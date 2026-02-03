@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); ?>
+<?php include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Pago Intereses de Prestaciones)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Pago Intereses de Prestaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -100,7 +100,7 @@ return true;}
              <td><table width="876">
                <tr>
                  <td width="146"><span class="Estilo5">FECHA PAGO INTERES :</span></td>
-                 <td width="730"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" ></span></td>
+                 <td width="730"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" ></span></td>
                </tr>
              </table></td>
            </tr>
@@ -111,7 +111,7 @@ return true;}
                  <td width="146"><span class="Estilo5">TOTAL INTERESES:</span></td>
                  <td width="300"><span class="Estilo5"><div id="saldop"><input class="Estilo10" name="txttotal_interes" type="text" id="txttotal_interes" size="13" maxlength="12"  style="text-align:right" value="0" readonly></span></div></td>
                  <td width="130"><span class="Estilo5">A LA FECHA:</span></td>
-                 <td width="300" ><span class="Estilo5"><div id="fechac"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  value="<?echo $fecha_hoy?>" readonly></span></div></td>
+                 <td width="300" ><span class="Estilo5"><div id="fechac"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  value="<?php echo $fecha_hoy?>" readonly></span></div></td>
 
                 </tr>
              </table></td>

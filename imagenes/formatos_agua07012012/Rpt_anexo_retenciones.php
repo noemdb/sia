@@ -1,9 +1,9 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
 if (!$_GET){ $nro_orden="";$tipo_causado=""; } else{$nro_orden=$_GET["txtnro_orden"];  $tipo_causado=$_GET["txttipo_causado"];}
 $sql="Select * from ORD_PAGO where tipo_causado='$tipo_causado' and nro_orden='$nro_orden'";
 $rif_emp="G-20000831-8";
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $concepto="";$fecha="";$nombre_abrev_caus=""; $ced_rif="";$nombre="";$inf_usuario="";$anulado="";  $tipo_documento="";  $nro_documento=""; $afecta_presu=""; $status_1=""; $usuario_sia="";
 $func=""; $inv=""; $con_comp=""; $directa=""; $financ=""; $caja_chica=""; $permanente=""; $orden_permanen=""; $cod_tipo_orden="";
 $oc=""; $os=""; $fact=""; $nom=""; $anticipo=""; $recibo=""; $otros="";
@@ -109,6 +109,6 @@ class PDF extends FPDF{
   $pdf->Cell(175,3,'TOTAL RETENCIONES Bs.',0,0,'R');
   $pdf->Cell(25,3,$total_ret,0,1,'R');
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 ?>
 

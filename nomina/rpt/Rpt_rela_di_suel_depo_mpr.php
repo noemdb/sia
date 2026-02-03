@@ -1,11 +1,11 @@
-<? include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nominad=$_GET["tipo_nomina_d"]; $tipo_nominah=$_GET["tipo_nomina_h"];  $codigo_departamento_d=$_GET["codigo_departamento_d"];   $codigo_departamento_h=$_GET["codigo_departamento_h"]; 
    $mes=$_GET["mes"]; $ano=$_GET["ano"]; $categoria=$_GET["categoria"]; $tipo_rpt=$_GET["tipo_rpt"]; $most_reporte=$_GET["most_reporte"]; $montos_cero=$_GET["montos_cero"]; $Sql="";   $date=date("d-m-Y");   $hora=date("h:i:s a"); $criterio1="";
    $fecha_d="01/".$mes."/".$ano;  $fecha_h=colocar_udiames($fecha_d); $mcod_part="-401-01-08-01";   
    if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
    if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';} $fecha_hasta=$ano1.$mes1.$dia1;   
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
     $criterio=" (nom006.cod_empleado=nom030.cod_empleado) and ((nom030.tipo_calculo='P') or (nom030.tipo_calculo='S') ) and (nom006.tipo_nomina>='".$tipo_nominad."' and nom006.tipo_nomina<='".$tipo_nominah."') 
 	   and (nom030.fecha_calculo>='".$fecha_desde."' and nom030.fecha_calculo<='".$fecha_hasta."') and (nom006.cod_departam>='".$codigo_departamento_d."' and nom006.cod_departam<='".$codigo_departamento_h."' ) ";

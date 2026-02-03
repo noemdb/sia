@@ -6,7 +6,7 @@ $fecha_hoy=asigna_fecha_hoy();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Recepcion de Cheques)</title>
+<title>SIPAP CONTROL BANCARIO (Recepcion de Cheques)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -45,7 +45,7 @@ return true;}
             <td><table width="360" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE RECEPCI&Oacute;N: </span></td>
-                <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_recep" type="text" id="txtfecha_recep" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_recep" type="text" id="txtfecha_recep" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span></td>
               </tr>
             </table></td>
@@ -54,12 +54,12 @@ return true;}
             <td>&nbsp;</td>
           </tr>
           <td><table width="360" border="0" align="center"> <tr>
-            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?echo $cod_banco?>"></td>
+            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?php echo $cod_banco?>"></td>
             <td width="40"><input name="txtentregado" type="hidden" id="txtentregado" value="N"></td>
             <td width="40"><input name="txtopcion" type="hidden" id="txtopcion" value="R"></td>
             <td width="40"><input name="txtced_rif_recib" type="hidden" id="txtced_rif_recib" value=""></td>
             <td width="40"><input name="txtnombre_recib" type="hidden" id="txtnombre_recib" value=""></td>
-            <td width="40"><input name="txtnum_cheque" type="hidden" id="txtnum_cheque" value="<?echo $num_cheque?>"></td>
+            <td width="40"><input name="txtnum_cheque" type="hidden" id="txtnum_cheque" value="<?php echo $num_cheque?>"></td>
           </tr></table></td>
           </tr>
           <tr>

@@ -7,13 +7,13 @@ $tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6);
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Detalle Archivo Banco)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Detalle Archivo Banco)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="javascript" src="ajax_nom.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_nomina_arch_banco.php?criterio=<?echo $criterio?>'; }
+function llamar_anterior(){ document.location ='Det_nomina_arch_banco.php?criterio=<?php echo $criterio?>'; }
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txttipo_nomina.value==""){alert("Tipo de Nomina no puede estar Vacio");return false;}
    if(f.txtdes_nomina.value==""){alert("Descripcion no puede estar Vacio");return false;}
@@ -59,8 +59,8 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input class="Estilo10" name="txtcod_arch_banco" type="hidden" id="txtcod_arch_banco" value="<?echo $cod_arch_banco?>"></td>
-            <td width="20"><input class="Estilo10" name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?echo $tipo_arch_banco?>"></td>
+            <td width="20"><input class="Estilo10" name="txtcod_arch_banco" type="hidden" id="txtcod_arch_banco" value="<?php echo $cod_arch_banco?>"></td>
+            <td width="20"><input class="Estilo10" name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?php echo $tipo_arch_banco?>"></td>
             <td width="80">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

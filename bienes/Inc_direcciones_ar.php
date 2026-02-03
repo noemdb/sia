@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); if (!$_GET){$codigo_mov=""; $cod_direcci=""; $denominacion="";}
+<?php include ("../class/ventana.php"); if (!$_GET){$codigo_mov=""; $cod_direcci=""; $denominacion="";}
 else{$cod_dependen=$_GET["cod_dependen"]; $cod_direcci=$_GET["cod_direcci"]; $denominacion=$_GET["denominacion"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES(Incluir Direcciones)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES(Incluir Direcciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -20,7 +20,7 @@ MM_reloadPage(true);
 //-->
 </script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_direcciones.php?cod_dependen=<?echo $cod_dependen?>'; }
+function llamar_anterior(){ document.location ='Det_direcciones.php?cod_dependen=<?php echo $cod_dependen?>'; }
 function chequea_codigo(mform){ var mref;
  mref=mform.txtcod_direccion.value; // mref=Rellenarizq(mref,"0",4);   mform.txtcod_direccion.value=mref; 
  }
@@ -49,7 +49,7 @@ return true;}
             <td><table width="730">
               <tr>
                 <td width="130" scope="col"><div align="left"><span class="Estilo5">CODIGO DIRECCION:</span></div></td>
-                <td width="600" scope="col"><div align="left"><span class="Estilo5"><input name="txtcod_direccion" type="text" id="txtcod_direccion" size="5" maxlength="4" value="<?echo $cod_direcci?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo10" onchange="chequea_codigo(this.form);">  </span></div></td>
+                <td width="600" scope="col"><div align="left"><span class="Estilo5"><input name="txtcod_direccion" type="text" id="txtcod_direccion" size="5" maxlength="4" value="<?php echo $cod_direcci?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo10" onchange="chequea_codigo(this.form);">  </span></div></td>
               </tr>
             </table></td>
           </tr>
@@ -68,7 +68,7 @@ return true;}
          <td>
            <table width="730" align="center">
           <tr>
-            <td width="30"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?echo $cod_dependen?>"></td>			
+            <td width="30"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?php echo $cod_dependen?>"></td>			
 			<td width="10"><input name="txtdireccion_dir" type="hidden" id="txtdireccion_dir" value=""></td>
 			<td width="10"><input name="txtnombre_contacto_r" type="hidden" id="txtnombre_contacto_r" value=""></td>
 			<td width="10"><input name="txtobservacion_dir" type="hidden" id="txtobservacion_dir" value=""></td>			

@@ -1,6 +1,6 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);  $php_os=PHP_OS;
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);  $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{  $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
    $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];}
@@ -92,7 +92,7 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
            <td width="120" align="center" bgcolor="#99CCFF"><strong>MODIFICACIONES</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF"><strong>ASIGNACION ACTUALIZADA</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];  
@@ -101,14 +101,14 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
 		   $denominacion=conv_cadenas($denominacion,0);  
 	?>	   
 		   <tr>
-           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="50" align="center">'<? echo $cod_fuente; ?></td>
-           <td width="120" align="right"><? echo $asignado; ?></td>
-           <td width="120" align="right"><? echo $modificacion; ?></td>
-           <td width="120" align="right"><? echo $actualizada; ?></td>
+           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="50" align="center">'<?php  echo $cod_fuente; ?></td>
+           <td width="120" align="right"><?php  echo $asignado; ?></td>
+           <td width="120" align="right"><?php  echo $modificacion; ?></td>
+           <td width="120" align="right"><?php  echo $actualizada; ?></td>
          </tr>
-	<? } 	  
+	<?php } 	  
 	}	
-pg_close();
+pg_close($conn);
 ?>

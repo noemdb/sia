@@ -1,9 +1,9 @@
-<?include ("../../class/conect.php"); include ("../../class/phpreports/PHPReportMaker.php");  include ("../../class/conect.php");
+<?php include ("../../class/conect.php"); include ("../../class/phpreports/PHPReportMaker.php");  include ("../../class/conect.php");
 if ($_GET){$cod_presup_d=$_GET["cod_presup_d"];$cod_presup_h=$_GET["cod_presup_h"];$cod_fuente_d=$_GET["cod_fuente_d"];$cod_fuente_h=$_GET["cod_fuente_h"];}
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$tipo="";}
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
 
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 
 
   $criterio="where (cod_presup>='$cod_presup_d' and cod_presup<='$cod_presup_h') and (cod_fuente>='$cod_fuente_d' and cod_fuente<='$cod_fuente_h')";

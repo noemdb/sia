@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $nro_aut="N";
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $nro_aut="N";
 $equipo=getenv("COMPUTERNAME");  $mcod_m="BIEN027".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $tipo_comp="ED001";
 $fecha_hoy=asigna_fecha_hoy();  $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"]; $port=$_POST["txtport"]; $host=$_POST["txthost"];
 $codigo_mov=$_POST["txtcodigo_mov"]; $cod_dep=$_POST["txtcod_dep"]; $nom_dep=$_POST["txtnom_dep"]; 
@@ -11,7 +11,7 @@ $fecha_fin=formato_ddmmaaaa($fec_fin_e);  if(FDate($fecha_hoy)>FDate($fecha_fin)
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Depreciacion Bienes Inmuebles)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Depreciacion Bienes Inmuebles)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -93,7 +93,7 @@ return true;}
                  <td width="170"><span class="Estilo5">REFERENCIA DEPRECIACION:</span></td>
                  <td width="115"><div id="refmov"><input name="txtreferencia" type="text" id="txtreferencia" size="10" maxlength="8"  onFocus="encender(this); " onBlur="apagar(this);"  onchange="checkreferencia(this.form);" class="Estilo5"> </div> </td>
                  <td width="145"><span class="Estilo5">FECHA DEPRECIACION:</span></td>
-                 <td width="120"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?echo $fecha_hoy?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" onchange="chequea_fecha(this)" onkeyup="mascara(this,'/',patronfecha,true)">  </span></td>
+                 <td width="120"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?php echo $fecha_hoy?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" onchange="chequea_fecha(this)" onkeyup="mascara(this,'/',patronfecha,true)">  </span></td>
                  <td width="165"><span class="Estilo5">CALCULAR DEPRECIACION:</span></td>
 				 <td width="130"><span class="Estilo5"><select name="txtmet_calculo"> <option value="M">MENSUAL</option><option value="A">ANUAL</option> </select> </span> </td>               
                </tr>
@@ -123,18 +123,18 @@ return true;}
    rows[1][2] = "Comprobantes";            // Requiere: <div id="T12" class="tab-body">  ... </div>
    rows[1][3] = "Causado Presupuestario";            // Requiere: <div id="T12" class="tab-body">  ... </div>
             </script>
-              <?include ("../class/class_tab.php");?>
+              <?php include ("../class/class_tab.php");?>
               <script type="text/javascript" language="javascript"> DrawTabs(); </script>
               <!-- PESTA&Ntilde;A 1 -->
               <div id="T11" class="tab-body">
-                <iframe src="Det_inc_bienes_inmu_depreciacion.php?&codigo_mov=<?echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_bienes_inmu_depreciacion.php?&codigo_mov=<?php echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
               </div>              
               <!--PESTA&Ntilde;A 2 -->
               <div id="T12" class="tab-body" >
-                <iframe src="Det_inc_comp_inmu_depreciacion.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_comp_inmu_depreciacion.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <div id="T13" class="tab-body" >
-                <iframe src="Det_inc_causado_depreciacion.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_causado_depreciacion.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="350" scrolling="auto" frameborder="0"> </iframe>
               </div>
             </div></td>
          </tr>
@@ -143,8 +143,8 @@ return true;}
         <div id="Layer3" style="position:absolute; width:868px; height:25px; z-index:3; left: 2px; top: 450px;">
         <table width="812" height="200">
           <tr>
-            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td> 
+            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td> 
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Grabar"></td>
             <td width="88"><input name="Submit2" type="reset" value="Blanquear"></td>
           </tr>

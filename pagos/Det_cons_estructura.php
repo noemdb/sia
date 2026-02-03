@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -27,23 +27,23 @@ $res=pg_query($sql);
 		   <td width="120" align="left" bgcolor="#99CCFF" ><strong>Tipo Imputacion</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF" ><strong>Referencia Cred.</strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res)){ $monto=$registro["monto_est"]; $monto=formato_monto($monto);
 $total=$total+$registro["monto_est"]; $denominacion=$registro["denominacion"]; $denominacion=substr($denominacion,0,100);
 $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["ref_imput_presu"];
   if($tipo_imput_presu=="P"){$tipo_imput_presu="PRESUPUESTO";}else{$tipo_imput_presu="CRED. ADICIONAL";}
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="50" align="left"><? echo $registro["tipo_comp_est"]; ?></td>
-           <td width="80" align="left"><? echo $registro["ref_comp_est"]; ?></td>
-           <td width="200" align="left"><? echo $registro["cod_presup_est"]; ?></td>
-           <td width="40" align="left"><? echo $registro["fuente_est"]; ?></td>
-           <td width="370" align="left"><? echo $denominacion; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-		    <td width="120" align="left"><? echo $tipo_imput_presu; ?></td>
-           <td width="100" align="left"><? echo $ref_imput_presu; ?></td>
+           <td width="50" align="left"><?php  echo $registro["tipo_comp_est"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["ref_comp_est"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["cod_presup_est"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["fuente_est"]; ?></td>
+           <td width="370" align="left"><?php  echo $denominacion; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+		    <td width="120" align="left"><?php  echo $tipo_imput_presu; ?></td>
+           <td width="100" align="left"><?php  echo $ref_imput_presu; ?></td>
          </tr>
-         <?} $total=formato_monto($total);
+         <?php } $total=formato_monto($total);
 ?>
        </table></td>
    </tr>
@@ -56,7 +56,7 @@ $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["re
          <td width="132"><span class="Estilo5">TOTAL CODIGOS:</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td align="right" class="Estilo5"><? echo $total; ?></td>
+             <td align="right" class="Estilo5"><?php  echo $total; ?></td>
            </tr>
          </table></td>
        </tr>
@@ -66,6 +66,6 @@ $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["re
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

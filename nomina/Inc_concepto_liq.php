@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php");  include ("../class/fun_fechas.php"); $equipo=getenv("COMPUTERNAME"); $fecha_hoy=asigna_fecha_hoy(); 
+<?php include ("../class/ventana.php");  include ("../class/fun_fechas.php"); $equipo=getenv("COMPUTERNAME"); $fecha_hoy=asigna_fecha_hoy(); 
 if (!$_GET){$mcod_m="LIQ".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Conceptos de Liquidacion)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Conceptos de Liquidacion)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -50,13 +50,13 @@ function apaga_monto(mthis){var mcant; var mmonto; var mtotal;
   document.form1.txttotal.value=mtotal;  document.form1.txttotal.value=daformatomonto(document.form1.txttotal.value);
 }
 
-function llamar_anterior(){ document.location ='Det_inc_cal_liq.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_cal_liq.php?codigo_mov=<?php echo $codigo_mov?>'; }
 
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_concepto.value==""){alert("Codigo de Concepto no puede estar Vacio");return false;}
    if(f.txtdenominacion.value==""){alert("Denominacion no puede estar Vacio"); return false; }
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -97,9 +97,9 @@ return true;}
              <td><table width="620">
                  <tr>
                    <td width="100"><span class="Estilo5">PERIODO DESDE : </span></td>
-                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="130"><span class="Estilo5">PERIODO HASTA : </span></td>
-                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                      </tr>
              </table></td>
          </tr>
@@ -121,7 +121,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

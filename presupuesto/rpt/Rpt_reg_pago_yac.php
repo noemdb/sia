@@ -1,9 +1,9 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
 if (!$_GET){  $referencia_caus='';$tipo_causado='';$tipo_pago=''; $referencia_pago=''; $referencia_comp='';$tipo_compromiso=''; $cod_banco='';}
  else {  $tipo_pago=$_GET["txttipo_pago"];  $referencia_pago=$_GET["txtreferencia_pago"];   $referencia_caus=$_GET["txtreferencia_caus"];  $tipo_causado=$_GET["txttipo_causado"];  $referencia_comp = $_GET["txtreferencia_comp"];  $tipo_compromiso = $_GET["txttipo_compromiso"]; $cod_banco='';}
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $l_cat=0;  $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_cat=$registro["campo526"];$l_cat=strlen($formato_cat);} 
 $sql="Select * FROM PAGOS where tipo_pago='$tipo_pago' and referencia_pago='$referencia_pago' and tipo_causado='$tipo_causado' and referencia_caus='$referencia_caus' and  tipo_compromiso='$tipo_compromiso' and referencia_comp='$referencia_comp'" ;
 $descripcion="";$fecha="";$nombre_abrev_caus="";$nombre_abrev_pago="";$nombre_abrev_comp="";$ced_rif="";$nombre="";$num_proyecto="";$des_proyecto="";$func_inv="";$genera_comprobante="";$inf_usuario="";$modulo="";$anulado="";
@@ -124,5 +124,5 @@ class PDF extends FPDF{
 	$total_comp=$total_comp+$registro["monto"];
   }	
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 ?> 

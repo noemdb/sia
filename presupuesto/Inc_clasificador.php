@@ -1,4 +1,4 @@
-<?include ("../class/seguridad.inc"); include ("../class/ventana.php"); include ("../class/fun_fechas.php"); 
+<?php include ("../class/seguridad.inc"); include ("../class/ventana.php"); include ("../class/fun_fechas.php"); 
  $Formato_Cuenta="XXX-XX-XX-XX-XXX"; $fecha_hoy=asigna_fecha_hoy(); $fecha_c="01/01/".substr($fecha_hoy,0,4);
  $mpatron="Array(4,2,2,2,2,0,0,0,0,0)";  $mpatron=arma_patron($Formato_Cuenta);
  ?> 
@@ -7,7 +7,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Clasificador de Partidas)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Clasificador de Partidas)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="Javascript" src="../class/sia.js" type="text/javascript"></script>

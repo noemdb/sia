@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
 if ($_GET){$cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"];$mes_desde=$_GET["mes_desde"];$mes_hasta=$_GET["mes_hasta"];$asig_global=$_GET["asig_global"]; $c_cat=$_GET["csubtotal"];} 
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$fecha=""; $cant_cat=1;}   $equipo=getenv("COMPUTERNAME"); $cod_mov="PRE020".$usuario_sia; 
 //$asig_global="N"; 
@@ -9,13 +9,13 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   for ($i=1; $i<10; $i++) {if ($mcontrol[$i] == 0) {$mcontrol[$i]=0;} else { $j=$mcontrol[$i]+$k; $mcontrol[$i]=$j+1; $k=$mcontrol[$i];}}
   for ($i=1; $i<10; $i++) {if ($mcontrol[$i] < 0) {$mcontrol[$i]=0;}} $actual=-1;
   for ($i=0; $i<10; $i++) { if (strlen($clave) == $mcontrol[$i]){$actual=$i; $i=10;} }
-  if ($actual==-1){?><script language="JavaScript">muestra('ERROR Longitud del Código Invalido');</script><? }
+  if ($actual==-1){?><script language="JavaScript">muestra('ERROR Longitud del Código Invalido');</script><?php }
   return $actual;
 }
 if ($mes_desde==01){$mesd="Enero";}elseif ($mes_desde==02){$mesd="Febrero";}elseif ($mes_desde==03){$mesd="Marzo";}elseif ($mes_desde==04){$mesd="Abril";}elseif ($mes_desde==05){$mesd="Mayo";}elseif ($mes_desde==06){$mesd="Junio";}elseif ($mes_desde==07){$mesd="Julio";}elseif ($mes_desde==08){$mesd="Agosto";}elseif ($mes_desde==09){$mesd="Septiembre";}elseif ($mes_desde==10){$mesd="Octubre";}elseif ($mes_desde==11){$mesd="Noviembre";}elseif ($mes_desde==12){$mesd="Diciembre";}
 if ($mes_hasta==01){$mesh="Enero";}elseif ($mes_hasta==02){$mesh="Febrero";}elseif ($mes_hasta==03){$mesh="Marzo";}elseif ($mes_hasta==04){$mesh="Abril";}elseif ($mes_hasta==05){$mesh="Mayo";}elseif ($mes_hasta==06){$mesh="Junio";}elseif ($mes_hasta==07){$mesh="Julio";}elseif ($mes_hasta==08){$mesh="Agosto";}elseif ($mes_hasta==09){$mesh="Septiembre";}elseif ($mes_hasta==10){$mesh="Octubre";}elseif ($mes_hasta==11){$mesh="Noviembre";}elseif ($mes_hasta==12){$mesh="Diciembre";}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
   
    $criterio1="Desde: ".$mesd." Hasta: ".$mesh; $criterio2="";   
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
@@ -62,7 +62,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
    }
    
    $StrSQL = "DELETE FROM PRE020 Where (Tipo_Registro='2') And (Nombre_Usuario='".$cod_mov."')";
-   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
    if($asig_global=="S"){$sql_Asignacion="asignado,";}
   
   
@@ -70,14 +70,14 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
   $StrSQL= "INSERT INTO PRE020 SELECT '".$cod_mov."' as Nombre_Usuario,'2' as Tipo_Registro, Cod_Presup, Cod_Fuente, Denominacion,substr(cod_presup,1,".$ls.") as cod_categoria,"."'' as Denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as Denomina_Par,Status_Dist,Func_Inv,Ord_Cord,Aplicacion,Cod_Unidad_Ejec, ";
   $StrSQL=$StrSQL.$sql_Asignacion." Disponible,Disp_Diferida,".$sql_Compromiso.$sql_Causado.$sql_Pagado.$sql_Traslados.$sql_Trasladon.$sql_Adicion.$sql_Disminucion.$sql_Diferido.", "."0 as CompromisoM,0 as CausadoM, 0 as PagadoM, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
   $StrSQL=$StrSQL." FROM PRE001 WHERE length(Cod_Presup)=".$l_c." and ".$criterio;
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
   $ordenar=" ORDER BY PRE020.cod_partida";
   if($c_cat>0){ $ordenar=" ORDER BY PRE020.cod_categoria,PRE020.cod_partida";
    $sSQL = "Select cod_presup,denominacion from pre001 WHERE cod_presup in (select distinct cod_categoria from pre020 where (Tipo_Registro='2') and (Nombre_Usuario='$cod_mov'))";  $res=pg_query($sSQL);
   while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; 
      $sql="update pre020 set denomina_cat='$denominacion' where Tipo_Registro='2' and Nombre_Usuario='$cod_mov' and cod_categoria='$cod_presup'";$resultado=pg_exec($conn,$sql); 
-	 $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   }}
   
   		$sSQL = "SELECT PRE020.Cod_Presup,PRE020.cod_fuente, PRE020.Denominacion,PRE020.cod_categoria,PRE020.denomina_cat,PRE020.cod_partida, substring(PRE020.cod_partida,1,3) as partida, PRE020.Asignado, PRE020.Traslados, PRE020.Trasladon, PRE020.Adicion, 

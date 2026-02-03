@@ -1,9 +1,9 @@
-<?include ("../class/ventana.php"); $tipo_arch_banco='97'; ?>
+<?php include ("../class/ventana.php"); $tipo_arch_banco='97'; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL N&Oacute;MINA Y PERSONAL (Incluir Archivo de Prestaciones)</title>
+<title>SIPAP CONTROL N&Oacute;MINA Y PERSONAL (Incluir Archivo de Prestaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -77,7 +77,7 @@ return true;}
         <table width="812">
           <tr>
             <td width="612">&nbsp;</td>
-            <td width="20"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?echo $tipo_arch_banco?>"></td>
+            <td width="20"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?php echo $tipo_arch_banco?>"></td>
 			<td width="20"><input name="txtcod_cta_emp" type="hidden" id="txtcod_cta_emp" value=""></td>
             <td width="90"><input name="Submit" type="submit" id="Submit"  value="Grabar"></td>
             <td width="90"><input name="Submit2" type="reset" value="Blanquear"></td>

@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $tipo_nomina_d="";
  $tipo_nomina_h="zzzzzzzz";
  $cod_trab_hasta="";
@@ -58,7 +58,7 @@ var url;
 -->
 </style>
 </head>
-<?
+<?php 
 $sql="SELECT MAX(Referencia) As Max_Referencia, MIN(Referencia) As Min_Referencia,MAX(Tipo_Asiento) As Max_Tipo,MIN(Tipo_Asiento) As Min_Tipo FROM CON002";
 $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$encontro=true;}
@@ -101,12 +101,12 @@ if($encontro=true){
                 <td width="193" align="center"><div align="left">REFERENCIA DESDE: </div></td>
                 <td width="140" align="center">
                   <div align="left"><span class="Estilo5">
-                    <input name="txtReferenciad" type="text" id="txtReferenciad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $referencia_d?>" size="12" maxlength="8">
+                    <input name="txtReferenciad" type="text" id="txtReferenciad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $referencia_d?>" size="12" maxlength="8">
                 </span></div></td>
                 <td width="68" align="center"><div align="left">HASTA:</div></td>
                 <td width="187" align="center">
                   <div align="left"><span class="Estilo5">
-                    <input name="txtReferenciah" type="text" id="txtReferenciah" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $referencia_h?>" size="12" maxlength="8">
+                    <input name="txtReferenciah" type="text" id="txtReferenciah" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $referencia_h?>" size="12" maxlength="8">
                 </span></div></td>
               </tr>
             </table>
@@ -122,13 +122,13 @@ if($encontro=true){
                 <td width="193" align="center"><div align="left">TIPO ASIENTO  DESDE: </div></td>
                 <td width="139" align="center">
                   <div align="left"><span class="Estilo5">
-                    <input name="txtTipo_Asientod" type="text" id="txttipo_asientod" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_asiento_d?>" size="12" maxlength="3">
+                    <input name="txtTipo_Asientod" type="text" id="txttipo_asientod" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_asiento_d?>" size="12" maxlength="3">
                     <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Tipos de Asientos" onclick="VentanaCentrada('../Cat_tipo_asientod.php?criterio=','SIA','','650','500','true')" value="...">
 </span></div></td>
                 <td width="71" align="center"><div align="left">HASTA:</div></td>
                 <td width="184" align="center">
                   <div align="left"><span class="Estilo5">
-                    <input name="txtTipo_Asientoh" type="text" id="txttipo_asientoh" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_asiento_h?>" size="12" maxlength="3">
+                    <input name="txtTipo_Asientoh" type="text" id="txttipo_asientoh" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_asiento_h?>" size="12" maxlength="3">
                     <input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Tipos de Asientos" onclick="VentanaCentrada('../Cat_tipo_asientoh.php?criterio=','SIA','','650','500','true')" value="...">
 </span></div></td>
               </tr>
@@ -171,4 +171,4 @@ if($encontro=true){
 </body>
 </html>
 
-<? pg_close();?>
+<?php  pg_close($conn);?>

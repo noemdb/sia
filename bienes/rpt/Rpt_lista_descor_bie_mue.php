@@ -11,7 +11,7 @@ include ("../../class/configura.inc");
 
 $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
 
-if (pg_ErrorMessage($conn))
+if (pg_last_error($conn))
   { ?> <script language="Javascript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php
   }
   else
@@ -413,5 +413,5 @@ if ($encontro = true)
 </body>
 </html>
 <?php
-pg_close();
+pg_close($conn);
 ?>

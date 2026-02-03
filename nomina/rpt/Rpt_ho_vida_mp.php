@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
    $tipo_nominad=$_GET["tipo_nominad"];
    $tipo_nominah=$_GET["tipo_nominah"];
@@ -40,7 +40,7 @@ include ("../../class/conect.php");
         $fecha_hasta_ing=$ano1.$mes1.$dia1;
 
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT

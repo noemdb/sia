@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  include ("../class/configura.inc"); if (!$_GET){$codigo_mov='';}else{$codigo_mov=$_GET["codigo_mov"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  include ("../class/configura.inc"); if (!$_GET){$codigo_mov='';}else{$codigo_mov=$_GET["codigo_mov"];}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -23,7 +23,7 @@ function chequea_genera(mform){var mgen;
 return true;}
 function llama_agregar(){var mref='NO';
    mref=document.form1.txtgenera_comprobante.value;
-   LlamarURL('Inc_pas_orden.php?codigo_mov=<?echo $codigo_mov?>&pasivo_comp='+mref+'&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>')
+   LlamarURL('Inc_pas_orden.php?codigo_mov=<?php echo $codigo_mov?>&pasivo_comp='+mref+'&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>')
 return true;}
 function asig_genera_comp(mvalor){var f=document.form1;
     if(mvalor=="NO"){document.form1.txtgenera_comprobante.options[0].selected = true;}else{document.form1.txtgenera_comprobante.options[1].selected = true;}
@@ -31,7 +31,7 @@ function asig_genera_comp(mvalor){var f=document.form1;
 
 function llama_ctas_activo(){var mref='SI';
    document.form1.txtgenera_comprobante.value=mref;
-   LlamarURL('Gen_cta_activo.php?codigo_mov=<?echo $codigo_mov?>&pasivo_comp='+mref+'&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>')
+   LlamarURL('Gen_cta_activo.php?codigo_mov=<?php echo $codigo_mov?>&pasivo_comp='+mref+'&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>')
 return true;}
 
 </script>
@@ -53,14 +53,14 @@ $sql="SELECT * FROM cod_pasivo  where codigo_mov='$codigo_mov' order by cod_cuen
 			 <td width="100"><span class="Estilo5">
 			 <select name="txtgenera_comprobante" size="1" id="txtgenera_comprobante" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_genera(this.form);">
 			   <option>NO</option>  <option>SI</option>  </select>
-			   <script language="JavaScript" type="text/JavaScript"> asig_genera_comp('<?echo $pasivo_comp;?>');</script> </span></td>
+			   <script language="JavaScript" type="text/JavaScript"> asig_genera_comp('<?php echo $pasivo_comp;?>');</script> </span></td>
 			 <td width="180"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Cuentas a otros pasivos" onclick="javascript:llama_agregar();"></td>
 			 <td width="180"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar los Codigos de otros Pasivos"></td>
-			 <?if($Cod_Emp=="58"){?>
+			 <?php if($Cod_Emp=="58"){?>
 			 <td width="160"><input name="btActivos" type="button" id="btActivos" value="Activos" title="Agregar Cuentas de Activos Automatico" onclick="javascript:llama_ctas_activo();"></td>
-			 <?} else {?>
+			 <?php } else {?>
 			 <td width="160">&nbsp;</td>
-			 <?}?>
+			 <?php }?>
 		  </tr>	 
 		</table> 
       </td>		
@@ -80,17 +80,17 @@ $sql="SELECT * FROM cod_pasivo  where codigo_mov='$codigo_mov' order by cod_cuen
            <td width="35" align="center" bgcolor="#99CCFF"><strong>D/C</strong></td>
            <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto </strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res))
 { $monto=$registro["monto_pasivo"]; $tipo_DC=$registro["debito_credito"];$total=$total+$monto;$monto=formato_monto($monto);
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["cod_cuenta"]; ?>','<? echo $registro["debito_credito"]; ?>');">
-           <td width="180" align="left"><? echo $registro["cod_cuenta"]; ?></td>
-           <td width="500" align="left"><? echo $registro["nombre_cuenta"]; ?></td>
-           <td width="35" align="center"><? echo $tipo_DC; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["cod_cuenta"]; ?>','<?php  echo $registro["debito_credito"]; ?>');">
+           <td width="180" align="left"><?php  echo $registro["cod_cuenta"]; ?></td>
+           <td width="500" align="left"><?php  echo $registro["nombre_cuenta"]; ?></td>
+           <td width="35" align="center"><?php  echo $tipo_DC; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
          </tr>
-         <?}
+         <?php }
  $total=formato_monto($total);
 ?>
        </table></td>
@@ -105,7 +105,7 @@ while($registro=pg_fetch_array($res))
          <td width="113"><span class="Estilo5">TOTAL PASIVOS :</span></td>
          <td width="167"><table width="151" border="1" cellspacing="0" cellpadding="0">
              <tr>
-               <td align="right" class="Estilo5"><? echo $total; ?></td>
+               <td align="right" class="Estilo5"><?php  echo $total; ?></td>
              </tr>
          </table></td>
        </tr>
@@ -116,6 +116,6 @@ while($registro=pg_fetch_array($res))
  </form>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

@@ -7,7 +7,7 @@ if (!$_GET){ $referencia_comp='';$tipo_compromiso='';  $cod_comp='';}
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Devolver Compromiso)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Devolver Compromiso)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript>
 </script>
@@ -53,7 +53,7 @@ return true;}
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE DEVOLUCI&Oacute;N: </span></td>
                 <td width="270"><span class="Estilo5"><span class="Estilo10">
-                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" maxlength="10" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" maxlength="10" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
@@ -75,9 +75,9 @@ return true;}
           </tr>
           <tr>
                      <td><table width="680" border="0" align="center"> <tr>
-            <td width="20"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?echo $tipo_compromiso?>"></td>
-                        <td width="96"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?echo $referencia_comp?>"></td>
-                        <td width="20"><input name="txtcod_comp" type="hidden" id="txtcodigo_mov" value="<?echo $cod_comp?>"></td>
+            <td width="20"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?php echo $tipo_compromiso?>"></td>
+                        <td width="96"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?php echo $referencia_comp?>"></td>
+                        <td width="20"><input name="txtcod_comp" type="hidden" id="txtcodigo_mov" value="<?php echo $cod_comp?>"></td>
                         </tr></table></td>
           </tr>
           <tr>

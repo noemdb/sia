@@ -2,7 +2,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA NOMINA Y PERSONAL</title>
+<title>SIPAP NOMINA Y PERSONAL</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <style type="text/css">
@@ -76,6 +76,6 @@ return true;}
     </tr>
   </table>
 </form>
-<?if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?}}?>
+<?php if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?php } }?>
 </body>
 </html>

@@ -1,13 +1,13 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_retencion_d=$_GET["tipo_retencion_d"];$tipo_retencion_h=$_GET["tipo_retencion_h"]; $tipo_rpt=$_GET["tipo_rpt"];
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="01"; $opcion="03-0000054"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?php }
 
        // LLAMAR A PHP_REPORT
        $sSQL = "SELECT PAG003.Tipo_Retencion, PAG003.Descripcion_Ret, PAG003.Cod_Contable, CON001.Nombre_Cuenta, PAG003.Tasa  FROM CON001, PAG003
@@ -102,7 +102,7 @@ if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="01"; $opcion="
            <td width="400" align="left" bgcolor="#99CCFF"><strong>Nombre Cuenta</strong></td>
            <td width="100" align="right" bgcolor="#99CCFF"><strong>Tasa</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_retencion=$registro["tipo_retencion"]; $descripcion_ret=$registro["descripcion_ret"]; $cod_contable=$registro["cod_contable"];  $nombre_cuenta=$registro["nombre_cuenta"];
@@ -110,16 +110,16 @@ if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="01"; $opcion="
 		$descripcion_ret=conv_cadenas($descripcion_ret,0);  $nombre_cuenta=conv_cadenas($nombre_cuenta,0);
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_retencion; ?></td>
-           <td width="400" align="left"><? echo $descripcion_ret; ?></td>
-           <td width="100" align="center">'<? echo $cod_contable; ?></td>
-           <td width="400" align="left"><? echo $nombre_cuenta; ?></td>
-           <td width="100" align="right">'<? echo $tasa; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_retencion; ?></td>
+           <td width="400" align="left"><?php  echo $descripcion_ret; ?></td>
+           <td width="100" align="center">'<?php  echo $cod_contable; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_cuenta; ?></td>
+           <td width="100" align="right">'<?php  echo $tasa; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr> <td>&nbsp;</td>  </tr>	     
-	  </table><?
+	  </table><?php 
 	}
 }  
 ?>

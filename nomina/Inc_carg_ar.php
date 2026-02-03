@@ -1,9 +1,9 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL NÓMINA Y PERSONAL (Incluir Definición De Cargos)</title>
+<title>SIPAP CONTROL Nï¿½MINA Y PERSONAL (Incluir Definiciï¿½n De Cargos)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -24,7 +24,7 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtced_rif.value==""){alert("Cédula/Rif del beneficiario no puede estar Vacio");return false;}
+    if(f.txtced_rif.value==""){alert("Cï¿½dula/Rif del beneficiario no puede estar Vacio");return false;}
           else{f.txtced_rif.value=f.txtced_rif.value.toUpperCase();}
     if(f.txtnombre.value==""){alert("Nombre del Beneficiario no puede estar Vacia"); return false; }
        else{f.txtnombre.value=f.txtnombre.value.toUpperCase();}

@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$tipo_diferidod=$_GET["tipo_diferidod"];$tipo_diferidoh=$_GET["tipo_diferidoh"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_diferidod="";$tipo_diferidoh="zzzz";$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 $sSQL = "select tipo_diferido, nombre_tipo_dife, nombre_abrev_dife from pre024 where pre024.tipo_diferido>='".$tipo_diferidod."' and pre024.tipo_diferido<='".$tipo_diferidoh."'  order by tipo_diferido";
    
@@ -81,18 +81,18 @@ if($tipo_rep=="EXCEL"){
            <td width="400" align="left" bgcolor="#99CCFF"><strong>NOMBRE DIFERIDO</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>NOMBRE ABREV.</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_diferido=$registro["tipo_diferido"]; $nombre_tipo_dife=$registro["nombre_tipo_dife"]; $nombre_abrev_dife=$registro["nombre_abrev_dife"];
 		$nombre_tipo_dife=conv_cadenas($nombre_tipo_dife,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_diferido; ?></td>
-           <td width="400" align="left"><? echo $nombre_tipo_dife; ?></td>
-           <td width="100" align="left">'<? echo $nombre_abrev_dife; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_diferido; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_tipo_dife; ?></td>
+           <td width="100" align="left">'<?php  echo $nombre_abrev_dife; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -101,7 +101,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

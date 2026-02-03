@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php"); $cod_modulo="04";
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php"); $cod_modulo="04";
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN"; $cod_modulo="04";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000065"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 $equipo=getenv("COMPUTERNAME"); $mcod_m = "NOM011".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $tipo_nomina="01"; $cod_concepto=""; $criterio="";  $descripcion=""; $denominacion="";
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="00";}else{$temp_nomina=$gnomina; $tipo_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 $sql="SELECT * FROM NOM001 ".$criterion." Order by tipo_nomina"; $res=pg_query($sql);$filas=pg_num_rows($res);
@@ -13,7 +13,7 @@ $sql="Select * from conceptos where tipo_nomina='$tipo_nomina' and cod_concepto=
 if($filas>=1){  $registro=pg_fetch_array($res,0);  $cod_concepto=$registro["cod_concepto"]; $denominacion=$registro["denominacion"];  }
 $campo502="NNNNNNNNNNNNNNNNNNN"; $sql="Select * from SIA005 where campo501='$cod_modulo'";$resultado=pg_query($sql);if($registro=pg_fetch_array($resultado,0)){$cod_modulo=$registro["campo501"]; $campo502=$registro["campo502"]; }
 /* */
-if (substr($campo502,15,1)=="N"){$error=0;} else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+if (substr($campo502,15,1)=="N"){$error=0;} else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 //echo substr($campo502,15,1)." ".$campo502;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -82,9 +82,9 @@ return true;}
              <td><table width="946">
                  <tr>
                    <td width="150"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2" onFocus="encender(this)" onBlur="apaga_tipo(this)" onchange="chequea_tipo(this.form);" value="<?echo $tipo_nomina?>"> </span></td>
+                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2" onFocus="encender(this)" onBlur="apaga_tipo(this)" onchange="chequea_tipo(this.form);" value="<?php echo $tipo_nomina?>"> </span></td>
                    <td width="50"><input class="Estilo10" name="bttiponom" type="button" id="bttiponom" title="Abrir Catalogo Tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="705"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?echo $descripcion?>" > </span></td>
+                   <td width="705"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?php echo $descripcion?>" > </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -92,10 +92,10 @@ return true;}
              <td><table width="946">
                  <tr>
                    <td width="166"><span class="Estilo5">C&Oacute;DIGO DE CONCEPTO : </span></td>
-                   <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_concepto(this.form);" value="<?echo $cod_concepto?>"> </span></td>
+                   <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_concepto(this.form);" value="<?php echo $cod_concepto?>"> </span></td>
                    <td width="50"><input class="Estilo10" name="btconcepto" type="button" id="btconcepto" title="Abrir Catalogo Conceptos"  onClick="VentanaCentrada('Cat_conceptos.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
                    <td width="100"><span class="Estilo5">DENOMINACI&Oacute;N : </span></td>
-                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="55" maxlength="80" readonly value="<?echo $denominacion?>"> </span></td>
+                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="55" maxlength="80" readonly value="<?php echo $denominacion?>"> </span></td>
                    <td width="20"><span class="Estilo5"></td>
                  </tr>
              </table></td>
@@ -116,12 +116,12 @@ return true;}
            <tr> <td>&nbsp;</td> </tr>
          </table>
          <div id="T11" class="tab-body">
-         <iframe src="Det_carga_bono_vac.php?criterio=<?echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe>
+         <iframe src="Det_carga_bono_vac.php?criterio=<?php echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe>
          </div>
          <table width="940">
           <tr> <td>&nbsp;</td> </tr>
           <tr>
-            <td width="40"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="40"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="150">&nbsp;</td>
 			<td width="150"><input name="btProcesar" type="button" id="btProcesar" title="Procesar Carga  Bono Vacacional" onclick="javascript:Carga_procesar()" value="Procesar"></td>
             <td width="150">&nbsp;</td>
@@ -139,4 +139,4 @@ return true;}
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

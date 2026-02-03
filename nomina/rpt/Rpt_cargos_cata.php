@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $codigo_cargo_d=$_GET["codigo_cargo_d"];   $codigo_cargo_h=$_GET["codigo_cargo_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
   $sSQL = "SELECT nom004.codigo_cargo, nom004.denominacion, nom004.nro_cargos, nom004.asignados, nom004.grado, nom004.Paso, nom004.sueldo_cargo  FROM nom004 where nom004.codigo_cargo>='$codigo_cargo_d' and nom004.codigo_cargo<='$codigo_cargo_h' ORDER BY nom004.codigo_cargo";
   if($tipo_rpt=="HTML"){ include ("../../class/phpreports/PHPReportMaker.php");
@@ -87,31 +87,31 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>GRADO</strong></font></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>PASO</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 	  $codigo_cargo=$registro["codigo_cargo"]; $denominacion=$registro["denominacion"]; $nro_cargos=$registro["nro_cargos"]; $asignados=$registro["asignados"]; $grado=$registro["grado"];
           $sueldo_cargo=$registro["sueldo_cargo"]; $sueldo_cargo=formato_monto($sueldo_cargo);$paso=$registro["paso"]; $cantidad=$cantidad+1; $denominacion=conv_cadenas($denominacion,0);  
 	 ?>	   
 	    <tr>
-           <td width="100" align="left">'<? echo $codigo_cargo; ?></td>
-           <td width="400" align="left"><? echo $denominacion; ?></td>
-           <td width="100" align="right"><? echo $sueldo_cargo; ?></td>
-           <td width="100" align="right"><? echo $nro_cargos; ?></td>
-           <td width="100" align="right"><? echo $asignados; ?></td>
-           <td width="100" align="right"><? echo $grado; ?></td>
-           <td width="100" align="right"><? echo $paso; ?></td>
+           <td width="100" align="left">'<?php  echo $codigo_cargo; ?></td>
+           <td width="400" align="left"><?php  echo $denominacion; ?></td>
+           <td width="100" align="right"><?php  echo $sueldo_cargo; ?></td>
+           <td width="100" align="right"><?php  echo $nro_cargos; ?></td>
+           <td width="100" align="right"><?php  echo $asignados; ?></td>
+           <td width="100" align="right"><?php  echo $grado; ?></td>
+           <td width="100" align="right"><?php  echo $paso; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
        </tr>
 	   <tr>
             <td width="100" align="center"></td>
-		    <td width="400" align="left"><strong>CANTIDAD DE CARGOS: <? echo $cantidad; ?></strong></td>	
+		    <td width="400" align="left"><strong>CANTIDAD DE CARGOS: <?php  echo $cantidad; ?></strong></td>	
          </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
 }

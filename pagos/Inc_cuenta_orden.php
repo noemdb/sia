@@ -7,7 +7,7 @@ $monto=formato_monto($monto);
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGO (Incluir Cuentas a la orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGO (Incluir Cuentas a la orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <link href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -26,7 +26,7 @@ return str2;}
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value; mmonto=eliminapunto(mmonto);  mthis.value=mmonto; 
 }
-function llamar_anterior(){ document.location ='Det_inc_comp_ord_fin.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_comp_ord_fin.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){var f=document.form1;var Valido=true;
    if(f.txtCodigo_Cuenta.value==""){alert("Codigo de Cuenta no puede estar Vacio");return false;}
    if(f.txtDeb_Cre.value=="D" || f.txtDeb_Cre.value=="C") {Valido=true;}  else{alert("Valor Dedito/Credito no valida");return false; }
@@ -52,7 +52,7 @@ return true;}
           <td><table width="614" border="0">
               <tr>
                 <td width="330"><span class="Estilo5">C&Oacute;DIGO CUENTA : <input name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" title="Registre el C&oacute;digo de la Cuenta"  size="30" maxlength="30" onFocus="encender(this); " onBlur="apagar(this);">  </span></td>
-                <td width="268"><input class="Estilo10" name="btCatcuentas" type="button" id="btCatcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onclick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=<?echo $cta_pasivo?>','SIA','','750','500','true')" value="..."></td>
+                <td width="268"><input class="Estilo10" name="btCatcuentas" type="button" id="btCatcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onclick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=<?php echo $cta_pasivo?>','SIA','','750','500','true')" value="..."></td>
               </tr>
           </table></td>
         </tr>
@@ -70,7 +70,7 @@ return true;}
               <table width="614" border="0">
                 <tr>
                   <td width="336"><span class="Estilo5">DEBITO/CREDITO : <input class="Estilo10" name="txtDeb_Cre" type="text"  id="txtDeb_Cre" size="2" maxlength="2" value="D" readonly>    </span></td>
-                  <td width="242"><span class="Estilo5">MONTO : <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto?>" onKeypress="return validarNum(event)"> </span></td>
+                  <td width="242"><span class="Estilo5">MONTO : <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto?>" onKeypress="return validarNum(event)"> </span></td>
                 </tr>
             </table></td>
         </tr>
@@ -83,7 +83,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

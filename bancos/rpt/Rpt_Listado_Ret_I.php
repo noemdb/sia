@@ -1,10 +1,10 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); 
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); 
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$comprobante_d=$_GET["comprobante_d"];$comprobante_h=$_GET["comprobante_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$agrupado=$_GET["agrupado"];  $tipo_comp=$_GET["tipo_comp"]; $tipo_rpt=$_GET["tipo_rpt"];
 $criterio1="Fecha Desde: ".$fecha_d." Al: ".$fecha_h; $criterio2="";   $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");    $php_os=PHP_OS; 
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}  $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}  else{$fecha_h='';}$fecha_hasta=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $criterio_s="  BAN027.fecha_emision>='".$fecha_desde."' AND BAN027.fecha_emision<='".$fecha_hasta."'";
     if($tipo_comp==="ORDEN CANCELADA") { $criterio_s="  BAN027.fecha_emision<='".$fecha_hasta."' and BAN027.monto_iva_retenido<>0 and BAN027.tipo_mov='O/P' and BAN027.referencia in (select nro_orden  from pag001 where status='I' and fecha_cheque>='".$fecha_desde."' and fecha_cheque<='".$fecha_hasta."') ";}
@@ -139,7 +139,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 		    <td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="120" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>COMPROBANTE</strong></td>
@@ -153,7 +153,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>IMPUESTO IVA</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>IVA RETENIDO</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_comprobante=$registro["nro_comprobante"]; $fechae=$registro["fechae"]; $ced_rif=$registro["ced_rif"]; $nombre=$registro["nombre"]; $referencia=$registro["referencia"];
@@ -165,18 +165,18 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
             $totalir=$totalir+$registro["monto_iva_retenido"]; $nombre=conv_cadenas($nombre,0);  
 	?>	   
         <tr>
-           <td width="120" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_comprobante; ?></td>
-           <td width="100" align="left"><? echo $fechae; ?></td>
-		   <td width="100" align="left"><? echo $referencia; ?></td>
-           <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="justify"><? echo $nombre; ?></td>
-           <td width="100" align="right"><? echo $monto_documento; ?></td>
-           <td width="100" align="right"><? echo $monto_exento_iva; ?></td>
-           <td width="100" align="right"><? echo $base_imponible; ?></td>
-           <td width="100" align="right"><? echo $monto_iva; ?></td>
-           <td width="100" align="right"><? echo $monto_iva_retenido; ?></td>
+           <td width="120" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_comprobante; ?></td>
+           <td width="100" align="left"><?php  echo $fechae; ?></td>
+		   <td width="100" align="left"><?php  echo $referencia; ?></td>
+           <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre; ?></td>
+           <td width="100" align="right"><?php  echo $monto_documento; ?></td>
+           <td width="100" align="right"><?php  echo $monto_exento_iva; ?></td>
+           <td width="100" align="right"><?php  echo $base_imponible; ?></td>
+           <td width="100" align="right"><?php  echo $monto_iva; ?></td>
+           <td width="100" align="right"><?php  echo $monto_iva_retenido; ?></td>
          </tr>
-	<? } $totald=formato_monto($totald); $totale=formato_monto($totale); $totalb=formato_monto($totalb); $totali=formato_monto($totali); $totalir=formato_monto($totalir);
+	<?php } $totald=formato_monto($totald); $totale=formato_monto($totale); $totalb=formato_monto($totalb); $totali=formato_monto($totali); $totalir=formato_monto($totalir);
         ?>
 		<tr> <td>&nbsp;</td>
 	   <tr>
@@ -184,14 +184,14 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="400" align="right"><strong>TOTAL :</strong></td>
-		<td width="100" align="right"><strong><? echo $totald; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totale; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totalb; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totali; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totalir; ?></strong></font></td>
+		<td width="100" align="right"><strong><?php  echo $totald; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totale; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalb; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totali; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalir; ?></strong></font></td>
       </tr>
   
-	  </table><?
+	  </table><?php 
 	}
 
    }

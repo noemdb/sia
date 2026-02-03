@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Tipos Documento)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Tipos Documento)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript  src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -19,11 +19,11 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtcod_documento.value==""){alert("Código no puede estar Vacio");return false;}
+    if(f.txtcod_documento.value==""){alert("Cï¿½digo no puede estar Vacio");return false;}
     if(f.txttipo_documento.value==""){alert("Tipo de Documento no puede estar Vacia");return false; }
        else{f.txttipo_documento.value=f.txttipo_documento.value.toUpperCase();}
     if(f.txtcod_documento.value.length==2){f.txtcod_documento.value=f.txtcod_documento.value.toUpperCase();}
-       else{alert("Longitud de Código Invalida");return false;}
+       else{alert("Longitud de Cï¿½digo Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>

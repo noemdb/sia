@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);
 $codigo_mov=$_POST["txtcodigo_mov"];$nro_factura=$_POST["txtnro_factura"]; $rif_fact=$_POST["txtrif_fact"]; $tipo_planilla=$_POST["txttipo_planilla"];
 $nro_con_factura=$_POST["txtnro_con_factura"];$fecha_factura=$_POST["txtfecha_factura"]; 
 $monto_sin_iva=$_POST["txtmonto_sin_iva"];$monto_iva1_so=$_POST["txtmonto_iva1_so"]; $monto_iva4_so=$_POST["txtmonto_iva4_so"];
@@ -14,29 +14,29 @@ $monto_iva3=formato_numero($monto_iva3); if(is_numeric($monto_iva3)){$monto_iva3
 $equipo = getenv("COMPUTERNAME");$MInf_Usuario = $usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 echo "ESPERE POR FAVOR INCLUYENDO....","<br>";$url="Det_inc_plan_ret.php?codigo_mov=".$codigo_mov;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ $error=0;   $sSQL="Select * from PAG029 WHERE codigo_mov='$codigo_mov' and nro_factura='$nro_factura'";$resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
-  if ($filas>0){$error=1; ?> <script language="JavaScript"> muestra('FACTURA YA EXISTE EN LA ORDEN');</script><? }
+  if ($filas>0){$error=1; ?> <script language="JavaScript"> muestra('FACTURA YA EXISTE EN LA ORDEN');</script><?php }
   if($error==0){$sSQL="Select nro_orden from PAG016 WHERE rif_factura='$rif_fact' and nro_factura='$nro_factura' and (nro_orden in (select nro_orden from pag001 where ced_rif='$rif_fact' and anulado='N'))";$resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
     if($filas>0){ $reg=pg_fetch_array($resultado); $otra_ord=$reg["nro_orden"]; echo "FACTURA ESTA EN LA ORDEN ".$otra_ord;
-	  $error=1; ?> <script language="JavaScript"> muestra('FACTURA YA EXISTE CON OTRA ORDEN');</script><? } }
+	  $error=1; ?> <script language="JavaScript"> muestra('FACTURA YA EXISTE CON OTRA ORDEN');</script><?php } }
   if($error==0){
-    if($monto_sin_iva>$monto_factura){$error=1; ?> <script language="JavaScript"> muestra('MONTO CON IVA NO PUEDE SER MENOR A MONTO SIN IVA');</script><?}
-    if($monto_iva1_so>$monto_sin_iva){$error=1; ?> <script language="JavaScript"> muestra('MONTO SIN IVA NO PUEDE SER MENOR A MONTO OBJETO');</script><?}
-    if(($monto_sin_iva<>$monto_factura)and($tasa_iva1==0)){$error=1; ?> <script language="JavaScript"> muestra('TASA DE IVA INVALIDA');</script><?}	
-	if(($tasa_iva3==0)){$error=1; ?> <script language="JavaScript"> muestra('TASA DE RETENCION INVALIDA');</script><?}
-	if(($monto_iva3==0)){$error=1; ?> <script language="JavaScript"> muestra('MONTO DE RETENCION INVALIDO');</script><?}	
-    if (checkData($fecha_factura)=='1'){$error=0;}else{$error=1; ?> <script language="JavaScript">muestra('FECHA FACTURA NO ES VALIDA');</script><? }
+    if($monto_sin_iva>$monto_factura){$error=1; ?> <script language="JavaScript"> muestra('MONTO CON IVA NO PUEDE SER MENOR A MONTO SIN IVA');</script><?php }
+    if($monto_iva1_so>$monto_sin_iva){$error=1; ?> <script language="JavaScript"> muestra('MONTO SIN IVA NO PUEDE SER MENOR A MONTO OBJETO');</script><?php }
+    if(($monto_sin_iva<>$monto_factura)and($tasa_iva1==0)){$error=1; ?> <script language="JavaScript"> muestra('TASA DE IVA INVALIDA');</script><?php }	
+	if(($tasa_iva3==0)){$error=1; ?> <script language="JavaScript"> muestra('TASA DE RETENCION INVALIDA');</script><?php }
+	if(($monto_iva3==0)){$error=1; ?> <script language="JavaScript"> muestra('MONTO DE RETENCION INVALIDO');</script><?php }	
+    if (checkData($fecha_factura)=='1'){$error=0;}else{$error=1; ?> <script language="JavaScript">muestra('FECHA FACTURA NO ES VALIDA');</script><?php }
     if($error==0){$sSQL="SELECT ced_rif FROM pre099 WHERE ced_rif='$rif_fact'";  $resultado=pg_exec($conn,$sSQL); $filas=pg_numrows($resultado);
-      if ($filas==0){$error=1;?><script language="JavaScript">muestra('RIF FACTURA NO EXISTE EN BENEFICIARIO');</script><?}    }
+      if ($filas==0){$error=1;?><script language="JavaScript">muestra('RIF FACTURA NO EXISTE EN BENEFICIARIO');</script><?php } }
 	if($error==0){ $sfecha=formato_aaaammdd($fecha_factura); $monto_iva1=$monto_factura-$monto_sin_iva;
 	  $StrSQL="select max(campo_str1) as campo_str1 from pag029 where codigo_mov='$codigo_mov'"; $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
       if($filas>0){$registro=pg_fetch_array($resultado); $nro_linea=$registro["campo_str1"]; } $nro_linea=$nro_linea+1; $nro_linea=Rellenarcerosizq($nro_linea,4);
       $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG029(1,'$codigo_mov','$nro_factura','$nro_con_factura','$ref_compromiso','$tipo_compromiso','$sfecha',$monto_sin_iva,$monto_iva1_so,$tasa_iva1,$monto_iva1,0,0,0,$monto_iva3_so,$tasa_iva3,$monto_iva3,$monto_iva4_so,0,0,$monto_factura,'$rif_fact','N','S','$nro_linea','$tipo_planilla')");
-      $error=pg_errormessage($conn);$error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+      $error=pg_errormessage($conn);$error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     }
   }
 }
-pg_close();   error_reporting(E_ALL ^ E_WARNING);
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? } 
+pg_close($conn);   error_reporting(E_ALL ^ E_WARNING);
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php } 
 ?>

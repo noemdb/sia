@@ -1,6 +1,6 @@
-<?include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $tipo_nominad=""; $tipo_nominah="zz";   $cod_empleado_d=""; $cod_empleado_h="";  $cedula_d=""; $cedula_h="zzzzzzzz";
    $sexo="";  $estado_civil="";  $fecha_d="01/01/1900";  $fecha_h="31/12/9999";
    $edad_d="0";  $edad_h="99";  $estatus="";  $codigo_cargo_d="";   $codigo_cargo_h="zzzzzzzz";   $codigo_departamentod="";  $codigo_departamentoh="zzzzzzzz";
@@ -54,7 +54,7 @@ function Llama_Menu_Rpt(murl){var url;    url="../"+murl;  LlamarURL(url);}
 
 </script>
 </head>
-<?  $descripcion_d="";
+<?php   $descripcion_d="";
     $descripcion_h="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ";
 $res=pg_query($sql);
@@ -66,7 +66,7 @@ if($encontro=true){
   $tipo_nomina_d=$registro["min_tipo_nomina"];
   $tipo_nomina_h=$registro["max_tipo_nomina"];   }
 ?>
-<?  $nombre_d="";
+<?php   $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cod_empleado) As Max_cod_empleado, MIN(cod_empleado) As Min_cod_empleado FROM nom006";
 $res=pg_query($sql);
@@ -78,7 +78,7 @@ if($encontro=true){
   $cod_empleado_d=$registro["min_cod_empleado"];
   $cod_empleado_h=$registro["max_cod_empleado"];   }
 ?>
-<?
+<?php 
     $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cedula) As Max_cedula, MIN(cedula) As Min_cedula FROM NOM006";
@@ -92,7 +92,7 @@ if($encontro=true){
   $cedula_h=$registro["max_cedula"];
   }
 ?>
-<?  $denominacion_d="";
+<?php   $denominacion_d="";
  $denominacion_d="";
 $sql="SELECT MAX(codigo_cargo) As Max_codigo_cargo, MIN(codigo_cargo) As Min_codigo_cargo FROM nom004 ";
 $res=pg_query($sql);
@@ -104,7 +104,7 @@ if($encontro=true){
   $codigo_cargo_d=$registro["min_codigo_cargo"];
   $codigo_cargo_h=$registro["max_codigo_cargo"];   }
 ?>
-<?  $descripcion_dep_d="";
+<?php   $descripcion_dep_d="";
  $descripcion_dep_d="";
 $sql="SELECT MAX(codigo_departamento) As Max_codigo_departamento, MIN(codigo_departamento) As Min_codigo_departamento FROM nom005 ";
 $res=pg_query($sql);
@@ -146,14 +146,14 @@ if($encontro=true){
                <tr>
                  <td width="182" scope="col"><div align="right"><span class="Estilo5">TIPO DE NOMINA :</span></div></td>
                  <td width="30" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_d?>">
+                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_d?>">
                      <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                  <td width="231" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo1" type="button" id="Catalogo12" title="Abrir Catalogo Tipos de n&oacute;minas" onClick="VentanaCentrada('../Cat_tipo_nomina_d.php?criterio=','SIA','','650','500','true')" value="...">
                  </strong></strong></span></span></span></td>
                  <td width="58" class="Estilo5" scope="col">HASTA : </td>
                  <td width="29" scope="col"><span class="Estilo5"><span class="Estilo10">
-                   <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_h?>">
+                   <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_h?>">
                    <span class="menu"><strong><strong> <strong><strong> </strong></strong> </strong></strong></span></span></span></td>
                  <td width="347" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong><strong><strong>
                    <input name="Catalogo2" type="button" id="Catalogo22" title="Abrir Catalogo Tipos de n&oacute;minas" onClick="VentanaCentrada('../Cat_tipo_nomina_h.php?criterio=','SIA','','650','500','true')" value="...">
@@ -166,14 +166,14 @@ if($encontro=true){
                <tr>
                  <td width="180" scope="col"><div align="right"><span class="Estilo5">CODIGO TRABAJADOR DESDE :</span></div></td>
                  <td width="142" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                     <input name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="15"  value="<?echo $cod_empleado_d?>">
+                     <input name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="15"  value="<?php echo $cod_empleado_d?>">
                      <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                  <td width="123" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo3" type="button" id="Catalogo33" title="Abrir Catalogo de Trabajadores" onClick="VentanaCentrada('../Cat_trabajadoresd.php?criterio=','SIA','','650','500','true')" value="...">
                  </strong></strong></span></span></span></td>
                  <td width="54" scope="col"><span class="Estilo5">HASTA :</span></td>
                  <td width="137" scope="col"><span class="Estilo5"><span class="Estilo10">
-                   <input name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="20"  value="<?echo $cod_empleado_h?>">
+                   <input name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="20"  value="<?php echo $cod_empleado_h?>">
                    <span class="menu"><strong><strong> </strong></strong></span></span></span></td>
                  <td width="241" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo4" type="button" id="Catalogo43" title="Abrir Catalogo de Trabajadores" onClick="VentanaCentrada('../Cat_trabajadoresh.php?criterio=','SIA','','650','500','true')" value="...">
@@ -186,14 +186,14 @@ if($encontro=true){
                <tr>
                  <td width="180" scope="col"><div align="right"><span class="Estilo5">CEDULA TRABAJADOR DESDE :</span></div></td>
                  <td width="94" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                     <input name="txtcedula_d" type="text" id="txtcedula_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cedula_d?>">
+                     <input name="txtcedula_d" type="text" id="txtcedula_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cedula_d?>">
                      <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                  <td width="171" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo5" type="button" id="Catalogo5" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_d.php?criterio=','SIA','','650','500','true')" value="...">
                  </strong></strong></span></span></span></td>
                  <td width="56" class="Estilo5" scope="col">HASTA : </td>
                  <td width="94" scope="col"><span class="Estilo5"><span class="Estilo10">
-                   <input name="txtcedula_h" type="text" id="txtcedula_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cedula_h?>">
+                   <input name="txtcedula_h" type="text" id="txtcedula_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cedula_h?>">
                    <span class="menu"><strong><strong> </strong></strong></span></span></span></td>
                  <td width="282" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo6" type="button" id="Catalogo6" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_h.php?criterio=','SIA','','650','500','true')" value="...">
@@ -238,12 +238,12 @@ if($encontro=true){
                <tr>
                  <td width="182" scope="col"><div align="right"><span class="Estilo5">FECHA NACIMIENTO DESDE :</span></div></td>
                  <td width="269" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong><strong><strong> <strong><strong><strong><strong>
-                     <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                     <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                      <strong><strong><strong><strong><img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /> </strong></strong> </strong></strong></span></span> </span></div></td>
                  <td width="56" scope="col"><span class="Estilo5">HASTA :</span></td>
                  <td width="378" scope="col"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong><strong><strong> <strong><strong><strong><strong> <strong><strong><strong><strong><strong><strong><strong><strong>
-                   <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+                   <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                    <strong><strong><strong><strong><strong><strong><strong><strong><img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  /> </strong></strong></strong></strong> </strong></strong> </strong></strong></span></span></span></td>
                </tr>
@@ -280,12 +280,12 @@ if($encontro=true){
                <tr>
                  <td width="180" scope="col"><div align="right"><span class="Estilo5">FECHA INGRESO :</span></div></td>
                  <td width="272" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong><strong><strong>
-                     <input name="txtFecha" type="text" id="txtFecha" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                     <input name="txtFecha" type="text" id="txtFecha" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario3')"  /> </strong></strong> </strong></strong></span></span> </span></div></td>
                  <td width="57" scope="col"><span class="Estilo5">HASTA :</span></td>
                  <td width="376" scope="col"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong><strong><strong> <strong><strong><strong><strong>
-                   <input name="txtFechax" type="text" id="txtFechax" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+                   <input name="txtFechax" type="text" id="txtFechax" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                    <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario4')"  /> </strong></strong></strong></strong> </strong></strong> </strong></strong></span></span></span></td>
                </tr>
@@ -377,4 +377,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

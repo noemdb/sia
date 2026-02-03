@@ -1,6 +1,6 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT"; error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT"; error_reporting(E_ALL ^ E_NOTICE); 
 if (!$_GET){ $cod_empleado='';} else{$cod_empleado=$_GET["txtcod_empleado"];} 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $nombre=""; $cedula=""; $fecha_ingreso=""; $fecha_caus_hasta=""; $fecha_caus_desde=""; $denominacion=""; $cod_concepto_v=""; $fecha_d_desde=""; $fecha_d_hasta=""; $cod_cargo=""; $cod_departam="";
 $dias_habiles=0; $dias_no_habiles=0; $fecha_d_desde=""; $fecha_d_hasta=""; $fecha_reincorp=""; $dias_bono_vac=0; $monto_bono_vac=0; $dias_disfrutados=0; $inf_usuario="";
 $calcula_nomina="NO"; $fecha_cal_d=""; $fecha_cal_h=""; $des_cargo=""; $des_departamento=""; $monto_concepto=0; $des_nomina=""; $tipo_nomina=""; $monto_sueldo=0;
@@ -160,5 +160,5 @@ class PDF extends FPDF{
   $pdf->SetFont('Arial','B',9);
   $pdf->Cell(100,5,' Observaciones :',0,1,'L');
   $pdf->Output();
-  pg_close();
+  pg_close($conn);
 ?>

@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -24,20 +24,20 @@ $sql="SELECT * FROM NOM010  where cod_empleado='$cod_empleado' order by fecha_de
            <td width="180" align="center" bgcolor="#99CCFF" ><strong>Ultimo Cargo </strong></td>
            <td width="100" align="right" bgcolor="#99CCFF" ><strong>Sueldo</strong></td>
          </tr>
-<? while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_desde"]; $fechad=formato_ddmmaaaa($sfecha); $sfecha=$registro["fecha_hasta"]; $fechah=formato_ddmmaaaa($sfecha); $monto_s=formato_monto($registro["sueldo"]);
+<?php  while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_desde"]; $fechad=formato_ddmmaaaa($sfecha); $sfecha=$registro["fecha_hasta"]; $fechah=formato_ddmmaaaa($sfecha); $monto_s=formato_monto($registro["sueldo"]);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="80" align="left"><? echo $fechad; ?></td>
-           <td width="80" align="left"><? echo $fechah; ?></td>
-           <td width="200" align="left"><? echo $registro["empresa"]; ?></td>
-           <td width="200" align="left"><? echo $registro["departamento"]; ?></td>
-           <td width="180" align="left"><? echo $registro["cargo"]; ?></td>
-           <td width="100" align="right"><? echo $monto_s; ?></td>
+           <td width="80" align="left"><?php  echo $fechad; ?></td>
+           <td width="80" align="left"><?php  echo $fechah; ?></td>
+           <td width="200" align="left"><?php  echo $registro["empresa"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["departamento"]; ?></td>
+           <td width="180" align="left"><?php  echo $registro["cargo"]; ?></td>
+           <td width="100" align="right"><?php  echo $monto_s; ?></td>
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");$tipo_nomina_d=$_GET["tipo_nomina_d"];
    $tipo_nomina_h=$_GET["tipo_nomina_h"];
    $cod_conceptod=$_GET["cod_conceptod"];
@@ -16,7 +16,7 @@ include ("../../class/conect.php");$tipo_nomina_d=$_GET["tipo_nomina_d"];
    else{$criterio1="RESUMEN DE NOMINA";}
 //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else
    {
    if (($tipo_resumen=='ASIGNACIONES') && ($forma_pago=='TODOS'))

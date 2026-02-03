@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); include ("../presupuesto/Ver_dispon.php"); $codigo_mov=$_GET["codigo_mov"]; ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); include ("../presupuesto/Ver_dispon.php"); $codigo_mov=$_GET["codigo_mov"]; ?>
 <html>
 <head>  <title>PEGAR MOVIMIENTO EN LIBRO EN LIBROS</title>
 <script language="JavaScript" type="text/JavaScript">
@@ -6,8 +6,8 @@ function Llamar_Inc_Orden(mref_comp){ if(mref_comp=="S"){document.form3.submit()
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
 $resultado=pg_exec($conn,"SELECT ELIMINA_CON010('$codigo_mov')"); $merror=pg_errormessage($conn); $merror=substr($merror, 0, 91);
 $resultado=pg_exec($conn,"SELECT BORRAR_BAN035('$codigo_mov')");  $merror=pg_errormessage($conn); $merror=substr($merror, 0, 91);
 $nombre_banco="";$nro_cuenta="";$des_tipo_mov="";$referencia="";$cod_banco=""; $tipo_mov="";$nombre_benef=""; $ced_rif=""; $descripcion=""; $monto_mov_libro=0; $fecha=""; $inf_usuario=""; $anulado="N"; $mes_conciliacion="00"; $fecha_anulado="";  $inf_anul=""; $por_emision=""; $cod_bancoa=""; $referenciaa=""; $mop='M';
@@ -34,25 +34,25 @@ while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $fue
 <form name="form2" method="post" action="Inc_Mov_Libros.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	      
-     <td width="5"><input class="Estilo10" name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtced_r" type="hidden" id="txtced_r" value="<?echo $ced_rif?>"></td>
-     <td width="5"><input class="Estilo10" name="txtnomb" type="hidden" id="txtnomb" value="<?echo $nombre_benef?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>	 
-	 <td width="5"><input class="Estilo10" name="txtcod_b" type="hidden"  id="txtcod_b"  value="<?echo $cod_banco?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtnro_c" type="hidden"  id="txtnro_c"  value="<?echo $nro_cuenta?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtnombre_b" type="hidden"  id="txtnombre_b"  value="<?echo $nombre_banco?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtref" type="hidden"  id="txtref"  value="<?echo $referencia?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txttipo_m" type="hidden" id="txttipo_m"  value="<?echo $tipo_mov?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtdes_tipo_m" type="hidden" id="txtdes_tipo_m"  value="<?echo $des_tipo_mov?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtdesc" type="hidden" id="txtdesc" value="<?echo $descripcion?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtmonto_mov" type="hidden" id="txtmonto_mov" value="<?echo $monto_mov_libro?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtfecha_m" type="hidden" id="txtfecha_m" value="<?echo $fecha?>"></td>	
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	      
+     <td width="5"><input class="Estilo10" name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtced_r" type="hidden" id="txtced_r" value="<?php echo $ced_rif?>"></td>
+     <td width="5"><input class="Estilo10" name="txtnomb" type="hidden" id="txtnomb" value="<?php echo $nombre_benef?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>	 
+	 <td width="5"><input class="Estilo10" name="txtcod_b" type="hidden"  id="txtcod_b"  value="<?php echo $cod_banco?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtnro_c" type="hidden"  id="txtnro_c"  value="<?php echo $nro_cuenta?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtnombre_b" type="hidden"  id="txtnombre_b"  value="<?php echo $nombre_banco?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtref" type="hidden"  id="txtref"  value="<?php echo $referencia?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txttipo_m" type="hidden" id="txttipo_m"  value="<?php echo $tipo_mov?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtdes_tipo_m" type="hidden" id="txtdes_tipo_m"  value="<?php echo $des_tipo_mov?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtdesc" type="hidden" id="txtdesc" value="<?php echo $descripcion?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtmonto_mov" type="hidden" id="txtmonto_mov" value="<?php echo $monto_mov_libro?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtfecha_m" type="hidden" id="txtfecha_m" value="<?php echo $fecha?>"></td>	
 	 
   </tr>
 </table>
@@ -60,31 +60,31 @@ while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $fue
 <form name="form3" method="post" action="Inc_trans_Libros.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtuser2" type="hidden" id="txtuser2" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword2" type="hidden" id="txtpassword2" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname2" type="hidden" id="txtdbname2" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport2" type="hidden" id="txtport2" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost2" type="hidden" id="txthost2" value="<?echo $host?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtnro_aut2" type="hidden" id="txtnro_aut2" value="<?echo $nro_aut?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov2" type="hidden" id="txtcodigo_mov2" value="<?echo $codigo_mov?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtced_r2" type="hidden" id="txtced_r2" value="<?echo $ced_rif?>"></td>
-     <td width="5"><input class="Estilo10" name="txtnomb2" type="hidden" id="txtnomb2" value="<?echo $nombre_benef?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtfecha_fin2" type="hidden" id="txtfecha_fin2" value="<?echo $Fec_Fin_Ejer?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtcod_b2" type="hidden"  id="txtcod_b2"  value="<?echo $cod_banco?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtnro_c2" type="hidden"  id="txtnro_c2"  value="<?echo $nro_cuenta?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtnombre_b2" type="hidden"  id="txtnombre_b2"  value="<?echo $nombre_banco?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtref2" type="hidden"  id="txtref2"  value="<?echo $referencia?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txttipo_m2" type="hidden" id="txttipo_m2"  value="<?echo $tipo_mov?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtdes_tipo_m2" type="hidden" id="txtdes_tipo_m2"  value="<?echo $des_tipo_mov?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtdesc2" type="hidden" id="txtdesc" value="<?echo $descripcion?>"></td>
-	  <td width="5"><input class="Estilo10" name="txtmonto_mov" type="hidden" id="txtmonto_mov" value="<?echo $monto_mov_libro?>"></td>
-	  <td width="5"><input class="Estilo10" name="txtfecha_m2" type="hidden" id="txtfecha_m2" value="<?echo $fecha?>"></td>	
+     <td width="5"><input class="Estilo10" name="txtuser2" type="hidden" id="txtuser2" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword2" type="hidden" id="txtpassword2" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname2" type="hidden" id="txtdbname2" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport2" type="hidden" id="txtport2" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost2" type="hidden" id="txthost2" value="<?php echo $host?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtnro_aut2" type="hidden" id="txtnro_aut2" value="<?php echo $nro_aut?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov2" type="hidden" id="txtcodigo_mov2" value="<?php echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtced_r2" type="hidden" id="txtced_r2" value="<?php echo $ced_rif?>"></td>
+     <td width="5"><input class="Estilo10" name="txtnomb2" type="hidden" id="txtnomb2" value="<?php echo $nombre_benef?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtfecha_fin2" type="hidden" id="txtfecha_fin2" value="<?php echo $Fec_Fin_Ejer?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtcod_b2" type="hidden"  id="txtcod_b2"  value="<?php echo $cod_banco?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtnro_c2" type="hidden"  id="txtnro_c2"  value="<?php echo $nro_cuenta?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtnombre_b2" type="hidden"  id="txtnombre_b2"  value="<?php echo $nombre_banco?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtref2" type="hidden"  id="txtref2"  value="<?php echo $referencia?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txttipo_m2" type="hidden" id="txttipo_m2"  value="<?php echo $tipo_mov?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtdes_tipo_m2" type="hidden" id="txtdes_tipo_m2"  value="<?php echo $des_tipo_mov?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtdesc2" type="hidden" id="txtdesc" value="<?php echo $descripcion?>"></td>
+	  <td width="5"><input class="Estilo10" name="txtmonto_mov" type="hidden" id="txtmonto_mov" value="<?php echo $monto_mov_libro?>"></td>
+	  <td width="5"><input class="Estilo10" name="txtfecha_m2" type="hidden" id="txtfecha_m2" value="<?php echo $fecha?>"></td>	
   </tr>
 </table>
 </form>
-<?   
-pg_close();
-if ($error==0){?><script language="JavaScript">alert('Movimiento Pegado'); var mop='<?echo $mop?>';
-if(mop=='M'){ document.form2.submit(); } if(mop=='T'){ document.form3.submit(); }</script> <? }
-else {?>  <script language="JavaScript">history.back();</script> <? }
+<?php    
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">alert('Movimiento Pegado'); var mop='<?php echo $mop?>';
+if(mop=='M'){ document.form2.submit(); } if(mop=='T'){ document.form3.submit(); }</script> <?php }
+else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>

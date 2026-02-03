@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_nomina_d=$_GET["tipo_nomina_d"];   $tipo_nomina_h=$_GET["tipo_nomina_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $date=date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
   $sSQL = "select tipo_nomina,descripcion,frecuencia,ultima_fecha,redondear, to_char(ultima_fecha,'DD/MM/YYYY') as fecham from nom001 order by tipo_nomina";	  
   if($tipo_rpt=="HTML"){ include ("../../class/phpreports/PHPReportMaker.php");
@@ -80,28 +80,28 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>ULTIMA FECHA</strong></font></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>REDONDEAR</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; $cantidad=$cantidad+1; 
 		   $tipo_nomina=$registro["tipo_nomina"]; $descripcion=$registro["descripcion"]; $frecuencia=$registro["frecuencia"]; $fecham=$registro["fecham"]; $redondear=$registro["redondear"]; 
            $descripcion=conv_cadenas($descripcion,0);  
 	?>	   
 	    <tr>
-           <td width="100" align="left"><? echo $tipo_nomina; ?></td>
-           <td width="400" align="left"><? echo $descripcion; ?></td>
-           <td width="100" align="center"><? echo $frecuencia; ?></td>
-           <td width="100" align="center"><? echo $fecham; ?></td>
-           <td width="100" align="center"><? echo $redondear; ?></td>
+           <td width="100" align="left"><?php  echo $tipo_nomina; ?></td>
+           <td width="400" align="left"><?php  echo $descripcion; ?></td>
+           <td width="100" align="center"><?php  echo $frecuencia; ?></td>
+           <td width="100" align="center"><?php  echo $fecham; ?></td>
+           <td width="100" align="center"><?php  echo $redondear; ?></td>
          </tr>
-	<? }?>
+	<?php }?>
 	   <tr>
             <td>&nbsp;</td>
        </tr>
 	   <tr>
             <td width="100" align="center"></td>
-		    <td width="400" align="left"><strong>TIPOS NOMINA : <? echo $cantidad; ?></strong></td>	
+		    <td width="400" align="left"><strong>TIPOS NOMINA : <?php  echo $cantidad; ?></strong></td>	
        </tr>      
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

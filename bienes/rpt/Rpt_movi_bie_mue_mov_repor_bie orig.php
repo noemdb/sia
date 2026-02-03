@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_mued=$_GET["cod_bien_mued"];$cod_bien_mueh=$_GET["cod_bien_mueh"];$cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"]; $cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"];
 $cod_departamentod=$_GET["cod_departamentod"]; $cod_departamentoh=$_GET["cod_departamentoh"];$referenciad=$_GET["referenciad"]; $referenciah=$_GET["referenciah"]; $mes_proceso=$_GET["mes_proceso"];$tipo_rep=$_GET["tipo_rep"]; $ordenado=$_GET["ordenado"];  $agrup_dep=$_GET["agrup_dep"];
 $date = date("d-m-Y");$hora = date("H:i:s a");$Sql=""; $fecha_d="01/".substr($mes_proceso,0,2)."/".substr($mes_proceso,3,4);
@@ -6,7 +6,7 @@ if (checkData($fecha_d)=='1'){$error=0; $sfecha=formato_aaaammdd($fecha_d);} els
 $mordenado=" bien015.cod_dependencia,bien015.cod_bien_mue"; if($ordenado=="N"){$mordenado=" bien015.cod_dependencia,bien015.num_bien"; }
 $criterio ="(BIEN015.cod_bien_mue>='$cod_bien_mued' AND BIEN015.cod_bien_mue<='$cod_bien_mueh') and (bien015.cod_empresa>='$cod_empresad' and bien015.cod_empresa<='$cod_empresah') AND (BIEN025.cod_dependencia>='$cod_dependenciad' AND BIEN025.cod_dependencia<='$cod_dependenciah') and (bien015.cod_direccion>='$cod_direcciond' and bien015.cod_direccion<='$cod_direccionh') AND
   (bien015.cod_departamento>='$cod_departamentod' and bien015.cod_departamento<='$cod_departamentoh') AND (BIEN025.referencia>='$referenciad' AND BIEN025.referencia<='$referenciah') AND (BIEN025.fecha>='$sfechad') AND (BIEN025.fecha<='$sfechah')";
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $$php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
    
          // LLAMAR A PHP_REPORT

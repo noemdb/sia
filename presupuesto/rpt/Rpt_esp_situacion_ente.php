@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$timestre=$_GET["timestre"];$ingresos=$_GET["ingresos"];} else { $timestre="01";$ingresos="";}  $mes_desde="01"; $mes_hasta="03"; $mdes_trim="I-TRIMESTRE";
 $asig_global="N"; $equipo=getenv("COMPUTERNAME"); $cod_mov="Spre020".$usuario_sia; $php_os=PHP_OS;
 
@@ -22,7 +22,7 @@ function Rellenarcerosizq($str,$n){$numeroarellenar=$n-strlen($str); $texto=""; 
 if ($mes_desde=='01'){$mesd="Enero";}elseif ($mes_desde=='02'){$mesd="Febrero";}elseif ($mes_desde=='03'){$mesd="Marzo";}elseif ($mes_desde=='04'){$mesd="Abril";}elseif ($mes_desde=='05'){$mesd="Mayo";}elseif ($mes_desde=='06'){$mesd="Junio";}elseif ($mes_desde=='07'){$mesd="Julio";}elseif ($mes_desde=='08'){$mesd="Agosto";}elseif ($mes_desde=='09'){$mesd="Septiembre";}elseif ($mes_desde=='10'){$mesd="Octubre";}elseif ($mes_desde=='11'){$mesd="Noviembre";}elseif ($mes_desde=='12'){$mesd="Diciembre";}
 if ($mes_hasta=='01'){$mesh="Enero";}elseif ($mes_hasta=='02'){$mesh="Febrero";}elseif ($mes_hasta=='03'){$mesh="Marzo";}elseif ($mes_hasta=='04'){$mesh="Abril";}elseif ($mes_hasta=='05'){$mesh="Mayo";}elseif ($mes_hasta=='06'){$mesh="Junio";}elseif ($mes_hasta=='07'){$mesh="Julio";}elseif ($mes_hasta=='08'){$mesh="Agosto";}elseif ($mes_hasta=='09'){$mesh="Septiembre";}elseif ($mes_hasta=='10'){$mesh="Octubre";}elseif ($mes_hasta=='11'){$mesh="Noviembre";}elseif ($mes_hasta=='12'){$mesh="Diciembre";}
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); } if($utf_rpt=="SI"){ $php_os="WINNT";}
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); } if($utf_rpt=="SI"){ $php_os="WINNT";}
    $mano=substr($Fec_Fin_Ejer,0,4);    $criterio1="Desde: ".$mesd." Hasta: ".$mesh." Ejercicio Fiscal: ".$mano;    $criterio2="";  
 
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
@@ -62,12 +62,12 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
    }
    
   $StrSQL = "DELETE FROM pre020 Where (tipo_registro='S') and (nombre_usuario='".$cod_mov."')";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
   if($asig_global=="S"){$sql_Asignacion="asignado,";}
   $StrSQL= "INSERT INTO pre020 SELECT '".$cod_mov."' as nombre_usuario,'S' as tipo_registro,cod_presup,cod_fuente,denominacion,substr(cod_presup,1,".$ls.") as cod_categoria,"."'' as denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as denomina_par,status_dist,func_inv,ord_cord,aplicacion,cod_unidad_ejec, ";
   $StrSQL=$StrSQL.$sql_Asignacion." disponible,disp_diferida,".$sql_Compromiso.$sql_Causado.$sql_Pagado.$sql_Traslados.$sql_Trasladon.$sql_Adicion.$sql_Disminucion.$sql_Diferido.", "."0 as compromisom,0 as causadom, 0 as pagadom, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
   $StrSQL=$StrSQL." FROM PRE001 WHERE length(cod_presup)=".$l_c;
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
   $ordenar=" ORDER BY pre020.cod_partida";   
   $sSQL ="Select distinct substr(cod_presup,".$ini.",".$p.") as codigo,denominacion from pre001 where length(cod_presup)=".$h." order by codigo "; $res=pg_query($sSQL); 
@@ -148,7 +148,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 	$pdf->Output(); 
 	
   $StrSQL = "DELETE FROM pre020 Where (tipo_registro='S') And (nombre_usuario='".$cod_mov."')";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
 ?>
 
     

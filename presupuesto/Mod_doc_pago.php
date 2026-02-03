@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){
   $Doc_pago='';
 } else {
@@ -55,7 +55,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $sql="Select * from pre004 where tipo_pago='$Doc_pago'";
 $res=pg_query($sql);
@@ -106,21 +106,21 @@ var f=document.form1;
           <tr>
             <td height="49" colspan="3" valign="middle"><blockquote>
               <p class="Estilo5">C&Oacute;DIGO :
-                                <input name="txtdoc_pago" id="txtdoc_pago" value="<?ECHO $Doc_pago?>" size="10" readOnly>
+                                <input name="txtdoc_pago" id="txtdoc_pago" value="<?php ECHO $Doc_pago?>" size="10" readOnly>
                   </p>
                           </blockquote></td>
           </tr>
           <tr>
             <td height="49" colspan="3" valign="middle"><blockquote>
               <p align="left"><span class="Estilo5">NOMBRE DEL DOCUMENTO :</span>
-                <input name="txtnombre_doc_pago" type="text" id="txtnombre_doc_pago" title="Registre el Nombre del Documento Pago"  onFocus="encender(this)" onBlur="apagar(this)" value="<?ECHO $Nombre_doc_pago?>" size="80" maxlength="70">
+                <input name="txtnombre_doc_pago" type="text" id="txtnombre_doc_pago" title="Registre el Nombre del Documento Pago"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php ECHO $Nombre_doc_pago?>" size="80" maxlength="70">
 </p>
             </blockquote></td>
           </tr>
           <tr>
             <td width="387" height="43" valign="middle"><blockquote>
               <p><span class="Estilo5">NOMBRE ABREVIADO  DOCUMENTO :</span>
-                    <input name="txtnombre_abrev" type="text" id="txtnombre_abrev" title="Registre el Nombre Abreviado del Documento Pago"  onFocus="encender(this)" onBlur="apagar(this)" value="<?ECHO $Nombre_Abrev?>" size="8" maxlength="4">
+                    <input name="txtnombre_abrev" type="text" id="txtnombre_abrev" title="Registre el Nombre Abreviado del Documento Pago"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php ECHO $Nombre_Abrev?>" size="8" maxlength="4">
               </p>
             </blockquote></td>
             <td width="230" valign="middle"><span class="Estilo5">REFIERE A  :
@@ -129,7 +129,7 @@ var f=document.form1;
                   <option>CAUSADO</option>
                   <option>NINGUNO</option>
                 </select>
-                                <script language="JavaScript"> Asigna_Refierea('<?ECHO $Refiera_a?>');</script>
+                                <script language="JavaScript"> Asigna_Refierea('<?php ECHO $Refiera_a?>');</script>
             </span></td>
             <td width="228" valign="middle"><span class="Estilo5">AFECTA PRESUPUESTO :
                 <select name="TxtAfecta" size="1" id="TxtAfecta" onFocus="encender(this)" onBlur="apagar(this)">
@@ -137,7 +137,7 @@ var f=document.form1;
                   <option>NO</option>
                 </select></td>
                                 <script language="JavaScript" type="text/JavaScript">
-                var valor='<?ECHO $Afecta_Presup?>';
+                var valor='<?php ECHO $Afecta_Presup?>';
              if(valor=="SI"){document.form1.TxtAfecta.options[0].selected = true;}
              if(valor=="NO"){document.form1.TxtAfecta.options[1].selected = true;}
                          </script>
@@ -163,4 +163,4 @@ var f=document.form1;
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

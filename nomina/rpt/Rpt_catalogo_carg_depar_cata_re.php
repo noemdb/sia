@@ -1,11 +1,11 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="03-0000022"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?php }
 $codigo_departamento_d=""; $codigo_departamento_h=""; $codigo_cargo_d=""; $codigo_cargo_h=""; 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -30,7 +30,7 @@ function Llama_Rpt_catalogo_carg_depar_cata(murl){var url;var r;
 function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 </script>
 </head>
-<?
+<?php 
 $descripcion_dep_d="";$descripcion_dep_h=""; 
 $sql="SELECT MAX(codigo_departamento) As Max_codigo_departamento, MIN(codigo_departamento) As Min_codigo_departamento FROM nom005 ";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$codigo_departamento_d=$registro["min_codigo_departamento"];$codigo_departamento_h=$registro["max_codigo_departamento"];   }
@@ -73,11 +73,11 @@ $sql="SELECT codigo_cargo,denominacion FROM nom004 where codigo_cargo='$codigo_c
              <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="200" align="center" class="Estilo5"><div align="left">CODIGO DEPARTAMENTO DESDE :</div></td>
-                 <td width="102"><div align="left"><span class="Estilo5"><input name="txtcodigo_departamento_d" type="text" id="txtcodigo_departamento_d" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?echo $codigo_departamento_d?>" class="Estilo5">
+                 <td width="102"><div align="left"><span class="Estilo5"><input name="txtcodigo_departamento_d" type="text" id="txtcodigo_departamento_d" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?php echo $codigo_departamento_d?>" class="Estilo5">
                  </span></div></td>
                  <td width="41"><div align="left"><span class="Estilo5"><input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Departamentos" onClick="VentanaCentrada('../Cat_departamentod.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
-                 <td width="560"><div align="left"><span class="Estilo5"><input name="txtdescripcion_dep_d" type="text" id="txtdescripcion_dep_d" size="80" maxlength="108" value="<?echo $descripcion_dep_d?>" readonly class="Estilo5" >
+                 <td width="560"><div align="left"><span class="Estilo5"><input name="txtdescripcion_dep_d" type="text" id="txtdescripcion_dep_d" size="80" maxlength="108" value="<?php echo $descripcion_dep_d?>" readonly class="Estilo5" >
                  </span></div></td>
                </tr>
              </table></td>
@@ -86,11 +86,11 @@ $sql="SELECT codigo_cargo,denominacion FROM nom004 where codigo_cargo='$codigo_c
            <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
              <tr>
                <td width="200" align="center" class="Estilo5"><div align="left">CODIGO DEPARTAMENTO HASTA :</div></td>
-               <td width="102"><div align="left"><span class="Estilo5"><input name="txtcodigo_departamento_h" type="text" id="txtcodigo_departamento_h" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?echo $codigo_departamento_h?>" class="Estilo5">
+               <td width="102"><div align="left"><span class="Estilo5"><input name="txtcodigo_departamento_h" type="text" id="txtcodigo_departamento_h" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?php echo $codigo_departamento_h?>" class="Estilo5">
                </span></div></td>
                <td width="41"><div align="left"><span class="Estilo5"><input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Departamentos" onClick="VentanaCentrada('../Cat_departamentoh.php?criterio=','SIA','','650','500','true')" value="...">
                </span></div></td>
-               <td width="560" align="center"><div align="left"><span class="Estilo5"><input name="txtdescripcion_dep_h" type="text" id="txtdescripcion_dep_h" size="80" maxlength="109" value="<?echo $descripcion_dep_h?>" readonly class="Estilo5">
+               <td width="560" align="center"><div align="left"><span class="Estilo5"><input name="txtdescripcion_dep_h" type="text" id="txtdescripcion_dep_h" size="80" maxlength="109" value="<?php echo $descripcion_dep_h?>" readonly class="Estilo5">
                </span></div></td>
              </tr>
            </table></td>
@@ -100,11 +100,11 @@ $sql="SELECT codigo_cargo,denominacion FROM nom004 where codigo_cargo='$codigo_c
              <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="150" align="center" class="Estilo5"><div align="left">CODIGO CARGO DESDE : </div></td>
-                 <td width="83"><div align="left"><span class="Estilo5">  <input name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?echo $codigo_cargo_d?>" class="Estilo5">
+                 <td width="83"><div align="left"><span class="Estilo5">  <input name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?php echo $codigo_cargo_d?>" class="Estilo5">
                  </span></div></td>
                  <td width="41"><div align="left"><span class="Estilo5"> <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Cargos" onClick="VentanaCentrada('../Cat_cargosd.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
-                 <td width="629"><div align="left"><span class="Estilo5"><input name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="80" maxlength="108" value="<?echo $denominacion_d?>" readonly class="Estilo5" >
+                 <td width="629"><div align="left"><span class="Estilo5"><input name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="80" maxlength="108" value="<?php echo $denominacion_d?>" readonly class="Estilo5" >
                  </span></div></td>
                </tr>
              </table></td>
@@ -113,11 +113,11 @@ $sql="SELECT codigo_cargo,denominacion FROM nom004 where codigo_cargo='$codigo_c
            <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
              <tr>
                <td width="150" align="center" class="Estilo5"><div align="left">CODIGO CARGO HASTA : </div></td>
-               <td width="83"><div align="left"><span class="Estilo5"><input name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?echo $codigo_cargo_h?>" class="Estilo5">
+               <td width="83"><div align="left"><span class="Estilo5"><input name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="10" maxlength="10" value="<?php echo $codigo_cargo_h?>" class="Estilo5">
                </span></div></td>
                <td width="41"><div align="left"><span class="Estilo5"><input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Cargos" onClick="VentanaCentrada('../Cat_cargosh.php?criterio=','SIA','','650','500','true')" value="...">
                </span></div></td>
-               <td width="629" align="center"><div align="left"><span class="Estilo5"><input name="txtdenominacion_h" type="text" id="txtdenominacion_h" size="80" maxlength="109" value="<?echo $denominacion_h?>" readonly class="Estilo5">
+               <td width="629" align="center"><div align="left"><span class="Estilo5"><input name="txtdenominacion_h" type="text" id="txtdenominacion_h" size="80" maxlength="109" value="<?php echo $denominacion_h?>" readonly class="Estilo5">
                </span></div></td>
              </tr>
            </table></td>
@@ -155,4 +155,4 @@ $sql="SELECT codigo_cargo,denominacion FROM nom004 where codigo_cargo='$codigo_c
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

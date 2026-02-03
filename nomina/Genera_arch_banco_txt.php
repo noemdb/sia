@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0;
+<?php include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0;
 $cod_arch_banco=$_POST["txtcod_arch_banco"];  $tipo_arch_banco=$_POST["txttipo_arch_banco"]; $cod_cta_emp=$_POST["txtcod_cta_emp"];  $tipo_calculo=$_POST["txttipo_calculo"];
 $fecha_hasta=$_POST["txtfecha_hasta"]; $fecha_dep=$_POST["txtfecha_dep"]; $hora_dep=$_POST["txthora_dep"];  $mformula=""; $fechah=formato_aaaammdd($fecha_hasta);
 $frac_nom=$_POST["txtfrac_nom"];$num_quinc=$_POST["txtnum_quinc"];$tipo_formato=$_POST["txttipo_formato"];$tipo_nom=$_POST["txttipo_nom"]; $concepto_t=$_POST["txtconcepto_t"]; $tipo_salida=$_POST["txttipo_salida"];
@@ -6,7 +6,7 @@ $frac_nom=$_POST["txtfrac_nom"];$num_quinc=$_POST["txtnum_quinc"];$tipo_formato=
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $tipo_nom=substr($tipo_nom,0,1); $tipo_calculo=substr($tipo_calculo,0,1);
 $sql="SELECT nom046.tipo_nomina,nom001.descripcion FROM nom046,nom001 Where (nom046.tipo_nomina=nom001.tipo_nomina) And (Cod_Arch_Banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco')"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){ $tipo=$registro["tipo_nomina"]; if($mformula!=""){$mformula=$mformula." or ";}  $mformula=$mformula."(tipo_nomina='$tipo')";}
-if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><? }
+if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><?php }
 if($error==0){ $mformula="(".$mformula.")";
 
 $salto_linea="\n"; if($tipo_salida=="TXT"){ $tipo_formato="LINEAL";  }
@@ -25,7 +25,7 @@ while($reg=pg_fetch_array($res)){ $cedula=$reg["cedula"]; $grupo=$reg["cedula"].
     
   $num_linea=$num_linea+1;
   } $monto_tot=$monto_tot+$monto_emp; if($monto_emp>0){$monto_emp=0;$leidos=$leidos+1;}
-if($leidos==0){ $error=1;?> <script language="JavaScript">muestra('INFORMACION DE NOMINAS NO LOCALIZADA');</script><? }
+if($leidos==0){ $error=1;?> <script language="JavaScript">muestra('INFORMACION DE NOMINAS NO LOCALIZADA');</script><?php }
 else{ $encabezado=""; $detalle="";  $pie_pagina=""; if($tipo_formato=="TABULADO"){$encabezado="<tr>";}
   $StrSQL="SELECT * FROM nom052 Where (cod_arch_banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco') And (status2_campo='E') Order by Pos_Campo";  $resc=pg_query($StrSQL);
   while($registro=pg_fetch_array($resc)){ $str_campo=""; $l=0; $cod_campo=$registro["cod_campo"]; $car_especial=$registro["car_especial"]; $tipo_campo=$registro["tipo_campo"];
@@ -176,8 +176,8 @@ else{ echo $encabezado.$detalle.$pie_pagina; }
 
 
 } }
-pg_close();
+pg_close($conn);
 
-if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?} 
+if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?php } 
 
 ?>

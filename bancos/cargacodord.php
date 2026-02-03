@@ -17,6 +17,6 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $tipo_causado=$registro["tipo_ca
 	} 
 }
 ?>
-<iframe src="../presupuesto/Det_inc_pagos_caus.php?codigo_mov=<?echo $codigo_mov?>" width="950" height="300" scrolling="auto" frameborder="1">
+<iframe src="../presupuesto/Det_inc_pagos_caus.php?codigo_mov=<?php echo $codigo_mov?>" width="950" height="300" scrolling="auto" frameborder="1">
 </iframe>
-<?pg_close();?>
+<?php pg_close($conn);?>

@@ -1,6 +1,6 @@
-<? include ("../class/conect.php"); include ("../class/funciones.php");
+<?php  include ("../class/conect.php"); include ("../class/funciones.php");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ echo "ESPERE ACTUALIZANDO PROCESANDO....","<br>";
 
   $sql="SELECT pre038.referencia_pago,pre038.tipo_pago,pre038.referencia_comp,pre038.tipo_compromiso,pre038.referencia_caus,pre038.tipo_causado,pre038.cod_banco,pre038.cod_presup,pre038.fuente_financ,pre038.tipo_imput_presu,pre038.ref_imput_presu,pre038.monto,pre038.ajustado,pre038.amort_anticipo,pre038.monto_credito,pre008.fecha_pago,pre008.cod_banco,pre008.ced_rif,pre008.ref_aep,pre008.modulo,pre008.inf_usuario,pre008.descripcion_pago  from pre038,PRE008 WHERE pre008.cod_banco=pre038.cod_banco and pre008.tipo_pago=pre038.tipo_pago and pre008.referencia_pago=pre038.referencia_pago and pre008.tipo_causado=pre038.tipo_causado and pre008.referencia_caus=pre038.referencia_caus and pre008.tipo_compromiso=pre038.tipo_compromiso and pre008.referencia_comp=pre038.referencia_comp and pre038.tipo_compromiso='0000' and pre038.tipo_causado='0000' and pre038.cod_presup='01-00-53-403-08-02-00' and pre008.modulo<>'B'";
@@ -70,4 +70,4 @@ else{ echo "ESPERE ACTUALIZANDO PROCESANDO....","<br>";
   
   
 
-}pg_close(); ?>
+}pg_close($conn); ?>

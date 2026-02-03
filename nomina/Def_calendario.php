@@ -1,12 +1,12 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $ini='N'; $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $ini='N'; $fecha_hoy=asigna_fecha_hoy();
 if (!$_GET){$ano='2012';$mes='01';  $ano=substr($fecha_hoy,6,4);  $mes=substr($fecha_hoy,3,2); }else{$mes=$_GET["mes"]; $mes=$_GET["mes"]; $ini=$_GET["ini"];}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="04-0000040"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 $equipo = getenv("COMPUTERNAME"); $criterio=$usuario_sia; ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -61,9 +61,9 @@ function anterior_mes(){var murl; var mmes=document.form1.txtmes.value; var mano
 			  <td height="19" align="center" class="Estilo16"><table width="920" border="0">
 				<tr>
 				  <td width="60" height="26" align="left" class="Estilo5"> MES : </td>
-				  <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtmes" type="text" id="txtmes" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $mes?>" size="4" maxlength="2" class="Estilo5"> </span></td>
+				  <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtmes" type="text" id="txtmes" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $mes?>" size="4" maxlength="2" class="Estilo5"> </span></td>
 				  <td width="60" class="Estilo5"><div align="left">A&Ntilde;O  : </div></td>
-				  <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtano" type="text" id="txtano" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $ano?>" size="8" maxlength="4" class="Estilo5">  </span></td>
+				  <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtano" type="text" id="txtano" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $ano?>" size="8" maxlength="4" class="Estilo5">  </span></td>
 				  <td width="100"></td>
 				  
 				  <td width="150"><span class="Estilo5"><input type="button" name="btanterior" value="Mes Anterior" title="Cambia al Anterior Mes" onClick="javascript:anterior_mes()" ></span></td>
@@ -74,13 +74,13 @@ function anterior_mes(){var murl; var mmes=document.form1.txtmes.value; var mano
 			  </table></td>
 		   </tr> 
 		   <tr>
-            <td> <iframe src="Det_def_calendario.php?mes=<?echo $mes?>&ano=<?echo $ano?>&ini=<?echo $ini?>"  width="850" height="380" scrolling="auto" frameborder="1">  </iframe></td>
+            <td> <iframe src="Det_def_calendario.php?mes=<?php echo $mes?>&ano=<?php echo $ano?>&ini=<?php echo $ini?>"  width="850" height="380" scrolling="auto" frameborder="1">  </iframe></td>
           </tr>
           </table>
         <table width="923">
 		  <tr><td>&nbsp;</td> </tr>
           <tr>
-            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="139"></td>
             <td width="142" valign="middle"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>
           </tr>
@@ -92,4 +92,4 @@ function anterior_mes(){var murl; var mmes=document.form1.txtmes.value; var mano
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

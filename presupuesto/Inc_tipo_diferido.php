@@ -3,7 +3,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Tipos de Diferidos)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Tipos de Diferidos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js"  type=text/javascript></SCRIPT>
@@ -19,12 +19,12 @@ MM_reloadPage(true);
 function LlamarURL(url){  document.location = url; }
 function revisar(){var f=document.form1;var Valido;
     if(f.txttipo_diferido.value==""){alert("Tipo de Diferido no puede estar Vacio");return false;}
-    if(f.txtnombre_tipo_dife.value==""){alert("Descripción Tipo de Diferido no puede estar Vacia"); return false; }
+    if(f.txtnombre_tipo_dife.value==""){alert("Descripciï¿½n Tipo de Diferido no puede estar Vacia"); return false; }
        else{f.txtnombre_tipo_dife.value=f.txtnombre_tipo_dife.value.toUpperCase();}
         if(f.txtnombre_abrev.value==""){alert("Nombre Abreviado del Tipo de Diferido no puede estar Vacio");return false; }
        else{f.txtnombre_abrev.value=f.txtnombre_abrev.value.toUpperCase();}
     if(f.txttipo_diferido.value.length==4){f.txttipo_diferido.value=f.txttipo_diferido.value.toUpperCase();}
-       else{alert("Longitud Código de Aplicación Invalida");return false;}
+       else{alert("Longitud Cï¿½digo de Aplicaciï¿½n Invalida");return false;}
 document.form1.submit;
 return true;}
 function chequea_codigo(mform){var mref;
@@ -82,7 +82,7 @@ return true;}
                   <table width="816" border="0">
                     <tr>
                       <td width="148"><span class="Estilo5">DESCRIPCION :</span></td>
-                      <td width="666"><input name="txtnombre_tipo_dife" type="text" id="txtnombre_tipo_dife" title="Registre la descripción del tipo de diferido" size="100" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="666"><input name="txtnombre_tipo_dife" type="text" id="txtnombre_tipo_dife" title="Registre la descripciï¿½n del tipo de diferido" size="100" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>

@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -30,26 +30,26 @@ $sql="SELECT * FROM RET_ORD where nro_orden_ret='$nro_orden' order by aux_orden,
            <td width="50" align="center" bgcolor="#99CCFF" ><strong>Gen.C.R.</strong></td>
            <td width="50" align="center" bgcolor="#99CCFF" ><strong>Pago R.</strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res)){ $monto=$registro["monto_retencion"]; $monto=formato_monto($monto);$total=$total+$registro["monto_retencion"];
 $concepto_ret=$registro["des_orden_ret"]; $concepto_ret=substr($concepto_ret,0,140);$deno_ret=$registro["denominacion"]; $deno_ret=substr($deno_ret,0,100);
 $nom_cuenta=$registro["nombre_cuenta"]; $nom_cuenta=substr($nom_cuenta,0,100);$nom_benef=$registro["nombre"]; $nom_benef=substr($nom_benef,0,100);
 $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["fuente_fin_ret"]." ".$registro["cod_presup_ret"];
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="30" align="left"><? echo $registro["tipo_retencion"]; ?></td>
-           <td width="300" align="left"><? echo $registro["descripcion_ret"]; ?></td>          
-           <td width="100" align="right"><? echo $monto; ?></td>
-           <td width="300" align="left"><? echo $codigo; ?></td>
-           <td width="400" align="left"><? echo $deno_ret; ?></td>
-           <td width="120" align="left"><? echo $registro["cod_contable_ret"]; ?></td>
-           <td width="300" align="left"><? echo $nom_cuenta; ?></td>
-           <td width="100" align="left"><? echo $registro["ced_rif_r"]; ?></td>
-           <td width="300" align="left"><? echo $nom_benef; ?></td>
-           <td width="50" align="center"><? echo $registro["status_1"]; ?></td>
-           <td width="50" align="center"><? echo $registro["status_2"]; ?></td>
+           <td width="30" align="left"><?php  echo $registro["tipo_retencion"]; ?></td>
+           <td width="300" align="left"><?php  echo $registro["descripcion_ret"]; ?></td>          
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+           <td width="300" align="left"><?php  echo $codigo; ?></td>
+           <td width="400" align="left"><?php  echo $deno_ret; ?></td>
+           <td width="120" align="left"><?php  echo $registro["cod_contable_ret"]; ?></td>
+           <td width="300" align="left"><?php  echo $nom_cuenta; ?></td>
+           <td width="100" align="left"><?php  echo $registro["ced_rif_r"]; ?></td>
+           <td width="300" align="left"><?php  echo $nom_benef; ?></td>
+           <td width="50" align="center"><?php  echo $registro["status_1"]; ?></td>
+           <td width="50" align="center"><?php  echo $registro["status_2"]; ?></td>
          </tr>
-         <?} $total=formato_monto($total);?>
+         <?php } $total=formato_monto($total);?>
        </table></td>
    </tr>
    <tr><td>&nbsp;</td> </tr>
@@ -60,7 +60,7 @@ $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["
          <td width="378">&nbsp;</td>
          <td width="132"><span class="Estilo5">TOTAL RETENCIONES:</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
-           <tr> <td align="right" class="Estilo5"><? echo $total; ?></td></tr>
+           <tr> <td align="right" class="Estilo5"><?php  echo $total; ?></td></tr>
          </table></td>
        </tr>
      </table></td>
@@ -69,4 +69,4 @@ $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

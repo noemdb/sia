@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");
+<?php include ("../class/conect.php");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -18,7 +18,7 @@ function cerrar_catalogo(ced,nomb){
 }
 </script></head>
 <body>
-<?      $criterio = "";        $txt_criterio = "";
+<?php       $criterio = "";        $txt_criterio = "";
         if ($_GET["cod_est"]!=""){$cod_est=$_GET["cod_est"];  $criterio = " where cod_estructura='$cod_est'";} else {$cod_est=""; }		 
         if ($_GET){if ($_GET["criterio"]!=""){$txt_criterio = $_GET["criterio"]; $txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where cod_estructura='$cod_est' and (ced_rif_est like '%" . $txt_criterio . "%' or nombre_benef_e like '%" . $txt_criterio . "%')";}}
@@ -44,16 +44,16 @@ function cerrar_catalogo(ced,nomb){
                 $descripcion=$registro["nombre_benef_e"]; $descripcion=substr($descripcion,0,150);
                 if ($linea>$limitInf+$tamPag){$Salir=true;}   if (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $registro["ced_rif_est"];?>','<? echo $registro["nombre_benef_e"];?>');" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["ced_rif_est"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $descripcion; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["ced_rif_est"];?>','<?php  echo $registro["nombre_benef_e"];?>');" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["ced_rif_est"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $descripcion; ?></b></font></td>
   </tr>
-<?}} echo "</table>"; }
+<?php } } echo "</table>"; }
 ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-  <?    if($pagina>1){
+  <?php     if($pagina>1){
           echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&cod_est=".$cod_est."&criterio=".$txt_criterio."'>";
           echo "<font face='verdana' size='-2'>Principio</font>";
           echo "</a>&nbsp;";
@@ -75,7 +75,7 @@ function cerrar_catalogo(ced,nomb){
         </table>
 <hr noshade style="color:CC6666;height:1px">
 <form action="Ced_estructuras.php" method="get">
-<td width="20"><input name="cod_est" type="hidden" id="cod_est" value="<?echo $cod_est?>"></td>
+<td width="20"><input name="cod_est" type="hidden" id="cod_est" value="<?php echo $cod_est?>"></td>
 Criterio de b&uacute;squeda:
 <input type="text" name="criterio" size="22" maxlength="150">
 <input type="submit" value="Buscar">
@@ -83,4 +83,4 @@ Criterio de b&uacute;squeda:
 </form>
 </body>
 </html>
-<? pg_close(); ?>
+<?php  pg_close($conn); ?>

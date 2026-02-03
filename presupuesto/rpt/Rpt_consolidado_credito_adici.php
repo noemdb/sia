@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
 $ref_credito=$_GET["ref_credito"]; $cod_presupd=$_GET["cod_presupd"]; $cod_presuph=$_GET["cod_presuph"];  $fuente_d=$_GET["fuente_d"];  $fuente_h=$_GET["fuente_h"]; $fecha_d=$_GET["fecha_d"];  $fecha_h=$_GET["fecha_h"];$tipo_rep=$_GET["tipo_rep"]; $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $cod_fuented=$fuente_d; $cod_fuenteh=$fuente_h; $criterio1="Fecha Desde: ".$fecha_d; $criterio2="";    $php_os=PHP_OS; 
 $mcontrol = array (0,0,0,0,0,0,0,0,0,0);
@@ -10,7 +10,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a"); $Rif_Emp="";
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
   
   $sql="Select * from SIA000 order by campo001";$resultado=pg_query($sql);if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"]; $Rif_Emp=$registro["campo007"]; }
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
@@ -42,20 +42,20 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
    }else{$criterio="cod_presup>='".$cod_presupd."' and cod_presup<='".$cod_presuph."' and  cod_fuente>='".$cod_fuented."' and cod_fuente<='".$cod_fuenteh."'";}
   $pfecha=$sfechad; 
   if($sfechad==$Fec_Ini_Ejer){$buscaf_ant="N";} else{$buscaf_ant="S";} 
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('E','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('E','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
   $StrSQL= "INSERT INTO pre020 SELECT '".$cod_mov."' as nombre_usuario,'A' as Tipo_Registro, cod_presup, cod_fuente, denominacion,substr(cod_presup,1,".$c.") as cod_categoria,"."'' as Denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as Denomina_Par,Status_Dist,Func_Inv,Ord_Cord,Aplicacion,Cod_Unidad_Ejec, ";
   $StrSQL=$StrSQL."asignado,disponible,disp_diferida,0 as compromiso,0 as causado, 0 as pagado, 0 as traslados, 0 as trasladon, 0 as adicion, 0 as disminucion, 0 as Diferido,0 as CompromisoM,0 as CausadoM, 0 as PagadoM, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
   $StrSQL=$StrSQL." FROM pre001 WHERE (length(cod_presup)=".$l_c.") and (text(cod_presup)||text(cod_fuente) in (select text(cod_presup)||text(fuente_financ) from pre039 where pre039.referencia_modif='$ref_credito' and (pre039.tipo_modif='1' or pre039.tipo_modif='2') )   ) and ".$criterio;  
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
   $criterion="(cod_presup>='$cod_presupd' and cod_presup<='$cod_presuph') And (fuente_financ>='$cod_fuented' and fuente_financ<='$cod_fuenteh') And (fecha_doc>='$fecha_d' and fecha_doc<='$fecha_h')";
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('C','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('A','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('P','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('J','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('C','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('A','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('P','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('J','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
-  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('N','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,"SELECT ACTUALIZA_CONS_CREDITO('N','$cod_mov','A','$sfechad','$sfechah','$ref_credito','$Rif_Emp')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
   
   $sSQL = "select distinct cod_presup,fuente_financ from pre012 where (pre012.Tipo_Rep='A') and (nombre_Usuario='$cod_mov')";  $res=pg_query($sSQL);
@@ -63,7 +63,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
      $sql="Select pre039.monto from pre039 WHERE cod_presup='$cod_presup' And fuente_financ='$fuente_financ' and pre039.referencia_modif='$ref_credito'";
 	 $resultado=pg_exec($conn,$sql); $filas=pg_numrows($resultado); if($filas>0){$reg=pg_fetch_array($resultado); $asignado=$reg["monto"];}
      $sql="SELECT ACTUALIZA_DISP_CONS('$cod_mov','A','$cod_presup','$fuente_financ',$asignado)";$resultado=pg_exec($conn,$sql); 
-	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   }
   
   
@@ -232,7 +232,7 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 				<td width="90" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1;?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1;?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="90" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Fecha</strong></td>
@@ -246,7 +246,7 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Pagado</strong></td>
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Disponible</strong></td>		 
 			 </tr>
-		  <?  $i=0;  $totalm=0; $totalc=0; $totala=0; $totalp=0; $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $prev_clave="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $totalm=0; $totalc=0; $totala=0; $totalp=0; $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $prev_clave="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $asignado=$registro["asignado"];		$asignado=formato_monto($asignado);  
 		       $cod_presup=$registro["cod_presup"]; $fuente_financ=$registro["fuente_financ"]; $denominacion=$registro["denominacion"]; 
 			   $cod_presup_cat=$registro["cod_presup_cat"]; $denominacion_cat=$registro["denominacion_cat"];   $cod_part=$registro["cod_part"];			   
@@ -271,24 +271,24 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 				      <td width="80" align="left"></td>
 					  <td width="80" align="left"></td>
 					  <td width="400" align="left"></td>
-					  <td width="200" align="right"><? echo "Totales : "; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalm; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalc; ?></td>
-					  <td width="120" align="right"><? echo $sub_totala; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalp; ?></td>
+					  <td width="200" align="right"><?php  echo "Totales : "; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalm; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalc; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totala; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalp; ?></td>
 					  <td width="120" align="left"></td>
 				    </tr>	
 					<tr>
 				      <td width="90" align="left"></td>
 				    </tr>	
-                  <? 					
+                  <?php  					
 				 }
 				 ?>	   
 				   <tr>
-				     <td width="90" align="left"><? echo $cod_presup_cat; ?></td>
+				     <td width="90" align="left"><?php  echo $cod_presup_cat; ?></td>
 					 <td width="80" align="left"></td>
 					 <td width="80" align="left"></td>
-				     <td width="400" align="left"><? echo $denominacion_cat; ?></td>
+				     <td width="400" align="left"><?php  echo $denominacion_cat; ?></td>
 					 <td width="200" align="left"></td>
 					 <td width="120" align="left"></td>
 					 <td width="120" align="right"></td>
@@ -297,18 +297,18 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 					 <td width="120" align="right"></td>
 				   </tr>
 				   <tr>
-				     <td width="90" align="left"><? echo $cod_part; ?></td>
+				     <td width="90" align="left"><?php  echo $cod_part; ?></td>
 					 <td width="80" align="left"></td>
 					 <td width="80" align="left"></td>
-				     <td width="400" align="left"><? echo $denominacion; ?></td>
+				     <td width="400" align="left"><?php  echo $denominacion; ?></td>
 					 <td width="200" align="left">Asignacion Credito :</td>
 					 <td width="120" align="left"></td>
 					 <td width="120" align="right"></td>
 					 <td width="120" align="right"></td>
 					 <td width="120" align="right"></td>
-					 <td width="120" align="right"><? echo $asignado; ?></td>
+					 <td width="120" align="right"><?php  echo $asignado; ?></td>
 				   </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_clave=$clave;  $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0;
 			   }
 		       $referencia=$registro["referencia_doc"]; $fecha=$registro["fecha_doc"];  $tipo=$registro["nombre_abrev_doc"];  $descripcion=$registro["campo_str1"]." ".$registro["descripcion"]; $nombre=$registro["nombre"];
@@ -319,18 +319,18 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 			   $fechaf=formato_ddmmaaaa($fecha);  $descripcion=conv_cadenas($descripcion,0); $nombre=conv_cadenas($nombre,0);
 			   ?>	   
 				<tr>
-				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $fechaf; ?></td>
-				   <td width="80" align="left"><? echo $tipo; ?></td>
-				   <td width="80" align="left">'<? echo $referencia; ?></td>				  
-				   <td width="400" align="justify"><? echo $descripcion; ?></td>
-				   <td width="200" align="justify"><? echo $nombre; ?></td>				   
-				   <td width="120" align="right"><? echo $modificaciones; ?></td>
-				   <td width="120" align="right"><? echo $comprometido; ?></td>
-				   <td width="120" align="right"><? echo $causado; ?></td>
-				   <td width="120" align="right"><? echo $pagado; ?></td>
-				   <td width="120" align="right"><? echo $disponible; ?></td>
+				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $fechaf; ?></td>
+				   <td width="80" align="left"><?php  echo $tipo; ?></td>
+				   <td width="80" align="left">'<?php  echo $referencia; ?></td>				  
+				   <td width="400" align="justify"><?php  echo $descripcion; ?></td>
+				   <td width="200" align="justify"><?php  echo $nombre; ?></td>				   
+				   <td width="120" align="right"><?php  echo $modificaciones; ?></td>
+				   <td width="120" align="right"><?php  echo $comprometido; ?></td>
+				   <td width="120" align="right"><?php  echo $causado; ?></td>
+				   <td width="120" align="right"><?php  echo $pagado; ?></td>
+				   <td width="120" align="right"><?php  echo $disponible; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 		  if(($sub_totalc>0)or($sub_totalm>0)or($sub_totala>0)or($sub_totalp>0)){ $sub_totalc=formato_monto($sub_totalc);$sub_totala=formato_monto($sub_totala);  $sub_totalp=formato_monto($sub_totalp);  $sub_totalm=formato_monto($sub_totalm); 
 		  ?>	 				 
@@ -351,17 +351,17 @@ ORDER BY pre012.cod_presup,pre012.fuente_financ,pre012.fecha_doc,pre012.Tipo_Reg
 			  <td width="80" align="left"></td>
 			  <td width="80" align="left"></td>
 			  <td width="400" align="left"></td>
-			  <td width="200" align="right"><? echo "Totales : "; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalm; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalc; ?></td>
-			  <td width="120" align="right"><? echo $sub_totala; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalp; ?></td>
+			  <td width="200" align="right"><?php  echo "Totales : "; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalm; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalc; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totala; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalp; ?></td>
 			  <td width="120" align="left"></td>
 			</tr>	
 			
-		  <? 					
+		  <?php  					
 		  }		  
-		  ?></table><?
+		  ?></table><?php 
         }		  
    
 ?>

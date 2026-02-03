@@ -1,4 +1,4 @@
-<?include "../../class/seguridad.inc";include "../../class/conects.php";include "../../class/fun_fechas.php";include "../../class/fun_numeros.php";include "../../class/configura.inc";
+<?php include "../../class/seguridad.inc";include "../../class/conects.php";include "../../class/fun_fechas.php";include "../../class/fun_numeros.php";include "../../class/configura.inc";
 error_reporting(E_ALL ^ E_NOTICE);include "../../class/phpreports/PHPReportMaker.php";
 $tipo_nomina_d = $_GET["tipo_nomina_d"];
 $tipo_nomina_h = $_GET["tipo_nomina_h"];
@@ -51,7 +51,7 @@ if ($tipo_calculo == "E") {$cri_tp19 = "  ((nom019.tp_calculo='E')and(nom019.num
 $cri_tp17 = "  (nom017.tp_calculo='" . $tipo_calculo . "') ";
 if ($tipo_calculo == "E") {$cri_tp17 = "  ((nom017.tp_calculo='E')and(nom017.num_periodos=$num_periodos))  ";}
 
-$conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");if (pg_ErrorMessage($conn)) {$error = 1;} else {
+$conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");if (pg_last_error($conn)) {$error = 1;} else {
 	$Nom_Emp = busca_conf();if ($utf_rpt == "SI") {if ($php_os == "WINNT") {$php_os = "LINUX";} else { $php_os = "WINNT";}}
 	if ($tipo_nomina_d != $tipo_nomina_h) {
 		$sql = "SELECT tipo_nomina,descripcion,desc_grupo from nom001 where tipo_nomina='$tipo_nomina_d'";
@@ -64,7 +64,7 @@ $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password
 	$StrSQL = "delete from nom016 where (linea='000' or  linea='001') and tipo_nomina>='" . $tipo_nomina_d . "' and tipo_nomina<='" . $tipo_nomina_h . "'";
 	$res = pg_exec($conn, $StrSQL);
 	$error = pg_errormessage($conn);
-	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?echo $error; ?>'); </script> <?}
+	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?php echo $error; ?>'); </script> <?php }
 
 	if ($act_hist == 'S') {
 		$sSQL = "SELECT nom019.tipo_nomina, nom019.des_Nomina, nom019.fecha_desde, nom019.fecha_Hasta, nom019.cod_concepto, nom019.denominacion, nom019.cod_Empleado, nom019.Nombre, nom019.Asignacion, nom019.Monto_Asignacion, nom019.Monto_deduccion, nom019.Oculto, nom019.Monto, nom019.cod_presup, nom019.fecha_p_Hasta, nom019.Tp_calculo, nom019.desc_Grupo,
@@ -94,12 +94,12 @@ $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password
 	$temp = $StrSQL;
 	$res = pg_exec($conn, $StrSQL);
 	$error = pg_errormessage($conn);
-	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?echo $error; ?>'); </script> <?}
+	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?php echo $error; ?>'); </script> <?php }
 
 	$StrSQL = "update nom016 set monto1=monto*-1,monto2=0,linea='001' where asignacion='NO' and cod_retencion='000'";
 	$res = pg_exec($conn, $StrSQL);
 	$error = pg_errormessage($conn);
-	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?echo $error; ?>'); </script> <?}
+	$error = substr($error, 0, 91);if (!$res) {?> <script language="JavaScript">  muestra('<?php echo $error; ?>'); </script> <?php }
 
 	$sSQL = "SELECT nom016.linea,nom016.tipo_nomina,nom016.des_Nomina, nom016.fecha_desde, nom016.fecha_Hasta, nom016.cod_concepto1 as cod_concepto, nom016.denominacion1 as denominacion, nom016.cod_Empleado, nom016.Nombre, nom016.Asignacion, nom016.monto1 as monto_asignacion, nom016.monto2 as monto_deduccion, nom016.Oculto, nom016.Monto, nom016.cod_presup, nom016.cod_contable, nom016.fecha_p_Hasta, nom016.Tp_calculo, nom016.desc_Grupo,
                    nom016.Afecta_presup,nom016.cod_Retencion,nom016.Asig_ded_Apo,to_char(nom016.fecha_p_hasta,'DD/MM/YYYY') as fechaph,to_char(nom016.fecha_hasta,'DD/MM/YYYY') as fechah,to_char(nom016.fecha_desde,'DD/MM/YYYY') as fechad, pre022.cod_presup_p, pre022.cod_fuente_p, pre022.denominacion_p

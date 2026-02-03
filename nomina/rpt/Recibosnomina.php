@@ -1,9 +1,9 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $ced_empleado=$_GET["cedula"];  $fecha_nom=$_GET["fecha_nom"]; $orden=" order by cedula,cod_concepto"; $php_os=PHP_OS; $cfechan=formato_aaaammdd($fecha_nom); $tipo_calculo=$_GET["tipo_calculo"];
 $criterio=" nom019 WHERE (fecha_p_hasta='".$cfechan."') and (oculto='NO') ";
 
 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 $sSQL = "SELECT *  FROM ".$criterio." and (tp_calculo='".$tipo_calculo."')  and (cedula='".$ced_empleado."') ".$orden.",fecha_p_hasta desc";   
 
 

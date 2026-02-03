@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
 
    $tipo_nomina_d=$_GET["tipo_nomina_d"]; $tipo_nomina_h=$_GET["tipo_nomina_h"];  $cod_conceptod=$_GET["cod_concepto_d"]; $cod_conceptoh=$_GET["cod_concepto_h"];   
    $forma_pago=$_GET["forma_pago"]; $tipo_calculo=$_GET["tipo_calculo"];   $cod_empleado_d=$_GET["cod_empleado_d"]; $cod_empleado_h=$_GET["cod_empleado_h"];   
@@ -31,7 +31,7 @@
 		  (substring(cod_presup,1,8)>='".$cod_presup_catd."' and substring(cod_presup,1,8)<='".$cod_presup_cath."')  and (cod_concepto='".$cod_concepto_r."' or cod_concepto='".$cod_concepto_a."') ";
    
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
    
    function muestra_cant($mop,$mtipo,$mdep,$mcod_emp){global $criterio; global $host; global $password; global $user; global $dbname;

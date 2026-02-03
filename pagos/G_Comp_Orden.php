@@ -1,13 +1,13 @@
 <?php
 function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0;
   $sSQL="Select * from PAG036 WHERE codigo_mov='$codigo_mov'";  $resultado=pg_exec($mconn,$sSQL);  $filas=pg_numrows($resultado);
-  if ($filas==0){$mvalor=1; ?> <script language="JavaScript"> muestra('TIPO DE ORDEN NO VALIDA');</script> <? }
+  if ($filas==0){$mvalor=1; ?> <script language="JavaScript"> muestra('TIPO DE ORDEN NO VALIDA');</script> <?php }
    else{ $registro=pg_fetch_array($resultado); $tipo_ord=$registro["tipo_orden"]; $pasivo_comp=$registro["pasivo_comp"]; $monto_am_ant=$registro["monto_am_ant"];  $cod_cont_ant=$registro["campo_str1"];
     $StrSQL="select * from pag008 where tipo_orden='$tipo_ord'";    $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
     if($filas>0){$registro=pg_fetch_array($resultado); $cod_contable=$registro["cod_contable_t"];  }
-     else {$mvalor=1; ?> <script language="JavaScript"> muestra('TIPO DE ORDEN NO VALIDA');</script> <? }
+     else {$mvalor=1; ?> <script language="JavaScript"> muestra('TIPO DE ORDEN NO VALIDA');</script> <?php }
     if($mvalor==0){ $monto_t=0;
-      $resultado=pg_exec($mconn,"SELECT ELIMINA_CON008('$codigo_mov')");  $mvalor=pg_errormessage($mconn); $mvalor=substr($mvalor, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $mvalor; ?>'); </script> <? }
+      $resultado=pg_exec($mconn,"SELECT ELIMINA_CON008('$codigo_mov')");  $mvalor=pg_errormessage($mconn); $mvalor=substr($mvalor, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $mvalor; ?>'); </script> <?php }
       $sql="Select * from CODIGOS_PRE026 where codigo_mov='$codigo_mov' and monto>0 order by cod_presup";  $res=pg_query($sql);
       while(($registro=pg_fetch_array($res))){    $monto_asiento=$registro["monto"]; $codigo_cuenta=$registro["cod_con_g_pagar"];
         $referencia_comp=$registro["referencia_comp"]; $tipo_compromiso=$registro["tipo_compromiso"];
@@ -27,18 +27,18 @@ function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0
 		  if ($filas>0){ $reg=pg_fetch_array($resultado);
              $monto_c=$monto1+$reg["monto_asiento"];  $monto_c=cambia_coma_numero($monto_c);
              $resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','D','$codigo1',$monto_c,'CAUSADO PRESUPUESTARIO')");
-             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
            else{ $resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','D','$codigo1','00000','',$monto1,'D','C','N','01','0','')");
-            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
           
 		  if($codigo2<>""){
 		  $sSQL="Select * from CON008 WHERE codigo_mov='$codigo_mov' and cod_cuenta='$codigo2' and debito_credito='D'"; $resultado=pg_exec($mconn,$sSQL); $filas=pg_numrows($resultado);
 		  if ($filas>0){ $reg=pg_fetch_array($resultado);
              $monto_c=$monto2+$reg["monto_asiento"];  $monto_c=cambia_coma_numero($monto_c);
              $resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','D','$codigo2',$monto_c,'CAUSADO PRESUPUESTARIO')");
-             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
            else{$resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','D','$codigo2','00000','',$monto2,'D','C','N','01','0','')");
-            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
 		  }
 		  
 		  if($codigo3<>""){
@@ -46,9 +46,9 @@ function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0
 		  if ($filas>0){ $reg=pg_fetch_array($resultado);
              $monto_c=$monto3+$reg["monto_asiento"];  $monto_c=cambia_coma_numero($monto_c);
              $resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','D','$codigo3',$monto_c,'CAUSADO PRESUPUESTARIO')");
-             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
            else{$resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','D','$codigo3','00000','',$monto3,'D','C','N','01','0','')");
-            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+            $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
 		  }
 		
 		}
@@ -62,10 +62,10 @@ function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0
           $sSQL="Select * from CON008 WHERE codigo_mov='$codigo_mov' and cod_cuenta='$codigo_cuenta' and debito_credito='C'"; $resultado=pg_exec($mconn,$sSQL); $filas=pg_numrows($resultado);
           if ($filas>0){ $reg=pg_fetch_array($resultado);  $monto_c=$monto_asiento+$reg["monto_asiento"];  $monto_c=cambia_coma_numero($monto_c);
              if ($monto_c>0){$resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','C','$codigo_cuenta',$monto_c,'CAUSADO PRESUPUESTARIO')");
-             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } } }
+             $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } } }
            else{
             $resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','C','$codigo_cuenta','00000','',$monto_asiento,'D','C','N','01','0','')");
-            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
         }
       }}
       if ($pasivo_comp=="SI") {
@@ -78,10 +78,10 @@ function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0
               if ($filas>0){$reg=pg_fetch_array($resultado);
                  $monto_c=$monto_asiento+$reg["monto_asiento"]; $monto_c=cambia_coma_numero($monto_c);
                  $resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','$debito_credito','$codigo_cuenta',$monto_c,'CAUSADO PRESUPUESTARIO')");
-                 $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+                 $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
                else{
                  $resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','$debito_credito','$codigo_cuenta','00000','',$monto_asiento,'D','C','N','01','0','')");
-                 $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+                 $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
             }
          }
       }
@@ -90,16 +90,16 @@ function g_comprobante_ord($mconn,$codigo_mov,$G_Comp_Ret,$G_Ord_Ret){ $mvalor=0
          if ($filas>0){ $reg=pg_fetch_array($resultado);
             $monto_c=$monto_asiento+$reg["monto_asiento"]; $monto_c=cambia_coma_numero($monto_c);
             $resultado=pg_exec($mconn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','C','$codigo_cuenta',$monto_c,'CAUSADO PRESUPUESTARIO')");
-            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
           else{
             $resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','C','$codigo_cuenta','00000','',$monto_asiento,'D','C','N','01','0','')");
-            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+            $mvalor=pg_errormessage($mconn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
       }  $monto_t=cambia_coma_numero($monto_t);
       $sSQL="Select * from con001 WHERE codigo_cuenta='$cod_contable'";  $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);  $mvalor=0;
-      if ($filas==0){$mvalor=1; ?> <script language="JavaScript"> muestra('CUENTA TIPO DE ORDEN NO EXISTE');</script><? }
-      else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$mvalor=1; ?> <script language="JavaScript"> muestra('CUENTA TIPO DE ORDEN NO ES CARGABLE');</script><?} }
+      if ($filas==0){$mvalor=1; ?> <script language="JavaScript"> muestra('CUENTA TIPO DE ORDEN NO EXISTE');</script><?php }
+      else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$mvalor=1; ?> <script language="JavaScript"> muestra('CUENTA TIPO DE ORDEN NO ES CARGABLE');</script><?php } }
       if($mvalor==0){ $resultado=pg_exec($mconn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','C','$cod_contable','00000','',$monto_t,'D','C','N','01','0','')");
-      $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+      $mvalor=pg_errormessage($mconn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
     }
    }
 return $mvalor;

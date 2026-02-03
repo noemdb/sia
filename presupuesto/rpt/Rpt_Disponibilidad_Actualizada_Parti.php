@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"]; $tipo_rep=$_GET["tipo_rep"];}
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$fecha="";$tipo_rep="HTML";}   $equipo=getenv("COMPUTERNAME"); $cod_mov="PRE020".$usuario_sia; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? }  else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php }  else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
   $criterio="(cod_presup>='$cod_presup_d' and cod_presup<='$cod_presup_h') and (cod_fuente>='$cod_fuente_d' and cod_fuente<='$cod_fuente_h')";
   $StrSQL= "INSERT INTO PRE020 SELECT '".$cod_mov."' as Nombre_Usuario,'5' as Tipo_Registro, Cod_Presup, Cod_Fuente, Denominacion,substr(cod_presup,1,".$c.") as cod_categoria,"."'' as Denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as Denomina_Par,Status_Dist,Func_Inv,Ord_Cord,Aplicacion,Cod_Unidad_Ejec, ";
   $StrSQL=$StrSQL.$sql_Asignacion." Disponible,Disp_Diferida,".$sql_Compromiso.$sql_Causado.$sql_Pagado.$sql_Traslados.$sql_Trasladon.$sql_Adicion.$sql_Disminucion.$sql_Diferido.", "."0 as CompromisoM,0 as CausadoM, 0 as PagadoM, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
@@ -81,7 +81,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
            <td width="400" align="left" bgcolor="#99CCFF"><strong>DENOMINACION</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF"><strong>DISPONIBILIDAD</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];  
@@ -89,13 +89,13 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 		   $denominacion=conv_cadenas($denominacion,0);  
 	?>	   
 		   <tr>
-           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="120" align="right"><? echo $disponible; ?></td>
+           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="120" align="right"><?php  echo $disponible; ?></td>
          </tr>
-	<? } 
+	<?php } 
 	
 	  
 	}
-pg_close();	
+pg_close($conn);	
 ?>

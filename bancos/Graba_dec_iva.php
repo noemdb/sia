@@ -1,4 +1,4 @@
-<? include ("../class/conect.php"); //include ("../class/fun_numeros.php");
+<?php  include ("../class/conect.php"); //include ("../class/fun_numeros.php");
 $codigo_mov=$_POST["txtcodigo_mov"]; $rif_emp=$_POST["txtced_rif_emp"]; $ano=$_POST["txtano"]; $mes=$_POST["txtmes"]; $tipo_formato=$_POST["txttipo_formato"];
 function elimina_comas($str){$texto="";  for ($i=0; $i<strlen($str); $i++) { if (substr($str,$i, 1)==",") {$texto=$texto; }  else {$texto=$texto.substr($str,$i, 1);}  } return $texto;}
 function elimina_guion($str){$texto="";  for ($i=0; $i<strlen($str); $i++) { if (substr($str,$i, 1)=="-") {$texto=$texto; }  else {$texto=$texto.substr($str,$i, 1);}  } return $texto;}
@@ -9,32 +9,32 @@ $sql="SELECT * FROM BAN029 where codigo_mov='$codigo_mov' order by nro_comproban
 if($tipo_formato=="EXCEL"){
 	header("Content-type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=decla_iva.xls");	
-	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?	
+	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?php 	
 	while($registro=pg_fetch_array($res)){ $sfechaf=$registro["fecha_factura"]; $tipo_operacion=$registro["tipo_operacion"]; $tipo_doc=$registro["tipo_documento"]; $nro_doc=$registro["nro_documento"];  $nro_con_doc=$registro["nro_con_factura"]; $nro_doc_afectado=$registro["nro_doc_afectado"]; $nro_exp=$registro["tipo_en"]; $ced_rif=$registro["ced_rif"]; $ced_rif=elimina_guion($ced_rif);
 	$montop=$registro["monto_pago"]; $montoo=$registro["monto_objeto"]; $montor=$registro["monto_retencion"];  $montoe=$registro["monto2"]; $tasa=$registro["tasa"];
 	if($nro_doc_afectado==""){$nro_doc_afectado="0";}$nro_comp=$ano.$mes.$registro["nro_comprobante"];
 	//$montop=cambia_punto_comas($montop); $montor=cambia_punto_comas($montor); $montoe=cambia_punto_comas($montoe); $montoo=cambia_punto_comas($montoo); $tasa=cambia_punto_comas($tasa);
 	if(substr($nro_con_doc,0,1)=="-"){$nro_con_doc="00".$nro_con_doc;}	
 ?><tr>
-             <td width="120" align="left"><? echo $rif_emp; ?></td>
-             <td width="100" align="left"><? echo $ano.$mes; ?></td>
-			 <td width="100" align="left" style="mso-number-format:'@';"><? echo $sfechaf; ?></td>
-             <td width="50" align="left"><? echo $tipo_operacion; ?></td>
-			 <td width="50" align="left" style="mso-number-format:'@';"><? echo $tipo_doc; ?></td>
-			 <td width="120" align="left"><? echo $ced_rif; ?></td>
-			 <td width="150" align="left" style="mso-number-format:'@';"><? echo $nro_doc; ?></td>
-			 <td width="150" align="left" style="mso-number-format:'@';"><? echo $nro_con_doc; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montop; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montoo; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montor; ?></td>
-			 <td width="150" align="left" style="mso-number-format:'@';"><? echo $nro_doc_afectado; ?></td>
-			 <td width="150" align="left" style="mso-number-format:'@';"><? echo $nro_comp; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';" ><? echo $montoe; ?></td>
-			 <td width="050" align="right" style="mso-number-format:'0.00';"><? echo $tasa; ?></td>
-			 <td width="150" align="left" style="mso-number-format:'@';"><? echo $nro_exp; ?></td>
- </tr> <?	
+             <td width="120" align="left"><?php  echo $rif_emp; ?></td>
+             <td width="100" align="left"><?php  echo $ano.$mes; ?></td>
+			 <td width="100" align="left" style="mso-number-format:'@';"><?php  echo $sfechaf; ?></td>
+             <td width="50" align="left"><?php  echo $tipo_operacion; ?></td>
+			 <td width="50" align="left" style="mso-number-format:'@';"><?php  echo $tipo_doc; ?></td>
+			 <td width="120" align="left"><?php  echo $ced_rif; ?></td>
+			 <td width="150" align="left" style="mso-number-format:'@';"><?php  echo $nro_doc; ?></td>
+			 <td width="150" align="left" style="mso-number-format:'@';"><?php  echo $nro_con_doc; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montop; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montoo; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montor; ?></td>
+			 <td width="150" align="left" style="mso-number-format:'@';"><?php  echo $nro_doc_afectado; ?></td>
+			 <td width="150" align="left" style="mso-number-format:'@';"><?php  echo $nro_comp; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';" ><?php  echo $montoe; ?></td>
+			 <td width="050" align="right" style="mso-number-format:'0.00';"><?php  echo $tasa; ?></td>
+			 <td width="150" align="left" style="mso-number-format:'@';"><?php  echo $nro_exp; ?></td>
+ </tr> <?php 	
 	}
-	?></table><?
+	?></table><?php 
 }else{
 $tabla="<table>";
 $sql="SELECT * FROM BAN029 where codigo_mov='$codigo_mov' order by nro_comprobante"; $res=pg_query($sql);
@@ -47,5 +47,5 @@ $tabla.="<tr><td>".$rif_emp."</td><td>".$ano.$mes."</td><td>".$sfechaf."</td><td
 }
 $tabla.="</table>";
 echo $tabla;}
-pg_close();
+pg_close($conn);
 ?>

@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"]; $fecha_d=$_GET["fecha_d"]; $fecha_h=$_GET["fecha_h"]; $agrupa_cat=$_GET["agrupa_cat"]; $agrupa_par=$_GET["agrupa_par"]; $agrupa_fuen=$_GET["agrupa_fuen"];
 $cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"]; $tipo_modif=$_GET["tipo_modif"];$tipo_rep=$_GET["tipo_rep"];$tipo_regis=$_GET["tipo_regis"]; 
 $mcontrol=array (0,0,0,0,0,0,0,0,0,0);
@@ -10,7 +10,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} } $error=0;
 $date = date("d-m-Y");$hora = date("H:i:s a");$Sql=""; $cod_mov="pre009".$usuario_sia;
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
@@ -61,7 +61,7 @@ if ($tipo_modif=='TODOS'){$nombre="";} $criterio_est="";
           ORDER BY pre009.Fecha_Modif, pre009.Referencia_Modif";
          
 $StrSQL = "DELETE FROM pre021 Where (Tipo_Registro='M') And (nombre_usuario='".$cod_mov."')";
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 $t=$c; if($t>12){$t=12;}
 $StrSQL= "INSERT INTO pre021 SELECT '$cod_mov' as nombre_usuario,'M' as Tipo_Registro,pre009.Referencia_Modif,pre009.Tipo_Modif,'','','00000000' as Referencia_Caus,'0000' as Tipo_Causado,'' as Nombre_Abrev_Caus, '' as Nombre_Tipo_Caus,'00000000' as Referencia_Pago,'0000' as Tipo_Pago,'' as Nombre_Abrev_Pago,'' as Nombre_Tipo_Pago, pre039.cod_presup,pre039.fuente_financ,pre001.Denominacion,
@@ -69,33 +69,33 @@ pre009.Fecha_Modif as Fecha_Doc,'' as Ref_AEP,pre039.Grupo, pre009.Fecha_Modif a
 '' as Nombre_Benef,pre039.monto,(pre039.monto*-1) as Comprometido,0,0,0,pre039.Operacion,
 'P','',pre001.asignado,pre009.inf_usuario,pre009.Descripcion_Modif as Descripcion_Doc FROM pre001,pre009, pre039, pre095 WHERE (pre001.cod_presup=pre039.cod_presup) AND (pre001.Cod_Fuente=pre039.fuente_financ) AND 
 (pre039.fuente_financ=pre095.Cod_fuente_financ) AND (pre009.referencia_modif=pre039.referencia_modif) and (pre009.tipo_modif=pre039.tipo_modif) AND ".$criteriop;
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 $StrSQL= "update pre021 set ajustado=monto WHERE ((tipo_compromiso='1')or(tipo_compromiso='3')or(tipo_compromiso='5')) and (func_inv='+') and (Tipo_Registro='M') And (nombre_usuario='".$cod_mov."') ";
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
  
 $StrSQL= "update pre021 set ajustado=monto WHERE ((tipo_compromiso='2')or(tipo_compromiso='4')) and (func_inv='-') and (Tipo_Registro='M') And (nombre_usuario='".$cod_mov."') ";
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 $ordenado="ORDER BY pre021.Fecha_Doc, pre021.Referencia_Comp, pre021.Tipo_Compromiso,pre021.cod_presup";
 if($agrupa_cat=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.Fecha_Doc, pre021.Referencia_Comp, pre021.Tipo_Compromiso,pre021.cod_presup";
    $sSQL = "Select cod_presup,denominacion from pre001 WHERE cod_presup in (select distinct ced_rif from pre021 where (Tipo_Registro='M') and (nombre_usuario='$cod_mov'))";  $res=pg_query($sSQL);
   while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; 
      $sql="update pre021 set nombre_benef='$denominacion' where Tipo_Registro='M' and nombre_usuario='$cod_mov' and ced_rif='$cod_presup'";$resultado=pg_exec($conn,$sql); 
-	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   }}
 
 if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre021.fuente_financ,pre021.Fecha_Doc, pre021.Referencia_Comp, pre021.Tipo_Compromiso";
   $StrSQL= "update pre021 set causado=monto WHERE (func_inv='+') and (Tipo_Registro='M') And (nombre_usuario='".$cod_mov."') ";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
  
   $StrSQL= "update pre021 set pagado=monto WHERE (func_inv='-') and (Tipo_Registro='M') And (nombre_usuario='".$cod_mov."') ";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
   $sSQL = "Select cod_presup,denominacion from pre001 WHERE cod_presup in (select distinct ced_rif from pre021 where (Tipo_Registro='M') and (nombre_usuario='$cod_mov'))";  $res=pg_query($sSQL);
   while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; 
      $sql="update pre021 set nombre_benef='$denominacion' where Tipo_Registro='M' and nombre_usuario='$cod_mov' and ced_rif='$cod_presup'";$resultado=pg_exec($conn,$sql); 
-	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   }
   
   if($agrupa_fuen==="SI"){
@@ -104,7 +104,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 	  $sSQL = "Select cod_presup,denominacion,asignado from pre001 WHERE cod_presup in (select distinct cod_presup from pre021 where (Tipo_Registro='M') and (nombre_usuario='$cod_mov'))";  $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; $asignado=$registro["asignado"];
 		 $sql="update pre021 set monto_credito=monto_credito+$asignado where Tipo_Registro='M' and nombre_usuario='$cod_mov' and cod_presup='$cod_presup'";$resultado=pg_exec($conn,$sql); 
-		 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+		 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 	  }
   }
   
@@ -497,7 +497,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 			 </tr>
 			 <tr height="20">
@@ -514,7 +514,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			   <td width="400" align="left" bgcolor="#99CCFF"><strong>Denominacion Codigo Presupuestario</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0; $total_ajustado=0; $total_ajustado1=0; $sub_total_ajustado=0; $sub_total_ajustado1=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp="";  $res=pg_query($sSQL);
+		  <?php   $i=0; $total_ajustado=0; $total_ajustado1=0; $sub_total_ajustado=0; $sub_total_ajustado1=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 				$ced_rif=$registro["ced_rif"]; $nombre_benef=$registro["nombre_benef"];$descripcion_doc=$registro["descripcion_doc"]; 
 			$fecha_doc=formato_ddmmaaaa($fecha_doc); $cantidad_ordenes=$cantidad_ordenes+1;
 			$fecha_doc_grupo=$fecha_doc; $tipo_compromiso_grupo=$tipo_compromiso; $referencia_comp_grupo=$referencia_comp; $ced_rif_grupo=$ced_rif; 
@@ -533,19 +533,19 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_ajustado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_ajustado1; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo 'CATEGORIA:   '.$ced_rif_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo 'CATEGORIA:   '.$ced_rif_grupo; ?></td>
 				   <td width="100" align="left"></td>
-				   <td width="400" align="left"><? echo $nombre_benef_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $nombre_benef_grupo; ?></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_total_ajustado1=0; }
 
 			   if(($prev_fecha_doc<>$fecha_doc_grupo)or($prev_tipo_compromiso<>$tipo_compromiso_grupo)or($prev_referencia_comp<>$referencia_comp_grupo)){
@@ -560,20 +560,20 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 				<tr>
 			    	   <td width="100" align="left"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="400" align="right"><? echo 'TOTAL: '.$prev_ced_rif; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_ajustado; ?></td>
+			           <td width="400" align="right"><?php  echo 'TOTAL: '.$prev_ced_rif; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_ajustado; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $referencia_comp_grupo; ?></td>
-				   <td width="100" align="left"><? echo $fecha_doc_grupo; ?></td>
-				   <td width="400" align="left"><? echo $descripcion_doc_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_comp_grupo; ?></td>
+				   <td width="100" align="left"><?php  echo $fecha_doc_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $descripcion_doc_grupo; ?></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_fecha_doc=$fecha_doc_grupo; $prev_tipo_compromiso=$tipo_compromiso_grupo; $prev_referencia_comp=$referencia_comp_grupo; $prev_ced_rif=$ced_rif_grupo;$sub_total_ajustado=0; }
 
 		           $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 
@@ -584,15 +584,15 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			   $descripcion_doc=conv_cadenas($descripcion_doc,0);$denominacion=conv_cadenas($denominacion,0); 
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_presup; ?></td>
-				   <td width="100" align="left">'<? echo $fuente_financ; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
-				   <td width="100" align="right"><? echo $resultado; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_presup; ?></td>
+				   <td width="100" align="left">'<?php  echo $fuente_financ; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+				   <td width="100" align="right"><?php  echo $resultado; ?></td>
 				 </tr>
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-			   <? 	
+			   <?php  	
 
 		  }$total_ajustado=formato_monto($total_ajustado);  
 		     if($sub_total_ajustado>0){ $sub_total_ajustado=formato_monto($sub_total_ajustado); 		
@@ -607,12 +607,12 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_ajustado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_ajustado; ?></td>
 			        </tr>			
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
@@ -624,10 +624,10 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    <td width="100" align="left"></strong></td>
 			    <td width="100" align="right"></td>
 			    <td width="400" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="100" align="right"><strong><? echo $total_ajustado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_ajustado; ?></strong></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?}
+		       <?php  				  
+		  ?></table><?php }
         else{if($agrupa_par=="SI")
 	      {if($agrupa_fuen==="SI")
                   {
@@ -642,13 +642,13 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 			 </tr>
 			 <tr height="20">
 			 </tr>
 
-		  <?  $i=0; $total_ajustado=0; $total_causado=0;  $total_causado1=0; $total_pagado=0; $total_pagado1=0;  $total_monto_credito=0; $total=0; $sub_total_ajustado=0; $sub_total_causado=0; $sub_total_causado1=0; $sub_total_pagado=0; $sub_total_pagado1=0; $sub_total_monto_credito=0; $sub_total=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_cod_presup=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp=""; $prev_cod_partida=""; $res=pg_query($sSQL);
+		  <?php   $i=0; $total_ajustado=0; $total_causado=0;  $total_causado1=0; $total_pagado=0; $total_pagado1=0;  $total_monto_credito=0; $total=0; $sub_total_ajustado=0; $sub_total_causado=0; $sub_total_causado1=0; $sub_total_pagado=0; $sub_total_pagado1=0; $sub_total_monto_credito=0; $sub_total=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_cod_presup=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp=""; $prev_cod_partida=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_presup=$registro["cod_presup"]; $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 	$ced_rif=$registro["ced_rif"]; $nombre_benef=$registro["nombre_benef"];$descripcion_doc=$registro["descripcion_doc"]; $cod_partida=$registro["cod_partida"]; $denominacion=$registro["denominacion"]; $monto_credito=$registro["monto_credito"];
 			$fecha_doc=formato_ddmmaaaa($fecha_doc); $cantidad_ordenes=$cantidad_ordenes+1;
 			$fecha_doc_grupo=$fecha_doc; $tipo_compromiso_grupo=$tipo_compromiso; $referencia_comp_grupo=$referencia_comp; $ced_rif_grupo=$ced_rif; 
@@ -670,22 +670,22 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo $sub_total_monto_credito; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_causado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto_credito; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $cod_partida_grupo; ?></td>
-				   <td width="400" align="left"><? echo $denominacion_grupo; ?></td>
-				   <td width="100" align="left"><? echo $monto_credito_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $cod_partida_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $denominacion_grupo; ?></td>
+				   <td width="100" align="left"><?php  echo $monto_credito_grupo; ?></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_presup=$cod_presup_grupo; $prev_cod_partida=$cod_partida_grupo; $sub_total_monto_credito=0; $sub_total_causado1=0; $sub_total_pagado1=0; $sub_total=0;}
 
 			   if(($prev_ced_rif<>$ced_rif_grupo)){
@@ -695,7 +695,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo 'TOTAL : '.$prev_ced_rif; ?><</td>
+			           <td width="100" align="right"><?php  echo 'TOTAL : '.$prev_ced_rif; ?><</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right"></td>
@@ -705,18 +705,18 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="100" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_causado; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado; ?></td>
 			           <td width="100" align="right"></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo 'CATEGORIA: '.$ced_rif_grupo; ?></td>
-				   <td width="400" align="left"><? echo $nombre_benef_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo 'CATEGORIA: '.$ced_rif_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $nombre_benef_grupo; ?></td>
 			      </tr>
 			      <tr height="20">
 			   	   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Codigo Presupuestario</strong></td>
@@ -727,7 +727,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="100" align="right" bgcolor="#99CCFF"><strong>Decrementos</strong></td>
 			           <td width="100" align="right" bgcolor="#99CCFF" ><strong>Actual</strong></td>
 			      </tr>			
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_total_causado=0; $sub_total_pagado=0;}
 
 		           $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 
@@ -744,16 +744,16 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 				<tr>
 				   <td width="100" align="left"></td>
 				   <td width="400" align="left"></td>
-				   <td width="100" align="left">'<? echo 'REFERENCIA : '.$referencia_comp; ?></td>
-				   <td width="100" align="right"><? echo 'FECHA : '.$fecha_doc; ?></td>
-				   <td width="100" align="right"><? echo $causado; ?></td>
-				   <td width="100" align="right"><? echo $pagado; ?></td>
+				   <td width="100" align="left">'<?php  echo 'REFERENCIA : '.$referencia_comp; ?></td>
+				   <td width="100" align="right"><?php  echo 'FECHA : '.$fecha_doc; ?></td>
+				   <td width="100" align="right"><?php  echo $causado; ?></td>
+				   <td width="100" align="right"><?php  echo $pagado; ?></td>
 				   <td width="100" align="right"></td>
 				 </tr>
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-			   <? 	
+			   <?php  	
 
 		  }$total_causado=formato_monto($total_causado);  $total_pagado=formato_monto($total_pagado); 
 		     if(($sub_total_monto_credito>0)or($sub_total_causado1>0)or($sub_total_pagado1>0)or($sub_total>0)){ $sub_total_monto_credito=formato_monto($sub_total_monto_credito);  $sub_total_causado1=formato_monto($sub_total_causado1); $sub_total_pagado1=formato_monto($sub_total_pagado1); $sub_total=formato_monto($sub_total);		
@@ -771,15 +771,15 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo $sub_total_monto_credito; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_causado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto_credito; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>
-                              <?}
+                              <?php }
 
 		      if(($sub_total_causado>0)or($sub_total_pagado>0)){ $sub_total_causado=formato_monto($sub_total_causado); $sub_total_pagado=formato_monto($sub_total_pagado);	
 			     ?>	 				 
@@ -787,7 +787,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo 'TOTAL : '.$prev_ced_rif; ?><</td>
+			           <td width="100" align="right"><?php  echo 'TOTAL : '.$prev_ced_rif; ?><</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right"></td>
@@ -797,14 +797,14 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="100" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_causado; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado; ?></td>
 			           <td width="100" align="right"></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>
-                              <?}
+                              <?php }
 			?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
@@ -820,12 +820,12 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    <td width="400" align="right"></td>
 			    <td width="100" align="right"></td>
 			    <td width="100" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="100" align="right"><strong><? echo $total_causado; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $total_pagado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_causado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_pagado; ?></strong></td>
 			    <td width="100" align="right"></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?} 
+		       <?php  				  
+		  ?></table><?php } 
                   else{
 		  /*Rpt_modificaciones_part*/
                  header("Content-type: application/vnd.ms-excel");
@@ -838,13 +838,13 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 			 </tr>
 			 <tr height="20">
 			 </tr>
 
-		  <?  $i=0; $total_ajustado=0; $total_causado=0;  $total_causado1=0; $total_pagado=0; $total_pagado1=0;  $total_monto_credito=0; $total=0; $sub_total_ajustado=0; $sub_total_causado=0; $sub_total_causado1=0; $sub_total_pagado=0; $sub_total_pagado1=0; $sub_total_monto_credito=0; $sub_total=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_cod_presup=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp=""; $prev_cod_partida=""; $prev_fuente_financ; $res=pg_query($sSQL);
+		  <?php   $i=0; $total_ajustado=0; $total_causado=0;  $total_causado1=0; $total_pagado=0; $total_pagado1=0;  $total_monto_credito=0; $total=0; $sub_total_ajustado=0; $sub_total_causado=0; $sub_total_causado1=0; $sub_total_pagado=0; $sub_total_pagado1=0; $sub_total_monto_credito=0; $sub_total=0; $cantidad_ordenes=""; $prev_ced_rif=""; $prev_cod_presup=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp=""; $prev_cod_partida=""; $prev_fuente_financ; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_presup=$registro["cod_presup"]; $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 	$ced_rif=$registro["ced_rif"]; $nombre_benef=$registro["nombre_benef"];$descripcion_doc=$registro["descripcion_doc"]; $cod_partida=$registro["cod_partida"]; $denominacion=$registro["denominacion"]; $fuente_financ=$registro["fuente_financ"];  $monto_credito=$registro["monto_credito"];
 			$fecha_doc=formato_ddmmaaaa($fecha_doc); $cantidad_ordenes=$cantidad_ordenes+1;
 			$fecha_doc_grupo=$fecha_doc; $tipo_compromiso_grupo=$tipo_compromiso; $referencia_comp_grupo=$referencia_comp; $ced_rif_grupo=$ced_rif; 
@@ -866,22 +866,22 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo $sub_total_monto_credito; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_causado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto_credito; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $cod_partida_grupo."    ".$fuente_financ_grupo; ?></td>
-				   <td width="400" align="left"><? echo $denominacion_grupo; ?></td>
-				   <td width="100" align="left"><? echo $monto_credito_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $cod_partida_grupo."    ".$fuente_financ_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $denominacion_grupo; ?></td>
+				   <td width="100" align="left"><?php  echo $monto_credito_grupo; ?></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_presup=$cod_presup_grupo; $prev_cod_partida=$cod_partida_grupo;  $prev_fuente_financ=$fuente_financ_grupo; $sub_total_monto_credito=0; $sub_total_causado1=0; $sub_total_pagado1=0; $sub_total=0;}
 
 			   if(($prev_ced_rif<>$ced_rif_grupo)){
@@ -891,7 +891,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo 'TOTAL : '.$prev_ced_rif; ?><</td>
+			           <td width="100" align="right"><?php  echo 'TOTAL : '.$prev_ced_rif; ?><</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right"></td>
@@ -901,18 +901,18 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="100" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_causado; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado; ?></td>
 			           <td width="100" align="right"></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo 'CATEGORIA: '.$ced_rif_grupo; ?></td>
-				   <td width="400" align="left"><? echo $nombre_benef_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo 'CATEGORIA: '.$ced_rif_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $nombre_benef_grupo; ?></td>
 			      </tr>
 			      <tr height="20">
 			   	   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Codigo Presupuestario</strong></td>
@@ -923,7 +923,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="100" align="right" bgcolor="#99CCFF"><strong>Decrementos</strong></td>
 			           <td width="100" align="right" bgcolor="#99CCFF" ><strong>Actual</strong></td>
 			      </tr>			
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_total_causado=0; $sub_total_pagado=0;}
 
 		           $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 
@@ -940,16 +940,16 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 				<tr>
 				   <td width="100" align="left"></td>
 				   <td width="400" align="left"></td>
-				   <td width="100" align="left">'<? echo 'REFERENCIA : '.$referencia_comp; ?></td>
-				   <td width="100" align="right"><? echo 'FECHA : '.$fecha_doc; ?></td>
-				   <td width="100" align="right"><? echo $causado; ?></td>
-				   <td width="100" align="right"><? echo $pagado; ?></td>
+				   <td width="100" align="left">'<?php  echo 'REFERENCIA : '.$referencia_comp; ?></td>
+				   <td width="100" align="right"><?php  echo 'FECHA : '.$fecha_doc; ?></td>
+				   <td width="100" align="right"><?php  echo $causado; ?></td>
+				   <td width="100" align="right"><?php  echo $pagado; ?></td>
 				   <td width="100" align="right"></td>
 				 </tr>
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-			   <? 	
+			   <?php  	
 
 		  }$total_causado=formato_monto($total_causado);  $total_pagado=formato_monto($total_pagado); 
 		     if(($sub_total_monto_credito>0)or($sub_total_causado1>0)or($sub_total_pagado1>0)or($sub_total>0)){ $sub_total_monto_credito=formato_monto($sub_total_monto_credito);  $sub_total_causado1=formato_monto($sub_total_causado1); $sub_total_pagado1=formato_monto($sub_total_pagado1); $sub_total=formato_monto($sub_total);		
@@ -967,15 +967,15 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo $sub_total_monto_credito; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_causado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado1; ?></td>
-			           <td width="100" align="right"><? echo $sub_total; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto_credito; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado1; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>
-                              <?}
+                              <?php }
 
 		      if(($sub_total_causado>0)or($sub_total_pagado>0)){ $sub_total_causado=formato_monto($sub_total_causado); $sub_total_pagado=formato_monto($sub_total_pagado);	
 			     ?>	 				 
@@ -983,7 +983,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
-			           <td width="100" align="right"><? echo 'TOTAL : '.$prev_ced_rif; ?><</td>
+			           <td width="100" align="right"><?php  echo 'TOTAL : '.$prev_ced_rif; ?><</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right">---------------</td>
 			           <td width="100" align="right"></td>
@@ -993,14 +993,14 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			           <td width="400" align="right"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="100" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_causado; ?></td>
-			           <td width="100" align="right"><? echo $sub_total_pagado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_causado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_pagado; ?></td>
 			           <td width="100" align="right"></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>
-                              <?}
+                              <?php }
 			?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
@@ -1016,12 +1016,12 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    <td width="400" align="right"></td>
 			    <td width="100" align="right"></td>
 			    <td width="100" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="100" align="right"><strong><? echo $total_causado; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $total_pagado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_causado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_pagado; ?></strong></td>
 			    <td width="100" align="right"></td>
 			</tr>	
-		       <? 					  
-		  ?></table><?}
+		       <?php  					  
+		  ?></table><?php }
     	      }
               else{
                   /*Rpt_modificaciones_sin*/
@@ -1037,7 +1037,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 			 </tr>
 			 <tr height="20">
@@ -1054,7 +1054,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			   <td width="400" align="left" bgcolor="#99CCFF"><strong>Denominacion Codigo Presupuestario</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0; $total_ajustado=0; $sub_total_ajustado=0; $sub_total_dism=0; $sub_total_aum=0; $cantidad_ordenes=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp="";  $res=pg_query($sSQL);
+		  <?php   $i=0; $total_ajustado=0; $sub_total_ajustado=0; $sub_total_dism=0; $sub_total_aum=0; $cantidad_ordenes=""; $prev_fecha_doc=""; $prev_tipo_compromiso=""; $prev_referencia_comp="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 				$ced_rif=$registro["ced_rif"]; $nombre_benef=$registro["nombre_benef"];$descripcion_doc=$registro["descripcion_doc"]; 
 			$fecha_doc=formato_ddmmaaaa($fecha_doc); $cantidad_ordenes=$cantidad_ordenes+1;
 			$fecha_doc_grupo=$fecha_doc; $tipo_compromiso_grupo=$tipo_compromiso; $referencia_comp_grupo=$referencia_comp; $ced_rif_grupo=$ced_rif; 
@@ -1073,19 +1073,19 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_ajustado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_ajustado; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $referencia_comp_grupo; ?></td>
-				   <td width="100" align="left"><? echo $fecha_doc_grupo; ?></td>
-				   <td width="400" align="left"><? echo $descripcion_doc_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_comp_grupo; ?></td>
+				   <td width="100" align="left"><?php  echo $fecha_doc_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $descripcion_doc_grupo; ?></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_fecha_doc=$fecha_doc_grupo; $prev_tipo_compromiso=$tipo_compromiso_grupo; $prev_referencia_comp=$referencia_comp_grupo; $sub_total_ajustado=0; }
 
 		       $fecha_doc=$registro["fecha_doc"]; $tipo_compromiso=$registro["tipo_compromiso"]; $referencia_comp=$registro["referencia_comp"]; 
@@ -1098,15 +1098,15 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			   $descripcion_doc=conv_cadenas($descripcion_doc,0);$denominacion=conv_cadenas($denominacion,0); 
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_presup; ?></td>
-				   <td width="100" align="left">'<? echo $fuente_financ; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
-				   <td width="100" align="right"><? echo $resultado; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_presup; ?></td>
+				   <td width="100" align="left">'<?php  echo $fuente_financ; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+				   <td width="100" align="right"><?php  echo $resultado; ?></td>
 				 </tr>
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-			   <? 	
+			   <?php  	
 
 		  }$total_ajustado=formato_monto($total_ajustado);  
 		      $total_ajustado=$total_ajustado+$sub_total_ajustado; $sub_total_ajustado=formato_monto($sub_total_ajustado); 		
@@ -1121,7 +1121,7 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    	   <td width="100" align="left"></td>
 			    	   <td width="100" align="left"></td>
 			           <td width="400" align="right"></td>
-			           <td width="100" align="right"><? echo $sub_total_ajustado; ?></td>
+			           <td width="100" align="right"><?php  echo $sub_total_ajustado; ?></td>
 			        </tr>			
 			        <tr>
 				  <td width="90" align="left"></td>
@@ -1136,10 +1136,10 @@ if($agrupa_par=="SI"){ $ordenado="ORDER BY pre021.ced_rif,pre021.cod_presup,pre0
 			    <td width="100" align="left"></td>
 			    <td width="100" align="right"></td>
 			    <td width="400" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="100" align="right"><strong><? echo $total_ajustado; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_ajustado; ?></strong></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?} 
+		       <?php  				  
+		  ?></table><?php } 
     }
    }
  }		  

@@ -1,6 +1,6 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");
+<?php include ("../class/conect.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 
@@ -30,7 +30,7 @@ document.form2.txtcedula_c.value=Gced_rif; document.form2.submit(); }
 </script>
 
 </head>
-<?
+<?php 
 $Ssql="select * from SIA000"; $resultado=pg_query($Ssql);if ($registro=pg_fetch_array($resultado,0)){$reg_e=$registro["campo041"];$edo_e=$registro["campo010"];$mun_e=$registro["campo011"];$ciu_e=$registro["campo009"];}else{$reg_e="REGION CENTRO-OCCIDENTAL";$edo_e="LARA";$mun_e="IRIBARREN";$ciu_e="BARQUISIMETO";}
 $cod_e="00"; $Ssql="select * FROM pre091 where estado='".$edo_e."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_e=$registro["cod_estado"];}
 $cod_m="00"; $Ssql="select * FROM PRE093 where nombre_municipio='".$mun_e."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_m=$registro["cod_municipio"];}
@@ -100,24 +100,24 @@ $equipo=getenv("COMPUTERNAME"); $mcod_m="TRAB".$usuario_sia.$equipo; $codigo_mov
 <form name="form2" method="post" action="Inc_info_trabajadores.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
 	 <td width="5"><input class="Estilo10" name="txtcedula_c" type="hidden" id="txtcedula_c" value="" ></td>	 
-     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $temp_nomina?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?echo $temp_des_nomina?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtregion_e" type="hidden" id="txtregion_e" value="<?echo $reg_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtestado_e" type="hidden" id="txtestado_e" value="<?echo $edo_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?echo $mun_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?echo $ciu_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtparroquia_e" type="hidden" id="txtparroquia_e" value="<?echo $mun_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?echo $cod_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcod_municipio" type="hidden" id="txtcod_municipio" value="<?echo $cod_m?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtformato_trab" type="hidden" id="txtformato_trab" value="<?echo $formato_trab?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtprimero_apellido" type="hidden" id="txtprimero_apellido" value="<?echo $primero_apellido?>" ></td>
+     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $temp_nomina?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?php echo $temp_des_nomina?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtregion_e" type="hidden" id="txtregion_e" value="<?php echo $reg_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtestado_e" type="hidden" id="txtestado_e" value="<?php echo $edo_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?php echo $mun_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?php echo $ciu_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtparroquia_e" type="hidden" id="txtparroquia_e" value="<?php echo $mun_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?php echo $cod_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcod_municipio" type="hidden" id="txtcod_municipio" value="<?php echo $cod_m?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtformato_trab" type="hidden" id="txtformato_trab" value="<?php echo $formato_trab?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtprimero_apellido" type="hidden" id="txtprimero_apellido" value="<?php echo $primero_apellido?>" ></td>
   </tr>
 </table>
 </form>
@@ -127,4 +127,4 @@ $equipo=getenv("COMPUTERNAME"); $mcod_m="TRAB".$usuario_sia.$equipo; $codigo_mov
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

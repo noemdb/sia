@@ -1,4 +1,4 @@
-<?include ("../class/funciones.php"); 
+<?php include ("../class/funciones.php"); 
   //cod_presup_est='01-00-51-401-05-01-00'
    $conn = pg_connect("host=".$host." port=".$port." password=super user=usia dbname=DATOS");
    if (!$conn) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }

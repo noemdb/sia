@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); include ("../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="01"; $opcion="02-0000015"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG019".$usuario_sia.$equipo;
 if (!$_GET){ $criterio= ''; $referencia_aju=''; $tipo_aju_ord=''; $p_letra='';  $sql="SELECT * FROM AJUSTE_ORD ORDER BY Referencia_Aju_Ord,tipo_aju_ord";
 } else { $criterio= $_GET["Gcriterio"]; $referencia_aju = substr($criterio,0,8); $tipo_aju_ord=substr($criterio,8,4); $p_letra=substr($criterio, 0, 1);
@@ -88,10 +88,10 @@ MM_reloadPage(true);
 </script>
 
 </head>
-<?
+<?php 
 if ($codigo_mov==""){$codigo_mov="";} else{
- $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
- $resultado=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+ $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+ $resultado=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 }
 $mconf="";$tipo_causd="0002";$tipo_causc="0001";$tipo_causf="0003";$tipo_aju="0002";$Ssql="Select * from SIA005 where campo501='01'";$resultado=pg_query($Ssql);
 if ($registro=pg_fetch_array($resultado,0)){$mconf=$registro["campo502"]; $tipo_causc=$registro["campo504"];$tipo_causd=$registro["campo505"];$tipo_causf=$registro["campo506"];$tipo_aju=$registro["campo509"];}
@@ -121,17 +121,17 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
     <td>
     <table width="92" height="494" border="1" cellpadding="0" cellspacing="0" id="tablam">
     <td width="92"><table width="92" height="530" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF"  id="tablamenu">
-        <?if (($Mcamino{0}=="S")and($SIA_Cierre=="N")){?>
+        <?php if (($Mcamino{0}=="S")and($SIA_Cierre=="N")){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Inc_Aju_Orden('D')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llamar_Inc_Aju_Orden('D')">Incluir</a></div></td>
       </tr>
-          <?} if (($Mcamino{1}=="S")and($SIA_Cierre=="N")){?>
+          <?php } if (($Mcamino{1}=="S")and($SIA_Cierre=="N")){?>
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<?echo $anulado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<?echo $anulado?>');">Modificar</a></div></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php echo $anulado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php echo $anulado?>');">Modificar</a></div></td>
       </tr>
-          <?} if ($Mcamino{2}=="S"){?>
+          <?php } if ($Mcamino{2}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('P')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Mover_Registro('P');">Primero</a></div></td>
@@ -152,22 +152,22 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
     <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cat_act_ajuste_orden.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a href="Cat_act_ajuste_orden.php" class="menu">Catalogo</a></div></td>
   </tr>
-  <?} if (($Mcamino{7}=="S")and($SIA_Cierre=="N")){?>
+  <?php } if (($Mcamino{7}=="S")and($SIA_Cierre=="N")){?>
   <tr>
     <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
-    onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llama_Anular('<?echo $modulo?>','<?echo $anulado?>');" class="menu">Anular</a></td>
+    onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llama_Anular('<?php echo $modulo?>','<?php echo $anulado?>');" class="menu">Anular</a></td>
   </tr>
-  <?} if ($Mcamino{6}=="S"){?>
+  <?php } if ($Mcamino{6}=="S"){?>
   <tr>
     <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a href="javascript:Llama_Eliminar('<?echo $anulado?>');" class="menu">Eliminar</a></div></td>
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a href="javascript:Llama_Eliminar('<?php echo $anulado?>');" class="menu">Eliminar</a></div></td>
   </tr>
-  <?} if (($Mcamino{4}=="S")and($SIA_Cierre=="N")){?>
+  <?php } if (($Mcamino{4}=="S")and($SIA_Cierre=="N")){?>
 	<tr>
 	  <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
 	  onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llamar_Formato();" class="menu">Formato</a></td>
 	</tr>
-  <?} ?>
+  <?php } ?>
   <tr>
 	<td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:VentanaCentrada('/sia/pagos/ayuda/ayuda_ajuste_orden.htm','Ayuda SIA','','1000','1000','true');";
 		  onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:VentanaCentrada('/sia/pagos/ayuda/ayuda_ajuste_orden.htm','Ayuda SIA','','1000','1000','true');" class="menu">Ayuda </a></td>
@@ -189,19 +189,19 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                     <td width="850" height="14"><table width="848">
                     <tr>
                       <td width="151"><span class="Estilo5">REFERENCIA AJUSTE : </span></td>
-                      <td width="106"><span class="Estilo5"><input class="Estilo10" name="txtreferencia_aju" type="text" id="txtreferencia_aju" size="9" maxlength="8" value="<?echo $referencia_aju?>" readonly >
+                      <td width="106"><span class="Estilo5"><input class="Estilo10" name="txtreferencia_aju" type="text" id="txtreferencia_aju" size="9" maxlength="8" value="<?php echo $referencia_aju?>" readonly >
                       </span></td>
                       <td width="160"><span class="Estilo5">DOCUMENTO AJUSTE : </span></td>
-                      <td width="41"><span class="Estilo5"> <input class="Estilo10" name="txttipo_ajuste" type="text" id="txttipo_ajuste" size="4" maxlength="4"  value="<?echo $tipo_ajuste?>" readonly >
+                      <td width="41"><span class="Estilo5"> <input class="Estilo10" name="txttipo_ajuste" type="text" id="txttipo_ajuste" size="4" maxlength="4"  value="<?php echo $tipo_ajuste?>" readonly >
                       </span></td>
                       <td width="64"><span class="Estilo5">
-                      <input class="Estilo10" name="txtnombre_abrev_ajuste" type="text" id="txtnombre_abrev_ajuste" size="5" maxlength="5" value="<?echo $nombre_abrev_aju?>" readonly></span></td>
-                      <? if($anulado=='S'){?> <td width="100"><span class="Estilo15">ANULADO</span></td>
-                      <? }else{?> <td width="100"><span class="Estilo5"></span></td><? }?>
+                      <input class="Estilo10" name="txtnombre_abrev_ajuste" type="text" id="txtnombre_abrev_ajuste" size="5" maxlength="5" value="<?php echo $nombre_abrev_aju?>" readonly></span></td>
+                      <?php  if($anulado=='S'){?> <td width="100"><span class="Estilo15">ANULADO</span></td>
+                      <?php }else{?> <td width="100"><span class="Estilo5"></span></td><?php }?>
                       <td width="50"><span class="Estilo5">FECHA :</span></td>
-                      <td width="82"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="9" maxlength="15"  value="<?echo $fecha?>" readonly >
+                      <td width="82"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="9" maxlength="15"  value="<?php echo $fecha?>" readonly >
                       </span></td>
-                      <td width="52"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
+                      <td width="52"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
                     </tr>
                   </table></td>
                 </tr>
@@ -209,12 +209,12 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                   <td height="14"><table width="861" >
                     <tr>
                       <td width="152"><span class="Estilo5">N&Uacute;MERO ORDEN : </span></span></td>
-                      <td width="105"><span class="Estilo5"><input class="Estilo10" name="txtnro_orden" type="text" id="txtnro_orden" size="9" maxlength="8" value="<?echo $nro_orden?>" readonly>
+                      <td width="105"><span class="Estilo5"><input class="Estilo10" name="txtnro_orden" type="text" id="txtnro_orden" size="9" maxlength="8" value="<?php echo $nro_orden?>" readonly>
                       </span></td>
                       <td width="162"><span class="Estilo5">DOCUMENTO CAUSADO :</span></span></td>
-                      <td width="40"><span class="Estilo5"><input class="Estilo10" name="txttipo_causado" type="text" id="txttipo_causado" size="4" maxlength="4" value="<?echo $tipo_causado?>" readonly>
+                      <td width="40"><span class="Estilo5"><input class="Estilo10" name="txttipo_causado" type="text" id="txttipo_causado" size="4" maxlength="4" value="<?php echo $tipo_causado?>" readonly>
                       </span></td>
-                      <td width="67"><span class="Estilo5"><input class="Estilo10" name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus" size="5" maxlength="5" value="<?echo $nombre_abrev_caus?>" readonly>
+                      <td width="67"><span class="Estilo5"><input class="Estilo10" name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus" size="5" maxlength="5" value="<?php echo $nombre_abrev_caus?>" readonly>
                       </span></td>
                       <td width="133"><span class="Estilo5"></span></td>
                       <td width="170"><span class="Estilo5">
@@ -226,7 +226,7 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                   <td height="14"><table width="855">
                     <tr>
                       <td width="120" height="24"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></span></td>
-                      <td width="709"><span class="Estilo5"><textarea name="txtconcepto" cols="89" readonly="readonly" class="Estilo10" id="txtconcepto"><?echo $concepto?></textarea>
+                      <td width="709"><span class="Estilo5"><textarea name="txtconcepto" cols="89" readonly="readonly" class="Estilo10" id="txtconcepto"><?php echo $concepto?></textarea>
                       </span> </td>
                     </tr>
                   </table></td>
@@ -244,15 +244,15 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
    rows[1][1] = "C&oacute;d. Presupuestario";        // Requiere: <div id="T11" class="tab-body">  ... </div>
    rows[1][2] = "Comprobantes";
              </script>
-              <?include ("../class/class_tab.php");?>
+              <?php include ("../class/class_tab.php");?>
               <script type="text/javascript" language="javascript"> DrawTabs(); </script>
               <!-- PESTA&Ntilde;A 1 -->
               <div id="T11" class="tab-body">
-                <iframe src="Det_cons_ajus_ord.php?criterio=<?echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_cons_ajus_ord.php?criterio=<?php echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <!--PESTA&Ntilde;A 2 -->
                <div id="T12" class="tab-body" >
-                <iframe src="Det_cons_comp_orden.php?criterio=<?echo $criterio?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_cons_comp_orden.php?criterio=<?php echo $criterio?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
               </div>
             </div></td>
          </tr>
@@ -266,7 +266,7 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                 <td width="127">&nbsp;</td>
                 <td width="150" align="right"> <span class="Estilo5">TOTAL AJUSTE : </span> </td>
                 <td width="158"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_ajuste; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_ajuste; ?></td> </tr>
          </table></td>
                 </tr>
 
@@ -275,18 +275,18 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
 <form name="form2" method="post" action="Inc_ajuste_orden.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	 
-     <td width="5"><input class="Estilo10" name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtgen_ord_ret" type="hidden" id="txtgen_ord_ret" value="<?echo $gen_ord_ret?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtgen_comp_ret" type="hidden" id="txtgen_comp_ret" value="<?echo $gen_comp_ret?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtgen_pre_ret" type="hidden" id="txtgen_pre_ret" value="<?echo $gen_pre_ret?>" ></td>
-     <td width="5"><input class="Estilo10" name="txttipo_aju" type="hidden" id="txttipo_aju" value="<?echo $tipo_aju?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	 
+     <td width="5"><input class="Estilo10" name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtgen_ord_ret" type="hidden" id="txtgen_ord_ret" value="<?php echo $gen_ord_ret?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtgen_comp_ret" type="hidden" id="txtgen_comp_ret" value="<?php echo $gen_comp_ret?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtgen_pre_ret" type="hidden" id="txtgen_pre_ret" value="<?php echo $gen_pre_ret?>" ></td>
+     <td width="5"><input class="Estilo10" name="txttipo_aju" type="hidden" id="txttipo_aju" value="<?php echo $tipo_aju?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
   </tr>
 </table>
 </form>
@@ -296,4 +296,4 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

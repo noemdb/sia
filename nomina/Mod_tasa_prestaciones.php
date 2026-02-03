@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); if (!$_GET){$numero="";} else{$numero=$_GET["codigo"];}$fecha_hoy=asigna_fecha_hoy(); $fecha_desde=$fecha_hoy; $fecha_hasta=colocar_udiames($fecha_desde); $tasa=0;?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); if (!$_GET){$numero="";} else{$numero=$_GET["codigo"];}$fecha_hoy=asigna_fecha_hoy(); $fecha_desde=$fecha_hoy; $fecha_hasta=colocar_udiames($fecha_desde); $tasa=0;?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -31,12 +31,12 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM021 where numero='$numero'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 If($registro=pg_fetch_array($res,0)){$fecha_desde=$registro["fecha_desde"]; $fecha_desde=formato_ddmmaaaa($fecha_desde); $fecha_hasta=$registro["fecha_hasta"]; $fecha_hasta=formato_ddmmaaaa($fecha_hasta); $tasa=$registro["tasa"]; }
-pg_close(); $tasa=formato_monto($tasa);
+pg_close($conn); $tasa=formato_monto($tasa);
 ?>
 <body>
 <table width="978" height="52" border="0" bgcolor="#000066">
@@ -66,7 +66,7 @@ pg_close(); $tasa=formato_monto($tasa);
             <td><table width="866">
                 <tr>
                   <td width="200" ><span class="Estilo5">NUMERO DE GACETA :  </span></td>
-                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txtnumero" type="text" id="txtnumero" size="8" maxlength="6"  readonly value="<?echo $numero?>"> </span></td>
+                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txtnumero" type="text" id="txtnumero" size="8" maxlength="6"  readonly value="<?php echo $numero?>"> </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -75,9 +75,9 @@ pg_close(); $tasa=formato_monto($tasa);
              <td><table width="866">
                <tr>
                  <td width="200" ><span class="Estilo5">FECHA DESDE : </span></td>
-                 <td width="236" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="12" maxlength="10"  readonly value="<?echo $fecha_desde?>"> </span></td>
+                 <td width="236" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="12" maxlength="10"  readonly value="<?php echo $fecha_desde?>"> </span></td>
                  <td width="200" ><span class="Estilo5">FECHA HASTA : </span></td>
-                 <td width="230" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="12" maxlength="10"  readonly value="<?echo $fecha_hasta?>"> </span></td>
+                 <td width="230" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="12" maxlength="10"  readonly value="<?php echo $fecha_hasta?>"> </span></td>
                </tr>
              </table></td>
           </tr>
@@ -86,7 +86,7 @@ pg_close(); $tasa=formato_monto($tasa);
             <td><table width="866">
                 <tr>
                   <td width="200" ><span class="Estilo5">TASA PROMEDIO :</span></td>
-                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txttasa" type="text" id="txttasa" style="text-align:right" size="6" maxlength="5"  onFocus="encender(this)" onBlur="apaga_monto(this)" value="<?echo $tasa?>" onKeypress="return validarNum(event)"> </span></td>
+                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txttasa" type="text" id="txttasa" style="text-align:right" size="6" maxlength="5"  onFocus="encender(this)" onBlur="apaga_monto(this)" value="<?php echo $tasa?>" onKeypress="return validarNum(event)"> </span></td>
                 </tr>
             </table></td>
           </tr>

@@ -7,7 +7,7 @@ if (!$_GET){  $referencia_caus='';$tipo_causado='';$tipo_pago=''; $referencia_pa
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Anular Pagos)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Anular Pagos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript>
 </script>
@@ -24,7 +24,7 @@ function revisar(){
 var f=document.form1;
 var Valido=true;
     if(f.txtfecha_anu.value==""){alert("Fecha no puede estar Vacia");return false;}
-    if(f.txtdescrip_anu.value==""){alert("Descripción de Anulación no puede estar Vacia"); return false; }
+    if(f.txtdescrip_anu.value==""){alert("Descripciï¿½n de Anulaciï¿½n no puede estar Vacia"); return false; }
       else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
     if(f.txtfecha_anu.value.length==10){Valido=true;}
       else{alert("Longitud de Fecha Invalida");return false;}
@@ -59,7 +59,7 @@ return true;}
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
                 <td width="270"><span class="Estilo5"><span class="Estilo10">
-                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
@@ -81,13 +81,13 @@ return true;}
           </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input name="txtreferencia_pago" type="hidden" id="txtreferencia_pago" value="<?echo $referencia_pago?>"></td>
-            <td width="40"><input name="txttipo_pago" type="hidden" id="txttipo_pago" value="<?echo $tipo_pago?>"></td>
-            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?echo $cod_banco?>"></td>
-            <td width="40"><input name="txtreferencia_caus" type="hidden" id="txtreferencia_caus" value="<?echo $referencia_caus?>"></td>
-            <td width="40"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?echo $tipo_causado?>"></td>
-            <td width="40"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?echo $tipo_compromiso?>"></td>
-            <td width="40"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?echo $referencia_comp?>"></td>
+            <td width="40"><input name="txtreferencia_pago" type="hidden" id="txtreferencia_pago" value="<?php echo $referencia_pago?>"></td>
+            <td width="40"><input name="txttipo_pago" type="hidden" id="txttipo_pago" value="<?php echo $tipo_pago?>"></td>
+            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?php echo $cod_banco?>"></td>
+            <td width="40"><input name="txtreferencia_caus" type="hidden" id="txtreferencia_caus" value="<?php echo $referencia_caus?>"></td>
+            <td width="40"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?php echo $tipo_causado?>"></td>
+            <td width="40"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?php echo $tipo_compromiso?>"></td>
+            <td width="40"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?php echo $referencia_comp?>"></td>
           </tr></table></td>
           </tr>
           <tr>

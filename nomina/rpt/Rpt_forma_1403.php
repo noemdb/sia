@@ -1,4 +1,4 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_empleado=$_POST["txtcod_empleado"];$cedula=$_POST["txtcedula"];$nacionalidad=$_POST["txtnacionalidad"];$fecha_ingreso=$_POST["txtfecha_ingreso"];
 $nombre=$_POST["txtnombre"];$tnom_emp=$_POST["txtnom_emp"]; $nro_empresa=$_POST["txtnro_empresa"];
 $num_aseg=$_POST["txtnum_aseg"]; $cod_suc=$_POST["txtcod_suc"]; $cond_trab=$_POST["txtcond_trab"];$fecha_nac=$_POST["txtfecha_nacimiento"]; $direccion=$_POST["txtdireccion"];
@@ -6,7 +6,7 @@ $cod_cent=$_POST["txtcod_cent"]; $sexo=$_POST["txtsexo"]; $zurdo=$_POST["txtzurd
 $salario_sem=$_POST["txtsalario_sem"]; $cod_ocupacion=$_POST["txtcod_ocupacion"]; $ocupacion=$_POST["txtocupacion"];  $fec_retiro=$_POST["txtfec_retiro"];
 
 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
   if($php_os=="WINNT"){$Nom_Emp=$Nom_Emp; }else{$Nom_Emp=utf8_decode($Nom_Emp); $nombre=utf8_decode($nombre); }
   $nac_v=""; $nac_e=""; if(substr($nacionalidad,0,1)=="E"){$nac_e="X";}else {$nac_v="X";}

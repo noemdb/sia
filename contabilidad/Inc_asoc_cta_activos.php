@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Incluir Asociacion Cuentas de Activos)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Incluir Asociacion Cuentas de Activos)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK  href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript  src="../class/sia.js" type=text/javascript></SCRIPT>

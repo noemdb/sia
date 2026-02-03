@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -51,42 +51,42 @@ $res=pg_query($sql);
 		   <td width="249" align="center" bgcolor="#99CCFF" ><strong>Pago de Vacaciones por N&oacute;mina </strong></td>
 		   <td width="303" align="center" bgcolor="#99CCFF" ><strong>Fecha Retorno Vacaciones </strong></td>
 		   </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res))
 { $monto=$registro["monto_ret"]; $monto=formato_monto($monto);$total=$total+$registro["monto_ret"];
 $concepto_ret=$registro["concepto_ret"]; $concepto_ret=substr($concepto_ret,0,150);
 $codigo=$registro["ref_comp_est"]." ".$registro["cod_presup_est"]." ".$registro["fuente_est"];
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="184" align="left"><? echo $registro["tipo_ret"]; ?></td>
-           <td width="358" align="left"><? echo $registro["descripcion_ret"]; ?></td>
-           <td width="263" align="right"><? echo $registro["tasa"]; ?></td>
-           <td width="362" align="right"><? echo $registro["monto_objeto"]; ?></td>
-           <td width="235" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="164" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="263" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="176" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="362" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="195" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="168" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="797" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="176" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="267" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="409" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="797" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="215" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="231" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="599" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="283" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="249" align="right"><? echo $registro["tasa"]; ?></td>
-		   <td width="303" align="right"><? echo $registro["tasa"]; ?></td>
+           <td width="184" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+           <td width="358" align="left"><?php  echo $registro["descripcion_ret"]; ?></td>
+           <td width="263" align="right"><?php  echo $registro["tasa"]; ?></td>
+           <td width="362" align="right"><?php  echo $registro["monto_objeto"]; ?></td>
+           <td width="235" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="164" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="263" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="176" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="362" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="195" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="168" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="797" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="176" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="267" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="409" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="797" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="215" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="231" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="599" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="283" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="249" align="right"><?php  echo $registro["tasa"]; ?></td>
+		   <td width="303" align="right"><?php  echo $registro["tasa"]; ?></td>
 		   </tr>
-         <?}
+         <?php }
  $total=formato_monto($total);
 ?>
        </table></td>
@@ -101,6 +101,6 @@ $codigo=$registro["ref_comp_est"]." ".$registro["cod_presup_est"]." ".$registro[
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

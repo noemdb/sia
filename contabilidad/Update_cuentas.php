@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $Codigo_Cuenta=$_POST["txtCodigo_Cuenta"]; $nombre_cuenta=$_POST["txtNombre_Cuenta"];  $fecha=$_POST["txtFecha_Creado"];
 $Clasificacion=$_POST["txtClasificacion"]; $TSaldo=$_POST["txtTSaldo"]; $monto=formato_numero($_POST["txtsaldo_anterior"]);
 $MClasif_Fiscal="";
@@ -14,19 +14,19 @@ if(is_numeric($monto)){ $Saldo_Anterior=$monto;} else{$Saldo_Anterior=0;}
 $equipo = getenv("COMPUTERNAME"); $MInf_Usuario = $equipo." ".date("d/m/y H:i a"); $l=0;  $error=0;
 echo "ESPERE POR FAVOR MODIFICANDO....";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript"> muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
- else{  if (checkData($fecha)=='1'){$sfecha=formato_aaaammdd($fecha);} else{$error=1; ?> <script language="JavaScript"> muestra('FECHA NO ES VALIDA');</script><? }
+if (pg_last_error($conn)){ ?> <script language="JavaScript"> muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
+ else{  if (checkData($fecha)=='1'){$sfecha=formato_aaaammdd($fecha);} else{$error=1; ?> <script language="JavaScript"> muestra('FECHA NO ES VALIDA');</script><?php }
   if ($error==0){
   $sSQL="Select * from con001 WHERE codigo_cuenta='$Codigo_Cuenta'";  $resultado=pg_exec($conn,$sSQL);   $filas=pg_numrows($resultado);
-  if ($filas==0){?> <script language="JavaScript"> muestra('CODIGO DE CUENTA NO EXISTE');</script><? }
+  if ($filas==0){?> <script language="JavaScript"> muestra('CODIGO DE CUENTA NO EXISTE');</script><?php }
    else{  $registro=pg_fetch_array($resultado);     $des_ant=$registro["nombre_cuenta"];   $sal_ant=$registro["saldo_anterior"];
      $resultado=pg_exec($conn,"SELECT ACTUALIZA_CON001(2,'$Codigo_Cuenta','$nombre_cuenta',$Saldo_Anterior,'C','$TSaldo','$MClasif_Fiscal','','','',0,0,'$MInf_Usuario',$l,'$sfecha')");
-     $error=pg_errormessage($conn); $error=substr($error,0,91);   if (!$resultado){?> <script language="JavaScript"> muestra('<? echo $error; ?>'); </script> <? }
-      else{?><script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?$desc_doc="CUENTA CONTABLE :".$Codigo_Cuenta.", DESCRIPCION:".$des_ant.", SALDO ANTERIOR:".$sal_ant;
+     $error=pg_errormessage($conn); $error=substr($error,0,91);   if (!$resultado){?> <script language="JavaScript"> muestra('<?php  echo $error; ?>'); </script> <?php }
+      else{?><script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?php $desc_doc="CUENTA CONTABLE :".$Codigo_Cuenta.", DESCRIPCION:".$des_ant.", SALDO ANTERIOR:".$sal_ant;
       $resultado=pg_exec($conn,"SELECT INCLUYE_SIA004('03','$usuario_sia','$usuario_sia','$equipo','Modifico','$sfecha','$desc_doc')");
-      $error=pg_errormessage($conn); $error=substr($error,0,91);      if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <?}}
+      $error=pg_errormessage($conn); $error=substr($error,0,91);      if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } }
   }}
 }
-pg_close();
+pg_close($conn);
 ?>
 <script language="JavaScript">history.back();</script>

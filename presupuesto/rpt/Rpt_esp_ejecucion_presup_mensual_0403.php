@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");?>
-<?include ("../../class/funciones.php");?>
+<?php include ("../../class/seguridad.inc");?>
+<?php include ("../../class/funciones.php");?>
 <?php include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $periodod='01';
  $periodoh='01';
  $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
@@ -222,4 +222,4 @@ var url;
 </body>
 </html>
 
-<? pg_close();?>
+<?php  pg_close($conn);?>

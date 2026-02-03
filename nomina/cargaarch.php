@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();
 $tipo_nomina=$_GET["tipo_nomina"];$cod_concepto=$_GET["cod_concepto"]; $nombre_arch=$_GET["nombre_arch"];
 $col1=$_GET["col1"]; $col2=$_GET["col2"]; $cambia=$_GET["cambia"]; $buscarp=$_GET["buscarp"]; $col1=$col1*1; $col2=$col2*1;
 $col1=$col1-1; $col2=$col2-1; $criterio=$tipo_nomina.$cod_concepto."0"; 
 //echo "ESPERE POR FAVOR CARGANDO ARCHIVO....","<br>";
 $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  
-if (pg_ErrorMessage($conn)){$error=1; echo 'OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS',"<br>";}
+if (pg_last_error($conn)){$error=1; echo 'OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS',"<br>";}
  else{ $error=0; $mov=9; $cod_partida=""; $frecuencia="3"; $afecta_presup="SI"; $cod_retencion="000";
     $formato_trab="XXXXXXXXXX";$sql="Select * from SIA005 where campo501='04'";$resultado=pg_query($sql);if($registro=pg_fetch_array($resultado,0)){$formato_trab=$registro["campo504"];$formato_cargo=$registro["campo505"];$formato_dep=$registro["campo506"];}
 	$l=strlen($formato_trab);
@@ -39,5 +39,5 @@ if (pg_ErrorMessage($conn)){$error=1; echo 'OCURRIO UN ERROR CONECTANDO LA BASE 
          }
       }
      }
-}pg_close(); 
-if($error==0){?> <iframe src="Det_carga_manual.php?criterio=<?echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe> <?} else{ echo $error;}?>
+}pg_close($conn); 
+if($error==0){?> <iframe src="Det_carga_manual.php?criterio=<?php echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe> <?php } else{ echo $error;}?>

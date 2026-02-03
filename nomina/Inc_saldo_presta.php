@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Saldo de Prestaciones)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Saldo de Prestaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -113,7 +113,7 @@ return true;}
              <td><table width="866">
                <tr>
                  <td width="146" ><span class="Estilo5">FECHA CALCULO : </span></td>
-                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"></span></td>
+                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"></span></td>
                  <td width="130" ><span class="Estilo5">MONTO SUELDO : </span></td>
                  <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txtsueldo_calculo" type="text" id="txtsueldo_calculo" size="17" maxlength="17"  style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)"  value="0" onKeypress="return validarNum(event)"></span></td>
                  <td width="120"><span class="Estilo5">CANTIDAD DIAS  :</span></td>

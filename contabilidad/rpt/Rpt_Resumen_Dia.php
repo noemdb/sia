@@ -1,14 +1,14 @@
-<?include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
 $fecha_d=$_GET["fecha_d"]; $fecha_h=$_GET["fecha_h"]; $cod_cuenta_d=$_GET["cod_cuenta_d"];$cod_cuenta_h=$_GET["cod_cuenta_h"]; $tipo_rpt=$_GET["tipo_rpt"];
 $vstatus=$_GET["vstatus"];   $criterio1="Desde ".$fecha_d." Al ".$fecha_h;  $Sql=""; $date = date("d-m-Y"); $hora = date("H:i:s a");
 if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','5')";    $resultado=pg_exec($conn,$Sql);    $error=pg_errormessage($conn);    $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
     $Sql="SELECT RPT_RES_DIARIO_CON013('".$usuario_sia."','5','".$sfecha_d."','".$sfecha_h."','".$cod_cuenta_d."','".$cod_cuenta_h."','".$vstatus."')";
     $resultado=pg_exec($conn,$Sql);     $error=pg_errormessage($conn);     $error="ERROR GRABANDO: ".substr($error, 0, 61);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
        else{ $Sql= "select * from RPT_RES_DIARIO WHERE nombre_usuario='".$usuario_sia."' AND tipo_registro='5' ORDER BY fecha, cod_cuenta"; $sSQL = $Sql;
 
        if($tipo_rpt=="HTML"){	 include ("../../class/phpreports/PHPReportMaker.php");
@@ -117,7 +117,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	$criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	$criterio1?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><strong>CODIGO CUENTA</strong></td>
@@ -125,7 +125,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>DEBE</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>HABER</strong></td>
 			 </tr>
-		  <?  $i=0;  $total_columna1=0; $total_columna2=0; $sub_total_columna1=0; $sub_total_columna2=0; $prev_fecha="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $total_columna1=0; $total_columna2=0; $sub_total_columna1=0; $sub_total_columna2=0; $prev_fecha="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha=$registro["fecha"];       $fecha=formato_ddmmaaaa($fecha); $fecha_grupo=$fecha;
 		       
 		    if($prev_fecha<>$fecha_grupo){ 			   
@@ -139,20 +139,20 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				    </tr>	
 				    <tr>
 				      <td width="100" align="left"></td>
-				      <td width="400" align="right"><strong><? echo "Total Fecha ".$prev_fecha." : "; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_columna1; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_columna2; ?></strong></td>
+				      <td width="400" align="right"><strong><?php  echo "Total Fecha ".$prev_fecha." : "; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_columna1; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_columna2; ?></strong></td>
 				    </tr>	
 					<tr>
 				      <td width="80" align="left"></td>
 				    </tr>	
-                  <?}	
+                  <?php }	
 				 ?>	   
 				<tr>
 				   <td width="100" align="left">FECHA:</td>
-				   <td width="400" align="left"><? echo $fecha_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $fecha_grupo; ?></td>
 				 </tr>
-			     <? 				 
+			     <?php  				 
 				 $prev_fecha=$fecha_grupo; $sub_total_columna1=0; $sub_total_columna2=0;}
 		  $cod_cuenta=$registro["cod_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; $columna1=$registro["columna1"]; $columna2=$registro["columna2"];  
                   if($php_os=="WINNT"){$nombre_cuenta=$registro["nombre_cuenta"]; }else{$nombre_cuenta=utf8_decode($nombre_cuenta);}
@@ -162,12 +162,12 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 		  $nombre_cuenta=conv_cadenas($nombre_cuenta,0);
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><? echo $cod_cuenta; ?></td>
-				   <td width="400" align="justify"><? echo $nombre_cuenta; ?></td>
-				   <td width="100" align="right"><? echo $columna1; ?></td>
-				   <td width="100" align="right"><? echo $columna2; ?></td>
+				   <td width="100" align="left"><?php  echo $cod_cuenta; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre_cuenta; ?></td>
+				   <td width="100" align="right"><?php  echo $columna1; ?></td>
+				   <td width="100" align="right"><?php  echo $columna2; ?></td>
 				 </tr>
-			   <? 
+			   <?php  
  			   
 		  } $total_columna1=formato_monto($total_columna1); $total_columna2=formato_monto($total_columna2);
 			if(($sub_total_columna1>0)or($sub_total_columna2>0)){ $sub_total_columna1=formato_monto($sub_total_columna1); $sub_total_columna2=formato_monto($sub_total_columna2); 
@@ -180,14 +180,14 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				    </tr>	
 				    <tr>
 				      <td width="100" align="left"></td>
-				      <td width="400" align="right"><strong><? echo "Total Fecha ".$prev_fecha." : "; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_columna1; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_columna2; ?></strong></td>
+				      <td width="400" align="right"><strong><?php  echo "Total Fecha ".$prev_fecha." : "; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_columna1; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_columna2; ?></strong></td>
 				    </tr>	
 					<tr>
 				      <td width="80" align="left"></td>
 				    </tr>	
-                 <?}	
+                 <?php }	
 				?>	 				 
                     <tr>
 				      <td width="100" align="left"></td>
@@ -198,13 +198,13 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				    <tr>
 				          <td width="100" align="left"></td>
 					  <td width="400" align="right"><strong>TOTAL GENERAL</strong></strong></td>
-					  <td width="100" align="right"><strong><? echo $total_columna1; ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $total_columna2; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $total_columna1; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $total_columna2; ?></strong></td>
 				    </tr>	
 				    <tr>
 				      <td width="150" align="left"></td>
 				    </tr>	
-                </table><?
+                </table><?php 
         }		  
     }
 }?>

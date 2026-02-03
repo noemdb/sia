@@ -3,4 +3,4 @@ $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$u
 $StrSQL="select * from pag036 where codigo_mov='$codigo_mov'";  $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
 if($filas==0){ $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(1,'$codigo_mov','00000000','0000','','0000','','$pasivo_comp')"); }
 else{$resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(4,'$codigo_mov','00000000','0000','','0000','','$pasivo_comp')"); }
-?><span class="Estilo5">CUENTAS FORMAN PARTE DEL COMPROBANTE:</span> <?pg_close();?>
+?><span class="Estilo5">CUENTAS FORMAN PARTE DEL COMPROBANTE:</span> <?php pg_close($conn);?>

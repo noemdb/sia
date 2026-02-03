@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
 if (!$_GET){$codigo_mov="";$ivag=0;$ref_comp="N";$ced_rif="";$tipo_comp="";$ref_compromiso="";$monto=0;}
 else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];$ivag=$_GET["ivag"];$ref_comp=$_GET["ref_comp"];$ced_rif=$_GET["ced_rif"];$tipo_comp=$_GET["tipo_comp"];$ref_compromiso=$_GET["ref_compromiso"];$monto=$_GET["monto"];}
 $tasa_iva=formato_monto($ivag);$fecha_hoy=asigna_fecha_hoy();
@@ -8,7 +8,7 @@ $tasa_iva=formato_monto($ivag);$fecha_hoy=asigna_fecha_hoy();
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Factura en la Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Factura en la Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -25,7 +25,7 @@ function validarNum(e,obj){tecla=(document.all) ? e.keyCode : e.which;  if(tecla
 }
 function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla!=13) return;  frm=obj.form;  for(i=0;i<frm.elements.length;i++)  if(frm.elements[i]==obj) {if (i==frm.elements.length-1) i=-1; break } frm.elements[i+1].focus(); return false;} 
 
-function llamar_anterior(){ document.location ='Det_inc_fact_ord.php?codigo_mov=<?echo $codigo_mov?>&ref_comp=<?echo $ref_comp?>&ced_rif=<?echo $ced_rif?>'; }
+function llamar_anterior(){ document.location ='Det_inc_fact_ord.php?codigo_mov=<?php echo $codigo_mov?>&ref_comp=<?php echo $ref_comp?>&ced_rif=<?php echo $ced_rif?>'; }
 function daformatomonto (monto){var i; var str2 ="";
    for (i = 0; i < monto.length; i++){if ((monto.charAt(i) == '.')){str2 = str2 + ",";} else{if (((monto.charAt(i) >= '0') && (monto.charAt(i) <= '9')) || (monto.charAt(i) == '-') ) {str2 = str2 + monto.charAt(i);} } }
    return str2;
@@ -133,7 +133,7 @@ function apaga_obj_ret(mthis){var mref; var mmonto;
    apagar(mthis);    mmonto=document.form1.txtmonto_iva4_so.value;  mmonto=cambia_punto_coma(mmonto);document.form1.txtmonto_iva4_so.value=mmonto;
 return true;}
 function Llama_catalogo(){var murl;
-  murl="Cat_comp_benef.php?codigo_mov=<?echo$codigo_mov;?>&ivag=<?echo$ivag;?>&ref_comp=<?echo$ref_comp;?>&ced_rif=<?echo $ced_rif?>&tipo_comp=&ref_compromiso=";
+  murl="Cat_comp_benef.php?codigo_mov=<?php echo$codigo_mov;?>&ivag=<?php echo$ivag;?>&ref_comp=<?php echo$ref_comp;?>&ced_rif=<?php echo $ced_rif?>&tipo_comp=&ref_compromiso=";
   document.location=murl;
 }
 function revisar(){var f=document.form1;var Valido=true;
@@ -161,22 +161,22 @@ return true;}
         <tr>
           <td height="31" align="center" bgcolor="#000066"><span class="Estilo9">INCLUIR NUEVA FACTURA A LA ORDEN</span></td>
         </tr>
-            <? if($ref_comp=='S'){?><tr><td><table width="656">
+            <?php  if($ref_comp=='S'){?><tr><td><table width="656">
             <tr>
               <td width="177"><span class="Estilo5">DOCUMENTO COMPROMISO:</span></td>
-              <td width="56"><input class="Estilo10" name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apaga_tipo(this)"  onchange="chequea_tipo(this.form);" value="<?echo $tipo_comp?>" onkeypress="return stabular(event,this)"></td>
+              <td width="56"><input class="Estilo10" name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apaga_tipo(this)"  onchange="chequea_tipo(this.form);" value="<?php echo $tipo_comp?>" onkeypress="return stabular(event,this)"></td>
               <td width="95"><span class="Estilo5"><input class="Estilo10" name="btcomp_rif" type="button" id="btcomp_rif" title="Abrir Catalogo de Compomisos del Beneficiario" onClick="Llama_catalogo()" value="..." onkeypress="return stabular(event,this)">  </span></td>
               <td width="128"><span class="Estilo5">REFERENCIA :</span></td>
-              <td width="176"><input class="Estilo10" name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8"  onFocus="encender(this);" onBlur="apaga_referencia(this)" onchange="checkreferencia(this.form);" value="<?echo $ref_compromiso?>" onkeypress="return stabular(event,this)"></td>
+              <td width="176"><input class="Estilo10" name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8"  onFocus="encender(this);" onBlur="apaga_referencia(this)" onchange="checkreferencia(this.form);" value="<?php echo $ref_compromiso?>" onkeypress="return stabular(event,this)"></td>
             </tr>
-          </table></td> </tr>  <? }?>
+          </table></td> </tr>  <?php }?>
         <tr>
           <td><table width="654">
             <tr>
               <td width="153"><span class="Estilo5">N&Uacute;MERO DOCUMENTO:</span></td>
               <td width="183"><input class="Estilo10" name="txtnro_factura" type="text"  id="txtnro_factura" size="25" maxlength="20" onFocus="encender(this);" onBlur="apaga_fact(this)"  onchange="chequea_factura(this.form);" onkeypress="return stabular(event,this)"></td>
               <td width="123"><span class="Estilo5">FECHA FACTURA:</span></td>
-              <td width="175"><input class="Estilo10" name="txtfecha_factura" type="text" id="txtfecha_factura" size="12" maxlength="10" onFocus="encende_fecha(this);" onBlur="apaga_fecha(this)"  onchange="chequea_fecha(this.form);" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return stabular(event,this)"></td>
+              <td width="175"><input class="Estilo10" name="txtfecha_factura" type="text" id="txtfecha_factura" size="12" maxlength="10" onFocus="encende_fecha(this);" onBlur="apaga_fecha(this)"  onchange="chequea_fecha(this.form);" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return stabular(event,this)"></td>
             </tr>
           </table></td>
         </tr>
@@ -194,9 +194,9 @@ return true;}
           <td><table width="655" border="0">
             <tr>
               <td width="154"><span class="Estilo5">MONTO SIN IVA: </span></td>
-              <td width="182"><span class="Estilo5"><div id="montOb"><input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right" onFocus="encende_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?echo $monto?>" onKeypress="return validarNum(event,this)">  </div> </span></td>
+              <td width="182"><span class="Estilo5"><div id="montOb"><input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right" onFocus="encende_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?php echo $monto?>" onKeypress="return validarNum(event,this)">  </div> </span></td>
               <td width="124"><span class="Estilo5">TASA DE IVA:</span></td>
-              <td width="177"><span class="Estilo5"><input class="Estilo10" name="txttasa_iva" type="text" id="txttasa_iva" size="6" maxlength="5" style="text-align:right" onFocus="encender(this);" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<?echo $tasa_iva?>" onKeypress="return validarNum(event,this)">  </span></td>
+              <td width="177"><span class="Estilo5"><input class="Estilo10" name="txttasa_iva" type="text" id="txttasa_iva" size="6" maxlength="5" style="text-align:right" onFocus="encender(this);" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<?php echo $tasa_iva?>" onKeypress="return validarNum(event,this)">  </span></td>
             </tr>
           </table></td>
         </tr>
@@ -216,24 +216,24 @@ return true;}
               <td width="153"><span class="Estilo5">MONTO OBJETO RETENCION:</span></td>
               <td width="182"><span class="Estilo5"><input class="Estilo10" name="txtmonto_iva4_so" type="text" id="txtmonto_iva4_so" size="22" style="text-align:right" onFocus="encender(this);" onBlur="apaga_obj_ret(this)" onKeypress="return validarNum(event,this)"> </span> </td>
 			  <td width="126"><span class="Estilo5">RIF FACTURA :</span></td>
-              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtrif_fact" type="text"  id="txtrif_fact"  value="<?echo $ced_rif?>" size="14" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" onkeypress="return stabular(event,this)"> </span> </td>
+              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtrif_fact" type="text"  id="txtrif_fact"  value="<?php echo $ced_rif?>" size="14" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" onkeypress="return stabular(event,this)"> </span> </td>
              </tr>
           </table>            </td>
         </tr>		
 		<tr>
           <td><table width="655" border="0">
               <tr>
-			    <? if($ref_comp=='S'){?>
+			    <?php  if($ref_comp=='S'){?>
                 <td width="154"><span class="Estilo5">MONTO ANTICIPO:</span></td>
                 <td width="182"><span class="Estilo5"><input class="Estilo10" name="txtmonto_iva3_so" type="text" id="txtmonto_iva3_so" value="0" size="22" maxlength="20" style="text-align:right" onFocus="encender(this); " onBlur="apagar(this)" onKeypress="return validarNum(event,this)">  </span></td>
                 <td width="126"><span class="Estilo5">FACT AFECTADA:</span></td>
 				<td width="175"><span class="Estilo5"><input class="Estilo10" name="txtcampo_str2" type="text" id="txtcampo_str2"  size="22" maxlength="20" onFocus="encender(this); " onBlur="apagar(this)" onkeypress="return stabular(event,this)">  </span></td>
-               <? } else{?>
+               <?php } else{?>
                 <td width="154"><span class="Estilo5">FACT AFECTADA:</span></td>
 				<td width="182"><span class="Estilo5"><input class="Estilo10" name="txtcampo_str2" type="text" id="txtcampo_str2"  size="22" maxlength="20" onFocus="encender(this); " onBlur="apagar(this)" onkeypress="return stabular(event,this)">  </span></td>
                 <td width="126">&nbsp;</td>
                 <td width="175">&nbsp;</td>
-				<? }?>
+				<?php }?>
               </tr>
           </table></td>
         </tr>
@@ -244,12 +244,12 @@ return true;}
       </table>
         <table width="595" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="100"><input name="txtref_comp" type="hidden" id="txtref_comp" value="<?echo $ref_comp?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="100"><input name="txtref_comp" type="hidden" id="txtref_comp" value="<?php echo $ref_comp?>"></td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>
             <td width="96" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-            <td width="117"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?echo $ced_rif?>"></td>
+            <td width="117"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?php echo $ced_rif?>"></td>
           </tr>
         </table>      </td>
     </tr>

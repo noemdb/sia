@@ -6,7 +6,7 @@ $fecha_hoy=asigna_fecha_hoy();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA COMPRAS,SERVICIOS Y ALMAC&Eacute;N (APROBAR SOLICITUD)</title>
+<title>SIPAP COMPRAS,SERVICIOS Y ALMAC&Eacute;N (APROBAR SOLICITUD)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
@@ -50,7 +50,7 @@ return true;}
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE APROBACI&Oacute;N: </span></td>
                 <td width="270"><span class="Estilo5"><span class="Estilo10">
-                  <input name="txtfecha_aprobada" type="text" id="txtfecha_aprobada" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input name="txtfecha_aprobada" type="text" id="txtfecha_aprobada" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
@@ -64,7 +64,7 @@ return true;}
                 <table width="680" border="0" align="center">
                   <tr>
                     <td width="110"><span class="Estilo5">APROBADA POR : </span></td>
-					<td width="495"><span class="Estilo5"><input name="txtaprobado_por" type="text" class="Estilo5" id="txtaprobado_por"  value="<?echo $aprobado_por?>" size="60" maxlength="60" onFocus="encender(this)" onBlur="apagar(this)"></span></td>    
+					<td width="495"><span class="Estilo5"><input name="txtaprobado_por" type="text" class="Estilo5" id="txtaprobado_por"  value="<?php echo $aprobado_por?>" size="60" maxlength="60" onFocus="encender(this)" onBlur="apagar(this)"></span></td>    
 					
                   </tr>
               </table></td>
@@ -74,7 +74,7 @@ return true;}
           </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input name="txtnro_solicitud" type="hidden" id="txtnro_solicitud" value="<?echo $nro_solicitud?>"></td>
+            <td width="40"><input name="txtnro_solicitud" type="hidden" id="txtnro_solicitud" value="<?php echo $nro_solicitud?>"></td>
           </tr></table></td>
           </tr>          
           <tr>

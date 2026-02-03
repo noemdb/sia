@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");$equipo=getenv("COMPUTERNAME");
 $fecha_hoy=asigna_fecha_hoy(); $codigo_mov=$_POST["txtcodigo_mov"]; $nacionalidad=$_POST["txtnacionalidad"]; $nro_asegurado=$_POST["txtnro_asegurado"];
 $cod_empleado=$_POST["txtcod_empleado"];$nombre=$_POST["txtnombre"]; $cedula=$_POST["txtcedula"]; $fecha_ingreso=$_POST["txtfecha_ingreso"]; 
 $cod_suc=$_POST["txtcod_suc"]; $fecha_nacimiento=$_POST["txtfecha_nacimiento"]; $cond_trab=$_POST["txtcond_trab"]; $direccion=$_POST["txtdireccion"];
@@ -11,7 +11,7 @@ $fecha_egreso=$_POST["txtfecha_egreso"];
 <LINK REL="SHORTCUT ICON" HREF="../../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (CARGAR FORMA 1403)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (CARGAR FORMA 1403)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../../class/sia.js" type="text/javascript"></script>
@@ -46,8 +46,8 @@ return true;}
   <tr>
     <td width="92" height="403"><table width="92" height="403" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
      <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('../Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="../Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('../Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="../Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -65,12 +65,12 @@ return true;}
              <td><table width="876">
                <tr>
                  <td width="176"><span class="Estilo5">C&Eacute;DULA TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="110"><span class="Estilo5">NACIONALIDAD : </span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?echo $nacionalidad?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?php echo $nacionalidad?>" readonly></span></td>
                 
 				 <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -78,7 +78,7 @@ return true;}
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -89,9 +89,9 @@ return true;}
              <td><table width="866">
                <tr>
                    <td width="130"><span class="Estilo5">NOMBRE PATRONO : </span></td>
-                   <td width="500"><span class="Estilo5"> <input class="Estilo10" name="txtnom_emp" type="text" id="txtnom_emp" size="70" maxlength="100"   value="<?echo $nom_emp?>" readonly></span></td>
+                   <td width="500"><span class="Estilo5"> <input class="Estilo10" name="txtnom_emp" type="text" id="txtnom_emp" size="70" maxlength="100"   value="<?php echo $nom_emp?>" readonly></span></td>
                    <td width="110"><span class="Estilo5">NRO EMPRESA : </span></td>
-				   <td width="126"><span class="Estilo5"> <input class="Estilo10" name="txtnro_empresa" type="text" id="txtnro_empresa" size="10" maxlength="10"   value="<?echo $nro_empresa?>" readonly></span></td>
+				   <td width="126"><span class="Estilo5"> <input class="Estilo10" name="txtnro_empresa" type="text" id="txtnro_empresa" size="10" maxlength="10"   value="<?php echo $nro_empresa?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -101,7 +101,7 @@ return true;}
              <td><table width="866">
                <tr>
                    <td width="170"><span class="Estilo5">NUMERO DE ASEGURADO : </span></td>
-                   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtnum_aseg" type="text" id="txtnum_aseg" size="15" maxlength="15"   value="<?echo $num_asegurado?>" readonly></span></td>
+                   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtnum_aseg" type="text" id="txtnum_aseg" size="15" maxlength="15"   value="<?php echo $num_asegurado?>" readonly></span></td>
                    
 				   <td width="170"><span class="Estilo5">CAUSA DEL RETIRO : </span></td>
 				   <td width="226"><span class="Estilo5"><select name="txtcond_trab" size="1" id="txtcond_trab" onFocus="encender(this)" onBlur="apagar(this)" onkeypress="return tabular(event,this)"><option>DESPEDIDO</option> <option>RENUNCIA</option>  <option>JUBILADO</option>  <option>PENSIONADO</option> <option>TRASLADO A OTRA EMPRESA</option>   <option>FALLECIMIENTO</option>  </select>  </span></td>
@@ -112,14 +112,14 @@ return true;}
              <td><table width="866">
                <tr>
 			       <td width="170"><span class="Estilo5">INGRESO A LA EMPRESA : </span></td>
-				   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txting_empresa" type="text" id="txting_empresa" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_ingreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+				   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txting_empresa" type="text" id="txting_empresa" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_ingreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="170"><span class="Estilo5">SALARIO SEMANAL : </span></td>
-                   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtsalario_sem" type="text" id="txtsalario_sem" size="15" maxlength="15"   value="<?echo $salario_sem?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtsalario_sem" type="text" id="txtsalario_sem" size="15" maxlength="15"   value="<?php echo $salario_sem?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>		   
 <script language="JavaScript" type="text/JavaScript">
-var mvalor='<?echo $cond_trab?>'; 
+var mvalor='<?php echo $cond_trab?>'; 
     if(mvalor=="DESPEDIDO"){document.form1.txtcond_trab.options[0].selected = true;}  
     if(mvalor=="RENUNCIA"){document.form1.txtcond_trab.options[1].selected = true;}
     if(mvalor=="JUBILADO"){document.form1.txtcond_trab.options[2].selected = true;}     
@@ -130,9 +130,9 @@ var mvalor='<?echo $cond_trab?>';
              <td><table width="866">
                <tr>
 			       <td width="170"><span class="Estilo5">FECHA DE RETIRO : </span></td>
-				   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtfec_retiro" type="text" id="txtfec_retiro" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_egreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+				   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtfec_retiro" type="text" id="txtfec_retiro" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_egreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="170"><span class="Estilo5">COD. OCUPACION  : </span></td>
-				   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtcod_ocupacion" type="text" id="txtcod_ocupacion" size="10" maxlength="10"   value="<?echo $cod_ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+				   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtcod_ocupacion" type="text" id="txtcod_ocupacion" size="10" maxlength="10"   value="<?php echo $cod_ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>	
@@ -141,7 +141,7 @@ var mvalor='<?echo $cond_trab?>';
              <td><table width="864">
                <tr>
                  <td width="154"><span class="Estilo5"> OCUPACION U OFICIO  : </span></td>
-                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtocupacion" type="text" id="txtocupacion" size="85" maxlength="85"  value="<?echo $ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtocupacion" type="text" id="txtocupacion" size="85" maxlength="85"  value="<?php echo $ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -152,14 +152,14 @@ var mvalor='<?echo $cond_trab?>';
          <p>&nbsp;</p>
          <table width="859">
                 <tr>
-				  <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
-				  <td width="5"><input class="Estilo10" name="txtcod_suc" type="hidden" id="txtcod_suc"  value="<?echo $cod_suc?>" ></td>
-				  <td width="5"><input class="Estilo10" name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento"  value="<?echo $fecha_nacimiento?>" ></td>				  
-				  <td width="5"><input class="Estilo10" name="txtsexo" type="hidden" id="txtsexo"  value="<?echo $sexo?>" ></td>				  
+				  <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
+				  <td width="5"><input class="Estilo10" name="txtcod_suc" type="hidden" id="txtcod_suc"  value="<?php echo $cod_suc?>" ></td>
+				  <td width="5"><input class="Estilo10" name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento"  value="<?php echo $fecha_nacimiento?>" ></td>				  
+				  <td width="5"><input class="Estilo10" name="txtsexo" type="hidden" id="txtsexo"  value="<?php echo $sexo?>" ></td>				  
 				  <td width="5"><input class="Estilo10" name="txtzurdo" type="hidden" id="txtzurdo"  value="NO" ></td>
 				  
-				  <td width="5"><input class="Estilo10" name="txtdireccion" type="hidden" id="txtdireccion"  value="<?echo $direccion?>" ></td>
-				  <td width="5"><input class="Estilo10" name="txtcod_cent" type="hidden" id="txtcod_cent"  value="<?echo $cod_cent?>" ></td>
+				  <td width="5"><input class="Estilo10" name="txtdireccion" type="hidden" id="txtdireccion"  value="<?php echo $direccion?>" ></td>
+				  <td width="5"><input class="Estilo10" name="txtcod_cent" type="hidden" id="txtcod_cent"  value="<?php echo $cod_cent?>" ></td>
 				 
                   <td width="660">&nbsp;</td>
                   <td width="100"><input name="Generar" type="submit" id="Generar"  value="Generar"></td>

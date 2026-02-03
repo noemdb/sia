@@ -1,6 +1,6 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");
+<?php include ("../class/conect.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,7 +27,7 @@ document.form2.txtced_rif_c.value=Gced_rif; document.form2.submit(); }
 </script>
 
 </head>
-<?
+<?php 
 $Ssql="Select * from SIA000"; $resultado=pg_query($Ssql);if ($registro=pg_fetch_array($resultado,0)){$reg_e=$registro["campo041"];$edo_e=$registro["campo010"];$mun_e=$registro["campo011"];$ciu_e=$registro["campo009"];}else{$reg_e="REGION CENTRO-OCCIDENTAL";$edo_e="LARA";$mun_e="IRIBARREN";$ciu_e="BARQUISIMETO";}
 $cod_e="00"; $Ssql="SELECT * FROM pre091 where estado='".$edo_e."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_e=$registro["cod_estado"];}
 ?>
@@ -91,16 +91,16 @@ $cod_e="00"; $Ssql="SELECT * FROM pre091 where estado='".$edo_e."'"; $resultado=
 <form name="form2" method="post" action="Inc_beneficiario.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>
-     <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>
-     <td width="5"><input name="txtregion_e" type="hidden" id="txtregion_e" value="<?echo $reg_e?>" ></td>
-     <td width="5"><input name="txtestado_e" type="hidden" id="txtestado_e" value="<?echo $edo_e?>" ></td>
-     <td width="5"><input name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?echo $mun_e?>" ></td>
-     <td width="5"><input name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?echo $ciu_e?>" ></td>
-     <td width="5"><input name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?echo $cod_e?>" ></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>
+     <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>
+     <td width="5"><input name="txtregion_e" type="hidden" id="txtregion_e" value="<?php echo $reg_e?>" ></td>
+     <td width="5"><input name="txtestado_e" type="hidden" id="txtestado_e" value="<?php echo $edo_e?>" ></td>
+     <td width="5"><input name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?php echo $mun_e?>" ></td>
+     <td width="5"><input name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?php echo $ciu_e?>" ></td>
+     <td width="5"><input name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?php echo $cod_e?>" ></td>
      <td width="5"><input name="txtced_rif_c" type="hidden" id="txtced_rif_c" value="" ></td>
   </tr>
 </table>
@@ -111,4 +111,4 @@ $cod_e="00"; $Ssql="SELECT * FROM pre091 where estado='".$edo_e."'"; $resultado=
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

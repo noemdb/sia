@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){ $Doc_ajuste='';} else { $Doc_ajuste = $_GET["GDoc_ajuste"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -45,7 +45,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $sql="Select * from pre005 where tipo_ajuste='$Doc_ajuste'";
 $res=pg_query($sql);
@@ -95,21 +95,21 @@ var f=document.form1;
           <tr>
             <td height="49" colspan="3" valign="middle"><blockquote>
               <p class="Estilo5">C&Oacute;DIGO :
-                                <input name="txtdoc_ajuste" id="txtdoc_ajuste" value="<?ECHO $Doc_ajuste?>" size="10" readOnly>
+                                <input name="txtdoc_ajuste" id="txtdoc_ajuste" value="<?php ECHO $Doc_ajuste?>" size="10" readOnly>
                   </p>
                           </blockquote></td>
           </tr>
           <tr>
             <td height="49" colspan="3" valign="middle"><blockquote>
               <p align="left"><span class="Estilo5">NOMBRE DEL DOCUMENTO :</span>
-                <input name="txtnombre_doc_ajuste" type="text" id="txtnombre_doc_ajuste" title="Registre el Nombre del Documento Ajuste"  onFocus="encender(this)" onBlur="apagar(this)" value="<?ECHO $Nombre_doc_ajuste?>" size="80" maxlength="70">
+                <input name="txtnombre_doc_ajuste" type="text" id="txtnombre_doc_ajuste" title="Registre el Nombre del Documento Ajuste"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php ECHO $Nombre_doc_ajuste?>" size="80" maxlength="70">
 </p>
             </blockquote></td>
           </tr>
           <tr>
             <td width="387" height="43" valign="middle"><blockquote>
               <p><span class="Estilo5">NOMBRE ABREVIADO  DOCUMENTO :</span>
-                    <input name="txtnombre_abrev" type="text" id="txtnombre_abrev" title="Registre el Nombre Abreviado del Documento Ajuste"  onFocus="encender(this)" onBlur="apagar(this)" value="<?ECHO $Nombre_Abrev?>" size="8" maxlength="4">
+                    <input name="txtnombre_abrev" type="text" id="txtnombre_abrev" title="Registre el Nombre Abreviado del Documento Ajuste"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php ECHO $Nombre_Abrev?>" size="8" maxlength="4">
               </p>
             </blockquote></td>
             <td width="230" valign="middle"><span class="Estilo5">REFIERE A  :
@@ -118,7 +118,7 @@ var f=document.form1;
                   <option>CAUSADO</option>
                   <option>PAGO</option>
                 </select>
-                                <script language="JavaScript"> Asigna_Refierea('<?ECHO $Refiera_a?>');</script>
+                                <script language="JavaScript"> Asigna_Refierea('<?php ECHO $Refiera_a?>');</script>
             </span></td>
           <tr>
             <td height="48" colspan="3" valign="middle">&nbsp;</td>
@@ -141,4 +141,4 @@ var f=document.form1;
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

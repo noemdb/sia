@@ -1,10 +1,10 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
    $tipo_nomina_d=$_GET["tipo_nomina_d"];   $act_hist=$_GET["act_hist"]; $fecha_nom=$_GET["fecha_nom"]; $tipo_rpt=$_GET["tipo_rpt"]; $fecha_ant=$_GET["fecha_ant"];
    $cod_departd=$_GET["cod_departd"];  $cod_departh=$_GET["cod_departh"];  $forma_pago=$_GET["forma_pago"];$tipo_calculo=$_GET["tipo_calculo"]; $tipo_concepto="nomINA";
    $cod_conceptod=$_GET["cod_conceptod"]; $cod_conceptoh=$_GET["cod_conceptoh"];
    $Sql="";$date = date("d-m-Y"); $hora = date("h:i:s a"); $cfechan=formato_aaaammdd($fecha_nom); $afechan=formato_aaaammdd($fecha_ant);  $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_errorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_errorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $nom_emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    $criterio=""; $criterio1=""; $criterio2=""; $ordenar=" order by tipo_nomina, cod_concepto, cod_empleado";
    if($act_hist=='S'){    

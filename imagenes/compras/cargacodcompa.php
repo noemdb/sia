@@ -10,6 +10,6 @@ while($registro=pg_fetch_array($res))
     $ssql="SELECT INCLUYE_PRE026('$codigo_mov','$cod_presup','$fuente','$referencia_comp','$tipo_compromiso','','0000','','0000','','0000','','','','$cod_contable','','','$fecha','C','$tipo_imput_presu','$ref_imput_presu','$fecha',0,$monto,0,0)";
     $resultado=pg_exec($conn,$ssql);     $error=pg_errormessage($conn);
   }
-}pg_close();?>
-<iframe src="/sia/presupuesto/Det_inc_ajustes_comp.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
+}pg_close($conn);?>
+<iframe src="/sia/presupuesto/Det_inc_ajustes_comp.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
 </iframe>

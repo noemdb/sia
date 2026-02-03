@@ -1,8 +1,8 @@
-<? include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $equipo = getenv("COMPUTERNAME"); $mcod_m="BAN04L".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$tipo_mov_d=$_GET["tipo_mov_d"];$tipo_mov_h=$_GET["tipo_mov_h"]; $tipo_rep=$_GET["tipo_rep"];
 $periodod=$_GET["periodod"];$periodoh=$_GET["periodoh"];$imprimir=$_GET["imprimir"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; 
     if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
      $mano=substr($Fec_Fin_Ejer,0,4);     $fecha_d=$Fec_Ini_Ejer; $fecha_h=$Fec_Fin_Ejer;

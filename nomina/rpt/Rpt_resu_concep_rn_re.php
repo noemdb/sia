@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $tipo_nominad="";$tipo_nominah="zz";$cod_conceptod="";$cod_conceptoh="zzzz";$codigo_departamentod="";$codigo_departamentoh="zzzz";$tipo_resumen="";;$forma_pago="";$tipo_calculo="";
  ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -38,7 +38,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 -->
 </style>
 </head>
-<?
+<?php 
 $descripcion_d="";$descripcion_h=""; $denominacion_concep_d;$denominacion_concep_h;  $descripcion_dep_d="";$descripcion_dep_d="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$tipo_nomina_d=$registro["min_tipo_nomina"];$tipo_nomina_h=$registro["max_tipo_nomina"];   }
@@ -83,13 +83,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="129" align="center" class="Estilo5"><div align="left">TIPO NOMINA DESDE :</div></td>
                  <td width="37" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?echo $tipo_nomina_d?>">
+                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?php echo $tipo_nomina_d?>">
                  </span></div></td>
                  <td width="45" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Tipos de nóminas" onClick="VentanaCentrada('../Cat_tipo_nominad.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="691" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="50" maxlength="108" readonly value="<?echo $descripcion_d?>">
+                     <input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="50" maxlength="108" readonly value="<?php echo $descripcion_d?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -100,13 +100,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="130" align="center" class="Estilo5"><div align="left">TIPO NOMINA HASTA:</div></td>
                  <td width="35" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?echo $tipo_nomina_d?>">
+                     <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?php echo $tipo_nomina_d?>">
                  </span></div></td>
                  <td width="47" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Tipos de nóminas" onClick="VentanaCentrada('../Cat_tipo_nominah.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="690" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="50" maxlength="109" readonly value="<?echo $descripcion_h?>">
+                     <input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="50" maxlength="109" readonly value="<?php echo $descripcion_h?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -117,13 +117,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="136" align="center" class="Estilo5"><div align="left">CONCEPTO DESDE :</div></td>
                  <td width="28" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtcod_concepto_d" type="text" id="txtcod_concepto_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?echo $cod_conceptod?>">
+                     <input name="txtcod_concepto_d" type="text" id="txtcod_concepto_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?php echo $cod_conceptod?>">
                  </span></div></td>
                  <td width="42" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo3" type="button" id="Catalogo3" title="Abrir Catalogo de Conceptos" onClick="VentanaCentrada('../Cat_conceptosd.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="696" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="50" maxlength="99" readonly value="<?echo $denominacion_concep_d?>">
+                     <input name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="50" maxlength="99" readonly value="<?php echo $denominacion_concep_d?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -134,13 +134,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="132" align="center" class="Estilo5"><div align="left">CONCEPTO HASTA :</div></td>
                  <td width="31" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtcod_concepto_h" type="text" id="txtcod_concepto_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?echo $cod_conceptoh?>">
+                     <input name="txtcod_concepto_h" type="text" id="txtcod_concepto_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?php echo $cod_conceptoh?>">
                  </span></div></td>
                  <td width="44" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo4" type="button" id="Catalogo4" title="Abrir Catalogo de Conceptos" onClick="VentanaCentrada('../Cat_conceptosh.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="695" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdenominacion_h" type="text" id="txtdenominacion_h" size="50" maxlength="109" readonly value="<?echo $denominacion_concep_h?>">
+                     <input name="txtdenominacion_h" type="text" id="txtdenominacion_h" size="50" maxlength="109" readonly value="<?php echo $denominacion_concep_h?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -151,13 +151,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="196" align="center" class="Estilo5"><div align="left">CODIGO DEPARTAMENTO DESDE :</div></td>
                  <td width="189" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtcodigo_departamento_d" type="text" id="txtcodigo_departamento_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?echo $codigo_departamento_d?>">
+                     <input name="txtcodigo_departamento_d" type="text" id="txtcodigo_departamento_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?php echo $codigo_departamento_d?>">
                  </span></div></td>
                  <td width="49" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo5" type="button" id="Catalogo5" title="Abrir Catalogo de Departamentos" onClick="VentanaCentrada('../Cat_departamentod.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="469" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_dep_d" type="text" id="txtdescripcion_dep_d" size="50" maxlength="100" readonly value="<?echo $descripcion_dep_d?>">
+                     <input name="txtdescripcion_dep_d" type="text" id="txtdescripcion_dep_d" size="50" maxlength="100" readonly value="<?php echo $descripcion_dep_d?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -168,13 +168,13 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
                  <td width="196" align="center" class="Estilo5"><div align="left">CODIGO DEPARTAMENTO HASTA :</div></td>
                  <td width="190" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtcodigo_departamento_h" type="text" id="txtcodigo_departamento_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?echo $codigo_departamento_h?>">
+                     <input name="txtcodigo_departamento_h" type="text" id="txtcodigo_departamento_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?php echo $codigo_departamento_h?>">
                  </span></div></td>
                  <td width="48" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo6" type="button" id="Catalogo6" title="Abrir Catalogo de Departamentos" onClick="VentanaCentrada('../Cat_departamentoh.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="469" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_dep_h" type="text" id="txtdescripcion_dep_h" size="50" maxlength="100" readonly value="<?echo $descripcion_dep_h?>">
+                     <input name="txtdescripcion_dep_h" type="text" id="txtdescripcion_dep_h" size="50" maxlength="100" readonly value="<?php echo $descripcion_dep_h?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -267,4 +267,4 @@ $sql="SELECT codigo_departamento,descripcion_dep FROM nom005 where codigo_depart
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

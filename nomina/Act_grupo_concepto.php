@@ -1,11 +1,11 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 if (!$_GET){$tipo_nomina="";} else{$tipo_nomina=$_GET["Gtipo_nomina"]; $cod_concepto=$_GET["Gconcepto"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA NOMINA Y PERSONAL (Actualizar Grupo de Concepto)</title>
+<title>SIPAP NOMINA Y PERSONAL (Actualizar Grupo de Concepto)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -32,7 +32,7 @@ return true;}
 -->
 </style>
 </head>
-<? $cod_desde=""; $cod_hasta="zzzzzzzzzzzzzzz"; $conc_desde=""; $conc_hasta="zzz";
+<?php  $cod_desde=""; $cod_hasta="zzzzzzzzzzzzzzz"; $conc_desde=""; $conc_hasta="zzz";
 ?>
 <body>
 <form name="form1" method="post" action="Update_grupo_conc.php" onSubmit="return revisar()">
@@ -47,9 +47,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">TIPO DE NOMINA DESDE :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>
@@ -57,9 +57,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR DESDE:</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="15" maxlength="15"  value="<?echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="15" maxlength="15"  value="<?php echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="15" maxlength="15"  value="<?echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="15" maxlength="15"  value="<?php echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>
@@ -67,9 +67,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">C&Oacute;DIGO CONCEPTO DESDE:</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtconc_desde" type="text" id="txtconc_desde" size="5" maxlength="4"  value="<?echo $conc_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtconc_desde" type="text" id="txtconc_desde" size="5" maxlength="4"  value="<?php echo $conc_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtconc_hasta" type="text" id="txtconc_hasta" size="5" maxlength="4"  value="<?echo $conc_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtconc_hasta" type="text" id="txtconc_hasta" size="5" maxlength="4"  value="<?php echo $conc_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>

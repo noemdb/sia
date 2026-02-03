@@ -1,11 +1,11 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 if (!$_GET){$tipo_nomina="";$cuenta="";} else{$tipo_nomina=$_GET["Gtipo_nomina"];$cuenta=$_GET["Gcuenta"]; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Cambiar Cuenta de Empresa)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Cambiar Cuenta de Empresa)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -38,7 +38,7 @@ return true;}
 -->
 </style>
 </head>
-<? $cod_desde="000000000000000"; $cod_hasta="999999999999999";
+<?php  $cod_desde="000000000000000"; $cod_hasta="999999999999999";
 
 ?>
 <body>
@@ -54,9 +54,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">TIPO DE NOMINA DESDE :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
 
                </tr>
              </table></td>
@@ -65,9 +65,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR DESDE:</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="17" maxlength="15"  value="<?echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="17" maxlength="15"  value="<?php echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="17" maxlength="15"  value="<?echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="17" maxlength="15"  value="<?php echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>
@@ -75,7 +75,7 @@ return true;}
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="200" ><span class="Estilo5">NUMERO CUENTA ACTUAL :</span> </td>
-                <td width="350"><span class="Estilo5"><input class="Estilo10" name="txtcuenta" type="text" id="txtcuenta" size="30" maxlength="30"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cuenta;?>"></span></td>
+                <td width="350"><span class="Estilo5"><input class="Estilo10" name="txtcuenta" type="text" id="txtcuenta" size="30" maxlength="30"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cuenta;?>"></span></td>
               </tr>
           </table></td>
         </tr>

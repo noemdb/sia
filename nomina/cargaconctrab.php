@@ -9,4 +9,4 @@ while($registro=pg_fetch_array($res)) { $cod_empleado=$registro["cod_empleado"];
   //echo $sSQLg,"<br>";
   $resultadog=pg_exec($conn,$sSQLg); $error=pg_errormessage($conn);}
 ?>
-<iframe src="Det_trab_nom_ext.php?codigo_mov=<?echo $codigo_mov?>" width="925" height="350" scrolling="auto" frameborder="0"></iframe>
+<iframe src="Det_trab_nom_ext.php?codigo_mov=<?php echo $codigo_mov?>" width="925" height="350" scrolling="auto" frameborder="0"></iframe>

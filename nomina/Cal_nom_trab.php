@@ -1,18 +1,18 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php"); include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}  $tipo_nomina=substr($criterio,0,2); $fecha_desde=substr($criterio,2,10); $fecha_hasta=substr($criterio,12,10); $num_semanas=substr($criterio,22,1); $parametro=substr($criterio,23,1); $u_semana=substr($criterio,24,1); $pcod_trab=substr($criterio,25,15);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Calcular Nomina Trabajador Especifico)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Calcular Nomina Trabajador Especifico)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_cal_nomina.php?criterio=<?echo $tipo_nomina?>'; }
-function Calcula_nom() { var mcriterio='<?echo $criterio?>'; var f=document.form1;
+function llamar_anterior(){ document.location ='Det_cal_nomina.php?criterio=<?php echo $tipo_nomina?>'; }
+function Calcula_nom() { var mcriterio='<?php echo $criterio?>'; var f=document.form1;
 mcriterio=mcriterio+f.txtcod_empleado.value; document.location ='Calcula_nomina.php?criterio='+mcriterio;
 }
 function revisar(){
@@ -65,7 +65,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?echo $criterio?>"></td>
+            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?php echo $criterio?>"></td>
             <td width="100">&nbsp;</td>
                         <td width="100" align="center"><input name="btcalcular" type="button" id="btcalcular" title="Calcular N&oacute;mina" onclick="javascript:Calcula_nom()" value="Calcular"></td>
             <td width="100" align="center"><input name="Cancelar" type="button" id="Cancelar" value="Cancelar" onClick="JavaScript:llamar_anterior()"></td>

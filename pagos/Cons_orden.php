@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
   $equipo = getenv("COMPUTERNAME");  $mcod_m = "PRE006".$equipo; $cod_tipo_comp="000000"; $des_tipo_comp="COMPROMISOS";
   $codigo_mov=substr($mcod_m,0,49);  $fecha_hoy=asigna_fecha_hoy();  $nro_orden=$_GET["nro_orden"]; $tipo_causado=$_GET["tipo_causado"]; $nombre_abrev_caus=$_GET["nombre_abrev_caus"];
 ?>
@@ -7,7 +7,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (CONSULTAR ORDENES DE PAGO)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (CONSULTAR ORDENES DE PAGO)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -48,8 +48,8 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
       <td>
       <table width="92" height="305" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_orden_pago.php?Gcriterio=C<? echo $nro_orden.$tipo_causado;?>'')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_orden_pago.php?Gcriterio=C<? echo $nro_orden.$tipo_causado;?>'">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_orden_pago.php?Gcriterio=C<?php  echo $nro_orden.$tipo_causado;?>'')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_orden_pago.php?Gcriterio=C<?php  echo $nro_orden.$tipo_causado;?>'">Atras</A></td>
       </tr>      
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -72,7 +72,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="832" border="0">
                         <tr>
 						  <td width="132"><span class="Estilo5">N&Uacute;MERO ORDEN:</span></td>
-                          <td width="300"><input name="txtnro_orden" type="text"  id="txtnro_orden" size="12" maxlength="8" value="<?echo $nro_orden?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkreferencia(this.form);" onkeypress="return stabular(event,this)"></td>
+                          <td width="300"><input name="txtnro_orden" type="text"  id="txtnro_orden" size="12" maxlength="8" value="<?php echo $nro_orden?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkreferencia(this.form);" onkeypress="return stabular(event,this)"></td>
                         
 						  <td width="400"><p><span class="Estilo5"></span></p></td>
                         
@@ -86,7 +86,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
           </table>
         <table width="768">
           <tr>
-            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Buscar"></td>
             <td width="88"><input name="Submit" type="reset" value="Blanquear"></td>
           </tr>

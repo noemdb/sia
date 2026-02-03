@@ -1,6 +1,6 @@
 <?php include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");  $fecha_hoy=asigna_fecha_hoy();  
 if (!$_GET){$tipo_informe="";$linea="00000000";}else{$tipo_informe=$_GET["tipo_informe"];$linea=$_GET["linea"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT * FROM CON006 where (tipo_informe='$tipo_informe') and (linea='$linea')";  $res=pg_query($sql);$filas=pg_num_rows($res);  
 $codigo_cuenta=""; $nombre_cuenta=""; 
 if($filas>=1){$registro=pg_fetch_array($res,0); $codigo_cuenta=$registro["codigo_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; }
@@ -14,7 +14,7 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $codigo_cuenta=$registro["codigo
 <LINK href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_cal_informes.php?linea=<?echo $linea?>&cod_informe=<?echo $tipo_informe?>'; }
+function llamar_anterior(){ document.location ='Det_inc_cal_informes.php?linea=<?php echo $linea?>&cod_informe=<?php echo $tipo_informe?>'; }
 
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtlinea.value==""){alert("Linea no puede estar Vacio");return false;}
@@ -45,9 +45,9 @@ return true;}
 		   <td><table width="840">
 		      <tr>
 			    <td width="70"><span class="Estilo5">LINEA :</span></td>
-			    <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtlinea" type="text" id="txtlinea" size="10" maxlength="10"  value="<?echo $linea?>" readonly></span></td>
-			    <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcod_cuenta" type="text" id="txtcod_cuenta" size="20" maxlength="30"  value="<?echo $codigo_cuenta?>" readonly></span></td>
-			    <td width="510"><span class="Estilo5"> <input class="Estilo10" name="txtnom_cuenta" type="text" id="txtnom_cuenta" size="80" maxlength="100"  value="<?echo $nombre_cuenta?>" readonly></span></td>
+			    <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtlinea" type="text" id="txtlinea" size="10" maxlength="10"  value="<?php echo $linea?>" readonly></span></td>
+			    <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcod_cuenta" type="text" id="txtcod_cuenta" size="20" maxlength="30"  value="<?php echo $codigo_cuenta?>" readonly></span></td>
+			    <td width="510"><span class="Estilo5"> <input class="Estilo10" name="txtnom_cuenta" type="text" id="txtnom_cuenta" size="80" maxlength="100"  value="<?php echo $nombre_cuenta?>" readonly></span></td>
 		      </tr>
 		   </table></td>
         </tr>
@@ -78,7 +78,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input name="txttipo_informe" type="hidden" id="txttipo_informe" value="<?echo $tipo_informe?>"></td>
+            <td width="20"><input name="txttipo_informe" type="hidden" id="txttipo_informe" value="<?php echo $tipo_informe?>"></td>
             <td width="80">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

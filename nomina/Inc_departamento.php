@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL N&Oacute;MINA Y PERSONAL (Incluir Definici&oacute;n Departamentos)</title>
+<title>SIPAP CONTROL N&Oacute;MINA Y PERSONAL (Incluir Definici&oacute;n Departamentos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>

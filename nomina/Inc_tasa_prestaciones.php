@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $fecha_desde=$fecha_hoy;
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $fecha_desde=$fecha_hoy;
 $fecha_desde=$_POST["txtufecha"];  $numero=$_POST["txtunumero"];
 $fecha_desde=nextDate($fecha_desde,1); $fecha_hasta=colocar_udiames($fecha_desde); $numero=$numero+1; if(strlen($numero)<6){ $p=strlen($numero); $p=6-$p; $rellena="000000"; $rellena=substr($rellena,0,$p); $numero=$rellena.$numero;}
 ?>
@@ -7,7 +7,7 @@ $fecha_desde=nextDate($fecha_desde,1); $fecha_hasta=colocar_udiames($fecha_desde
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Tasa Interes Prestaciones)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Tasa Interes Prestaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -84,7 +84,7 @@ return true;}
             <td><table width="866">
                 <tr>
                   <td width="200" ><span class="Estilo5">N&Uacute;MERO DE GACETA :  </span></td>
-                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txtnumero" type="text" id="txtnumero" size="8" maxlength="6"  onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_numero(this.form);" value="<?echo $numero?>"> </span></td>
+                  <td width="666" ><span class="Estilo5"> <input class="Estilo10" name="txtnumero" type="text" id="txtnumero" size="8" maxlength="6"  onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_numero(this.form);" value="<?php echo $numero?>"> </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -93,9 +93,9 @@ return true;}
              <td><table width="866">
                <tr>
                  <td width="200" ><span class="Estilo5">FECHA DESDE : </span></td>
-                 <td width="236" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_desde?>"> </span></td>
+                 <td width="236" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_desde?>"> </span></td>
                  <td width="200" ><span class="Estilo5">FECHA HASTA : </span></td>
-                 <td width="230" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hasta?>"> </span></td>
+                 <td width="230" ><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hasta?>"> </span></td>
                </tr>
              </table></td>
           </tr>

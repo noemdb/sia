@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");  $codigo_mov=$_POST["txtcodigo_mov"];  $fecha_hoy=asigna_fecha_hoy(); 
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");  $codigo_mov=$_POST["txtcodigo_mov"];  $fecha_hoy=asigna_fecha_hoy(); 
  $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"]; $ano_eje=$_POST["txtano_eje"]; $uperiodo=$_POST["txtUperiodo"];   
  $fecha_h=colocar_udiames($fecha_hoy); $mes_libro=substr($fecha_h,3,2); $mes_libro=$uperiodo; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO  (Incluir Gasto de Flujo)</title>
+<title>SIPAP CONTROL BANCARIO  (Incluir Gasto de Flujo)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -33,7 +33,7 @@ function Cargar_Ret(mform){var mmes;  mmes=mform.txtmes_fiscal.value;
   if (r==true) { ajaxSenddoc('GET', 'cargagastoflujo.php?mes='+mmes+'&ano='+mano+'&codigo_mov='+mcodigo_mov+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'T11', 'innerHTML'); }
 return true;}
 </script>
-<? 
+<?php  
 
 ?>
 </head>
@@ -79,7 +79,7 @@ return true;}
                         </select>
                       </span></td>
 <script language="JavaScript" type="text/JavaScript">
-var mvalor='<?echo $mes_libro ?>';
+var mvalor='<?php echo $mes_libro ?>';
     if(mvalor=="01"){document.form1.txtnomb_mes.options[0].selected = true;}
     if(mvalor=="02"){document.form1.txtnomb_mes.options[1].selected = true;}
     if(mvalor=="03"){document.form1.txtnomb_mes.options[2].selected = true;}
@@ -93,7 +93,7 @@ var mvalor='<?echo $mes_libro ?>';
 	if(mvalor=="11"){document.form1.txtnomb_mes.options[10].selected = true;}
 	if(mvalor=="12"){document.form1.txtnomb_mes.options[11].selected = true;}
 </script>
-                      <td width="80"><span class="Estilo5"><input name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" value='<?echo $mes_libro ?>' readonly ></span></td>
+                      <td width="80"><span class="Estilo5"><input name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" value='<?php echo $mes_libro ?>' readonly ></span></td>
                       <td width="350"></td>
                       <td width="200"><span class="Estilo5"> <input type="button" name="btcarga_fact" value="Generar" title="Generar Gastos para Flujo de Caja" onClick="javascript:Cargar_Ret(this.form)" > </span></td>
                      </tr>
@@ -102,13 +102,13 @@ var mvalor='<?echo $mes_libro ?>';
                 </tr>
           </table>
               <div id="T11" class="tab-body">
-              <iframe src="Det_inc_gasto_flujo.php?criterio=<?echo $mes_libro?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_inc_gasto_flujo.php?criterio=<?php echo $mes_libro?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
               </div>
          <table width="863" border="0"> <tr> <td height="5">&nbsp;</td> </tr> </table>
          <table width="812">
           <tr>
             <td width="654">&nbsp;</td>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
           </tr>
         </table>
         </form>

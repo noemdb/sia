@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
    $tipo_nomina_d=$_GET["tipo_nomina_d"];$tipo_nomina_h=$_GET["tipo_nomina_h"];$cod_concepto_d=$_GET["cod_concepto_d"];$cod_concepto_h=$_GET["cod_concepto_h"]; $tipo_rpt=$_GET["tipo_rpt"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{  $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 
    $sSQL = "SELECT nom003.tipo_nomina, nom001.descripcion, nom003.cod_concepto, nom002.denominacion, nom003.consecutivo, nom003.accion, nom003.rango_inicial, nom003.rango_final, nom003.Calculo1, NOM003.Calculo2, NOM003.CalculoFinal  
@@ -103,7 +103,7 @@ else{  $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
            	<td width="100" align="center" bgcolor="#99CCFF" ><strong>RANGO FINAL</strong></font></td>
            	<td width="400" align="center" bgcolor="#99CCFF" ><strong>RESULTADO 1</strong></font></td>
         </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $total_cantidad=0; $prev_tipo_nomina=""; $prev_descripcion=""; $prev_cod_concepto="";
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		    $tipo_nomina=$registro["tipo_nomina"]; $descripcion=$registro["descripcion"]; $cod_concepto=$registro["cod_concepto"]; $denominacion=$registro["denominacion"];
@@ -113,34 +113,34 @@ else{  $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
                 if($cantidad>0){ ?>	   
 				    <tr>
            				<td width="100" align="left"><strong>FORMULAS DE:</strong></td>
-           				<td width="400" align="left"><strong><? echo $prev_descripcion."    ".$cantidad; ?></strong></td>
+           				<td width="400" align="left"><strong><?php  echo $prev_descripcion."    ".$cantidad; ?></strong></td>
          			</tr>
 			        <tr>
 				      <td width="100" align="left"></td>
 			        </tr>
-				<?}?>	   
+				<?php }?>	   
 				<tr>
-           			<td width="100" align="left"><strong>'<? echo $tipo_nomina_grupo; ?></strong></td>
-           			<td width="400" align="left"><strong><? echo $descripcion_grupo; ?></strong></td>
+           			<td width="100" align="left"><strong>'<?php  echo $tipo_nomina_grupo; ?></strong></td>
+           			<td width="400" align="left"><strong><?php  echo $descripcion_grupo; ?></strong></td>
          		</tr>
 			    <tr>
 				  <td width="100" align="left"></td>
 			     </tr>
-				<?
+				<?php 
 				$prev_tipo_nomina=$tipo_nomina_grupo; $prev_descripcion=$descripcion_grupo; $cantidad=0; } 
                 if($prev_cod_concepto<>$cod_concepto_grupo){ ?>	   
 				    <tr>
 				      <td width="100" align="left"></td>
 			        </tr>
 				    <tr>
-           				<td width="100" align="left">'<? echo $cod_concepto_grupo; ?></td>
-           				<td width="400" align="left"><? echo $denominacion_grupo; ?></td>
+           				<td width="100" align="left">'<?php  echo $cod_concepto_grupo; ?></td>
+           				<td width="400" align="left"><?php  echo $denominacion_grupo; ?></td>
 
          			</tr>
 			        <tr>
 				      <td width="100" align="left"></td>
 			        </tr>
-				<?
+				<?php 
 				$prev_tipo_nomina=$tipo_nomina_grupo; $prev_descripcion=$descripcion_grupo; $cantidad=0; } 
 
 		    $tipo_nomina=$registro["tipo_nomina"]; $descripcion=$registro["descripcion"]; $cod_concepto=$registro["cod_concepto"]; $denominacion=$registro["denominacion"]; 
@@ -148,11 +148,11 @@ else{  $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
 	        $calculo1=$registro["calculo1"]; $calculo2=$registro["calculo2"]; $calculofinal=$registro["calculofinal"]; $cantidad=$cantidad+1; $total_cantidad=$total_cantidad+1;
 		?>	 
 			    <tr>
-           			<td width="100" align="center"><? echo $consecutivo; ?></td>
-           			<td width="400" align="center"><? echo $accion; ?></td>
-           			<td width="100" align="center"><? echo $rango_inicial; ?></td>
-           			<td width="100" align="center"><? echo $rango_final; ?></td>
-           			<td width="400" align="center"><? echo $calculo1; ?></td>
+           			<td width="100" align="center"><?php  echo $consecutivo; ?></td>
+           			<td width="400" align="center"><?php  echo $accion; ?></td>
+           			<td width="100" align="center"><?php  echo $rango_inicial; ?></td>
+           			<td width="100" align="center"><?php  echo $rango_final; ?></td>
+           			<td width="400" align="center"><?php  echo $calculo1; ?></td>
          		</tr>
 			   <tr>
 				 <td width="100" align="left"></td>
@@ -161,27 +161,27 @@ else{  $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
            			<td width="100" align="center"></td>
            			<td width="400" align="center"></td>
            			<td width="100" align="center">RESULTADO 2</td>
-           			<td width="400" align="left"><? echo $calculo2; ?></td>
+           			<td width="400" align="left"><?php  echo $calculo2; ?></td>
            			<td width="100" align="center"></td>
          		</tr>
 			   <tr>
            			<td width="100" align="center"></td>
            			<td width="400" align="center"></td>
            			<td width="100" align="center">RESULTADO FINAL</td>
-           			<td width="400" align="left"><? echo $calculofinal; ?></td>
+           			<td width="400" align="left"><?php  echo $calculofinal; ?></td>
            			<td width="100" align="center"></td>
          		</tr>
-		<? }
+		<?php }
                  if($cantidad>0){ ?>	   
 				    <tr>
            				<td width="100" align="left"><strong>FORMULAS DE:</strong></td>
-           				<td width="400" align="left"><strong><? echo $prev_descripcion."    ".$cantidad; ?></strong></td>
+           				<td width="400" align="left"><strong><?php  echo $prev_descripcion."    ".$cantidad; ?></strong></td>
          			</tr>
 			        <tr>
 				      <td width="100" align="left"></td>
 			        </tr>
-				<?}?>	
-	  </table><?
+				<?php }?>	
+	  </table><?php 
 	}
 
    }

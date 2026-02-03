@@ -1,10 +1,10 @@
-<? include ("../../class/conect.php");include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");
+<?php  include ("../../class/conect.php");include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");
 error_reporting(E_ALL ^ E_NOTICE); $date=date("d-m-Y"); $hora=date("H:i:s a"); $php_os=PHP_OS;
 $codigo_informe=$_GET["codigo_informe"]; $periodo=$_GET["periodo"]; $frecuencia=$_GET["seleccion"]; 
 $periodo_d=$periodo; $periodo_h=$periodo; if($frecuencia=="T"){ if($periodo=="01"){$periodo_h="03";} if($periodo=="02"){$periodo_d="04";$periodo_h="06";}  if($periodo=="03"){$periodo_d="07";$periodo_h="09";}  if($periodo=="04"){$periodo_d="10";$periodo_h="12";}  }
 $num_per=$periodo*1; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }else{ $Nom_Emp=busca_conf(); }
 $fecha_d=Armar_Fecha($periodo_d, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo_h,2,$Fec_Ini_Ejer); 
 $criterio1="Desde ".$fecha_d." Al ".$fecha_h; $Sql="";
 $fecha1=formato_aaaammdd($fecha_d); $fecha2=formato_aaaammdd($fecha_h); $fecha_d=formato_ddmmaaaa($fecha1); $fecha_h=formato_ddmmaaaa($fecha2);
@@ -148,5 +148,5 @@ require('../../class/fpdf/fpdf.php');
 	} 
 	$pdf->Output();
 
-pg_close();
+pg_close($conn);
 ?>

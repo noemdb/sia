@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
 $orden=$_GET["orden"];  $tipo_planilla=$_GET["tipo"]; $ano_fiscal="";
 $fecha_hoy=asigna_fecha_hoy();
 $nombre_planilla="COMPROBANTE DE RETENCION DE IMPUESTO SOBRE LA RENTA";
@@ -8,7 +8,7 @@ if($tipo_planilla=="04"){$nombre_planilla="COMPROBANTE DE RETENCION LABORAL"; }
 if($tipo_planilla=="05"){$nombre_planilla="COMPROBANTE DE RETENCION FIEL CUMPLIMIENTO"; }
 
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $direccion="AVENIDA CARACAS CON LIBERTADOR EDIFICIO ADMINISTRATIVO PISO 2A"; $nombre_emp="GOBERNACIÓN DEL ESTADO YARACUY"; $ced_rif_emp="G-20000164-0";
 $nro_comp=""; $sustraendo=0; $descripcion_ret=""; $fechae=""; $tipo_en=""; $tipo_documento=""; $nro_documento=""; $nro_con_factura=""; $fecha=""; $descripcion=""; $tipo_operacion="A";
 $ced_rif="";  $nombre_benef=""; $total_r=0; $monto_o=0; $tasa=0; $error=0; $temp_totalr=0; $tipo_retencion="";
@@ -257,7 +257,7 @@ class PDF extends FPDF{
 	 $morden=$orden; if(substr($morden,0,1)=="P"){$pdf->Cell(20,3,"Ver Nota",0,0,'C');}
      $fin=1;
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 
 
 ?>

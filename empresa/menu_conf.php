@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php");include ("../class/funciones.php");include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php");include ("../class/funciones.php");include ("../class/configura.inc");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf(); }
 if($dbname<>"DATOS"){ $Nom_Emp=$Nom_Emp." (".$dbname.")"; }
 $sql="SELECT campo036 FROM sia000"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado); $campo036="";
 if ($filas>0){$registro=pg_fetch_array($resultado); $campo036=$registro["campo036"]; }
@@ -50,48 +50,48 @@ MM_reloadPage(true);
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Configuracion.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_Configuracion.php">Configuracion General</A></td>
         </tr>
-		<? if($SIA_Cierre=="N"){ 		
+		<?php  if($SIA_Cierre=="N"){ 		
 		 if(substr($campo036,4,1)=="S"){?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Contab_Presup.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_Conf_Contab_Presup.php">Conf. Contabilidad Presupuestaria</A></td>
         </tr>
-		<? } if((substr($campo036,2,1)=="S")OR(substr($campo036,5,1)=="S")){ ?>
+		<?php } if((substr($campo036,2,1)=="S")OR(substr($campo036,5,1)=="S")){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('<?php echo $llama_contab ?>')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="<?php echo $llama_contab ?>"><?php echo $etiq_contab ?></A></td>
         </tr>
-		<? } if(substr($campo036,0,1)=="S"){ ?>
+		<?php } if(substr($campo036,0,1)=="S"){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Pagos.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Pagos.php">Conf. Ordenamiento de Pago</A></td>
         </tr>
-		<? } if(substr($campo036,1,1)=="S"){ ?>
+		<?php } if(substr($campo036,1,1)=="S"){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Banco.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Banco.php">Conf. Control Bancario</A></td>
         </tr>
-		<? } if(substr($campo036,8,1)=="S"){ ?>
+		<?php } if(substr($campo036,8,1)=="S"){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Compras.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Compras.php">Conf. Compras,Servicios y Almacen</A></td>
         </tr>
-		<? } if(substr($campo036,3,1)=="S"){ ?>
+		<?php } if(substr($campo036,3,1)=="S"){ ?>
          <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Nomina.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Nomina.php">Conf. Nomina y Personal</A></td>
         </tr>
-		<? } if(substr($campo036,6,1)=="S"){ ?>
+		<?php } if(substr($campo036,6,1)=="S"){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Ingresos.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Ingresos.php">Conf. Presupuesto de Ingresos</A></td>
         </tr>
-		<? } if(substr($campo036,12,1)=="S"){ ?>
+		<?php } if(substr($campo036,12,1)=="S"){ ?>
         <tr>
           <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_Conf_Bienes.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="Act_Conf_Bienes.php">Conf. Bienes Nacionales</A></td>
         </tr>
-		<? } } ?>
+		<?php } } ?>
                 <tr>
          <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="menu.php" class="menu">Menu Principal </a></td>
@@ -116,7 +116,7 @@ MM_reloadPage(true);
         </div>
     </div>
       <div id="Layer3" style="position:absolute; width:804px; height:36px; z-index:3; left: 149px; top: 83px;">
-        <div align="center" class="Estilo4"><? echo $Nom_Emp ?></div>
+        <div align="center" class="Estilo4"><?php  echo $Nom_Emp ?></div>
       </div>
       <div align="left"></div>
       <div align="center"></div>
@@ -126,4 +126,4 @@ MM_reloadPage(true);
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$cod_fuente='';} else {$cod_fuente=$_GET["Gfuente"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,7 +33,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $den_fuente="";
 $sql="Select cod_fuente_financ,des_fuente_financ from pre095 where cod_fuente_financ='$cod_fuente'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){  $cod_fuente=$registro["cod_fuente_financ"];  $den_fuente=$registro["des_fuente_financ"];}
@@ -78,7 +78,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_fuente=$registro["cod_fuente_financ
                   <tr>
                     <td width="148"><span class="Estilo5">C&Oacute;DIGO DE FUENTE :</span></td>
                     <td width="650"><span class="Estilo5">
-                      <input name="txtCodigo_Fuente" type="text" id="txtCodigo_Fuente" title="Registre el C&oacute;digo de la Fuente" size="10" maxlength="2"  readonly value="<?echo $cod_fuente?>">
+                      <input name="txtCodigo_Fuente" type="text" id="txtCodigo_Fuente" title="Registre el C&oacute;digo de la Fuente" size="10" maxlength="2"  readonly value="<?php echo $cod_fuente?>">
                     </span></td>
                   </tr>
                 </table></td>
@@ -91,7 +91,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_fuente=$registro["cod_fuente_financ
                   <table width="816" border="0">
                     <tr>
                       <td width="148"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                      <td width="666"><input name="txtNombre_Fuente" type="text" id="txtNombre_Fuente" title="Registre la denominaci&oacute;n de la Fuente" size="100" maxlength="200"  value="<?ECHO $den_fuente?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="666"><input name="txtNombre_Fuente" type="text" id="txtNombre_Fuente" title="Registre la denominaci&oacute;n de la Fuente" size="100" maxlength="200"  value="<?php ECHO $den_fuente?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>
@@ -130,4 +130,4 @@ if ($registro=pg_fetch_array($res,0)){  $cod_fuente=$registro["cod_fuente_financ
 </table>
 </body>
 </html>
-<? pg_close();?> 
+<?php  pg_close($conn);?> 

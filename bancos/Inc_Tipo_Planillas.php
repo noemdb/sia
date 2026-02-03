@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");?>
-<?include ("../class/ventana.php");?>
+<?php include ("../class/seguridad.inc");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Tipos Planillas de Retenci&oacute;n)</title>
+<title>SIPAP CONTROL BANCARIO (Tipos Planillas de Retenci&oacute;n)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js"  type=text/javascript></SCRIPT>
@@ -26,7 +26,7 @@ return true;}
 function revisar(){
 var f=document.form1;
   if(f.txtcodigo.value==""){alert("Tipo de planilla no puede estar Vacio");return false;}else{f.txtcodigo.value=f.txtcodigo.value.toUpperCase();}
-  if(f.txtdescripcion.value==""){alert("Descripción no puede estar Vacia"); return false; } else{f.txtdescripcion.value=f.txtdescripcion.value.toUpperCase();}
+  if(f.txtdescripcion.value==""){alert("Descripciï¿½n no puede estar Vacia"); return false; } else{f.txtdescripcion.value=f.txtdescripcion.value.toUpperCase();}
   document.form1.submit;
 return true;}
 </script>

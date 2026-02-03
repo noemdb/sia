@@ -1,7 +1,7 @@
-<?include("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE); 
+<?php include("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE); 
 if (!$_GET){ $cod_estructura='';} else{$cod_estructura=$_GET["cod_estructura"];} 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } } 
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } } 
 $descripcion_est="";$ced_rif_est="";$fecha_desde_est="";$fecha_hasta_est="";
 $sql="Select * from ESTRUCTURA_ORD where cod_estructura='$cod_estructura'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 if($filas>=1){ $registro=pg_fetch_array($res,0);
@@ -63,7 +63,7 @@ class PDF extends FPDF{
     $pdf->Cell(65,6,'',0,0,'L');
     $pdf->Cell(65,6,'Por Recursos Humanos ','T',1,'C');	
 	$pdf->Output();
-	$pg_close();
+	$pg_close($conn);
 ?>
 	  	
 		

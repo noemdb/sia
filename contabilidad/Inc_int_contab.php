@@ -6,7 +6,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Incluir Interfaz Contable)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Incluir Interfaz Contable)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <SCRIPT language="JavaScript"  src="../class/sia.js"  type="text/javascript"></SCRIPT>
@@ -69,10 +69,10 @@ return true;}
 		  <tr>
               <td colspan="3"><table width="860" border="0">
                 <tr>
-				  <td width="160"><span class="Estilo5">FECHA : <input name="txtFecha" type="text" id="txtFecha" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" size="12" maxlength="10" onchange="checkrefecha(this.form)"> </span></td>
+				  <td width="160"><span class="Estilo5">FECHA : <input name="txtFecha" type="text" id="txtFecha" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" size="12" maxlength="10" onchange="checkrefecha(this.form)"> </span></td>
 				  <td width="100"><img src="../imagenes/img_cal.png" width="20" height="14" id="calendario3" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"   onmouseover="this.style.background='blue';" onmouseout="this.style.background=''"  onClick="javascript:showCal('Calendario3')"  /></td>
-				  <td width="250"><span class="Estilo5">FECHA REGISTRO : <input name="txtFecha_reg" type="text"  id="txtFecha_reg" size="12" maxlength="19" onFocus="encender(this)" onBlur="apagar(this)"   value="<?echo $fecha_hoy?>"> </span></td>
-                  <td width="230"><span class="Estilo5">USUARIO: <input name="txtusuario_sia" id="txtusuario_sia" size="15" value="<?echo $nusuario_sia?>"  readonly > </span> </td>
+				  <td width="250"><span class="Estilo5">FECHA REGISTRO : <input name="txtFecha_reg" type="text"  id="txtFecha_reg" size="12" maxlength="19" onFocus="encender(this)" onBlur="apagar(this)"   value="<?php echo $fecha_hoy?>"> </span></td>
+                  <td width="230"><span class="Estilo5">USUARIO: <input name="txtusuario_sia" id="txtusuario_sia" size="15" value="<?php echo $nusuario_sia?>"  readonly > </span> </td>
                   
 				  
 				  <td width="120"><span class="Estilo5"> <input type="button" name="btcarga_fact" value="Cargar" title="Cargar Movimientos de Cobranza" onClick="javascript:Cargar_mov(this.form)" > </span></td>
@@ -97,26 +97,26 @@ return true;}
    rows[1][5] = "Presup Ingresos";
    if ((mbloq=="N")&&(gordr=="N")) {rows[1][5] = "O/P Retenciones Canc.";}
             </script>
-              <?include ("../class/class_tab.php");?>
+              <?php include ("../class/class_tab.php");?>
               <script type="text/javascript" language="javascript"> DrawTabs(); </script>
               <!-- PESTA&Ntilde;A 1 -->
               <div id="T11" class="tab-body">
-                <iframe src="Det_inc_int_cont.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_int_cont.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <!--PESTA&Ntilde;A 2 -->
               <div id="T12" class="tab-body" >
-                <iframe src="Det_inc_mov_cont.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_mov_cont.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <!--PESTA&Ntilde;A 3 -->
               <div id="T13" class="tab-body" >
-                <iframe src="Det_inc_comp_cont.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_comp_cont.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <!--PESTA&Ntilde;A 4 -->
               <div id="T14" class="tab-body" >
-                <iframe src="Det_inc_pag_cont.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_pag_cont.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
               </div>
 			  <div id="T15" class="tab-body" >
-                <iframe src="Det_inc_ing_cont.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_inc_ing_cont.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
               </div>
             </div></td>
          </tr>
@@ -127,7 +127,7 @@ return true;}
 
         <table width="800">
           <tr>
-            <td width="14"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="14"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
 			<td width="650"><span class="Estilo5">AFECTA PRESUPUESTO CON FECHA DE REGISTRO : <select name="txtafect_pre" size="1" id="txtafect_pre" onFocus="encender(this)" onBlur="apagar(this)">
                 <option>SI</option> <option selected>NO</option> </select></span></td>
 				  

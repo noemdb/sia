@@ -2,7 +2,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO</title>
+<title>SIPAP CONTROL BANCARIO</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
 <style type="text/css">
@@ -76,7 +76,7 @@ return true;}
     </tr>
   </table>
 </form>
-<? foreach($_GET as $key=> $val){${$key}=$val;}
-if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?}}?>
+<?php  foreach($_GET as $key=> $val){${$key}=$val;}
+if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?php } }?>
 </body>
 </html>

@@ -1,8 +1,8 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$tipo_mov_d=$_GET["tipo_mov_d"];$periodod=$_GET["periodod"]; $periodoh=$_GET["periodoh"]; $encab_reporte=$_GET["encab_reporte"];
 $tipo_rep=$_GET["tipo_rep"]; $Sql=""; $criterio1="";  $date = date("d-m-Y");$hora = date("h:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $mano=substr($Fec_Fin_Ejer,0,4);   $fecha_desde="01/".$periodod."/".$mano; $fecha_hasta="01/".$periodoh."/".$mano; 	
 	$fecha_desde=colocar_pdiames($fecha_desde); $fecha_hasta=colocar_udiames($fecha_hasta); 
@@ -11,8 +11,8 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
     $criterio1=$encab_reporte;
 	$criterio2="Fecha Desde: ".$fecha_desde." Hasta: ".$fecha_hasta;  
     $cod_mov="BAN004M".$usuario_sia;
-	$StrSQL = "DELETE FROM BAN036 Where (codigo_mov='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-	$res=pg_exec($conn,"SELECT INC_MOV_BAN036('$cod_mov','$cod_banco_d','$cod_banco_h','$fecha_d','$fecha_h','$tipo_mov_d')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	$StrSQL = "DELETE FROM BAN036 Where (codigo_mov='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+	$res=pg_exec($conn,"SELECT INC_MOV_BAN036('$cod_mov','$cod_banco_d','$cod_banco_h','$fecha_d','$fecha_h','$tipo_mov_d')");  $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 	
     $sSQL = "SELECT BAN002.Cod_Banco, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN002.Tipo_Cuenta, BAN002.Cod_Contable, BAN001.Descripcion_Tipo, BAN002.Tipo_Bco, BAN002.Descripcion_Banco, 
@@ -242,10 +242,10 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 		  ?>
 		   <table border="0" cellspacing='0' cellpadding='0' align="left">
 			 <tr height="20">
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 			 </tr>
 			 <tr height="20">
-				<td width="400" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio2; ?></strong></font></td>
+				<td width="400" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio2; ?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			 </tr>
@@ -265,7 +265,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="100" align="center" bgcolor="#99CCFF"><strong>DICIEMBRE</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>TOTAL</strong></td>
 			 </tr>
-		  <?  $i=0;  $total1=0; $total2=0; $total3=0; $total4=0; $total5=0; $total6=0; $total7=0; $total8=0;  $total9=0; $total10=0;  $total11=0; $total12=0; $totalG=0;
+		  <?php   $i=0;  $total1=0; $total2=0; $total3=0; $total4=0; $total5=0; $total6=0; $total7=0; $total8=0;  $total9=0; $total10=0;  $total11=0; $total12=0; $totalG=0;
 		  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_banco=$registro["cod_banco"]; 	$nombre_banco=$registro["nombre_banco"];  
 			  $descripcion_tipo=$registro["descripcion_tipo"];   $nro_cuenta=$registro["nro_cuenta"]; 	 $descripcion_banco=$registro["descripcion_banco"]; 
@@ -297,32 +297,32 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
               $totalG=$totalG+$total_causado;  
               ?>	 				 	
 				<tr>
-				  <td width="400" align="left"><? echo $nombre_banco; ?></td>
-				  <td width="100" align="right"><? echo $sub_total1; ?></td>
-				  <td width="100" align="right"><? echo $sub_total2; ?></td>
-				  <td width="100" align="right"><? echo $sub_total3; ?></td>
-				  <td width="100" align="right"><? echo $sub_total4; ?></td>
-				  <td width="100" align="right"><? echo $sub_total5; ?></td>
-				  <td width="100" align="right"><? echo $sub_total6; ?></td>
-				  <td width="100" align="right"><? echo $sub_total7; ?></td>
-				  <td width="100" align="right"><? echo $sub_total8; ?></td>
-				  <td width="100" align="right"><? echo $sub_total9; ?></td>
-				  <td width="100" align="right"><? echo $sub_total10; ?></td>
-				  <td width="100" align="right"><? echo $sub_total11; ?></td>
-				  <td width="100" align="right"><? echo $sub_total12; ?></td>
-				  <td width="100" align="right"><? echo $sub_totalG; ?></td>
+				  <td width="400" align="left"><?php  echo $nombre_banco; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total1; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total2; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total3; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total4; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total5; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total6; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total7; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total8; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total9; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total10; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total11; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_total12; ?></td>
+				  <td width="100" align="right"><?php  echo $sub_totalG; ?></td>
 				</tr>
 				<tr>
-				  <td width="400" align="left"><? echo $descripcion_tipo; ?></td>
+				  <td width="400" align="left"><?php  echo $descripcion_tipo; ?></td>
 				</tr>
 				<tr>
-				  <td width="400" align="left"><? echo "'".$nro_cuenta; ?></td>
+				  <td width="400" align="left"><?php  echo "'".$nro_cuenta; ?></td>
 				</tr>
 				<tr>
-				  <td width="400" align="left"><? echo $descripcion_banco; ?></td>
+				  <td width="400" align="left"><?php  echo $descripcion_banco; ?></td>
 				</tr>	
 				    
-           <?} $total1=formato_monto($total1);
+           <?php } $total1=formato_monto($total1);
 				$total2=formato_monto($total2);
 				$total3=formato_monto($total3);
 				$total4=formato_monto($total4);
@@ -338,22 +338,22 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 		   ?>	
 			<tr>
 			  <td width="400" align="right"><strong>TOTAL GENERAL:</strong></td>
-			  <td width="100" align="right"><strong><? echo $total1; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total2; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total3; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total4; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total5; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total6; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total7; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total8; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total9; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total10; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total11; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $total12; ?></strong></td>
-			  <td width="100" align="right"><strong><? echo $totalG; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total1; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total2; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total3; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total4; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total5; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total6; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total7; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total8; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total9; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total10; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total11; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $total12; ?></strong></td>
+			  <td width="100" align="right"><strong><?php  echo $totalG; ?></strong></td>
 			</tr>	
 				    
-		</table><?
+		</table><?php 
     }
 }
 ?>

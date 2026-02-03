@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -22,20 +22,20 @@ $sql="SELECT * FROM NOM014 where cod_empleado='$cod_empleado' order by fecha"; $
            <td width="250" align="center" bgcolor="#99CCFF" ><strong>Nombre Instituto </strong></td>
            <td width="250" align="center" bgcolor="#99CCFF" ><strong>Descripci&oacute;n </strong></td>
            </tr>
-<? while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha"]; $fechac=formato_ddmmaaaa($sfecha);
+<?php  while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha"]; $fechac=formato_ddmmaaaa($sfecha);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="50" align="left"><? echo $fechac; ?></td>
-           <td width="110" align="left"><? echo $registro["titulo"]; ?></td>
-           <td width="150" align="left"><? echo $registro["instituto"]; ?></td>
-           <td width="250" align="left"><? echo $registro["descripcion"]; ?></td>
+           <td width="50" align="left"><?php  echo $fechac; ?></td>
+           <td width="110" align="left"><?php  echo $registro["titulo"]; ?></td>
+           <td width="150" align="left"><?php  echo $registro["instituto"]; ?></td>
+           <td width="250" align="left"><?php  echo $registro["descripcion"]; ?></td>
            </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

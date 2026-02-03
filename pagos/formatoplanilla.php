@@ -2,4 +2,4 @@
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $formato="Rpt_planilla_ret.php";
 $StrSQL="select* from ban011 where codigo='$codigo'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $formato=$registro["formato_planilla"];}
-pg_close();?><input name="txtformato_planilla" type="text" id="txtformato_planilla" value="<?echo $formato?>" readonly>
+pg_close($conn);?><input name="txtformato_planilla" type="text" id="txtformato_planilla" value="<?php echo $formato?>" readonly>

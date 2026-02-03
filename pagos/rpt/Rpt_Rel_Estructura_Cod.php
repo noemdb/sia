@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $codigo_estrucrura_d=$_GET["codigo_estrucrura_d"];$codigo_estrucrura_h=$_GET["codigo_estrucrura_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
        // LLAMAR A PHP_REPORT
        $sSQL = "SELECT PAG006.cod_estructura, PAG006.Descripcion_Est, PAG009.Cod_Presup_Est,
@@ -116,7 +116,7 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_o
 			   <td width="400" align="left" bgcolor="#99CCFF"><strong>DENOMINACION</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>MONTO</strong></td>
 			 </tr>
-		  <?  $i=0;  $total_monto=0;  $sub_total_monto=0; $prev_cod_estructura="";   $res=pg_query($sSQL);
+		  <?php   $i=0;  $total_monto=0;  $sub_total_monto=0; $prev_cod_estructura="";   $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_estructura=$registro["cod_estructura"]; $descripcion_est=$registro["descripcion_est"]; $concepto_est=$registro["concepto_est"];
                   $cod_estructura_grupo=$cod_estructura; $descripcion_est_grupo=$descripcion_est; $concepto_est_grupo=$concepto_est;
 		       
@@ -131,22 +131,22 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_o
 				    <tr>
 				      <td width="100" align="left"></td>
 				      <td width="400" align="right"><strong>TOTAL ESTRUCTURA</strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_monto; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_monto; ?></strong></td>
 				    </tr>	
 					<tr>
 				      <td width="80" align="left"></td>
 				    </tr>	
-                  	         <?}	
+                  	         <?php }	
 				 ?>	   
 				<tr>
 				   <td width="100" align="left"><strong>Estructura Codigo:</strong></td>
-				   <td width="400" align="left"><strong><? echo $cod_estructura_grupo.'    '.$descripcion_est_grupo; ?></strong></td>
+				   <td width="400" align="left"><strong><?php  echo $cod_estructura_grupo.'    '.$descripcion_est_grupo; ?></strong></td>
 				 </tr>
 				<tr>
 				   <td width="100" align="left"><strong>Concepto :</td>
-				   <td width="400" align="left"><strong><? echo $concepto_est_grupo; ?></strong></td>
+				   <td width="400" align="left"><strong><?php  echo $concepto_est_grupo; ?></strong></td>
 				 </tr>
-			     <? 				 
+			     <?php  				 
 				$prev_cod_estructura=$cod_estructura_grupo; $sub_total_monto=0; }
 
 		  $cod_presup_est=$registro["cod_presup_est"]; $denominacion=$registro["denominacion"]; $monto_est=$registro["monto_est"]; 
@@ -156,11 +156,11 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_o
 		  $denominacion=conv_cadenas($denominacion,0);
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><? echo $cod_presup_est; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
-				   <td width="100" align="right"><? echo $monto_est; ?></td>
+				   <td width="100" align="left"><?php  echo $cod_presup_est; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_est; ?></td>
 				 </tr>
-			   <? 
+			   <?php  
  			   
 		  } $total_monto=formato_monto($total_monto); 
 			if($sub_total_monto>0){ $sub_total_monto=formato_monto($sub_total_monto); 
@@ -173,12 +173,12 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_o
 				    <tr>
 				      <td width="100" align="left"></td>
 				      <td width="400" align="right"><strong>TOTAL ESTRUCTURA</strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total_monto; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total_monto; ?></strong></td>
 				    </tr>	
 					<tr>
 				      <td width="80" align="left"></td>
 				    </tr>	
-                  	         <?}
+                  	         <?php }
 				?>	 				 
                                    <tr>
 				          <td width="100" align="left"></td>
@@ -188,13 +188,13 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_o
 				    <tr>
 				          <td width="100" align="left"></td>
 					  <td width="400" align="right"><strong>TOTAL GENERAL</strong></strong></td>
-					  <td width="100" align="right"><strong><? echo $total_monto; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $total_monto; ?></strong></td>
 				    </tr>	
 				    <tr>
 				      <td width="150" align="left"></td>
 				    </tr>	
-                                <?  
-		  ?></table><?
+                                <?php   
+		  ?></table><?php 
         }		  
     }
 ?>

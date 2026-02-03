@@ -1,4 +1,4 @@
-<?  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php   error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 if ($_GET){$codigod=$_GET["cod_presupd"];$codigoh=$_GET["cod_presuph"];$fuented=$_GET["cod_fuented"];$fuenteh=$_GET["cod_fuenteh"];$tipo=$_GET["tipo"];$tipo_rep=$_GET["tipo_rep"];}
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$tipo="";$tipo_rep="HTML";} $php_os=PHP_OS; $mcontrol = array (0,0,0,0,0,0,0,0,0,0);
 function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
@@ -9,7 +9,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
 $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];}
@@ -90,7 +90,7 @@ $long_u=strlen($formato_presup); $long_c=strlen($formato_categoria);
 		   $pdf->SetXY($x,$y);
 		   $pdf->MultiCell($n,3,$denominacion,0);
 		} 
-		$pdf->Output(); pg_close();  
+		$pdf->Output(); pg_close($conn);  
     }
     if($tipo_rep=="EXCEL"){	
 	  header("Content-type: application/vnd.ms-excel");
@@ -108,7 +108,7 @@ $long_u=strlen($formato_presup); $long_c=strlen($formato_categoria);
            <td width="100" align="center" bgcolor="#99CCFF"><strong>TIPO GASTO</strong></td>
            <td width="150" align="center" bgcolor="#99CCFF"><strong>CODIGO CONTABLE</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];   $cod_contable=$registro["cod_contable"];
@@ -116,14 +116,14 @@ $long_u=strlen($formato_presup); $long_c=strlen($formato_categoria);
            $denominacion=conv_cadenas($denominacion,0); $cod_unidad_ejec=$registro["cod_unidad_ejec"];
 	?>	   
 		   <tr>
-           <td width="200" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="50" align="center">'<? echo $cod_fuente; ?></td>
-           <td width="100" align="center"><? echo $func_inv; ?></td>
-           <td width="150" align="left"><? echo $cod_contable; ?></td>
+           <td width="200" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="50" align="center">'<?php  echo $cod_fuente; ?></td>
+           <td width="100" align="center"><?php  echo $func_inv; ?></td>
+           <td width="150" align="left"><?php  echo $cod_contable; ?></td>
          </tr>
-	<? }   ?>
-	  </table><?
+	<?php }   ?>
+	  </table><?php 
 	}  
 } 	
 ?>

@@ -1,5 +1,5 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME");   $fecha_hoy=asigna_fecha_hoy(); $fecha_hoy=colocar_udiames($fecha_hoy);
+<?php include ("../class/conect.php"); include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME");   $fecha_hoy=asigna_fecha_hoy(); $fecha_hoy=colocar_udiames($fecha_hoy);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -41,13 +41,13 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<? $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php  $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $cod_empleadod=""; $cod_empleadoh="";$sql="SELECT MAX(cod_empleado) As Max_cod_empleado, MIN(cod_empleado) As Min_cod_empleado FROM nom006"; $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$cod_empleadod=$registro["min_cod_empleado"];$cod_empleadoh=$registro["max_cod_empleado"]; }
 $tipo_nomina_d="10"; $tipo_nomina_d="10"; $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 where frecuencia='S'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$tipo_nomina_d=$registro["min_tipo_nomina"]; $tipo_nomina_h=$registro["max_tipo_nomina"];}
 $cod_conc=""; $sql="Select * from NOM001 where tipo_nomina='$tipo_nomina_d'";$res=pg_query($sql); if($registro=pg_fetch_array($res,0)){ $cod_conc=$registro["con_cal_liqui"];}
-pg_close();  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udiames($fecha_hoy);  $cod_conc="150"; $cant_dias=30; $tipo_nomina_d="10"; $tipo_nomina_d="10";
+pg_close($conn);  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udiames($fecha_hoy);  $cod_conc="150"; $cant_dias=30; $tipo_nomina_d="10"; $tipo_nomina_d="10";
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -81,10 +81,10 @@ pg_close();  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udia
              <td><table width="866">
                  <tr>
                    <td width="200"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR DESDE : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_empleadod?>" > </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_empleadod?>" > </span></td>
                    <td width="136"><input class="Estilo10" name="btcat_trab1" type="button" id="btcat_trab1" title="Abrir Catalogo Trabajadores"  onClick="VentanaCentrada('Cat_trabajadoresd.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
                    <td width="200"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR HASTA : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_empleadoh?>" > </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_empleadoh?>" > </span></td>
                    <td width="130"><input class="Estilo10" name="btcat_trab2" type="button" id="btcat_trab2" title="Abrir Catalogo Trabajadores"  onClick="VentanaCentrada('Cat_trabajadoresh.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
 
                   </tr>
@@ -94,10 +94,10 @@ pg_close();  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udia
            <td><table width="866">
                  <tr>
                    <td width="200"><span class="Estilo5">TIPO DE NOMINA DESDE : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?echo $tipo_nomina_d?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?php echo $tipo_nomina_d?>"> </span></td>
                    <td width="136"><input class="Estilo10" name="btcat_tipon1" type="button" id="btcat_tipon1" title="Abrir Catalogo tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina_d.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
                    <td width="200"><span class="Estilo5">TIPO DE NOMINA HASTA : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?echo $tipo_nomina_h?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?php echo $tipo_nomina_h?>"> </span></td>
                    <td width="130"><input class="Estilo10" name="btcat_tipon2" type="button" id="btcat_tipon2" title="Abrir Catalogo tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina_h.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
 
                    </tr>
@@ -108,9 +108,9 @@ pg_close();  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udia
              <td><table width="866">
                <tr>
                  <td width="206"><span class="Estilo5">FECHA DE HISTORICO DESDE :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_desde?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_desde" type="text" id="txtfecha_desde" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_desde?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="80"><span class="Estilo5">HASTA : </span></td>
-				 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hasta?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+				 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hasta?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="80"><span class="Estilo5">BUSCAR EN : </span></td>
 				 <td width="200"><select name="txtbusca_hist" size="1" id="txtbusca_hist" onFocus="encender(this)" onBlur="apagar(this)"> 
 				    <option value="NOM">HISTORICO DE NOMINAS</option></select>  </span></td>
@@ -122,9 +122,9 @@ pg_close();  $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udia
 		   <td><table width="866">
                  <tr>
                    <td width="233"><span class="Estilo5">CANTIDAD DE DIAS A DIVIDIR : </span></td>
-				   <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtcant_dias" type="text" id="txtcant_dias" size="6" maxlength="5" style="text-align:right" onFocus="encender(this);" onBlur="apagar(this)" value="<?echo $cant_dias?>" onKeypress="return validarNum(event)">  </span></td>
+				   <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtcant_dias" type="text" id="txtcant_dias" size="6" maxlength="5" style="text-align:right" onFocus="encender(this);" onBlur="apagar(this)" value="<?php echo $cant_dias?>" onKeypress="return validarNum(event)">  </span></td>
                    <td width="233"><span class="Estilo5">FECHA MES PROCESO :</span></td>
-                   <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hasta?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                   <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hasta?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
  
                  </tr>
              </table></td>

@@ -1,4 +1,4 @@
-<? include ("../class/seguridad.inc"); include ("../class/conects.php"); include("../class/fun_fechas.php"); include("../class/fun_numeros.php");   include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
+<?php  include ("../class/seguridad.inc"); include ("../class/conects.php"); include("../class/fun_fechas.php"); include("../class/fun_numeros.php");   include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
   $tipo_formato=$_POST["txttipo_formato"]; 
 function elimina_puntos($str){  $texto="";
   for ($i=0; $i<strlen($str); $i++) { if (substr($str,$i, 1)==".") {$texto=$texto; }  else {$texto=$texto.substr($str,$i, 1);}  }
@@ -15,10 +15,10 @@ $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$u
 $sSQL="Select * from nom045 WHERE cod_arch_banco='$cod_arch_banco' and tipo_arch_banco='$tipo_arch_banco'"; $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
 if($filas>=1){$sSQL="SELECT ACTUALIZA_nom045(2,'$cod_arch_banco','$tipo_arch_banco','$den_arch_banco','','','','$cod_emp','$cod_nomina_arch','$medio_envio','$cod_moneda','$cod_concepto1','$cod_concepto2','$cod_concepto3','','','','$minf_usuario')";}
 else{$sSQL="SELECT ACTUALIZA_nom045(1,'$cod_arch_banco','$tipo_arch_banco','$den_arch_banco','','','','$cod_emp','$cod_nomina_arch','$medio_envio','$cod_moneda','$cod_concepto1','$cod_concepto2','$cod_concepto3','','','','$minf_usuario')";}
-$resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){ $error=1;?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?}
+$resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){ $error=1;?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 if($error==0){$sql="SELECT nom046.tipo_nomina,nom001.descripcion FROM nom046,nom001 Where (nom046.tipo_nomina=nom001.tipo_nomina) And (Cod_Arch_Banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco')"; $res=pg_query($sql);
   while($registro=pg_fetch_array($res)){ $tipo=$registro["tipo_nomina"]; if($mformula!=""){$mformula=$mformula." or ";}  $mformula=$mformula."(tipo_nomina='$tipo')";}
-  if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><? }
+  if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><?php }
   if($error==0){ $mformula="(".$mformula.")"; 
     if($tipo_calculo=="T"){ $mformula=$mformula." and ((nom019.tp_calculo='N')or(nom019.tp_calculo='E')) "; } else {$mformula=$mformula." and (nom019.tp_calculo='$tipo_calculo') ";}
     $sql="SELECT * FROM nom019 Where ((nom019.cod_concepto='$cod_concepto1') or (nom019.cod_concepto='$cod_concepto2') or (nom019.cod_concepto='$cod_concepto3') or (nom019.cod_concepto='$cod_reposo')) And ((nom019.fecha_proceso>='$fechad') and (nom019.fecha_proceso<='$fechah')) And ". $mformula ." order by char_length(nom019.cedula),nom019.cedula,nom019.cod_concepto";
@@ -86,13 +86,13 @@ if($error==0){$sql="SELECT nom046.tipo_nomina,nom001.descripcion FROM nom046,nom
 		
 	$tot_emp=formato_monto($monto_te); $tot_aport=formato_monto($monto_ta);
      if($tipo_formato=="TXT"){   header('Content-type: application/txt');	  header("Content-Disposition: attachment; filename=arch_fpj.txt"); }
-    else{?><script language="JavaScript">alert('Archivo Generado,\n Cantidad de Trabajadores : <? echo $num_linea; ?> \n Monto Total Aporte Empleado : <? echo $tot_emp; ?> \n Monto Total Aporte Patronal : <? echo $tot_aport; ?>'); </script><?		}
+    else{?><script language="JavaScript">alert('Archivo Generado,\n Cantidad de Trabajadores : <?php  echo $num_linea; ?> \n Monto Total Aporte Empleado : <?php  echo $tot_emp; ?> \n Monto Total Aporte Patronal : <?php  echo $tot_aport; ?>'); </script><?php 		}
     if($num_linea==0){$error=1;}	
     else{ echo $detalle;    }
    } 
 }
-pg_close();
+pg_close($conn);
 
-if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?} 
+if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?php } 
 
 ?>

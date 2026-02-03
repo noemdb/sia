@@ -77,5 +77,5 @@ if ($t_amort>0){ $monto_anticipo=0;$codigo_cuenta="";
 $tiene_anticipo=substr($tiene_anticipo,0,1);
 if($tiene_anticipo=="S") {$sSQL="SELECT UPDATE_PAG036_ANT('$codigo_mov',$monto_anticipo,'$tiene_anticipo','$codigo_cuenta')";  $resultado=pg_exec($conn,$sSQL);}
 
-pg_close();
-?><iframe src="Det_inc_comp_ord.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+pg_close($conn);
+?><iframe src="Det_inc_comp_ord.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>

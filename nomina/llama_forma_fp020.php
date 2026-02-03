@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="FORMA".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_empleado=$_POST["txtcod_empleado"]; $mov_nuevo=$_POST["txtmov_nuevo"];  $fecha_mov=$_POST["txtfecha_mov"]; $fecha_mov_n=$_POST["txtfecha_mov_n"]; $fecha_hoy=asigna_fecha_hoy();
 $mov_nuevo=substr($mov_nuevo,0,1);
@@ -13,8 +13,8 @@ function Llamar_Inc_Calculo(mop){
 </script>
 </head>
 <body>
-<?
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
+<?php 
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
 $error=1;$nombre="";$nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $campo_str1="";  $campo_num1=0;
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $tipo_cuenta=""; $cod_banco=""; $nombre_banco=""; $cta_empresa=""; $calculo_grupos=""; $fecha_asigna_cargo=""; $cod_cargo=""; $cod_departam=""; $cod_tipo_personal=""; $paso=""; $grado=""; $sueldo=""; $prima=""; $compensacion=""; $otros=""; $sueldo_integral=""; $tipo_vacaciones="N"; $pago_vaciones="N"; $fecha_pago=""; $tiene_lph=""; $banco_lph=""; $cta_lph=""; $fecha_lph=""; $fecha_des_lph=""; $modif_lph=""; $tiene_dec_jurada=""; $fecha_declaracion=""; $monto_declaracion=""; $fecha_fin_con=""; $fecha_egreso=""; $motivo_egreso=""; $cont_fijo=""; $cod_cont_colec=""; $tipo_nom_ant=""; $cod_emp_ant=""; $fecha_camb_n=""; $motivo_camb_n=""; $tiene_aus_pro=""; $motivo_ausencia=""; $fecha_aus_desde=""; $fecha_aus_hasta="";  $motivo_suplen=""; $cedula_titular="";
 $nombre1=""; $nombre2=""; $apellido1=""; $apellido2=""; $sexo=""; $edo_civil=""; $fecha_nacimiento=""; $edad=""; $lugar_nacimiento=""; $direccion=""; $cod_postal=""; $telefono=""; $tlf_movil=""; $correo=""; $profesion=""; $grado_inst=""; $tiempo_e=""; $poliza=""; $fecha_seguro=""; $estado=""; $ciudad=""; $municipio=""; $parroquia=""; $observacion=""; $talla_camisa=""; $talla_pantalon=""; $talla_calzado=""; $peso=""; $estatura=""; $aptdo_postal=""; $sueldo=0; 
@@ -74,65 +74,65 @@ $prima1=formato_monto($prima1); $prima2=formato_monto($prima2); $prima3=formato_
 <form name="form2" method="post" action="/sia/nomina/rpt/Datos_forma_fp020.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
-	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
-	 <td width="5"><input name="txtfecha_mov" type="hidden" id="txtfecha_mov" value="<?echo $fecha_mov?>" ></td>
-	 <td width="5"><input name="txtmov_nuevo" type="hidden" id="txtmov_nuevo" value="<?echo $mov_nuevo?>" ></td>
-	 <td width="5"><input name="txtmovimiento" type="hidden" id="txtmovimiento" value="<?echo $movimiento?>" ></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
+	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
+	 <td width="5"><input name="txtfecha_mov" type="hidden" id="txtfecha_mov" value="<?php echo $fecha_mov?>" ></td>
+	 <td width="5"><input name="txtmov_nuevo" type="hidden" id="txtmov_nuevo" value="<?php echo $mov_nuevo?>" ></td>
+	 <td width="5"><input name="txtmovimiento" type="hidden" id="txtmovimiento" value="<?php echo $movimiento?>" ></td>
 	 
-	 <td width="5"><input name="txthorario1" type="hidden" id="txthorario1" value="<?echo $horario1?>" ></td>
-	 <td width="5"><input name="txthorario2" type="hidden" id="txthorario2" value="<?echo $horario2?>" ></td>
-	 <td width="5"><input name="txthora_sem" type="hidden" id="txthora_sem" value="<?echo $hora_sem?>" ></td>
+	 <td width="5"><input name="txthorario1" type="hidden" id="txthorario1" value="<?php echo $horario1?>" ></td>
+	 <td width="5"><input name="txthorario2" type="hidden" id="txthorario2" value="<?php echo $horario2?>" ></td>
+	 <td width="5"><input name="txthora_sem" type="hidden" id="txthora_sem" value="<?php echo $hora_sem?>" ></td>
 	 
 	 
-	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?echo $fecha_ingreso?>" ></td>
-	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?echo $nacionalidad?>"></td>	 
-	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?echo $fecha_nacimiento?>" ></td>
-	 <td width="5"><input name="txtedad" type="hidden" id="txtedad" value="<?echo $edad?>"></td>
-	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?echo $sexo?>"></td>
-	 <td width="5"><input name="txtedo_civil" type="hidden" id="txtedo_civil" value="<?echo $edo_civil?>"></td>	 
-	 <td width="5"><input name="txgrado_inst" type="hidden" id="txgrado_inst" value="<?echo $grado_inst?>"></td>
-	 <td width="5"><input name="txtprofesion" type="hidden" id="txtprofesion" value="<?echo $profesion?>"></td>	 	 
-	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?echo $direccion?>"></td>	 
-	 <td width="5"><input name="txtcod_cargo" type="hidden" id="txtcod_cargo" value="<?echo $cod_cargo?>"></td>
-	 <td width="5"><input name="txtdes_cargo" type="hidden" id="txtdes_cargo" value="<?echo $des_cargo?>"></td>	
-	 <td width="5"><input name="txtcod_departam" type="hidden" id="txtcod_departam" value="<?echo $cod_departam?>"></td>
-	 <td width="5"><input name="txtdes_departam" type="hidden" id="txtdes_departam" value="<?echo $descripcion_dep?>"></td>	 
-	 <td width="5"><input name="txtsueldo" type="hidden" id="txtsueldo" value="<?echo $sueldo?>"></td>
-	 <td width="5"><input name="txtcompensacion" type="hidden" id="txtcompensacion" value="<?echo $compensacion?>"></td>
-	 <td width="5"><input name="txtotros" type="hidden" id="txtotros" value="<?echo $otros?>"></td>	 
-	 <td width="5"><input name="txtcod_prima1" type="hidden" id="txtcod_prima1" value="<?echo $cod_prima1?>"></td>
-	 <td width="5"><input name="txtdes_prima1" type="hidden" id="txtdes_prima1" value="<?echo $des_prima1?>"></td>
-	 <td width="5"><input name="txtprima1" type="hidden" id="txtprima1" value="<?echo $prima1?>"></td>	 
-	 <td width="5"><input name="txtcod_prima2" type="hidden" id="txtcod_prima2" value="<?echo $cod_prima2?>"></td>
-	 <td width="5"><input name="txtdes_prima2" type="hidden" id="txtdes_prima2" value="<?echo $des_prima2?>"></td>
-	 <td width="5"><input name="txtprima2" type="hidden" id="txtprima2" value="<?echo $prima2?>"></td>	 
-	 <td width="5"><input name="txtcod_prima3" type="hidden" id="txtcod_prima3" value="<?echo $cod_prima3?>"></td>
-	 <td width="5"><input name="txtdes_prima3" type="hidden" id="txtdes_prima3" value="<?echo $des_prima3?>"></td>
-	 <td width="5"><input name="txtprima3" type="hidden" id="txtprima3" value="<?echo $prima3?>"></td>	 
-	 <td width="5"><input name="txtcod_prima4" type="hidden" id="txtcod_prima4" value="<?echo $cod_prima4?>"></td>
-	 <td width="5"><input name="txtdes_prima4" type="hidden" id="txtdes_prima4" value="<?echo $des_prima4?>"></td>
-	 <td width="5"><input name="txtprima4" type="hidden" id="txtprima4" value="<?echo $prima4?>"></td>	 
-	 <td width="5"><input name="txtcod_prima5" type="hidden" id="txtcod_prima5" value="<?echo $cod_prima5?>"></td>
-	 <td width="5"><input name="txtdes_prima5" type="hidden" id="txtdes_prima5" value="<?echo $des_prima5?>"></td>
-	 <td width="5"><input name="txtprima5" type="hidden" id="txtprima5" value="<?echo $prima5?>"></td>	 
-	 <td width="5"><input name="txtubc_geografica" type="hidden" id="txtubc_geografica" value="<?echo $ubc_geografica?>"></td>
-	 <td width="5"><input name="txtlugar_pag" type="hidden" id="txtlugar_pag" value="<?echo $lugar_pag?>"></td>
-	 <td width="5"><input name="txtcod_ent_fed" type="hidden" id="txtcod_ent_fed" value="<?echo $cod_ent_fed?>"></td>	 
-	 <td width="5"><input name="txtobservacion" type="hidden" id="txtobservacion" value="<?echo $observacion?>"></td>	 
-	 <td width="5"><input name="txtelaborado_por" type="hidden" id="txtelaborado_por" value="<?echo $elaborado_por?>"></td>
-	 <td width="5"><input name="txtfecha_elab" type="hidden" id="txtfecha_elab" value="<?echo $fecha_elab?>"></td>	 
-	 <td width="5"><input name="txtrevisado_por" type="hidden" id="txtrevisado_por" value="<?echo $revisado_por?>"></td>
-	 <td width="5"><input name="txtfecha_rev" type="hidden" id="txtfecha_rev" value="<?echo $fecha_rev?>"></td>	 
-	 <td width="5"><input name="txtautorizado_por" type="hidden" id="txtautorizado_por" value="<?echo $autorizado_por?>"></td>
-	 <td width="5"><input name="txtfecha_auto" type="hidden" id="txtfecha_auto" value="<?echo $fecha_auto?>"></td>	 
+	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?php echo $fecha_ingreso?>" ></td>
+	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?php echo $nacionalidad?>"></td>	 
+	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?php echo $fecha_nacimiento?>" ></td>
+	 <td width="5"><input name="txtedad" type="hidden" id="txtedad" value="<?php echo $edad?>"></td>
+	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?php echo $sexo?>"></td>
+	 <td width="5"><input name="txtedo_civil" type="hidden" id="txtedo_civil" value="<?php echo $edo_civil?>"></td>	 
+	 <td width="5"><input name="txgrado_inst" type="hidden" id="txgrado_inst" value="<?php echo $grado_inst?>"></td>
+	 <td width="5"><input name="txtprofesion" type="hidden" id="txtprofesion" value="<?php echo $profesion?>"></td>	 	 
+	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?php echo $direccion?>"></td>	 
+	 <td width="5"><input name="txtcod_cargo" type="hidden" id="txtcod_cargo" value="<?php echo $cod_cargo?>"></td>
+	 <td width="5"><input name="txtdes_cargo" type="hidden" id="txtdes_cargo" value="<?php echo $des_cargo?>"></td>	
+	 <td width="5"><input name="txtcod_departam" type="hidden" id="txtcod_departam" value="<?php echo $cod_departam?>"></td>
+	 <td width="5"><input name="txtdes_departam" type="hidden" id="txtdes_departam" value="<?php echo $descripcion_dep?>"></td>	 
+	 <td width="5"><input name="txtsueldo" type="hidden" id="txtsueldo" value="<?php echo $sueldo?>"></td>
+	 <td width="5"><input name="txtcompensacion" type="hidden" id="txtcompensacion" value="<?php echo $compensacion?>"></td>
+	 <td width="5"><input name="txtotros" type="hidden" id="txtotros" value="<?php echo $otros?>"></td>	 
+	 <td width="5"><input name="txtcod_prima1" type="hidden" id="txtcod_prima1" value="<?php echo $cod_prima1?>"></td>
+	 <td width="5"><input name="txtdes_prima1" type="hidden" id="txtdes_prima1" value="<?php echo $des_prima1?>"></td>
+	 <td width="5"><input name="txtprima1" type="hidden" id="txtprima1" value="<?php echo $prima1?>"></td>	 
+	 <td width="5"><input name="txtcod_prima2" type="hidden" id="txtcod_prima2" value="<?php echo $cod_prima2?>"></td>
+	 <td width="5"><input name="txtdes_prima2" type="hidden" id="txtdes_prima2" value="<?php echo $des_prima2?>"></td>
+	 <td width="5"><input name="txtprima2" type="hidden" id="txtprima2" value="<?php echo $prima2?>"></td>	 
+	 <td width="5"><input name="txtcod_prima3" type="hidden" id="txtcod_prima3" value="<?php echo $cod_prima3?>"></td>
+	 <td width="5"><input name="txtdes_prima3" type="hidden" id="txtdes_prima3" value="<?php echo $des_prima3?>"></td>
+	 <td width="5"><input name="txtprima3" type="hidden" id="txtprima3" value="<?php echo $prima3?>"></td>	 
+	 <td width="5"><input name="txtcod_prima4" type="hidden" id="txtcod_prima4" value="<?php echo $cod_prima4?>"></td>
+	 <td width="5"><input name="txtdes_prima4" type="hidden" id="txtdes_prima4" value="<?php echo $des_prima4?>"></td>
+	 <td width="5"><input name="txtprima4" type="hidden" id="txtprima4" value="<?php echo $prima4?>"></td>	 
+	 <td width="5"><input name="txtcod_prima5" type="hidden" id="txtcod_prima5" value="<?php echo $cod_prima5?>"></td>
+	 <td width="5"><input name="txtdes_prima5" type="hidden" id="txtdes_prima5" value="<?php echo $des_prima5?>"></td>
+	 <td width="5"><input name="txtprima5" type="hidden" id="txtprima5" value="<?php echo $prima5?>"></td>	 
+	 <td width="5"><input name="txtubc_geografica" type="hidden" id="txtubc_geografica" value="<?php echo $ubc_geografica?>"></td>
+	 <td width="5"><input name="txtlugar_pag" type="hidden" id="txtlugar_pag" value="<?php echo $lugar_pag?>"></td>
+	 <td width="5"><input name="txtcod_ent_fed" type="hidden" id="txtcod_ent_fed" value="<?php echo $cod_ent_fed?>"></td>	 
+	 <td width="5"><input name="txtobservacion" type="hidden" id="txtobservacion" value="<?php echo $observacion?>"></td>	 
+	 <td width="5"><input name="txtelaborado_por" type="hidden" id="txtelaborado_por" value="<?php echo $elaborado_por?>"></td>
+	 <td width="5"><input name="txtfecha_elab" type="hidden" id="txtfecha_elab" value="<?php echo $fecha_elab?>"></td>	 
+	 <td width="5"><input name="txtrevisado_por" type="hidden" id="txtrevisado_por" value="<?php echo $revisado_por?>"></td>
+	 <td width="5"><input name="txtfecha_rev" type="hidden" id="txtfecha_rev" value="<?php echo $fecha_rev?>"></td>	 
+	 <td width="5"><input name="txtautorizado_por" type="hidden" id="txtautorizado_por" value="<?php echo $autorizado_por?>"></td>
+	 <td width="5"><input name="txtfecha_auto" type="hidden" id="txtfecha_auto" value="<?php echo $fecha_auto?>"></td>	 
   </tr>
 </table>
 </form>
@@ -140,22 +140,22 @@ $prima1=formato_monto($prima1); $prima2=formato_monto($prima2); $prima3=formato_
 <form name="form3" method="post" action="/sia/nomina/rpt/llama_mod_forma_fp020.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>
-     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>	 
-	 <td width="5"><input name="txtfecha_mov_n" type="hidden" id="txtfecha_mov_n" value="<?echo $fecha_mov_n?>" ></td>	 
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>
+     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>	 
+	 <td width="5"><input name="txtfecha_mov_n" type="hidden" id="txtfecha_mov_n" value="<?php echo $fecha_mov_n?>" ></td>	 
   </tr>
 </table>
 </form>
 
 </body>
 </html>
-<?pg_close();
+<?php pg_close($conn);
 /* */
-if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('<?echo $mov_nuevo?>');</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('<?php echo $mov_nuevo?>');</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 
 ?>

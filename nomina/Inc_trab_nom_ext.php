@@ -1,15 +1,15 @@
-<?include ("../class/ventana.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php");$equipo=getenv("COMPUTERNAME");
 if(!$_GET){$mcod_m="ENOM017".$usuario_sia.$equipo;$codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Trabajadores N&oacute;mina Extraordinaria)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Trabajadores N&oacute;mina Extraordinaria)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script language="JavaScript" src="../class/sia.js" type=text/javascript></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_trab_nom_ext.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_trab_nom_ext.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_empleado.value==""){alert("Codigo de Empleado no puede estar Vacio");return false;}else{f.txtcod_empleado.value=f.txtcod_empleado.value.toUpperCase();}
 document.form1.submit;
@@ -47,7 +47,7 @@ return true;}
           <td><table width="620">
             <tr>
               <td width="120"><span class="Estilo5">NOMBRE :</span></td>
-			  <td width="500"><span class="Estilo5"> <input name="txtnombre" type="text" id="txtnombre" size="75" maxlength="80" readonly value="<?echo $nombre?>"> </span></td>
+			  <td width="500"><span class="Estilo5"> <input name="txtnombre" type="text" id="txtnombre" size="75" maxlength="80" readonly value="<?php echo $nombre?>"> </span></td>
             </tr>
           </table></td>
         </tr>
@@ -56,7 +56,7 @@ return true;}
       </table>
       <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

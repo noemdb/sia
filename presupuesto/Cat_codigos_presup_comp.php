@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");include ("../class/funciones.php"); error_reporting(E_ALL ^ E_NOTICE);
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");include ("../class/funciones.php"); error_reporting(E_ALL ^ E_NOTICE);
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";$formato_par="XXX-XX-XX-XX";$sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_par=$registro["campo527"];}$long_c=strlen($formato_presup);
 $mpatron="Array(1,1,3,2,2,4,0,0,0,0)";  $mpatron=arma_patron($formato_presup);$mpatronp="Array(1,1,3,2,2,4,0,0,0,0)";  $mpatronp=arma_patron($formato_par);
 ?>
@@ -35,7 +35,7 @@ return true;}
 <meta http-equiv="Pragma" content="no-cache" />
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 </head><body>
-<?      $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1;
+<?php       $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1;
         $criterio = "where (length(Cod_Presup)=".$long_c.")";$txt_criterio = "";
         if ($_GET){if ($_GET["criterio"]!=""){ $txt_criterio = $_GET["criterio"];$txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where (length(Cod_Presup)=".$long_c.") and (Cod_Presup like '%" . $txt_criterio . "%' or denominacion like '%" . $txt_criterio . "%')";}}
@@ -61,18 +61,18 @@ return true;}
 				$l=strlen($denominacion); if($l>100){$l=100;}else{$l-1;}$denominacion=substr($denominacion,0,$l);
                 if  ($linea>$limitInf+$tamPag){$Salir=true;}  if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){  $denominacion=cambiar_car_especiales($denominacion);
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];"  onDblClick="javascript:cerrar_catalogo('<? echo $registro["cod_presup"]; ?>','<? echo $registro["cod_fuente"]; ?>','<? echo $denominacion; ?>','<? echo $des_fuente_financ; ?>','<? echo $registro["cod_contable"]; ?>','<? echo $registro["nombre_cuenta"]; ?>','<? echo $monto; ?>','<? echo $montod; ?>') ">
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_presup"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_fuente"]; ?></b></font></td>
-    <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["denominacion"]; ?></b></font></td>
-    <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["des_fuente_financ"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];"  onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["cod_presup"]; ?>','<?php  echo $registro["cod_fuente"]; ?>','<?php  echo $denominacion; ?>','<?php  echo $des_fuente_financ; ?>','<?php  echo $registro["cod_contable"]; ?>','<?php  echo $registro["nombre_cuenta"]; ?>','<?php  echo $monto; ?>','<?php  echo $montod; ?>') ">
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_presup"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_fuente"]; ?></b></font></td>
+    <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["denominacion"]; ?></b></font></td>
+    <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["des_fuente_financ"]; ?></b></font></td>
  </tr>
-<?}  } echo "</table>"; }
+<?php } } echo "</table>"; }
 ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      if($pagina>1){
+<?php       if($pagina>1){
            echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."'>";
            echo "<font face='verdana' size='-2'>Principio</font>";
            echo "</a>&nbsp;";
@@ -118,4 +118,4 @@ return true;}
 </form>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

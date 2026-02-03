@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';$cod_estructura='';} else{$criterio=$_GET["criterio"];$cod_estructura=substr($criterio,0,8);}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';$cod_estructura='';} else{$criterio=$_GET["criterio"];$cod_estructura=substr($criterio,0,8);}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -25,30 +25,30 @@ $res=pg_query($sql);
            <td width="64" align="center" bgcolor="#99CCFF"><strong>Posici&oacute;n</strong></td>
 		   <td width="64" align="center" bgcolor="#99CCFF"><strong>Condici&oacute;n</strong></td>
 		   </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res))
 { $monto=$registro["monto_ret"]; $monto=formato_monto($monto);$total=$total+$registro["monto_ret"];
 $concepto_ret=$registro["concepto_ret"]; $concepto_ret=substr($concepto_ret,0,150);
 $codigo=$registro["ref_comp_est"]." ".$registro["cod_presup_est"]." ".$registro["fuente_est"];
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="80" align="left"><? echo $registro["tipo_ret"]; ?></td>
-           <td width="125" align="left"><? echo $registro["descripcion_ret"]; ?></td>
-		   <td width="31" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="61" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="73" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="41" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="32" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="105" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="123" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="128" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="130" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="94" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="95" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		   <td width="64" align="left"><? echo $registro["tipo_ret"]; ?></td>
-		    <td width="64" align="left"><? echo $registro["tipo_ret"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+           <td width="125" align="left"><?php  echo $registro["descripcion_ret"]; ?></td>
+		   <td width="31" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="61" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="73" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="41" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="32" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="105" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="123" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="128" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="130" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="94" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="95" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		   <td width="64" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
+		    <td width="64" align="left"><?php  echo $registro["tipo_ret"]; ?></td>
 		    </tr>
-         <?}
+         <?php }
  $total=formato_monto($total);
 ?>
        </table></td>
@@ -63,6 +63,6 @@ $codigo=$registro["ref_comp_est"]." ".$registro["cod_presup_est"]." ".$registro[
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

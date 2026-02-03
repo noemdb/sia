@@ -1,10 +1,10 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $mcontrol = array (0,0,0,0,0,0,0,0,0,0); $fuente_d="00"; $fuente_h="99"; $fuente_d=$_GET["cod_fuented"];  $fuente_h=$_GET["cod_fuenteh"];
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo_rep=$_GET["tipo_rep"];$Sql="";
 $cod_presup_d=$_GET["cod_presup_d"]; $cod_presup_h=$_GET["cod_presup_h"]; $criterio1="Fecha Desde: ".$fecha_d." Hasta: ".$fecha_h; $criterio2=""; $date = date("d-m-Y");$hora = date("H:i:s a");
 if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
    $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];}
@@ -184,7 +184,7 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="200" align="left" ><strong></strong></td>
-				<td width="400" align="center"> <strong><?	echo $criterio1?></strong></td>
+				<td width="400" align="center"> <strong><?php 	echo $criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Referencia</strong></td>
@@ -193,7 +193,7 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong></strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0;  $total1=0; $total2=0; $sub_total1=0;  $sub_total2=0;  $prev_cod_banco="";  $prev_nombre_banco=""; $prev_nro_cuenta=""; $prev_tipo_mov_libro=""; $res=pg_query($sSQL);
+		  <?php   $i=0;  $total1=0; $total2=0; $sub_total1=0;  $sub_total2=0;  $prev_cod_banco="";  $prev_nombre_banco=""; $prev_nro_cuenta=""; $prev_tipo_mov_libro=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $tipo_mov_libro=$registro["tipo_mov_libro"]; $referencia=$registro["referencia"]; $fecham=$registro["fecham"]; $ref_grupo=$registro["ref_grupo"];
 		       $descrip_mov_libro=$registro["descrip_mov_libro"]; $monto_mov_libro=$registro["monto_mov_libro"];
@@ -214,31 +214,31 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			      <tr>
 			          <td width="100" align="left"></td>
 				      <td width="200" align="left"></td>
-			          <td width="400" align="right"><strong><? echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total1; ?></strong></td>
-				      <td width="100" align="right"><strong><? echo $sub_total2; ?></strong></td>
+			          <td width="400" align="right"><strong><?php  echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total1; ?></strong></td>
+				      <td width="100" align="right"><strong><?php  echo $sub_total2; ?></strong></td>
 			      </tr>	
 			      <tr>
 				      <td width="100" align="left"></td>
 			      </tr>	
-                 <?}?>	   
+                 <?php }?>	   
 			      <tr>
-				     <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>'<? echo $cod_banco; ?></strong></td>
+				     <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>'<?php  echo $cod_banco; ?></strong></td>
 				     <td width="200" align="left"></td>
-		             <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $nombre_banco."    ".$nro_cuenta; ?></strong></td>
+		             <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $nombre_banco."    ".$nro_cuenta; ?></strong></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			   $prev_cod_banco=$cod_banco_grupo; $prev_nombre_banco=$nombre_banco_grupo;  $prev_nro_cuenta=$nro_cuenta_grupo;$sub_total1=0; $sub_total2=0;}
 
 			   if($prev_tipo_mov_libro<>$ref_grupo){ $monto_mov_libro_grupo=$registro["monto_mov_libro"]; if($registro["tipo_mov_libro"]=="NDB"){$monto_mov_libro_grupo=$monto_mov_libro_grupo;}else{$monto_mov_libro_grupo=$monto_mov_libro_grupo*-1;} 
 			     $sub_total2=$sub_total2+$monto_mov_libro; $total2=$total2+$monto_mov_libro; $monto_mov_libro_grupo=formato_monto($monto_mov_libro_grupo);
 			      ?>	   
 			      <tr>
-				  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $referencia; ?></td>
-				  <td width="200" align="center"><? echo $fecham; ?></td>
-				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $descrip_mov_libro; ?></td>
+				  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $referencia; ?></td>
+				  <td width="200" align="center"><?php  echo $fecham; ?></td>
+				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $descrip_mov_libro; ?></td>
 				  <td width="100" align="left"></td>
-				  <td width="100" align="right"><? echo $monto_mov_libro; ?></td>
+				  <td width="100" align="right"><?php  echo $monto_mov_libro; ?></td>
 			      </tr>	
 			      <tr>
 					<td width="100" align="left"><strong></strong></td>
@@ -246,7 +246,7 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 					<td width="400" align="left"><strong>Denominacion</strong></td>
 					<td width="100" align="right"><strong>Monto</strong></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_tipo_mov_libro=$ref_grupo;}
 
 		       $descrip_mov_libro=$registro["descrip_mov_libro"]; $num_cheque=$registro["referencia"];  
@@ -257,14 +257,14 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			   ?>	   
 				<tr>
 				   <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"></td>
-				   <td width="200" align="left"><? echo $cod_presup." ".$fuente_financ; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion_p; ?></td>
-				   <td width="100" align="right"><? echo $monto; ?></td>
+				   <td width="200" align="left"><?php  echo $cod_presup." ".$fuente_financ; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion_p; ?></td>
+				   <td width="100" align="right"><?php  echo $monto; ?></td>
 				 </tr>	
 			      <tr>
 				  <td width="100" align="left"></td>
 			      </tr>
-			   <? 		  
+			   <?php  		  
 		  }$total1=formato_monto($total1); $total2=formato_monto($total2);
 		  if(($sub_total1>0)or($sub_total2>0)){ $sub_total1=formato_monto($sub_total1); $sub_total2=formato_monto($sub_total2);
 			?>	 				 
@@ -278,11 +278,11 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="200" align="left"></td>
-			    <td width="400" align="right"><strong><? echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $sub_total1; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $sub_total2; ?></strong></td>
+			    <td width="400" align="right"><strong><?php  echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $sub_total1; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $sub_total2; ?></strong></td>
 			</tr>
-		   <? } ?>
+		   <?php } ?>
             <tr>
 				<td width="100" align="left"></td>
 		   </tr>
@@ -296,13 +296,13 @@ else { $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os==
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="200" align="left"></td>
-			    <td width="400" align="right"><strong><? echo "TOTAL : " ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $total1; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $total2; ?></strong></td>
+			    <td width="400" align="right"><strong><?php  echo "TOTAL : " ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total1; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total2; ?></strong></td>
 			</tr>	
 					
 		  		  
-		  </table><?
+		  </table><?php 
         }
 }
 ?>

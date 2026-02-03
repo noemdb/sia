@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="01-0000055"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 if (!$_GET){$tipo_nomina=''; $consecutivo=''; $p_letra='';$sql="SELECT * FROM tabla_indem ".$criterion." Order by tipo_nomina,consecutivo";
 } else {$codigo=$_GET["Gcodigo"];$p_letra=substr($codigo, 0, 1);
@@ -56,7 +56,7 @@ MM_reloadPage(true);
 //-->
 </script>
 </head>
-<?
+<?php 
 $res=pg_query($sql);$filas=pg_num_rows($res);if ($filas==0){if ($p_letra=="S"){$sql="SELECT * From tabla_indem ".$criterion." Order by tipo_nomina,consecutivo";}if ($p_letra=="A"){$sql="SELECT * From tabla_indem ".$criterion." Order by tipo_nomina desc,consecutivo desc";}  $res=pg_query($sql);$filas=pg_num_rows($res);}
 $tipo_nomina="";$consecutivo="";$desde=0;$hasta=0;$antiguedad=0;$preaviso=0;$vacaciones=0;$vac_adicional=0;$bono_vacacional=0;$auxiliar1=0;$valor1=0;$valor2=0;$valor3=0;$valor4=0;$valor5=0;$descripcion="";$inf_usuario="";
 if($filas>=1){  $registro=pg_fetch_array($res,0);
@@ -78,12 +78,12 @@ $temp_des_nomina=$descripcion;
 <table width="977" height="381" border="1" id="tablacuerpo">
   <tr>
     <td width="92" height="375"><table width="92" height="374" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
-     <?if ($Mcamino{0}=="S"){?>
+     <?php if ($Mcamino{0}=="S"){?>
 	 <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Inc_tabla_indemnizacion.php')";
                 onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Inc_tabla_indemnizacion.php">Incluir</a></td>
      </tr>
-	 <?} if ($Mcamino{1}=="S"){?>
+	 <?php } if ($Mcamino{1}=="S"){?>
      <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('Mod_tabla_indemnizacion.php?Gcodigo=')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Ventana('Mod_tabla_indemnizacion.php?Gcodigo=');">Modificar</A></td>
@@ -92,7 +92,7 @@ $temp_des_nomina=$descripcion;
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('Copia_tabla_indemnizacion.php?Gcodigo=');";
                 onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llamar_Ventana('Copia_tabla_indemnizacion.php?Gcodigo=');">Copiar</a></td>
      </tr>
-	  <?} if ($Mcamino{2}=="S"){?>
+	  <?php } if ($Mcamino{2}=="S"){?>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('P')";
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Mover_Registro('P');">Primero</a></td>
@@ -113,12 +113,12 @@ $temp_des_nomina=$descripcion;
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cat_act_tabla_indem.php')";
                           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a href="Cat_act_tabla_indem.php" class="menu">Catalogo</a></td>
      </tr>
-	 <?} if ($Mcamino{6}=="S"){?>
+	 <?php } if ($Mcamino{6}=="S"){?>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llama_Eliminar();" class="menu">Eliminar</a></td>
      </tr>
-	 <?} ?>
+	 <?php } ?>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
               onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="menu.php">Menu</a></td>
@@ -133,8 +133,8 @@ $temp_des_nomina=$descripcion;
              <td><table width="866">
                  <tr>
                    <td width="120"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="4" readonly value="<?echo $tipo_nomina?>"> </span></td>
-                   <td width="656"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?echo $descripcion?>"> </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="4" readonly value="<?php echo $tipo_nomina?>"> </span></td>
+                   <td width="656"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?php echo $descripcion?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -142,12 +142,12 @@ $temp_des_nomina=$descripcion;
              <td><table width="866">
                  <tr>
                    <td width="120"><span class="Estilo5">CONSECUTIVO :</span></td>
-                   <td width="166"><span class="Estilo5"> <input class="Estilo10" name="txtconsecutivo" type="text" id="txtconsecutivo" size="5" maxlength="4" readonly value="<?echo $consecutivo?>"> </span></td>
+                   <td width="166"><span class="Estilo5"> <input class="Estilo10" name="txtconsecutivo" type="text" id="txtconsecutivo" size="5" maxlength="4" readonly value="<?php echo $consecutivo?>"> </span></td>
                    <td width="100"><span class="Estilo5">RANGO DESDE :</span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtdesde" type="text" id="txtdesde" style="text-align:right" size="8" maxlength="8" readonly value="<?echo $desde?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtdesde" type="text" id="txtdesde" style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $desde?>"> </span></td>
                    <td width="100"><span class="Estilo5">MESES</span></td>
                    <td width="60"><span class="Estilo5">HASTA :</span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txthasta" type="text" id="txthasta" style="text-align:right" size="8" maxlength="8" readonly value="<?echo $hasta?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txthasta" type="text" id="txthasta" style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $hasta?>"> </span></td>
                    <td width="120"><span class="Estilo5">MESES</span></td>
                   </tr>
              </table></td>
@@ -157,9 +157,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS ANTIGUEDAD  :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtantiguedad" type="text" id="txtantiguedad"  style="text-align:right" size="8" maxlength="8" readonly value="<?echo $antiguedad?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtantiguedad" type="text" id="txtantiguedad"  style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $antiguedad?>"> </span></td>
                    <td width="280"><span class="Estilo5">CANTIDAD DIAS PREAVISO  :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtpreaviso" type="text" id="txtpreaviso" style="text-align:right" size="8" maxlength="8" readonly value="<?echo $preaviso?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtpreaviso" type="text" id="txtpreaviso" style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $preaviso?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -167,9 +167,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS VACACIONES :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtvacaciones" type="text" id="txtvacaciones"  style="text-align:right" size="8" maxlength="8" readonly value="<?echo $vacaciones?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtvacaciones" type="text" id="txtvacaciones"  style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $vacaciones?>"> </span></td>
                    <td width="280"><span class="Estilo5">CANTIDAD DIAS VACACIONES ADICIONALES :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtvac_adicional" type="text" id="txtvac_adicional" style="text-align:right" size="8" maxlength="8" readonly value="<?echo $vac_adicional?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtvac_adicional" type="text" id="txtvac_adicional" style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $vac_adicional?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -177,9 +177,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS BONO VACACIONAL :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtbono_vacacional" type="text" id="txtbono_vacacional"  style="text-align:right" size="8" maxlength="8" readonly value="<?echo $bono_vacacional?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtbono_vacacional" type="text" id="txtbono_vacacional"  style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $bono_vacacional?>"> </span></td>
                    <td width="280"><span class="Estilo5">DIAS ADICIONALES BONO VACACIONAL  :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtauxiliar1" type="text" id="txtauxiliar1" style="text-align:right" size="8" maxlength="8" readonly value="<?echo $auxiliar1?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtauxiliar1" type="text" id="txtauxiliar1" style="text-align:right" size="8" maxlength="8" readonly value="<?php echo $auxiliar1?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -189,14 +189,14 @@ $temp_des_nomina=$descripcion;
 <form name="form2" method="post" action="Inc_tabla_indemnizacion.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $temp_nomina?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?echo $temp_des_nomina?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $temp_nomina?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?php echo $temp_des_nomina?>" ></td>
     
   </tr>
 </table>
@@ -206,4 +206,4 @@ $temp_des_nomina=$descripcion;
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

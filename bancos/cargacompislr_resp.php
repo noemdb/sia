@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_ret="01"; $prev_ced_rif=""; $i=0; $monto_o=0;  $monto_p=0;  $monto_r=0; $monto_fact=0; $iva_fact=0; 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_ret="01"; $prev_ced_rif=""; $i=0; $monto_o=0;  $monto_p=0;  $monto_r=0; $monto_fact=0; $iva_fact=0; 
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $agrupar=$_GET["agrupar"]; $codigo_mov=$_GET["codigo_mov"]; $mes=$_GET["mes"]; $ano=$_GET["ano"]; $desde=$_GET["desde"]; $hasta=$_GET["hasta"]; $desde=formato_aaaammdd($desde); $hasta=formato_aaaammdd($hasta);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $resultado=pg_exec($conn,"SELECT BORRAR_BAN029('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); 
 if($agrupar=="SI"){
@@ -31,6 +31,6 @@ while($registro=pg_fetch_array($res)){$i=$i+1; $tipo_m=$i; $tipo_r=Rellenarceros
   $ssql="SELECT INCLUYE_BAN029('$codigo_mov','0000','$tipo_m','$nro_p','$tipo_p','$nro_p','$ced_rif','$fecha_e','$nro_o','$aux_o','I','$tipo_r','$tipo_d','$nro_fact','$nro_con_fac','','$fecha_f','','',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";
   $resul=pg_exec($conn,$ssql); $error=pg_errormessage($conn);
 }}
-pg_close();
+pg_close($conn);
 ?>
-<iframe src="Det_dec_ret_islr.php?codigo_mov=<?echo $codigo_mov?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
+<iframe src="Det_dec_ret_islr.php?codigo_mov=<?php echo $codigo_mov?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>

@@ -1,10 +1,10 @@
-<? include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
    $cod_empleado_d=$_GET["cod_empleado_d"]; $cod_empleado_h=$_GET["cod_empleado_h"];    $fecha_h=$_GET["fecha_h"];   $estatus=$_GET["estatus"]; $tipo_nominad=$_GET["tipo_nominad"];  $tipo_nominah=$_GET["tipo_nominah"];   
    $detalle=$_GET["detalle"]; $tipo_rpt=$_GET["tipo_rpt"];  $Sql="";   $date=date("d-m-Y");   $hora=date("h:i:s a"); $criterio1="";
    if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';} $fecha_hasta=$ano1.$mes1.$dia1;
    
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
     $criterio=" (nom006.cod_empleado=nom030.cod_empleado) and (nom006.cod_empleado>='".$cod_empleado_d."' and nom006.cod_empleado<='".$cod_empleado_h."') and (nom006.tipo_nomina>='".$tipo_nominad."' AND nom006.tipo_nomina<='".$tipo_nominah."') and nom030.fecha_calculo<='".$fecha_hasta."'";
     if (($estatus=='TODOS'))  { $criterio=$criterio; } else {  $criterio=$criterio." AND nom006.Status ='".$estatus."'";  }

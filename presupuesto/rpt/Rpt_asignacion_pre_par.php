@@ -1,8 +1,8 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$partida_d=$_GET["partida_d"];  $partida_h=$_GET["partida_h"]; $fuente_d=$_GET["fuente_d"];  $fuente_h=$_GET["fuente_h"];$nivel=$_GET["nivel"]; $tipo_rep=$_GET["tipo_rep"];}
  else{$partida_d="";  $partida_h=""; $fuente_d="";  $fuente_h=""; $nivel="";$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $efiscal=substr($Fec_Fin_Ejer,0,4);   $criterio1="EJERCICIO FISCAL: ".$efiscal;      
         
@@ -82,24 +82,24 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
            <td width="50" align="left" bgcolor="#99CCFF"><strong>FUENTE</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF"><strong>ASIGNADO</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];  
            $denominacion=conv_cadenas($denominacion,0); $asignado=$registro["asignado"]; $total=$total+$asignado; $asignado=formato_monto($asignado); 
 	?>	   
 		   <tr>
-           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="50" align="center">'<? echo $cod_fuente; ?></td>
-           <td width="120" align="right"><? echo $asignado; ?></td>
+           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="50" align="center">'<?php  echo $cod_fuente; ?></td>
+           <td width="120" align="right"><?php  echo $asignado; ?></td>
          </tr>
-	<? } $total=formato_monto($total);  ?>
+	<?php } $total=formato_monto($total);  ?>
       
 	
-	  </table><?	  
+	  </table><?php 	  
 	}  		 
  }
- pg_close();
+ pg_close($conn);
 ?>
 

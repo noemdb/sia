@@ -6,7 +6,7 @@ $fecha_hoy=asigna_fecha_hoy(); $fecha_fin=formato_ddmmaaaa($fecha_fin); if(FDate
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Anular Movimientos en Libros)</title>
+<title>SIPAP CONTROL BANCARIO (Anular Movimientos en Libros)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -18,7 +18,7 @@ return true;}
 function revisar(){ var f=document.form1;var r;
 var Valido=true;
     if(f.txtfecha_anu.value==""){alert("Fecha no puede estar Vacia");return false;}
-    if(f.txtdescrip_anu.value==""){alert("Descripcion de Anulación no puede estar Vacia"); return false; }  else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
+    if(f.txtdescrip_anu.value==""){alert("Descripcion de Anulaciï¿½n no puede estar Vacia"); return false; }  else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
     if(f.txtfecha_anu.value.length==10){Valido=true;}  else{alert("Longitud de Fecha Invalida");return false;}
     r=confirm("Esta seguro en Anular el Movimiento ?");
     if (r==true) {r=confirm("Esta Realmente seguro en Anular el Movimiento ?");
@@ -49,7 +49,7 @@ return true;}
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
                 <td width="270"><span class="Estilo5"><span class="Estilo10">
-                  <input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
@@ -70,9 +70,9 @@ return true;}
           </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?echo $cod_banco?>"></td>
-            <td width="40"><input name="txttipo_movimiento" type="hidden" id="txttipo_movimiento" value="<?echo $tipo_mov?>"></td>
-            <td width="40"><input name="txtreferencia" type="hidden" id="txtreferencia" value="<?echo $referencia?>"></td>
+            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?php echo $cod_banco?>"></td>
+            <td width="40"><input name="txttipo_movimiento" type="hidden" id="txttipo_movimiento" value="<?php echo $tipo_mov?>"></td>
+            <td width="40"><input name="txtreferencia" type="hidden" id="txtreferencia" value="<?php echo $referencia?>"></td>
           </tr></table></td>
           </tr>
           <tr>

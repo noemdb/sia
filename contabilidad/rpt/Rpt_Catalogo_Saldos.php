@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $codigod=$_GET["cod_cuenta_d"];$codigoh=$_GET["cod_cuenta_h"];  $tipo_rpt=$_GET["tipo_rpt"]; $Sql="";  
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } $efiscal=substr($Fec_Fin_Ejer,0, 4);   $criterio1="EJERCICIO FISCAL: ".$efiscal;
              $sSQL = "select Codigo_Cuenta,Nombre_Cuenta,TSaldo,Clasificacion,Saldo_Anterior from con001 order by Codigo_Cuenta";
              $sSQL = "select Codigo_Cuenta,Nombre_Cuenta,saldo_anterior,TSaldo,Clasificacion,Saldo_Anterior from con001 WHERE Codigo_Cuenta >='".$codigod."'and Codigo_Cuenta <='".$codigoh."' order by Codigo_Cuenta";
@@ -78,18 +78,18 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
            <td width="400" align="left" bgcolor="#99CCFF"><strong>NOMBRE DE LA CUENTA</strong></td>
            <td width="100" align="right" bgcolor="#99CCFF" ><strong>SALDO DE ANTERIOR</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$codigo_cuenta=$registro["codigo_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; $saldo_anterior=$registro["saldo_anterior"]; 
 		$nombre_cuenta=conv_cadenas($nombre_cuenta,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $codigo_cuenta; ?></td>
-           <td width="400" align="left"><? echo $nombre_cuenta; ?></td>
-           <td width="100" align="right"><? echo $saldo_anterior; ?></td>
+           <td width="100" align="left">'<?php  echo $codigo_cuenta; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_cuenta; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_anterior; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -98,7 +98,7 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

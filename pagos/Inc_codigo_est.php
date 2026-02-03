@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PAG006".$equipo;$codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Codigos en la Estructura)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Codigos en la Estructura)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
@@ -14,7 +14,7 @@ function validarNum(e){tecla=(document.all) ? e.keyCode : e.which;  if(tecla==0)
     if((tecla<48||tecla>57)&&(tecla!=46&&tecla!= 44&&tecla!= 45)){alert('Por Favor Ingrese Solo Numeros ') };
     patron=/[0-9\,\-\.]/;  te=String.fromCharCode(tecla); return patron.test(te);
 }
-function llamar_anterior(){ document.location ='Det_inc_cod_est.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_cod_est.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_tipo(mform){var mref;
    mref=mform.txttipo_compromiso.value;   mref=Rellenarizq(mref,"0",4);   mform.txttipo_compromiso.value=mref;
 return true;}
@@ -33,10 +33,10 @@ function revisar(){var f=document.form1; var Valido=true;
       else{f.txttipo_compromiso.value=f.txttipo_compromiso.value.toUpperCase();}
    if(f.txttipo_compromiso.value.length==4){f.txttipo_compromiso.value=f.txttipo_compromiso.value.toUpperCase();}
       else{alert("Longitud de Tipo Invalida");return false;}
-   if(f.txtcod_presup.value==""){alert("Código Presupuestario no puede estar Vacio");return false;}
-   if(f.txtcod_fuente.value==""){alert("Código de Fuente no puede estar Vacio"); return false; }
+   if(f.txtcod_presup.value==""){alert("Cï¿½digo Presupuestario no puede estar Vacio");return false;}
+   if(f.txtcod_fuente.value==""){alert("Cï¿½digo de Fuente no puede estar Vacio"); return false; }
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -124,7 +124,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

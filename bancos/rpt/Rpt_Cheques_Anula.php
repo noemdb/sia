@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$num_cheque_d=$_GET["num_cheque_d"];$num_cheque_h=$_GET["num_cheque_h"];
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$fecha_anu_d=$_GET["fecha_anulado_d"];$fecha_anu_h=$_GET["fecha_anulado_h"];$ordenado=$_GET["ordenado"];$imprimir=$_GET["imprimir"];$Sql="";$date = date("d-m-Y");$hora = date("h:i:s a");
 $tipo_rep=$_GET["tipo_rep"]; $date = date("d-m-Y");$hora = date("h:i:s a");
@@ -7,7 +7,7 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
 $fecha_a_d=formato_aaaammdd($fecha_anu_d); $fecha_a_h=formato_aaaammdd($fecha_anu_h);
 $criterio1="Fecha Anulado Desde: ".$fecha_anu_d." Hasta: ".$fecha_anu_h;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
       if ($imprimir=='N'){ $nomb_rpt="Rpt_Cheques_Anulados.xml";} else { $nomb_rpt="Rpt_Cheques_Anulados_Detallado.xml";} 
       $sSQL = "SELECT BAN006.Cod_Banco, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN006.Num_Cheque, BAN006.Fecha, BAN006.Ced_Rif, PRE099.Nombre,
@@ -133,7 +133,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="100" align="center" bgcolor="#99CCFF" ><strong>Fecha Anulado</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto Cheque</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		           $num_cheque=$registro["num_cheque"]; $ced_rif=$registro["ced_rif"]; $nombre=$registro["nombre"]; $cod_banco=$registro["cod_banco"];  
@@ -144,31 +144,31 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 		           $nombre=conv_cadenas($nombre,0);  $nombre_banco=conv_cadenas($nombre_banco,0);
 	?>	   
 	<tr>
-           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $num_cheque; ?></td>
-           <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="justify"><? echo $nombre; ?></td>
-           <td width="100" align="center">'<? echo $cod_banco; ?></td>
-           <td width="400" align="justify"><? echo $nombre_banco; ?></td>
-           <td width="100" align="center"><? echo $fechae; ?></td>
-           <td width="100" align="center"><? echo $fechaa; ?></td>
-           <td width="100" align="right"><? echo $monto_cheque; ?></td>
+           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $num_cheque; ?></td>
+           <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre; ?></td>
+           <td width="100" align="center">'<?php  echo $cod_banco; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre_banco; ?></td>
+           <td width="100" align="center"><?php  echo $fechae; ?></td>
+           <td width="100" align="center"><?php  echo $fechaa; ?></td>
+           <td width="100" align="right"><?php  echo $monto_cheque; ?></td>
          </tr>
-	<? }  $total=formato_monto($total);  ?>
+	<?php }  $total=formato_monto($total);  ?>
 	   <tr>
         <td>&nbsp;</td>
       </tr>
 	  <tr>
                 <td width="100" align="right"></td>
 		<td width="100" align="right"></td>
-		<td width="400" align="left"><strong>Cantidad de Cheques: <? echo $cantidad; ?></strong></td>
+		<td width="400" align="left"><strong>Cantidad de Cheques: <?php  echo $cantidad; ?></strong></td>
 		<td width="100" align="right"></td>	
 		<td width="400" align="right"></td>
 		<td width="100" align="right"></td>
 		<td width="100" align="right"><strong>TOTAL :</strong></td>
-		<td width="100" align="right"><strong><? echo $total; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $total; ?></strong></td>
       </tr>
       
-	  </table><?
+	  </table><?php 
 	}
 
 }

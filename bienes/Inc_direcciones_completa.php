@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php"); if (!$_GET){$codigo_mov=""; $cod_unidad="0000000000"; $des_unidad="";}
+<?php include ("../class/ventana.php"); if (!$_GET){$codigo_mov=""; $cod_unidad="0000000000"; $des_unidad="";}
 else{$cod_dependen=$_GET["cod_dependen"]; $cod_direcci=$_GET["cod_direcci"]; $denominacion=$_GET["denominacion"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA COMPRAS,SERVICIOS Y AMAC&Eacute;N(Unidad Solicitante)</title>
+<title>SIPAP COMPRAS,SERVICIOS Y AMAC&Eacute;N(Unidad Solicitante)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -19,7 +19,7 @@ MM_reloadPage(true);
 //-->
 </script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_direcciones.php?cod_dependen=<?echo $cod_dependen?>'; }
+function llamar_anterior(){ document.location ='Det_direcciones.php?cod_dependen=<?php echo $cod_dependen?>'; }
 
 function chequea_unidad_sol(mform){ var mref;
  mref=mform.txtcod_direccion.value;  mref=Rellenarizq(mref,"0",10);   mform.txtcod_direccion.value=mref;
@@ -108,7 +108,7 @@ return true;}
          <td>
            <table width="730" align="center">
           <tr>
-            <td width="30"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?echo $cod_dependen?>"></td>
+            <td width="30"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?php echo $cod_dependen?>"></td>
             <td width="200">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

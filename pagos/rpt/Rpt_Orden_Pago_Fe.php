@@ -1,6 +1,6 @@
-<?  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS; 
+<?php   error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS; 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"];$status_orden=$_GET["status_orden"];
 $criterio1="FECHA DESDE: ".$fecha_d." AL: ".$fecha_h;$Sql="";$tipo_rpt=$_GET["tipo_rpt"];
@@ -178,7 +178,7 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
 	     <tr height="20">
 		   <td width="80" align="left" ><strong></strong></td>
 		   <td width="200" align="left" ><strong></strong></td>
-		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
             <tr height="20">
            	   <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -187,7 +187,7 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
                 <td width="110" align="center" bgcolor="#99CCFF" ><strong>MONTO ORDEN </strong></td>
                 <td width="100" align="center" bgcolor="#99CCFF" ><strong>Estatus</strong></font></td>
              </tr>
-         <?
+         <?php 
 	  
 	  $i=0;  $total=0; $sub_total=0;  $cantidad=0; $prev_fecha="";
 	  $res=pg_query($sSQL);
@@ -207,20 +207,20 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
 					  <td width="80" align="left"></td>
 					  <td width="200" align="left"></td>
 					  <td width="400" align="left"></td>
-					  <td width="110" align="right"><? echo $sub_total; ?></td>
+					  <td width="110" align="right"><?php  echo $sub_total; ?></td>
 					  <td width="100" align="left"></td>
 				  </tr>	
 				  <tr>
 				  <td width="90" align="left"></td>
 				  </tr>	
-				 <?  
+				 <?php   
 				}
 			      ?>	   
 			      <tr>
 				  <td width="120" align="left">fecha Emision :</td>
-				  <td width="120" align="left"><? echo $fecha; ?></td>
+				  <td width="120" align="left"><?php  echo $fecha; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_fecha=$fecha_grupo; $sub_total=0;;
 			}
 
@@ -232,13 +232,13 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
             $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	    ?>	   
 		   <tr>
-                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_orden; ?></td>
-           		<td width="200" align="left"><? echo $nombre; ?></td>
-           		<td width="400" align="justify"><? echo $concepto; ?></td>
-           		<td width="110" align="right"><? echo $monto_orden; ?></td>
-           		<td width="100" align="center"><? echo $st_orden; ?></td>
+                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_orden; ?></td>
+           		<td width="200" align="left"><?php  echo $nombre; ?></td>
+           		<td width="400" align="justify"><?php  echo $concepto; ?></td>
+           		<td width="110" align="right"><?php  echo $monto_orden; ?></td>
+           		<td width="100" align="center"><?php  echo $st_orden; ?></td>
            </tr>
-	    <? 
+	    <?php  
 	    }  
         if(($sub_total>0)){ $sub_total=formato_monto($sub_total); 
 			?>	 				 
@@ -253,10 +253,10 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
 			   <td width="80" align="left"></td>
 		       <td width="200" align="left"></td>
 			   <td width="400" align="left"></td>
-		       <td width="110" align="right"><? echo $sub_total; ?></td>
+		       <td width="110" align="right"><?php  echo $sub_total; ?></td>
 			   <td width="100" align="left"></td>
 			</tr>			
-		      <?
+		      <?php 
 		  }$total=formato_monto($total); $cantidad==formato_monto ($cantidad);	
 		  ?>	 				 
 			<tr>
@@ -271,14 +271,14 @@ FROM pag001,PRE099 WHERE pag001.Ced_Rif = PRE099.Ced_Rif  and pag001.fecha>='".$
 			</tr>	
 			<tr>
 			   <td width="80">CANTIDAD ORDENES:</td>
-			   <td width="200"><? echo $cantidad; ?></td>
+			   <td width="200"><?php  echo $cantidad; ?></td>
 			   <td width="400" align="right">TOTAL ORDENES:</td>
-			   <td width="110" align="right"><? echo $total; ?></td>
+			   <td width="110" align="right"><?php  echo $total; ?></td>
 			   <td width="100" align="left"></td>
 			</tr> 
 			
-		  <?
-		  ?></table><?
+		  <?php 
+		  ?></table><?php 
         }		  
     }
 ?>

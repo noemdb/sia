@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
 if (!$_GET){$tipo_nomina="";$cod_concepto="";$cod_empleado="";} else{$tipo_nomina=$_GET["tipo_nomina"];$cod_concepto=$_GET["cod_concepto"];$cod_empleado=$_GET["cod_empleado"];}
 $criterio=$tipo_nomina.$cod_concepto; if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 ?>
@@ -6,7 +6,7 @@ $criterio=$tipo_nomina.$cod_concepto; if ($gnomina=="00"){ $criterion=""; $crite
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Modificar Prestamo)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Modificar Prestamo)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -26,10 +26,10 @@ function encende_monto(mthis){var mmonto; encender(mthis);   mmonto=mthis.value;
 function llamar_eliminar(){var murl; var r;
   murl="Esta seguro en Eliminar Asignacion del Prestamo ?"; r=confirm(murl);
   if(r==true){r=confirm("Esta Realmente seguro en Eliminar la Asignacion del Prestamo ?");
-    if(r==true){murl="Delete_prestamo.php?tipo_nomina=<?echo $tipo_nomina?>&cod_empleado=<?echo $cod_empleado?>&cod_concepto=<?echo $cod_concepto?>"; document.location=murl;}}
+    if(r==true){murl="Delete_prestamo.php?tipo_nomina=<?php echo $tipo_nomina?>&cod_empleado=<?php echo $cod_empleado?>&cod_concepto=<?php echo $cod_concepto?>"; document.location=murl;}}
    else{url="Cancelado, no elimino";}
 }
-function llamar_anterior(){ document.location ='Det_prestamo.php?criterio=<?echo $criterio?>'; }
+function llamar_anterior(){ document.location ='Det_prestamo.php?criterio=<?php echo $criterio?>'; }
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_empleado.value==""){alert("Codigo de Trabajador no puede estar Vacio");return false;}
 document.form1.submit;
@@ -48,7 +48,7 @@ return false;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $observacion="";
 $cantidad=0;$monto=0;$fecha_ini="";$fecha_exp="";$activo="";$calculable="";$denominacion="";$descripcion="";$nombre="";$frec="0";$imp_fija="SI";
 $sql="Select * from CONCEPTOS_ASIGNADOS where tipo_nomina='$tipo_nomina' and cod_empleado='$cod_empleado' and  cod_concepto='$cod_concepto' ".$criterioc.""; $res=pg_query($sql);
@@ -74,8 +74,8 @@ if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="QUINTA 
              <td><table width="760">
                  <tr>
                    <td width="100"><span class="Estilo5">TRABAJADOR : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" readonly value="<?echo $cod_empleado?>" onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="510"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" maxlength="70" readonly value="<?echo $nombre?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" readonly value="<?php echo $cod_empleado?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="510"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" maxlength="70" readonly value="<?php echo $nombre?>" onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -84,11 +84,11 @@ if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="QUINTA 
              <td><table width="760">
                  <tr>
                    <td width="100"><span class="Estilo5">NRO. CUOTAS : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtnro_cuotas" type="text" id="txtnro_cuotas" style="text-align:right" size="6" maxlength="6" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $nro_cuotas?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtnro_cuotas" type="text" id="txtnro_cuotas" style="text-align:right" size="6" maxlength="6" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $nro_cuotas?>" onKeypress="return validarNum(event,this)"> </span></td>
                    <td width="110"><span class="Estilo5">MONTO CUOTA : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto?>" onKeypress="return validarNum(event,this)"> </span></td>
                    <td width="150"><span class="Estilo5">MONTO PRESTAMO : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtmonto_prestamo" type="text" id="txtmonto_prestamo" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto_prestamo?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtmonto_prestamo" type="text" id="txtmonto_prestamo" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto_prestamo?>" onKeypress="return validarNum(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -97,11 +97,11 @@ if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="QUINTA 
              <td><table width="760">
                  <tr>
                    <td width="160"><span class="Estilo5">CUOTAS CANCELADAS : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtnro_cuotas_c" type="text" id="txtnro_cuotas_c" style="text-align:right" size="6" maxlength="6" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $nro_cuotas_c?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtnro_cuotas_c" type="text" id="txtnro_cuotas_c" style="text-align:right" size="6" maxlength="6" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $nro_cuotas_c?>" onKeypress="return validarNum(event,this)"> </span></td>
                    <td width="110"><span class="Estilo5">ACUMULADO : </span></td>
-                   <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtacumulado" type="text" id="txtacumulado" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $acumulado?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtacumulado" type="text" id="txtacumulado" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $acumulado?>" onKeypress="return validarNum(event,this)"> </span></td>
                    <td width="80"><span class="Estilo5">SALDO : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtsaldo" type="text" id="txtsaldo" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $saldo?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtsaldo" type="text" id="txtsaldo" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $saldo?>" onKeypress="return validarNum(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -110,24 +110,24 @@ if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="QUINTA 
              <td><table width="760">
                  <tr>
                    <td width="110"><span class="Estilo5">FECHA DESDE : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini"  size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_ini?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini"  size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_ini?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="100"><span class="Estilo5">FECHA HASTA : </span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_exp" type="text" id="txtfecha_exp"  size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_exp?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_exp" type="text" id="txtfecha_exp"  size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_exp?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="100"><span class="Estilo5">ACTIVO : </span></td>
                    <td width="100"><span class="Estilo5"><select name="txtactivo" size="1" id="txtactivo" onFocus="encender(this)" onBlur="apagar(this)" onkeypress="return tabular(event,this)"><option>SI</option> <option>NO</option></select>  </span></td>                   
 				 </tr>
              </table></td>
            </tr>
-<script language="JavaScript" type="text/JavaScript"> var mvalor='<?echo $activo;?>';var f=document.form1; 
+<script language="JavaScript" type="text/JavaScript"> var mvalor='<?php echo $activo;?>';var f=document.form1; 
 if(mvalor=="SI"){document.form1.txtactivo.options[0].selected=true;}else{document.form1.txtactivo.options[1].selected=true;}}
 </script>
         <tr> <td>&nbsp;</td> </tr>
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?echo $criterio?>"></td>
-            <td width="20"><input name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $tipo_nomina?>"></td>
-            <td width="20"><input name="txtcod_concepto" type="hidden" id="txtcod_concepto" value="<?echo $cod_concepto?>"></td>
+            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?php echo $criterio?>"></td>
+            <td width="20"><input name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $tipo_nomina?>"></td>
+            <td width="20"><input name="txtcod_concepto" type="hidden" id="txtcod_concepto" value="<?php echo $cod_concepto?>"></td>
             <td width="60">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

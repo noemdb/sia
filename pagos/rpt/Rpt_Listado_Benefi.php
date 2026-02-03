@@ -1,9 +1,9 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$clasificacion_d=$_GET["clasificacion_d"];$clasificacion_h=$_GET["clasificacion_h"];$ordenado=$_GET["ordenado"];$detallado=$_GET["detallado"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a"); $tipo_rpt=$_GET["tipo_rpt"];
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';}$fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';}$fecha_hasta=$ano1.$mes1.$dia1;
  $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
          $sSQL = "select ced_rif,nombre,cedula,rif,nit,tipo_benef,clasificacion,telefono,direccion,ciudad,fax,estado from pre099  where ced_rif>='".$cedula_d."' and  ced_rif<='".$cedula_h."' and clasificacion>='".$clasificacion_d."' and clasificacion<='".$clasificacion_h."' order by ".$ordenado."";
 
@@ -145,7 +145,7 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Tipo Beneficiario</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Clasificacion</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$ced_rif=$registro["ced_rif"]; $nombre=$registro["nombre"]; $rif=$registro["rif"]; $cedula=$registro["cedula"]; $tipo_benef=$registro["tipo_benef"];
@@ -153,30 +153,30 @@ if($tipo_rep=="EXCEL"){
 		$nombre=conv_cadenas($nombre,0);  $direccion=conv_cadenas($direccion,0); 
 	?>	   
 	     <tr>
-           <td width="100" align="left">'<? echo $ced_rif; ?></td>
-           <td width="400" align="left"><? echo $nombre; ?></td>
-           <td width="100" align="center">'<? echo $cedula; ?></td>
-           <td width="100" align="center">'<? echo $rit; ?></td>
-           <td width="100" align="center"><? echo $tipo_benef; ?></td>
-           <td width="100" align="center"><? echo $clasificacion; ?></td>
+           <td width="100" align="left">'<?php  echo $ced_rif; ?></td>
+           <td width="400" align="left"><?php  echo $nombre; ?></td>
+           <td width="100" align="center">'<?php  echo $cedula; ?></td>
+           <td width="100" align="center">'<?php  echo $rit; ?></td>
+           <td width="100" align="center"><?php  echo $tipo_benef; ?></td>
+           <td width="100" align="center"><?php  echo $clasificacion; ?></td>
          </tr>
 	     <tr>
            <td width="100" align="left">Direccion: </td>
-           <td width="400" align="left"><? echo $direccion; ?></td>
+           <td width="400" align="left"><?php  echo $direccion; ?></td>
            <td width="100" align="center"></td>
            <td width="100" align="left">Telefono: </td>
-           <td width="100" align="left"><? echo $telefono.'   '.$fax; ?></td>
+           <td width="100" align="left"><?php  echo $telefono.'   '.$fax; ?></td>
          </tr>
 	 <tr height="20">
 	 </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr><td>&nbsp;</td></tr>
 	   <tr>
            <td width="100" align="center"></td>
 		   <td width="400" align="left"><strong></strong></td>	
        </tr>      
-	  </table><?}
+	  </table><?php }
    else{ ?>
        <table border="0" cellspacing='0' cellpadding='0' align="left">
 	     <tr height="20">
@@ -193,7 +193,7 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Tipo Beneficiario</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Clasificacion</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$ced_rif=$registro["ced_rif"]; $nombre=$registro["nombre"]; $rif=$registro["rif"]; $cedula=$registro["cedula"]; $tipo_benef=$registro["tipo_benef"];
@@ -201,18 +201,18 @@ if($tipo_rep=="EXCEL"){
 		$nombre=conv_cadenas($nombre,0); $direccion=conv_cadenas($direccion,0);  
 	?>	   
 	    <tr>
-           <td width="100" align="left">'<? echo $ced_rif; ?></td>
-           <td width="400" align="left"><? echo $nombre; ?></td>
-           <td width="100" align="center">'<? echo $cedula; ?></td>
-           <td width="100" align="center">'<? echo $rit; ?></td>
-           <td width="100" align="center"><? echo $tipo_benef; ?></td>
-           <td width="100" align="center"><? echo $clasificacion; ?></td>
+           <td width="100" align="left">'<?php  echo $ced_rif; ?></td>
+           <td width="400" align="left"><?php  echo $nombre; ?></td>
+           <td width="100" align="center">'<?php  echo $cedula; ?></td>
+           <td width="100" align="center">'<?php  echo $rit; ?></td>
+           <td width="100" align="center"><?php  echo $tipo_benef; ?></td>
+           <td width="100" align="center"><?php  echo $clasificacion; ?></td>
         </tr>
-	<? } ?>
+	<?php } ?>
 	   <tr>
             <td>&nbsp;</td>
        </tr>	     
-	  </table><?}
+	  </table><?php }
 	}
 }
 ?>

@@ -3,7 +3,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Tipos de Aplicaciones)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Tipos de Aplicaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -21,7 +21,7 @@ function revisar(){
 var f=document.form1;
 var Valido;
     if(f.txtCodigo_Aplicacion.value==""){alert("Codigo de Aplicacion no puede estar Vacio");return false;}
-    if(f.txtNombre_Aplicacion.value==""){alert("Denominación de Aplicacion no puede estar Vacia"); return false; }
+    if(f.txtNombre_Aplicacion.value==""){alert("Denominaciï¿½n de Aplicacion no puede estar Vacia"); return false; }
        else{f.txtNombre_Aplicacion.value=f.txtNombre_Aplicacion.value.toUpperCase();}
     if(f.txtCodigo_Aplicacion.value.length==1){f.txtCodigo_Aplicacion.value=f.txtCodigo_Aplicacion.value.toUpperCase();}
        else{alert("Longitud Codigo de Aplicacion Invalida");return false;}
@@ -74,7 +74,7 @@ return true;}
                   <tr>
                     <td width="148"><span class="Estilo5">C&Oacute;DIGO APLICACI&Oacute;N :</span></td>
                     <td width="650"><span class="Estilo5">
-                      <input name="txtCodigo_Aplicacion" type="text" id="txtCodigo_Aplicacion" title="Registre el C&oacute;digo de la Aplicación" size="10" maxlength="1"  onchange="chequea_codigo(this.form);" onFocus="encender(this); " onBlur="apagar(this);">
+                      <input name="txtCodigo_Aplicacion" type="text" id="txtCodigo_Aplicacion" title="Registre el C&oacute;digo de la Aplicaciï¿½n" size="10" maxlength="1"  onchange="chequea_codigo(this.form);" onFocus="encender(this); " onBlur="apagar(this);">
                     </span></td>
                   </tr>
                 </table></td>
@@ -87,7 +87,7 @@ return true;}
                   <table width="816" border="0">
                     <tr>
                       <td width="148"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                      <td width="666"><input name="txtNombre_Aplicacion" type="text" id="txtNombre_Aplicacion" title="Registre la denominaci&oacute;n de la Aplicación" size="100" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="666"><input name="txtNombre_Aplicacion" type="text" id="txtNombre_Aplicacion" title="Registre la denominaci&oacute;n de la Aplicaciï¿½n" size="100" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>

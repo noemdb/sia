@@ -1,6 +1,6 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -13,7 +13,7 @@ function cerrar_fact(mfacturas){
   window.close(); window.opener.location.reload();
 }
 function Llamar_Inc_factura(){
- murl="Inc_rpt_cons_conceptos.php?password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>";
+ murl="Inc_rpt_cons_conceptos.php?password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>";
  document.location=murl;
 }
 function Llama_Modificar(codigo){var murl;
@@ -46,15 +46,15 @@ function Llama_Modificar(codigo){var murl;
            <td width="400"  align="left" bgcolor="#99CCFF"><strong>Descripcion del Reporte</strong></td>
            <td width="300" align="left" bgcolor="#99CCFF"><strong>Nombre Archivo</strong></td>           
          </tr>
-         <? 
+         <?php  
 while($registro=pg_fetch_array($res)){  ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $registro["cod_reporte"]; ?>');">
-           <td width="100" align="left"><? echo $registro["cod_reporte"]; ?></td>
-           <td width="400" align="left"><? echo $registro["des_repote"]; ?></td>
-           <td width="300" align="left"><? echo $registro["den_arch_rpt"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $registro["cod_reporte"]; ?>');">
+           <td width="100" align="left"><?php  echo $registro["cod_reporte"]; ?></td>
+           <td width="400" align="left"><?php  echo $registro["des_repote"]; ?></td>
+           <td width="300" align="left"><?php  echo $registro["den_arch_rpt"]; ?></td>
            
          </tr>
-         <?} ?>
+         <?php } ?>
        </table></td>
    </tr>
    <tr> <td>&nbsp;</td> </tr>  
@@ -65,6 +65,6 @@ while($registro=pg_fetch_array($res)){  ?>
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

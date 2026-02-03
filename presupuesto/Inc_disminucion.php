@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php");include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php");include ("../class/fun_fechas.php");
  $equipo = getenv("COMPUTERNAME"); $mcod_m = "PRE009".$equipo; $codigo_mov=substr($mcod_m,0,49);
  $user=$_POST["txtuser3"]; $password=$_POST["txtpassword3"]; $dbname=$_POST["txtdbname3"]; $nro_aut=$_POST["txtnro_aut3"]; $fecha_aut=$_POST["txtfecha_aut3"];
  $corr_m=$_POST["txtcorr_m3"]; $codigo_mov=$_POST["txtcodigo_mov3"];   $fecha_hoy=asigna_fecha_hoy();
@@ -8,7 +8,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Disminuciones Presupuestaria)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Disminuciones Presupuestaria)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -30,7 +30,7 @@ var mnro_aut='<?php echo $nro_aut ?>';
 function chequea_tipo(mform){var mref;var mtipo_m='4';
 var Valido=true;
    mref=mform.txttipo_modif.value;
-   if(mref=="Reduccion de Ingresos" || mref=="Insubsitencia") {Valido=true;}else{alert("Tipo de Modificación no valido");return false; }
+   if(mref=="Reduccion de Ingresos" || mref=="Insubsitencia") {Valido=true;}else{alert("Tipo de Modificaciï¿½n no valido");return false; }
    if(mref=="Reduccion de Ingresos"){mtipo_m="4";}else{mtipo_m="3";}
    ajaxSenddoc('GET', 'refmodaut.php?tipo_modif='+mtipo_m+'&corr_m='+mcorr_m+'&nro_aut='+mnro_aut+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'refer', 'innerHTML');
 return true;}
@@ -106,22 +106,22 @@ return true;}
                           <td width="196"><span class="Estilo5">  <select class="Estilo10" name="txttipo_modif" size="1" id="txttipo_modif" onFocus="encender(this)" onBlur="apaga_doc(this)" onchange="chequea_tipo(this.form);">
                               <option>Reduccion de Ingresos</option> <option>Insubsistencia</option>  </select></span></td>
                           <td width="113"><span class="Estilo5">REFERENCIA :</span> </td>
-                          <? if($nro_aut=='S'){?>
+                          <?php  if($nro_aut=='S'){?>
                           <td width="148"><div id="refer"><input class="Estilo10" name="txtreferencia_modif" type="text"  id="txtreferencia_modif" size="12" readonly></div></td>
-                          <? }else{?>
+                          <?php }else{?>
                           <td width="148"><div id="refer"><input class="Estilo10" name="txtreferencia_modif" type="text"  id="txtreferencia_modif" size="12" onFocus="encender(this); " onBlur="apagar(this);"  onchange="checkreferencia(this.form);"></div></td>
-                          <? }?>
+                          <?php }?>
 						  <script language="JavaScript" type="text/JavaScript">
 						    var mtipo_m='4';
 							ajaxSenddoc('GET', 'refmodaut.php?tipo_modif='+mtipo_m+'&corr_m='+mcorr_m+'&nro_aut='+mnro_aut+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'refer', 'innerHTML');
                           </script>
                           <td width="64"><span class="Estilo5">FECHA :</span> </td>
                           <td width="140"><span class="Estilo5">
-                            <? if($fecha_aut=='S'){?>
-                            <input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?echo $fecha_hoy?>" readonly>
-                            <? }else{?>
-                            <input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $fecha_hoy?>" onchange="checkrefecha(this.form)">
-                            <? }?>
+                            <?php  if($fecha_aut=='S'){?>
+                            <input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?php echo $fecha_hoy?>" readonly>
+                            <?php }else{?>
+                            <input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $fecha_hoy?>" onchange="checkrefecha(this.form)">
+                            <?php }?>
                           </span></td>
                         </tr>
                       </table></td>
@@ -143,8 +143,8 @@ return true;}
                               <option>INTERNA</option><option>EXTERNA</option>
                               <option>EXTERNA MAYOR AL 20%</option><option>EXTERNA MENOR AL 20%</option> <option>EXTERNA IGUAL 10%</option>
                             </select></span></td>
-                          <td width="97"><input class="Estilo10" name="txtfecha_modif" type="hidden" id="txtfecha_modif" value="<?echo $fecha_hoy?>"></td>
-                          <td width="69"><input class="Estilo10" name="txtfecha_documento" type="hidden" id="txtfecha_documento" value="<?echo $fecha_hoy?>"></td>
+                          <td width="97"><input class="Estilo10" name="txtfecha_modif" type="hidden" id="txtfecha_modif" value="<?php echo $fecha_hoy?>"></td>
+                          <td width="69"><input class="Estilo10" name="txtfecha_documento" type="hidden" id="txtfecha_documento" value="<?php echo $fecha_hoy?>"></td>
                           <td width="70"><input class="Estilo10" name="txtmodif_aprob" type="hidden" id="txtmodif_aprob" value="NO"></td>
                           <td width="99"><input class="Estilo10" name="txtaprobada_por" type="hidden" id="txtaprobada_por"></td>
                           <td width="111"><input class="Estilo10" name="txtnro_documento" type="hidden" id="txtnro_documento"></td>
@@ -154,7 +154,7 @@ return true;}
                   </table>  </td>
               </tr>
           </table>
-        <iframe src="Det_inc_disminuciones.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
+        <iframe src="Det_inc_disminuciones.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
         </iframe>
                 <table width="863" border="0">
           <tr>
@@ -163,9 +163,9 @@ return true;}
         </table>
         <table width="768">
           <tr>
-            <td width="564"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-            <td width="50"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>
+            <td width="564"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+            <td width="50"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>
             <td width="88" valign="middle"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
             <td width="88"><input name="Blanquear" type="reset" value="Blanquear"></td>
           </tr>

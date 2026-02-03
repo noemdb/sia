@@ -6,5 +6,5 @@ $StrSQL="select sum(monto) as total from pre036 where referencia_comp='$refcomp'
 $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $montoc=$registro["total"];}
 $montoc=formato_monto($montoc);
-?> <input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right" onFocus="encende_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?echo $montoc?>" onKeypress="return validarNum(event,this)">
-<?pg_close();?>
+?> <input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right" onFocus="encende_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?php echo $montoc?>" onKeypress="return validarNum(event,this)">
+<?php pg_close($conn);?>

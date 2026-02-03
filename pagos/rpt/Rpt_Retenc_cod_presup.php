@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
 $tipo_retencion_d=$_GET["tipo_retencion_d"];$tipo_retencion_h=$_GET["tipo_retencion_h"];$nro_orden_d=$_GET["numero_orden_d"];$nro_orden_h=$_GET["numero_orden_h"];
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $principal_canc=$_GET["principal_canc"];$tipo_rpt=$_GET["tipo_rpt"]; $status_orden=$_GET["status_orden"];
 $codigo_presu_d=$_GET["codigo_presu_d"];$codigo_presu_h=$_GET["codigo_presu_h"];$cod_fuented="";  $cod_fuenteh="zz"; $cod_fuented=$_GET["cod_fuented"];  $cod_fuenteh=$_GET["cod_fuenteh"];
@@ -58,7 +58,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
 }
    $criterio=""; 
    $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
    
      $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
@@ -199,7 +199,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
 	     <tr height="20">
 			<td width="80" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-			<td width="400" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	$criterio1?></strong></font></td>
+			<td width="400" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	$criterio1?></strong></font></td>
 		</tr>
          <tr height="20">
            <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -209,7 +209,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></td>
 		   <td width="100" align="left" bgcolor="#99CCFF"><strong>ESTATUS</strong></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; $sub_total=0;  $cantidad=0; $prev_ced_rif_r="";
 	  $res=pg_query($sSQL);
@@ -226,14 +226,14 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
 		   $concepto=conv_cadenas($concepto,0);
 	      ?>	   
 		   <tr>
-                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $aux_orden; ?></td>
-           		<td width="100" align="left"><? echo $fecha; ?></td>
-           		<td width="400" align="justify"><? echo $concepto; ?></td>
-           		<td width="250" align="left"><? echo $cod_presup_ret." ".$fuente_fin_ret; ?></td>
-           		<td width="100" align="right"><? echo $monto_retencion; ?></td>
-				<td width="100" align="center"><? echo $st_orden; ?></td>
+                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $aux_orden; ?></td>
+           		<td width="100" align="left"><?php  echo $fecha; ?></td>
+           		<td width="400" align="justify"><?php  echo $concepto; ?></td>
+           		<td width="250" align="left"><?php  echo $cod_presup_ret." ".$fuente_fin_ret; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_retencion; ?></td>
+				<td width="100" align="center"><?php  echo $st_orden; ?></td>
             </tr>
-	    <? 
+	    <?php  
 	    }  
         $total=formato_monto($total); $cantidad==formato_monto ($cantidad);	
 		    ?>	 				 
@@ -245,10 +245,10 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
 				<td width="100" align="right"><strong></strong></td>				
 				<td width="400" align="right"><strong>TOTAL ORDENES:</strong></td>
 				<td width="250" align="right"><strong></strong></td>
-				<td width="100" align="right"><strong><? echo $total; ?></strong></td>
+				<td width="100" align="right"><strong><?php  echo $total; ?></strong></td>
 				<td width="100" align="right"><strong></strong></td>
 			 </tr>
-		</table><?
+		</table><?php 
         }		  
     }
 

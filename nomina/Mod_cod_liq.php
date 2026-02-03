@@ -1,7 +1,7 @@
-<? include ("../class/conect.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");$mcod_m="LIQ".$usuario_sia.$equipo;
+<?php  include ("../class/conect.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");$mcod_m="LIQ".$usuario_sia.$equipo;
 if (!$_GET){$codigo_mov=substr($mcod_m,0,49);$cod_concepto="";} else{$codigo_mov=$_GET["codigo_mov"]; $cod_concepto=$_GET["cod_concepto"]; } 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -43,7 +43,7 @@ function apaga_monto(mthis){var mcant; var mmonto; var mtotal;
   mcant=(mcant*1); mmonto=(mmonto*1); mtotal=mcant*mmonto;  mtotal=Math.round(mtotal*100)/100;
   document.form1.txttotal.value=mtotal;  document.form1.txttotal.value=daformatomonto(document.form1.txttotal.value);
 }
-function llamar_anterior(){ document.location ='Det_inc_cal_liq.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_cal_liq.php?codigo_mov=<?php echo $codigo_mov?>'; }
 
 function llamar_eliminar(codigo_mov,cod_concepto){ var murl;var r; var mfecha_hasta=document.form1.txtfecha_hasta.value;
  if (cod_concepto=="") {alert("Codigo debe ser Seleccionado");}
@@ -63,7 +63,7 @@ return true;}
 </script>
 
 </head>
-<? $cantidad=0; $costo=0; $asig_ded_apo=""; $denominacion=""; $total=0; $fecha_hasta="";  $tipo_asigna='O';
+<?php  $cantidad=0; $costo=0; $asig_ded_apo=""; $denominacion=""; $total=0; $fecha_hasta="";  $tipo_asigna='O';
 $sSQL="Select * from nom076 WHERE codigo_mov='$codigo_mov' and cod_concepto='$cod_concepto' "; $res=pg_query($sSQL);
 if ($registro=pg_fetch_array($res,0)){ $denominacion=$registro["denominacion"]; $asig_ded_apo=$registro["asig_ded_apo"]; 
   $cantidad=formato_monto($registro["cantidad"]); $costo=formato_monto($registro["monto_orig"]); $total=$registro["valor"]; 
@@ -82,7 +82,7 @@ if ($registro=pg_fetch_array($res,0)){ $denominacion=$registro["denominacion"]; 
           <td><table width="620" border="0">
               <tr>
                 <td width="170"><span class="Estilo5">C&Oacute;DIGO CONCEPTO :</span></td>
-				<td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="3"  value="<? echo $cod_concepto ?>" readonly> </span></td>
+				<td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="3"  value="<?php  echo $cod_concepto ?>" readonly> </span></td>
                 <td width="150"><span class="Estilo5">TIPO DE CONCEPTO : </span></td>
                 <td width="150"><span class="Estilo5"><select class="Estilo10" name="txtasig_ded_apo" size="1" id="txtasig_ded_apo" onFocus="encender(this)" onBlur="apagar(this)">
                       <option>ASIGNACION</option> <option>DEDUCCION</option> </select>  </span></td>
@@ -93,14 +93,14 @@ if ($registro=pg_fetch_array($res,0)){ $denominacion=$registro["denominacion"]; 
 function asig_tipo_conc(mvalor){var f=document.form1;
     if(mvalor=="A"){document.form1.txtasig_ded_apo.options[0].selected = true;}
     if(mvalor=="D"){document.form1.txtasig_ded_apo.options[1].selected = true;}
-} asig_tipo_conc('<?echo $asig_ded_apo;?>');
+} asig_tipo_conc('<?php echo $asig_ded_apo;?>');
 </script>
 		<tr> <td>&nbsp;</td> </tr>
         <tr>
           <td><table width="620" border="0">
             <tr>
               <td width="100"><span class="Estilo5">DENOMINACI&Oacute;N : </span></td>
-              <td width="520"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="75" maxlength="80" onFocus="encender(this)" onBlur="apagar(this)"  value="<? echo $denominacion ?>"> </span></td>
+              <td width="520"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="75" maxlength="80" onFocus="encender(this)" onBlur="apagar(this)"  value="<?php  echo $denominacion ?>"> </span></td>
             </tr>
           </table></td>
         </tr>
@@ -109,9 +109,9 @@ function asig_tipo_conc(mvalor){var f=document.form1;
              <td><table width="620">
                  <tr>
                    <td width="100"><span class="Estilo5">PERIODO DESDE : </span></td>
-                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_desde?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_desde?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="130"><span class="Estilo5">PERIODO HASTA : </span></td>
-                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hasta?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hasta?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                      </tr>
              </table></td>
          </tr>
@@ -120,11 +120,11 @@ function asig_tipo_conc(mvalor){var f=document.form1;
           <td><table width="620" border="0">
             <tr>
                 <td width="70"><span class="Estilo5">CANTIDAD :</span></td>
-                  <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcantidad" type="text" id="txtcantidad" size="12" maxlength="12" style="text-align:right" onFocus="encende_cant(this)" onBlur="apaga_cant(this)" onKeypress="return validarNum(event)"  value="<? echo $cantidad ?>">  </span></td>
+                  <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcantidad" type="text" id="txtcantidad" size="12" maxlength="12" style="text-align:right" onFocus="encende_cant(this)" onBlur="apaga_cant(this)" onKeypress="return validarNum(event)"  value="<?php  echo $cantidad ?>">  </span></td>
                   <td width="60"><span class="Estilo5">MONTO : </span></td>
-                  <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcosto" type="text" id="txtcosto" size="15" style="text-align:right" maxlength="15" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)"  value="<? echo $costo ?>"> </span></td>
+                  <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcosto" type="text" id="txtcosto" size="15" style="text-align:right" maxlength="15" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)"  value="<?php  echo $costo ?>"> </span></td>
                   <td width="60"><span class="Estilo5">TOTAL : </span></td>
-                  <td width="140"><span class="Estilo5"><input class="Estilo10" name="txttotal" type="text" id="txttotal" size="15" style="text-align:right" maxlength="15" readonly  value="<? echo $total ?>"> </span></td>
+                  <td width="140"><span class="Estilo5"><input class="Estilo10" name="txttotal" type="text" id="txttotal" size="15" style="text-align:right" maxlength="15" readonly  value="<?php  echo $total ?>"> </span></td>
              
             </tr>
           </table></td>
@@ -133,12 +133,12 @@ function asig_tipo_conc(mvalor){var f=document.form1;
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="10"><input name="txttipo_asigna" type="hidden" id="txttipo_asigna" value="<?echo $tipo_asigna?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="10"><input name="txttipo_asigna" type="hidden" id="txttipo_asigna" value="<?php echo $tipo_asigna?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="90" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-			<td width="90" align="center"><input name="Eliminar" type="button" id="Eliminar" value="Eliminar" onClick="JavaScript:llamar_eliminar('<? echo $codigo_mov; ?>','<? echo $cod_concepto; ?>')"></td>
+			<td width="90" align="center"><input name="Eliminar" type="button" id="Eliminar" value="Eliminar" onClick="JavaScript:llamar_eliminar('<?php  echo $codigo_mov; ?>','<?php  echo $cod_concepto; ?>')"></td>
             <td width="130">&nbsp;</td>
           </tr>
         </table>      </td>

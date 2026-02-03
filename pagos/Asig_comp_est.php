@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
  $cod_estructura=$_GET["Gcod_estructura"]; $bloqueada="N"; $fecha_hoy=asigna_fecha_hoy();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -34,9 +34,9 @@ var Valido=true;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * from ESTRUCTURA_ORD where cod_estructura='$cod_estructura'";
 $descripcion_est="";$ced_rif_est="";$fecha_desde_est="";$fecha_hasta_est="";$modulo="";$tipo_documento="";$nro_documento="";$inf_usuario="";
 $cod_tipo_ord="";$concepto_est=""; $nombre="";  $des_tipo_orden="";
@@ -64,8 +64,8 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
         <td width="86">
       <td><table width="92" height="602" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_estructura_orden.php?Gcod_estructura=<?echo $cod_estructura?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_estructura_orden.php?Gcod_estructura=<?echo $cod_estructura?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_estructura_orden.php?Gcod_estructura=<?php echo $cod_estructura?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_estructura_orden.php?Gcod_estructura=<?php echo $cod_estructura?>">Atras</A></td>
       </tr>
   <tr>
     <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -87,10 +87,10 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                       <td><table width="855" >
                         <tr>
                           <td width="69" height="24"><span class="Estilo5">C&Oacute;DIGO : </span></td>
-                          <td width="94"><span class="Estilo5"><input name="txtcod_estructura" type="text" id="txtcod_estructura"  value="<?echo $cod_estructura?>" size="10" maxlength="8" readonly>
+                          <td width="94"><span class="Estilo5"><input name="txtcod_estructura" type="text" id="txtcod_estructura"  value="<?php echo $cod_estructura?>" size="10" maxlength="8" readonly>
                           </span></td>
                           <td width="93"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
-                          <td width="542"><span class="Estilo5"><input name="txtdescripcion_est" type="text" id="txtdescripcion_est"  readonly value="<?echo $descripcion_est?>"  size="85">
+                          <td width="542"><span class="Estilo5"><input name="txtdescripcion_est" type="text" id="txtdescripcion_est"  readonly value="<?php echo $descripcion_est?>"  size="85">
                           </span></td>
                         </tr>
                       </table></td>
@@ -102,7 +102,7 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
 			  </tr>
         </table>
         <div id="T11" class="tab-body">
-              <iframe src="Det_asig_comp_est.php?cod_estructura=<?echo $cod_estructura?>" width="870" height="460" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_asig_comp_est.php?cod_estructura=<?php echo $cod_estructura?>" width="870" height="460" scrolling="auto" frameborder="1"></iframe>
         </div>
     
   <p>&nbsp;</p>

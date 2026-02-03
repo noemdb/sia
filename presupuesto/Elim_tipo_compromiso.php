@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$tipo_comp='';} else {$tipo_comp = $_GET["Gtipo_comp"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Eliminar Tipos de Compromiso)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Eliminar Tipos de Compromiso)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -20,18 +20,18 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txttipo_comp.value==""){alert("Código de Documento Compromiso no puede estar Vacio");return false;}
+    if(f.txttipo_comp.value==""){alert("Cï¿½digo de Documento Compromiso no puede estar Vacio");return false;}
         if(f.txttipo_comp.value.charAt(0)=='A'){alert("Documento de Compromiso no valido");return false;}
-    if(f.txtdes_tipo_comp.value==""){alert("denominación del Tipo Compromiso no puede estar Vacia");return false; }
+    if(f.txtdes_tipo_comp.value==""){alert("denominaciï¿½n del Tipo Compromiso no puede estar Vacia");return false; }
        else{f.txtdes_tipo_comp.value=f.txtdes_tipo_comp.value.toUpperCase();}
     if(f.txttipo_comp.value.length==6){f.txttipo_comp.value=f.txttipo_comp.value.toUpperCase();}
-       else{alert("Longitud Código Tipo de Compromiso Invalida");return false;}
+       else{alert("Longitud Cï¿½digo Tipo de Compromiso Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $sql="Select * from pre016 where tipo_comp='$tipo_comp'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){  $des_tipo_comp=$registro["des_tipo_comp"]; $cod_part_iva=$registro["cod_part_iva"];
@@ -76,7 +76,7 @@ if($c_imp_unico=="S"){$c_imp_unico="SI";}else{$c_imp_unico="NO";}
                   <tr>
                     <td width="197"><span class="Estilo5">C&Oacute;DIGO TIPO DE COMPROMISO :</span></td>
                     <td width="591"><span class="Estilo5">
-                      <input name="txttipo_comp" type="text" id="txttipo_comp" readonly  value="<?echo $tipo_comp?>" size="12" maxlength="6">
+                      <input name="txttipo_comp" type="text" id="txttipo_comp" readonly  value="<?php echo $tipo_comp?>" size="12" maxlength="6">
                     </span></td>
                   </tr>
                 </table></td>
@@ -89,7 +89,7 @@ if($c_imp_unico=="S"){$c_imp_unico="SI";}else{$c_imp_unico="NO";}
                   <tr>
                     <td width="226"><span class="Estilo5">DENOMINACI&Oacute;N TIPO  COMPROMISO :</span></td>
                     <td width="562"><span class="Estilo5">
-                      <input name="txtdes_tipo_comp" type="text" id="txtdes_tipo_comp" readonly value="<?echo $des_tipo_comp?>" size="80" maxlength="100">
+                      <input name="txtdes_tipo_comp" type="text" id="txtdes_tipo_comp" readonly value="<?php echo $des_tipo_comp?>" size="80" maxlength="100">
                     </span></td>
                   </tr>
                 </table></td>
@@ -102,7 +102,7 @@ if($c_imp_unico=="S"){$c_imp_unico="SI";}else{$c_imp_unico="NO";}
                   <tr>
                     <td width="138"><span class="Estilo5">C&Oacute;DIGO PARTIDA IVA:</span></td>
                     <td width="650"><span class="Estilo5">
-                      <input name="txtcod_part_iva" type="text" id="txttipo_comp3" readonly value="<?echo $cod_part_iva?>" size="30" maxlength="24">
+                      <input name="txtcod_part_iva" type="text" id="txttipo_comp3" readonly value="<?php echo $cod_part_iva?>" size="30" maxlength="24">
                     </span></td>
                   </tr>
                 </table></td>
@@ -115,13 +115,13 @@ if($c_imp_unico=="S"){$c_imp_unico="SI";}else{$c_imp_unico="NO";}
                   <tr>
                     <td width="141"><span class="Estilo5">TIPO DE GASTO :</span> </td>
                     <td width="276"><span class="Estilo10">
-                      <input name="txtTipo_Gasto" type="text" class="Estilo5" id="txtTipo_Gasto"  value="<?ECHO $func_inv?>" size="20" maxlength="20" readonly>
-					  <script language="JavaScript" type="text/JavaScript"> asig_tgasto('<?echo $func_inv;?>');</script>
+                      <input name="txtTipo_Gasto" type="text" class="Estilo5" id="txtTipo_Gasto"  value="<?php ECHO $func_inv?>" size="20" maxlength="20" readonly>
+					  <script language="JavaScript" type="text/JavaScript"> asig_tgasto('<?php echo $func_inv;?>');</script>
                     </span></td>
                     <td width="147" class="Estilo5">PARTIDA DE IVA FIJA : </td>
                     <td width="266" class="Estilo5"><span class="Estilo10">
-                      <input name="txtc_imp_unico" type="text" class="Estilo5" id="txtc_imp_unico" title="Registre el Tipo de Aplicaci&ograve;n"  value="<?ECHO $c_imp_unico?>" size="5" maxlength="2" readonly>
-					  <script language="JavaScript" type="text/JavaScript"> asig_iunico('<?echo $c_imp_unico;?>');</script>
+                      <input name="txtc_imp_unico" type="text" class="Estilo5" id="txtc_imp_unico" title="Registre el Tipo de Aplicaci&ograve;n"  value="<?php ECHO $c_imp_unico?>" size="5" maxlength="2" readonly>
+					  <script language="JavaScript" type="text/JavaScript"> asig_iunico('<?php echo $c_imp_unico;?>');</script>
                     </span></td>
                   </tr>
                 </table></td>

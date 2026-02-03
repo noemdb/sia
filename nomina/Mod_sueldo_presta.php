@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME");   $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/conect.php");  include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME");   $fecha_hoy=asigna_fecha_hoy();
 if (!$_GET){$criterio="";} else{$criterio=$_GET["Gcriterio"];} $fecha=substr($criterio,0,10); $cod_empleado=substr($criterio,10,15);
 ?>
 
@@ -47,16 +47,16 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); 
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  $sfecha=formato_aaaammdd($fecha);
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  $sfecha=formato_aaaammdd($fecha);
 $sql="Select * FROM SUELDO_PRESTA where (cod_empleado='$cod_empleado') and (fecha_sueldo='$sfecha')"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $nombre="";$cod_empleado=""; $cedula=""; $fecha_ingreso=""; $fecha_sueldo=""; $monto_sueldo=0;  $monto_sueldo_adic=0;
 if($filas>=1){ $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $fecha_ingreso=$registro["fecha_ingreso"];  $fecha_ingreso=formato_ddmmaaaa($fecha_ingreso);
   $cod_empleado=$registro["cod_empleado"];  $fecha_sueldo=$registro["fecha_sueldo"]; $fecha=$fecha_sueldo; $fecha_sueldo=formato_ddmmaaaa($fecha_sueldo);
   $monto_sueldo=$registro["monto_sueldo"];    $monto_sueldo_adic=$registro["monto_sueldo_adic"];
 } $monto_sueldo=formato_monto($monto_sueldo);  $monto_sueldo_adic=formato_monto($monto_sueldo_adic);
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -70,8 +70,8 @@ pg_close();
   <tr>
     <td width="92" height="403"><table width="92" height="403" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
      <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_sueldo_prestaciones.php?Gcriterio=C<?echo $criterio?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_sueldo_prestaciones.php?Gcriterio=C<?echo $criterio?>">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_sueldo_prestaciones.php?Gcriterio=C<?php echo $criterio?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_sueldo_prestaciones.php?Gcriterio=C<?php echo $criterio?>">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -89,8 +89,8 @@ pg_close();
              <td><table width="866">
                  <tr>
                    <td width="156"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR  : </span></td>
-                   <td width="160"><span class="Estilo5"><input name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
-                   <td width="550"><span class="Estilo5"> <input name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?echo $nombre?>"> </span></td>
+                   <td width="160"><span class="Estilo5"><input name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
+                   <td width="550"><span class="Estilo5"> <input name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?php echo $nombre?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -99,7 +99,7 @@ pg_close();
              <td><table width="876">
                <tr>
                  <td width="176"><span class="Estilo5">FECHA SUELDO :</span></td>
-                 <td width="700"><span class="Estilo5"><input name="txtfecha_sueldo" type="text" id="txtfecha_sueldo" size="10" maxlength="10"  value="<?echo $fecha_sueldo?>" readonly></span></td>
+                 <td width="700"><span class="Estilo5"><input name="txtfecha_sueldo" type="text" id="txtfecha_sueldo" size="10" maxlength="10"  value="<?php echo $fecha_sueldo?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -108,7 +108,7 @@ pg_close();
              <td><table width="876">
                <tr>
                  <td width="196"><span class="Estilo5">MONTO SUELDO P/ANTIGUEDAD:</span></td>
-                 <td width="680"><span class="Estilo5"> <input name="txtmonto_sueldo" type="text" id="txtmonto_sueldo" size="13" maxlength="12"  style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)"  value="<?echo $monto_sueldo?>"  onKeypress="return validarNum(event)" ></span></td>
+                 <td width="680"><span class="Estilo5"> <input name="txtmonto_sueldo" type="text" id="txtmonto_sueldo" size="13" maxlength="12"  style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)"  value="<?php echo $monto_sueldo?>"  onKeypress="return validarNum(event)" ></span></td>
 
                 </tr>
              </table></td>
@@ -118,7 +118,7 @@ pg_close();
              <td><table width="876">
                <tr>
                  <td width="196"><span class="Estilo5">MONTO DIAS ADICIONALES :</span></td>
-                 <td width="680"><span class="Estilo5"> <input name="txtmonto_sueldo_adic" type="text" id="txtmonto_sueldo_adic" size="13" maxlength="12"  style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto_sueldo_adic?>"  onKeypress="return validarNum(event)" ></span></td>
+                 <td width="680"><span class="Estilo5"> <input name="txtmonto_sueldo_adic" type="text" id="txtmonto_sueldo_adic" size="13" maxlength="12"  style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto_sueldo_adic?>"  onKeypress="return validarNum(event)" ></span></td>
                 </tr>
              </table></td>
            </tr>

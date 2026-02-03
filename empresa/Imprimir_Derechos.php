@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){ $temp_usuario='';} else {$temp_usuario=$_GET["GUsuario"];}  $prev_modulo="";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 
@@ -41,5 +41,5 @@ while($reg=pg_fetch_array($res)){ $campo701=$reg["campo701"];  $campo601=$reg["c
   if(($reg["campo618"]=="S")and($reg["campo717"]<>"")){ $macceso=$macceso.$reg["campo717"].", ";}
   echo $reg["campo703"]."; OPCIONES: ".$macceso,"<br>";
 }
-pg_close();
+pg_close($conn);
 ?>

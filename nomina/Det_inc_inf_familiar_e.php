@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$codigo_mov='';} else{$codigo_mov=$_GET["codigo_mov"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$codigo_mov='';} else{$codigo_mov=$_GET["codigo_mov"];}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -17,7 +17,7 @@ function Llama_Modificar(codigo_mov,ci_part){var murl;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Informaci&oacute;n Familiar" onclick="javascript:LlamarURL('Inc_inf_familiar_e.php?codigo_mov=<?echo $codigo_mov?>')"></td>
+            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Informaci&oacute;n Familiar" onclick="javascript:LlamarURL('Inc_inf_familiar_e.php?codigo_mov=<?php echo $codigo_mov?>')"></td>
             <td width="255" align="center">&nbsp;</td>
             <td width="215" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar la Informaci&oacute;n Familiar"></td>
@@ -39,18 +39,18 @@ function Llama_Modificar(codigo_mov,ci_part){var murl;
            <td width="50" align="center" bgcolor="#99CCFF" ><strong>Edad (A&ntilde;os)</strong></td>
 		   <td width="80" align="center" bgcolor="#99CCFF" ><strong>Tiene HCM </strong></td>
            </tr>
-<? while($registro=pg_fetch_array($res)){ $edad=$registro["edad"]; $edad=floor($edad); $sfecha=$registro["fecha_nac"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
+<?php  while($registro=pg_fetch_array($res)){ $edad=$registro["edad"]; $edad=floor($edad); $sfecha=$registro["fecha_nac"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["ci_partida"]; ?>');">
-           <td width="90" align="left"><? echo $registro["ci_partida"]; ?></td>
-           <td width="340" align="left"><? echo $registro["nombre"]; ?></td>
-           <td width="90" align="left"><? echo $registro["parentesco"]; ?></td>
-           <td width="50" align="left"><? echo $registro["sexo"]; ?></td>
-           <td width="90" align="left"><? echo $fecha; ?></td>
-           <td width="50" align="right"><? echo  $edad ?></td>
-		   <td width="80" align="center"><? echo $registro["status"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["ci_partida"]; ?>');">
+           <td width="90" align="left"><?php  echo $registro["ci_partida"]; ?></td>
+           <td width="340" align="left"><?php  echo $registro["nombre"]; ?></td>
+           <td width="90" align="left"><?php  echo $registro["parentesco"]; ?></td>
+           <td width="50" align="left"><?php  echo $registro["sexo"]; ?></td>
+           <td width="90" align="left"><?php  echo $fecha; ?></td>
+           <td width="50" align="right"><?php  echo  $edad ?></td>
+		   <td width="80" align="center"><?php  echo $registro["status"]; ?></td>
            </tr>
-         <?}
+         <?php }
 ?>
        </table></td>
    </tr>
@@ -59,4 +59,4 @@ function Llama_Modificar(codigo_mov,ci_part){var murl;
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

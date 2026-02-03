@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$periodod=$_GET["periodod"];$imprimir=$_GET["imprimir"];$tipo_rep=$_GET["tipo_rep"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }  }
 $cfecha=formato_ddmmaaaa($Fec_Ini_Ejer); $cfecha="01/01/".substr($cfecha,6,4); 
 $sql_saldo="(BAN002.S_Inic_Libro+(BAN002.Deb_Libro01-BAN002.Cre_Libro01)";
@@ -107,7 +107,7 @@ $fecha_d=colocar_udiames($cfecha); $criterio1="A la Fecha: ". $fecha_d;
 	     </tr>
 		  <tr height="20">
 		    <td width="100" align="left" ><strong></strong></td>
-            <td width="400" align="center" > <strong><? echo $criterio1; ?></strong></td>
+            <td width="400" align="center" > <strong><?php  echo $criterio1; ?></strong></td>
         </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>CODIGO</strong></td>
@@ -117,7 +117,7 @@ $fecha_d=colocar_udiames($cfecha); $criterio1="A la Fecha: ". $fecha_d;
            <td width="100" align="left" bgcolor="#99CCFF"><strong>MES CONC.</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; 
 	  $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
@@ -126,14 +126,14 @@ $fecha_d=colocar_udiames($cfecha); $criterio1="A la Fecha: ". $fecha_d;
 		   $saldo_actual=formato_monto($saldo_actual); $nombre_banco=conv_cadenas($nombre_banco,0);  
 	    ?>	   
 	    <tr>
-           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
-           <td width="400" align="justify"><? echo $nombre_banco; ?></td>
-           <td width="300" align="left">'<? echo $nro_cuenta; ?></td>
-           <td width="300" align="left"><? echo $cod_contable; ?></td>
-           <td width="100" align="center"><? echo $u_conciliacion; ?></td>
-           <td width="100" align="right"><? echo $saldo_actual; ?></td>
+           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre_banco; ?></td>
+           <td width="300" align="left">'<?php  echo $nro_cuenta; ?></td>
+           <td width="300" align="left"><?php  echo $cod_contable; ?></td>
+           <td width="100" align="center"><?php  echo $u_conciliacion; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_actual; ?></td>
          </tr>
-	<? } $total=formato_monto($total); ?>   
+	<?php } $total=formato_monto($total); ?>   
    <tr>
          <td width="100"><span class="Estilo5"></span></td>
          <td width="400"><span class="Estilo5"></span></td>
@@ -142,11 +142,11 @@ $fecha_d=colocar_udiames($cfecha); $criterio1="A la Fecha: ". $fecha_d;
          <td width="100"><span class="Estilo5"><strong>TOTAL :</strong></span></td>
          <td width="100"><table width="150" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td align="right" class="Estilo5"><strong><? echo $total; ?></strong></td>
+             <td align="right" class="Estilo5"><strong><?php  echo $total; ?></strong></td>
            </tr>
          </table></td> 
     </tr>
-	  </table><?
+	  </table><?php 
 	}   
 ?>
 

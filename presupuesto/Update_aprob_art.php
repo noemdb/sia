@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();   $sfecha=formato_aaaammdd($fecha_hoy);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();   $sfecha=formato_aaaammdd($fecha_hoy);
 $cod_articulo=$_POST["txtcod_articulo"]; $denominacion=$_POST["txtdes_articulo"]; $ramo=$_POST["txtcod_ramo"];  $partida=$_POST["txtpartida"]; $cod_contable=""; $observacion=""; $lote=""; $fecha_vence=$sfecha; $refrigerado="N";
 $tipo_articulo=$_POST["txttipo_articulo"]; $tipo_articulo=substr($tipo_articulo,0,1); $unidad_medida=$_POST["txtunidad_medida"]; $unidad_alterna=$_POST["txtunidad_alterna"];
 $marca=$_POST["txtmarca"]; $modelo=$_POST["txtmodelo"]; $medida=$_POST["txtmedida"]; $grupo=$_POST["txtgrupo"];  $tipo_costo=$_POST["txttipo_costo"];  $tipo_costo=substr($tipo_costo,0,1);
@@ -12,34 +12,34 @@ $impuesto=$_POST["txtimpuesto"]; $impuesto=formato_numero($impuesto);  if(is_num
 $pedido_maximo=$_POST["txtpedido_maximo"];  $pedido_maximo=formato_numero($pedido_maximo); if(is_numeric($pedido_maximo)){$pedido_maximo=$pedido_maximo;}else{$pedido_maximo=0;}
 $fecha_creado=$_POST["txtfecha_creado"]; if(checkData($fecha_creado)=='1'){$fecha_creado=$sfecha;}else{$fecha_creado=$sfecha;}
 $cod_aux1=$_POST["txtcod_aux1"]; $fecha_aprobada=$_POST["txtfecha_aprobada"]; $error=0;
-if (checkData($fecha_aprobada)=='1'){ $afecha=formato_aaaammdd($fecha_aprobada);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA APROBACION NO ES VALIDA');</script><? }
+if (checkData($fecha_aprobada)=='1'){ $afecha=formato_aaaammdd($fecha_aprobada);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA APROBACION NO ES VALIDA');</script><?php }
 $usuario_aprueba=$usuario_sia;$aprobado="S";$fecha_aprobada=$afecha;
 $cod_aux2="";$campo_str1="";$campo_str2="";$campo_num1=0;$campo_num2=0;$costo1 =0;$fecha_costo1=$sfecha;$costo2=0;$fecha_costo2=$sfecha;$costo3=0;$fecha_costo3=$sfecha; $cod_barra=""; $status=""; 
 
 $equipo = getenv("COMPUTERNAME"); $inf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");echo "ESPERE POR FAVOR APROBANDO....","<br>"; $url="Act_Def_Art.php?Gcod_articulo=C".$cod_articulo;
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); 
-if (pg_ErrorMessage($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ 
   $sSQL="Select * from COMP072 WHERE cod_articulo='$cod_articulo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-  if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO NO EXISTE');</script><? }
+  if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO NO EXISTE');</script><?php }
    else{  $registro=pg_fetch_array($resultado,0);  $prev_apro=$registro["aprobado"];
-     if($prev_apro=="S"){$error=1; ?> <script language="JavaScript"> muestra('ARTICULO YA APROBADO');</script><? } 
+     if($prev_apro=="S"){$error=1; ?> <script language="JavaScript"> muestra('ARTICULO YA APROBADO');</script><?php } 
 	 else{$part="000001";
      $StrSQL="Select max(cod_articulo) As cod_articulo FROM COMP002 where substring(cod_articulo,1,3)='$ramo'"; $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
      if($filas>0){$registro=pg_fetch_array($resultado); $part=$registro["cod_articulo"];  $part=substr($part,4,6); if(is_numeric($part)){$part=$part+1;}else{$part="000001";} $part=Rellenarcerosizq($part,6); } $cod_aux2=$ramo.'-'.$part; }
    } 
-  if($error==0){if(strlen($cod_aux2)==10){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD CODIGO DE ARTICULO INVALIDA');</script><?} }
-  if($error==0){if(strlen($denominacion)==0){$error=1; ?> <script language="JavaScript"> muestra('DESCRIPCION INVALIDA');</script><?} }
-  if($error==0){$sSQL="Select cod_articulo,des_articulo from COMP002 WHERE cod_articulo='$cod_aux2'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO YA EXISTE');</script><? }}
+  if($error==0){if(strlen($cod_aux2)==10){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD CODIGO DE ARTICULO INVALIDA');</script><?php } }
+  if($error==0){if(strlen($denominacion)==0){$error=1; ?> <script language="JavaScript"> muestra('DESCRIPCION INVALIDA');</script><?php } }
+  if($error==0){$sSQL="Select cod_articulo,des_articulo from COMP002 WHERE cod_articulo='$cod_aux2'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO YA EXISTE');</script><?php } }
   
-  if($error==0){$sSQL="Select cod_par_ramo from COMP001 WHERE cod_ramo='$ramo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1;?><script language="JavaScript">muestra('CODIGO RAMO DE ARTICULO NO EXISTE');</script><?}else{$registro=pg_fetch_array($resultado); $cod_par_ramo=$registro["cod_par_ramo"];}}
-  if($error==0){if($ramo==substr($cod_aux2,0,3)){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO INVALIDO');</script><?}}
-  if($error==0){$l=strlen($cod_par_ramo); if($cod_par_ramo==substr($partida,0,$l)){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE PARTIDA INVALIDO');</script><?} }
-  if($error==0){$sSQL="Select cod_grupo from COMP053 WHERE cod_grupo='$grupo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1;?><script language="JavaScript">muestra('CODIGO GRUPO DE ARTICULO NO EXISTE');</script><?}}
-  if($error==0){$sSQL="Select cod_articulo,des_articulo from COMP002 WHERE des_articulo='$denominacion' and cod_articulo<>'$cod_aux2'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('ARTICULO YA EXISTE CON LA MISMA DESCRIPCION');</script><? }}
+  if($error==0){$sSQL="Select cod_par_ramo from COMP001 WHERE cod_ramo='$ramo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1;?><script language="JavaScript">muestra('CODIGO RAMO DE ARTICULO NO EXISTE');</script><?php }else{$registro=pg_fetch_array($resultado); $cod_par_ramo=$registro["cod_par_ramo"];}}
+  if($error==0){if($ramo==substr($cod_aux2,0,3)){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE ARTICULO INVALIDO');</script><?php } }
+  if($error==0){$l=strlen($cod_par_ramo); if($cod_par_ramo==substr($partida,0,$l)){$error=0;} else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE PARTIDA INVALIDO');</script><?php } }
+  if($error==0){$sSQL="Select cod_grupo from COMP053 WHERE cod_grupo='$grupo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1;?><script language="JavaScript">muestra('CODIGO GRUPO DE ARTICULO NO EXISTE');</script><?php } }
+  if($error==0){$sSQL="Select cod_articulo,des_articulo from COMP002 WHERE des_articulo='$denominacion' and cod_articulo<>'$cod_aux2'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('ARTICULO YA EXISTE CON LA MISMA DESCRIPCION');</script><?php } }
   
   if($error==0){$sSQL="SELECT ACTUALIZA_COMP072(4,'$cod_articulo','$denominacion','$ramo','$tipo_articulo','$partida','$cod_contable','$unidad_medida','$unidad_alterna','$observacion','$marca','$modelo','$medida','$grupo','$lote','$fecha_vence','$tipo_costo','$refrigerado',$relacion,$existencia_min,$existencia_max,$existencia,$pto_reorden,$pedido_minimo,$ultimo_costo,'$fecha_u_costo',$impuesto,$pedido_maximo,'$cod_barra','$status','$cod_aux1','$cod_aux2','$campo_str1','$campo_str2',$campo_num1,$campo_num2,'$fecha_creado','$aprobado','$fecha_aprobada','$usuario_aprueba','$inf_usuario')";
-    $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?}else{$error=0;?><script language="JavaScript">muestra('APROBO EXITOSAMENTE');</script><?}
+    $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }else{$error=0;?><script language="JavaScript">muestra('APROBO EXITOSAMENTE');</script><?php }
   }
-}pg_close();
-if($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?}else{?><script language="JavaScript">history.back();</script><?}?>
+}pg_close($conn);
+if($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php }else{?><script language="JavaScript">history.back();</script><?php }?>

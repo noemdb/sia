@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php"); include ("../../class/conect.php"); include ("../../class/configura.inc");
 $date = date("d-m-Y");  $hora = date("H:i:s a");  
 $MControl = array (0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -10,7 +10,7 @@ function BUSCAR_ACTUAL($Clave,$Formato){
   for ($a=1; $a<10; $a++) {if ($MControl[$a] == 0) {$MControl[$a]=0;} else { $j=$MControl[$a]+$k; $MControl[$a]=$j+1; $k=$MControl[$a];} }
   for ($a=1; $a<10; $a++) {if ($MControl[$a] < 0) {$MControl[$a]=0;}}  $act=-1;
   for ($a=0; $a<10; $a++) {if (strlen($Clave) == $MControl[$a]){$act=$a; $a=10;}}
-  if ($act==-1){?><script language="JavaScript">muestra('ERROR Longitud de la Cuenta Invalida');</script><? }
+  if ($act==-1){?><script language="JavaScript">muestra('ERROR Longitud de la Cuenta Invalida');</script><?php }
 return $act;}
 function Nivel_Cod($ncuenta){global $MControl; $n_cod=0; for($n=0;$n<10;$n++){if(strlen($ncuenta)==$MControl[$n]){$n_cod=$n; $n=10;}} return $n_cod;}
 function Seletion_Ok($cuenta,$fecha_c){global $Cta_Activo; global $Cta_Pasivo; global $Cta_Capital; global $Cta_Resultado; global $Cta_Costo_Venta; global $fecha_h;
@@ -28,7 +28,7 @@ $MSaldo_Total = array (0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 $Total_Activo=0; $Total_Pasivo=0; $Total_Resultado=0;$Total_Capital=0; $Total_Resultado_Balance=0; $Monto_Gan_Perd=0;
 $periodo=$_GET["periodo"]; $nivel_hasta=$_GET["nivel"]; $imp_encero=$_GET["vimprimir"]; $imp_cta_orden="N";  $nivel_hasta=$nivel_hasta*1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }else{ $Nom_Emp=busca_conf(); }
 $fecha_d=Armar_Fecha($periodo, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo,2,$Fec_Ini_Ejer); $criterio1="Desde ".$fecha_d." Al ".$fecha_h; $Sql="";
 $sfecha=formato_aaaammdd($fecha_d);   $ano_fiscal=substr($Fec_Ini_Ejer,6,4);  $periodo=$periodo*1;
 $sql="Select * from SIA005 where campo501='06'"; $resultado=pg_query($sql);
@@ -45,7 +45,7 @@ If (strlen($Cta_Result_Eje)>$ln){
 }
 $nro_linea=0; $cod_cuenta=""; $nom_cuenta=""; $c=0;  $prev_cuenta=""; $Total_Activo=0;  $Total_Resultado=0;  $Total_Pasivo=0; $Total_Capital=0;
 $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','C')"; $resultado=pg_exec($conn,$Sql);$error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
-if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
  else{ $sql="Select * from con001 order by codigo_cuenta"; $resultado=pg_query($sql);  $actual=$MControl[0];
      while($registro=pg_fetch_array($resultado)){ if($c==0){$c=1; $prev_cuenta=$registro["codigo_cuenta"];  $MCuenta[1]=$registro["codigo_cuenta"]; $MNombre[1]=$registro["nombre_cuenta"]; $MTSaldo[1]=$registro["TSaldo"]; }
        $cod_cuenta=$registro["codigo_cuenta"]; $cargable=$registro["cargable"]; $fecha_creado=$registro["fecha_creado"];  $tsaldo=$registro["tsaldo"];  $nombre_cuenta=$registro["nombre_cuenta"];
@@ -58,11 +58,11 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
                if($MCuenta[$i]==substr($Cta_Resultado,0,1)){$Total_Resultado=$MSaldo_Total[$i];} $lc=strlen($Cta_Capital); if($MCuenta[$i]==substr($Cta_Capital,0,$lc)){$Total_Capital=$MSaldo_Total[$i];} }
               if(($Imprimir==true)and($i<$nivel_hasta)){ $temp_nomb=" TOTAL ".$MNombre[$i]; $Monto1=0; $Monto2=0; $Monto3=0;  if(($i==1)or($i==2)){$Monto3=$MSaldo_Total[$i];}else{$Monto2=$MSaldo_Total[$i];}
                 
-				if(($i==1)and($MCuenta[$i]<>substr($Cta_Pasivo,0,1))and($MCuenta[$i]<>substr($Cta_Activo,0,1))){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','T','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?} }
-                if(($MCuenta[$i]==substr($Cta_Pasivo,0,1))or($MCuenta[$i]==substr($Cta_Capital,0,1))){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?} }
-                if($MCuenta[$i]==substr($Cta_Activo,0,1)){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','R','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?} }
+				if(($i==1)and($MCuenta[$i]<>substr($Cta_Pasivo,0,1))and($MCuenta[$i]<>substr($Cta_Activo,0,1))){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','T','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
+                if(($MCuenta[$i]==substr($Cta_Pasivo,0,1))or($MCuenta[$i]==substr($Cta_Capital,0,1))){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
+                if($MCuenta[$i]==substr($Cta_Activo,0,1)){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','R','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
                 
-				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','C','$MCuenta[$i]','$temp_nomb','$MTSaldo[$i]','','','',0,$Monto2,$Monto3,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','C','$MCuenta[$i]','$temp_nomb','$MTSaldo[$i]','','','',0,$Monto2,$Monto3,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
                 if(($i==0)and(trim($MCuenta[$i])==substr($Cta_Activo,1,1))and($imp_cta_orden=="S")){  }
               }
               $MCuenta[$i]="";$MNombre[$i]=""; $MTSaldo[$i]=""; $MSaldo_Total[$i]=0;
@@ -75,12 +75,12 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
          for($i=0;$i<$nivel_hasta-1;$i++){
             If(Nivel_Cod($cod_cuenta)>$i){ if($MTSaldo[$i]==$tsaldo){$MSaldo_Total[$i]=$MSaldo_Total[$i]+$MSaldo;}else{$MSaldo_Total[$i]=$MSaldo_Total[$i]-$MSaldo;} }
          } $Imprimir=true;  If(($MSaldo==0)and($imp_encero=="N")){$Imprimir=false;}
-         if($Imprimir==true){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','B','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',$MSaldo,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}}
+         if($Imprimir==true){$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','B','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',$MSaldo,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
          $actual=BUSCAR_ACTUAL($cod_cuenta,$Formato_Cuenta);
        }
        else{ if((strlen($cod_cuenta)<$MControl[$nivel_hasta-1])and(Seletion_Ok($cod_cuenta,$fecha_creado)==0)){ $actual=BUSCAR_ACTUAL($cod_cuenta,$Formato_Cuenta);
          $i=$actual; $MCuenta[$i]=substr($cod_cuenta,0,$MControl[$i]); $MNombre[$i]=$nombre_cuenta; $MTSaldo[$i]=$tsaldo;
-         $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','A','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+         $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','A','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
        }}
        $prev_cuenta=$registro["codigo_cuenta"];
      }
@@ -89,17 +89,17 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
        If((($MSaldo_Total[$i]==0)and($imp_encero=="N"))or(trim($MCuenta[$i])=="")){$Imprimir=false;}
        if($i==0){ if($MCuenta[$i]==substr($Cta_Activo,0,1)){$Total_Activo=$MSaldo_Total[$i];} if($MCuenta[$i]==substr($Cta_Pasivo,0,1)){$Total_Pasivo=$MSaldo_Total[$i];}
          if($MCuenta[$i]==substr($Cta_Resultado,0,1)){$Total_Resultado=$MSaldo_Total[$i];} $lc=strlen($Cta_Capital); if($MCuenta[$i]==substr($Cta_Capital,0,$lc)){$Total_Capital=$MSaldo_Total[$i];} }
-       if(($Imprimir==true)and($i<$nivel_hasta)){ $nro_linea=$nro_linea+1; $Monto1=0; $Monto2=0; $Monto3=0;  if(($i==1)or($i==2)){$Monto3=$MSaldo_Total[$i];}else{$Monto2=$MSaldo_Total[$i];} $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','C','$MCuenta[$i]','$MNombre[$i]','$MTSaldo[$i]','','','',0,$Monto2,$Monto3,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?} }
+       if(($Imprimir==true)and($i<$nivel_hasta)){ $nro_linea=$nro_linea+1; $Monto1=0; $Monto2=0; $Monto3=0;  if(($i==1)or($i==2)){$Monto3=$MSaldo_Total[$i];}else{$Monto2=$MSaldo_Total[$i];} $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','C','$MCuenta[$i]','$MNombre[$i]','$MTSaldo[$i]','','','',0,$Monto2,$Monto3,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
        $MCuenta[$i]="";$MNombre[$i]=""; $MTSaldo[$i]=""; $MSaldo_Total[$i]=0;
      }  
 	 $Resta_Resultado=0; $lc=strlen($Cta_Capital); if(substr($Cta_Resultado,0,$lc)==substr($Cta_Capital,0,$lc)){$Resta_Resultado=$Total_Resultado;}
      $Total_Resultado_Balance = $Total_Pasivo + $Total_Resultado + $Total_Capital -  $Resta_Resultado; $nombre="TOTAL PASIVO + TOTAL RESULTADO + TOTAL CAPITAL --->";
-     $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','R','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+     $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','R','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
            
-	 $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','$nombre','','','','',0,$Total_Resultado_Balance,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+	 $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','$nombre','','','','',0,$Total_Resultado_Balance,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
      If ($Total_Resultado_Balance <> $Total_Activo) { $Total_Resultado_Balance=$Total_Resultado_Balance-$Total_Activo; $Total_Resultado_Balance=$Total_Resultado_Balance*-1;  $nombre="N O T A:   Diferencia en el Balance de --->";
-       If ($Total_Resultado_Balance>0.0009){ $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
-        $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','$nombre','','','','',0,$Total_Resultado_Balance,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?} }
+       If ($Total_Resultado_Balance>0.0009){ $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
+        $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','U','','$nombre','','','','',0,$Total_Resultado_Balance,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
      }
 }
 if($nro_linea>0){

@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
    $fecha_h=formato_ddmmaaaa($Fec_Fin_Ejer);
    $tipo_nominad="";
@@ -69,7 +69,7 @@ var url;
 -->
 </style>
 </head>
-<?  $descripcion_d="";
+<?php   $descripcion_d="";
     $descripcion_h="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ";
 $res=pg_query($sql);
@@ -81,7 +81,7 @@ if($encontro=true){
   $tipo_nomina_d=$registro["min_tipo_nomina"];
   $tipo_nomina_h=$registro["max_tipo_nomina"];   }
 ?>
-<?
+<?php 
     $denominacion_d;
     $denominacion_h;
 $sql="SELECT MAX(cod_concepto) As Max_cod_concepto, MIN(cod_concepto) As Min_cod_concepto FROM nom002 ";
@@ -94,7 +94,7 @@ if($encontro=true){
   $cod_conceptod=$registro["min_cod_concepto"];
   $cod_conceptoh=$registro["max_cod_concepto"];   }
 ?>
-<?  $descripcion_dep_d="";
+<?php   $descripcion_dep_d="";
  $descripcion_dep_d="";
 $sql="SELECT MAX(codigo_departamento) As Max_codigo_departamento, MIN(codigo_departamento) As Min_codigo_departamento FROM nom005 ";
 $res=pg_query($sql);
@@ -312,4 +312,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

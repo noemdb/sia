@@ -1,4 +1,4 @@
-<? include ("../class/conect.php");  include ("../class/funciones.php");
+<?php  include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){  $equipo = getenv("COMPUTERNAME"); $mcod_m = "CON02".$equipo; $codigo_mov=substr($mcod_m,0,49);}  else{  $codigo_mov=$_GET["codigo_mov"];}
 $Gtipo_pago="0005";
 ?>
@@ -6,7 +6,7 @@ $Gtipo_pago="0005";
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <SCRIPT language="JavaScript" src="../class/sia.js"  type=text/javascript></SCRIPT>
 <script language="javascript" src="ajax_comp.js" type="text/javascript"></script>
@@ -16,7 +16,7 @@ var muser='<?php echo $user ?>';
 var mpassword='<?php echo $password ?>';
 var mdbname='<?php echo $dbname ?>';
 var mcodigo_mov='<?php echo $codigo_mov ?>';
-function llamar_anterior(){ document.location ='Det_inc_mov_comp.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_mov_comp.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function apaga_referencia(mthis){var mref;
    apagar(mthis); mref=document.form1.txtreferencia_pago.value;  mref=Rellenarizq(mref,"0",8);  document.form1.txtreferencia_pago.value=mref;
 return true;}
@@ -97,7 +97,7 @@ return true;}
                 </tr>
             </table></td>
         </tr>
-		<script language="JavaScript" type="text/JavaScript"> mref="<?echo $Gtipo_pago?>";
+		<script language="JavaScript" type="text/JavaScript"> mref="<?php echo $Gtipo_pago?>";
 			ajaxSenddoc('GET', 'cargarefpag.php?tipo_pago='+mref+'&nro_aut=N&password='+mpassword+'&user='+muser+'&dbname='+mdbname+'&codigo_mov='+mcodigo_mov, 'refpago', 'innerHTML');   </script></td>
         <tr>
           <td><table width="614" border="0">
@@ -121,9 +121,9 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="7"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="7"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
 			<td width="5"><input name="txtcod_contable" type="hidden" id="txtcod_contable" value=""></td>
-			<td width="5"><input name="txttipo_pago" type="hidden" id="txttipo_pago" value="<?echo $Gtipo_pago?>"></td>
+			<td width="5"><input name="txttipo_pago" type="hidden" id="txttipo_pago" value="<?php echo $Gtipo_pago?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

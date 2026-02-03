@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $cod_empleado_d="";
    $cod_empleado_h="";
    ?>
@@ -45,7 +45,7 @@ function Llama_Menu_Rpt(murl){var url;    url="../"+murl;  LlamarURL(url);}
 -->
 </style>
 </head>
-<?  $nombre_d="";
+<?php   $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cod_empleado) As Max_cod_empleado, MIN(cod_empleado) As Min_cod_empleado FROM nom006 ";
 $res=pg_query($sql);
@@ -88,14 +88,14 @@ if($encontro=true){
                <tr>
                  <td width="180" scope="col"><div align="right"><span class="Estilo5">CODIGO TRABAJADOR DESDE :</span></div></td>
                  <td width="142" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                     <input name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="15" value="<?echo $cod_empleado_d?>">
+                     <input name="txtcod_empleado_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="15" value="<?php echo $cod_empleado_d?>">
                      <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                  <td width="123" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo de Trabajadores" onClick="VentanaCentrada('../Cat_trabajadoresd.php?criterio=','SIA','','650','500','true')" value="...">
                  </strong></strong></span></span></span></td>
                  <td width="54" scope="col"><span class="Estilo5">HASTA :</span></td>
                  <td width="137" scope="col"><span class="Estilo5"><span class="Estilo10">
-                   <input name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="20" value="<?echo $cod_empleado_h?>">
+                   <input name="txtcod_empleado_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="20" maxlength="20" value="<?php echo $cod_empleado_h?>">
                    <span class="menu"><strong><strong> </strong></strong></span></span></span></td>
                  <td width="241" scope="col"><span class="Estilo5"><span class="Estilo10"><span class="menu"><strong><strong>
                    <input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo de Trabajadores" onClick="VentanaCentrada('../Cat_trabajadoresh.php?criterio=','SIA','','650','500','true')" value="...">
@@ -147,4 +147,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

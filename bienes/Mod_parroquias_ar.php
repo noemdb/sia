@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$cod_parroquia='';}else {$cod_parroquia=$_GET["Gcod_parroquia"];}
 ?>
 
@@ -42,7 +42,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
 $den_parroquia="";$sql="Select cod_parroquia,nombre_parroquia from PRE096 where cod_parroquia='$cod_parroquia'";
 $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_parroquia=$registro["cod_parroquia"];  $den_parroquia=$registro["nombre_parroquia"];}
@@ -83,7 +83,7 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_parroquia=$reg
                   <tr>
                     <td width="148"><span class="Estilo5">C&Oacute;DIGO :</span></td>
                     <td width="650"><span class="Estilo5">
-                      <input name="txtCodigo_Parroquia" type="text" class="Estilo5" id="txtCodigo_Parroquia" title="Registre el C&oacute;digo de la Parroquia" size="10" maxlength="6"  readonly value="<?ECHO $cod_parroquia?>">
+                      <input name="txtCodigo_Parroquia" type="text" class="Estilo5" id="txtCodigo_Parroquia" title="Registre el C&oacute;digo de la Parroquia" size="10" maxlength="6"  readonly value="<?php ECHO $cod_parroquia?>">
                     </span></td>
                   </tr>
                 </table></td>
@@ -96,7 +96,7 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_parroquia=$reg
                   <table width="816" border="0">
                     <tr>
                       <td width="148"><span class="Estilo5">NOMBRE :</span></td>
-                      <td width="666"><input name="txtNombre_Parroquia" type="text" class="Estilo5" id="txtNombre_Parroquia" title="Registre el Nombre de la Parroquia" size="80" maxlength="200"  value="<?ECHO $den_parroquia?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="666"><input name="txtNombre_Parroquia" type="text" class="Estilo5" id="txtNombre_Parroquia" title="Registre el Nombre de la Parroquia" size="80" maxlength="200"  value="<?php ECHO $den_parroquia?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>
@@ -125,4 +125,4 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_parroquia=$reg
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

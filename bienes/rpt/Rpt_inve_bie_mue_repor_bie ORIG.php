@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_mued=$_GET["cod_bien_mued"];$cod_bien_mueh=$_GET["cod_bien_mueh"];$cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"]; $observacion=$_GET["observacion"]; $agrup_dep=$_GET["agrup_dep"];
 $cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"];
 $cod_departamentod=$_GET["cod_departamentod"]; $cod_departamentoh=$_GET["cod_departamentoh"]; $ordenado=$_GET["ordenado"];
@@ -13,7 +13,7 @@ if($denominacion<>""){  $criterio=$criterio." and (bien015.denominacion Like '%"
 $mordenado=" bien015.cod_dependencia,bien015.cod_bien_mue"; if($ordenado=="N"){$mordenado=" bien015.cod_dependencia,bien015.num_bien"; }
 IF($agrup_dep=="SI"){ $mordenado=" bien015.cod_dependencia,bien015.cod_departamento,bien015.cod_bien_mue"; if($ordenado=="N"){$mordenado=" bien015.cod_dependencia,bien015.cod_departamento,bien015.num_bien"; } }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }    
          
 	$sSQL = "SELECT bien015.cod_bien_mue, bien015.Cod_Clasificacion, bien015.num_bien, substr(bien015.Cod_Clasificacion,1,1) as grupo, substr(bien015.Cod_Clasificacion,3,2) as subgrupo, substr(bien015.Cod_Clasificacion,6,1) as seccion, bien015.Denominacion, bien015.cod_dependencia,bien015.cod_direccion,bien015.Cod_Departamento,bien001.Denominacion_Dep, bien001.Direccion_Dep, bien015.Valor_Incorporacion, to_char(bien015.fecha_incorporacion,'DD/MM/YYYY') as fechai, bien015.Caracteristicas, bien015.Marca, bien015.Modelo, bien015.Color, bien015.Matricula, bien015.Serial1, bien015.Tipo_Clase, bien015.Dimension_Tam, bien015.Accesorios, bien015.Serial2, bien015.Material, bien005.Denominacion_Dir, bien006.Denominacion_Dep as Den_Departamento, bien004.Edo_Bien  

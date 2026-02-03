@@ -1,7 +1,7 @@
-<?  include ("../../class/conect.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php   include ("../../class/conect.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$tipo_comp_d=$_GET["tipo_comp_d"];$tipo_comp_h=$_GET["tipo_comp_h"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_comp_d="";$tipo_comp_h="zzzz";$tipo_rep="HTML";}  $criterio1="";$php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
    $sSQL = "select tipo_compromiso, nombre_tipo_comp, nombre_abrev_comp from pre002 where pre002.tipo_compromiso>='".$tipo_comp_d."' and pre002.tipo_compromiso<='".$tipo_comp_h."' order by tipo_compromiso";
 
@@ -62,7 +62,7 @@ if($tipo_rep=="PDF"){
          	   } 
 		$pdf->Cell(200,3,'',0,1,'L');	
 		$pdf->Cell(50,3,'',0,0,'L');			 
-		$pdf->Output();  pg_close(); 
+		$pdf->Output();  pg_close($conn); 
     }	  
 if($tipo_rep=="EXCEL"){	
 	  header("Content-type: application/vnd.ms-excel");
@@ -80,18 +80,18 @@ if($tipo_rep=="EXCEL"){
            <td width="400" align="left" bgcolor="#99CCFF"><strong>NOMBRE DOCUMENTO</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>NOMBRE ABREV.</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_compromiso=$registro["tipo_compromiso"]; $nombre_tipo_comp=$registro["nombre_tipo_comp"]; $nombre_abrev_comp=$registro["nombre_abrev_comp"];
 		$nombre_tipo_comp=conv_cadenas($nombre_tipo_comp,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_compromiso; ?></td>
-           <td width="400" align="left"><? echo $nombre_tipo_comp; ?></td>
-           <td width="100" align="left">'<? echo $nombre_abrev_comp; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_compromiso; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_tipo_comp; ?></td>
+           <td width="100" align="left">'<?php  echo $nombre_abrev_comp; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -100,7 +100,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

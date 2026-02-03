@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -32,30 +32,30 @@ if (!$_GET){$cedula='';} else{$cedula=$_GET["cedula"];} $sql="SELECT * FROM NOM0
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Fecha Egreso</strong></td>
            <td width="200" align="center" bgcolor="#99CCFF" ><strong>Motivo Egreso</strong></td>
          </tr>
-<? while($registro=pg_fetch_array($res)){  $fechaa=$registro["fecha_asigna_cargo"];  $fechaa=formato_ddmmaaaa($fechaa);  $fechai=$registro["fecha_ingreso"];  $fechai=formato_ddmmaaaa($fechai);  $fechae=$registro["fecha_egreso"];  $fechae=formato_ddmmaaaa($fechae);
+<?php  while($registro=pg_fetch_array($res)){  $fechaa=$registro["fecha_asigna_cargo"];  $fechaa=formato_ddmmaaaa($fechaa);  $fechai=$registro["fecha_ingreso"];  $fechai=formato_ddmmaaaa($fechai);  $fechae=$registro["fecha_egreso"];  $fechae=formato_ddmmaaaa($fechae);
  $sueldo=$registro["sueldo"]; $sueldo=formato_monto($sueldo); $compensacion=$registro["compensacion"]; $compensacion=formato_monto($compensacion);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="100" align="left"><? echo $registro["cod_cargo"]; ?></td>
-           <td width="200" align="left"><? echo $registro["des_cargo"]; ?></td>
-           <td width="90" align="center"><? echo $fechaa; ?></td>
-           <td width="100" align="left"><? echo $registro["cod_departam"]; ?></td>
-           <td width="200" align="left"><? echo $registro["des_departamento"]; ?></td>
-           <td width="80" align="center"><? echo $registro["cod_tipo_personal"]; ?></td>
-           <td width="40" align="center"><? echo $registro["grado"]; ?></td>
-           <td width="40" align="center"><? echo $registro["paso"]; ?></td>
-           <td width="120" align="right"><? echo $sueldo; ?></td>
-           <td width="120" align="right"><? echo $compensacion; ?></td>
-           <td width="120" align="left"><? echo $registro["cod_empleado"]; ?></td>
-           <td width="100" align="center"><? echo $fechai; ?></td>
-           <td width="100" align="left"><? echo $fechae ?></td>
-           <td width="200" align="left"><? echo $registro["motivo_egreso"]; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_cargo"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["des_cargo"]; ?></td>
+           <td width="90" align="center"><?php  echo $fechaa; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_departam"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["des_departamento"]; ?></td>
+           <td width="80" align="center"><?php  echo $registro["cod_tipo_personal"]; ?></td>
+           <td width="40" align="center"><?php  echo $registro["grado"]; ?></td>
+           <td width="40" align="center"><?php  echo $registro["paso"]; ?></td>
+           <td width="120" align="right"><?php  echo $sueldo; ?></td>
+           <td width="120" align="right"><?php  echo $compensacion; ?></td>
+           <td width="120" align="left"><?php  echo $registro["cod_empleado"]; ?></td>
+           <td width="100" align="center"><?php  echo $fechai; ?></td>
+           <td width="100" align="left"><?php  echo $fechae ?></td>
+           <td width="200" align="left"><?php  echo $registro["motivo_egreso"]; ?></td>
           </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
  <p>&nbsp;</p>
 </body>
 </html>
-<?   pg_close();  ?>
+<?php    pg_close($conn);  ?>

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php"); include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");
 if (!$_GET){$codigo="";} else{$codigo=$_GET["Gcodigo"];} $tipo_arch_banco=substr($codigo,0,2);$cod_arch_banco=substr($codigo,2,6);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -30,8 +30,8 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php 
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM045 where (tipo_arch_banco='$tipo_arch_banco') and (cod_arch_banco='$cod_arch_banco')"; $res=pg_query($sql);$filas=pg_num_rows($res);  $den_arch_banco=""; $cod_cta_emp=""; $inf_usuario="";
 if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_arch_banco"]; $den_arch_banco=$registro["den_arch_banco"]; $cod_cta_emp=$registro["cod_cta_emp"]; $inf_usuario=$registro["inf_usuario"];} $criterio=$tipo_arch_banco.$cod_arch_banco;
 ?>
@@ -47,8 +47,8 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
   <tr>
     <td width="92" height="543"><table width="92" height="540" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_archivo_nomina.php?Gcriterio=C<?echo $cod_arch_banco?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_archivo_nomina.php?Gcriterio=C<?echo $cod_arch_banco?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_archivo_nomina.php?Gcriterio=C<?php echo $cod_arch_banco?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_archivo_nomina.php?Gcriterio=C<?php echo $cod_arch_banco?>">Atras</A></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -64,16 +64,16 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
              <td><table width="876">
                <tr>
                  <td width="76"><span class="Estilo5">C&Oacute;DIGO :</span></td>
-                 <td width="100"><span class="Estilo5"><input name="txtcod_arch_banco" type="text" id="txtcod_arch_banco" size="6" maxlength="6"  value="<?echo $cod_arch_banco?>" readonly></span></td>
+                 <td width="100"><span class="Estilo5"><input name="txtcod_arch_banco" type="text" id="txtcod_arch_banco" size="6" maxlength="6"  value="<?php echo $cod_arch_banco?>" readonly></span></td>
                  <td width="100"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                 <td width="550"><span class="Estilo5"> <input name="txtden_arch_banco" type="text" id="txtden_arch_banco" size="70" maxlength="70"  value="<?echo $den_arch_banco?>" readonly></span></td>
-                 <td width="45"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
-				 <td width="5"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?echo $tipo_arch_banco?>"></td>
+                 <td width="550"><span class="Estilo5"> <input name="txtden_arch_banco" type="text" id="txtden_arch_banco" size="70" maxlength="70"  value="<?php echo $den_arch_banco?>" readonly></span></td>
+                 <td width="45"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
+				 <td width="5"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?php echo $tipo_arch_banco?>"></td>
                </tr>
              </table></td>
            </tr>           
           </table>
-          <iframe src="Det_inc_archivo_banco.php?criterio=<?echo $criterio?>"  width="850" height="420" scrolling="auto" frameborder="1">
+          <iframe src="Det_inc_archivo_banco.php?criterio=<?php echo $criterio?>"  width="850" height="420" scrolling="auto" frameborder="1">
           </iframe>
         </div>
       </form>

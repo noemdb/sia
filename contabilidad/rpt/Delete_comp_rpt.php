@@ -1,13 +1,13 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");
 $referencia=$_GET["referencia"];$codigo_mov=$_GET["codigo_mov"]; $fecha=$_GET["fecha"]; $tipo=$_GET["tipo"];
 echo "ESPERE POR FAVOR ELIMINANDO....";
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?>  <script language="JavaScript"> muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)) { ?>  <script language="JavaScript"> muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{$sSQL="Select referencia from con018 WHERE codigo_mov='$codigo_mov' and referencia='$referencia' and tipo_asiento='$tipo' and fecha='$fecha'";
   $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-  if ($filas==0){?> <script language="JavaScript">  muestra('COMPROBANTE NO LOCALIZADO'); </script>    <? }
+  if ($filas==0){?> <script language="JavaScript">  muestra('COMPROBANTE NO LOCALIZADO'); </script>    <?php }
    else{ $resultado=pg_exec($conn,"SELECT ELIM_REF_CON018('$codigo_mov','$referencia','$fecha','00000','$tipo')");    $error=pg_errormessage($conn);     $error=substr($error, 0, 61);
-     if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }  }
+     if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } }
   
 }
-pg_close();?><script language="JavaScript">document.location ='Det_inc_comp_rpt.php?codigo_mov=<?echo $codigo_mov?>';</script>
+pg_close($conn);?><script language="JavaScript">document.location ='Det_inc_comp_rpt.php?codigo_mov=<?php echo $codigo_mov?>';</script>

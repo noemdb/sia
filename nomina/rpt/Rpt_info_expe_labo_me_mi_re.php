@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $fecha_d="01/01/1900";
 $fecha_h="31/12/9999";
 $fecha_de="01/01/1900";
@@ -42,7 +42,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 -->
 </style>
 </head>
-<?
+<?php 
     $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cedula) As Max_cedula, MIN(cedula) As Min_cedula FROM nom006 ";
@@ -88,14 +88,14 @@ if($encontro=true){
                      <div align="right">CEDULA DESDE : </div>
                  </div></td>
                  <td width="94"><span class="Estilo5">
-                   <input name="txtcedula_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cod_empleado_d?>">
+                   <input name="txtcedula_d" type="text" id="txtcod_empleado_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cod_empleado_d?>">
                  </span></td>
                  <td width="255"><span class="Estilo5">
                    <input name="Catalogo5" type="button" id="Catalogo5" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_d.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></td>
                  <td width="50" class="Estilo5">HASTA :</td>
                  <td width="91"><span class="Estilo5">
-                   <input name="txtcedula_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cod_empleado_h?>">
+                   <input name="txtcedula_h" type="text" id="txtcod_empleado_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cod_empleado_h?>">
                  </span></td>
                  <td width="250"><span class="Estilo5">
                    <input name="Catalogo6" type="button" id="Catalogo6" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_h.php?criterio=','SIA','','650','500','true')" value="...">
@@ -111,13 +111,13 @@ if($encontro=true){
                  </div></td>
                  <td width="277" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                     <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></div></td>
                  <td width="136" align="center"><div align="left" class="Estilo5">FEC. EXP. LAB. DESDE :</div></td>
                  <td width="350" align="center">
                    <div align="left"><span class="Estilo5">
-                      <input name="txtFechade" type="text" id="txtFechade" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_de?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                      <input name="txtFechade" type="text" id="txtFechade" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_de?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario5" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario5')"  /> </span></div></td>
                </tr>
@@ -132,13 +132,13 @@ if($encontro=true){
                  <td width="55" align="center"><div align="left"><span class="Estilo5">HASTA :</span></div></td>
                  <td width="358" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+                     <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  /></span></div></td>
                  <td width="55" align="center"><div align="left" class="Estilo5">HASTA :</div></td>
                  <td width="350" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txtFechaha" type="text" id="txtFechaha" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_ha?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+                     <input name="txtFechaha" type="text" id="txtFechaha" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_ha?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario6" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario6')"  /> </span></div></td>
                </tr>
@@ -183,4 +183,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Tipos de Retenci&oacute;n)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Tipos de Retenci&oacute;n)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -24,7 +24,7 @@ function validarNum(e){tecla=(document.all) ? e.keyCode : e.which;  if(tecla==0)
 function revisar(){
 var f=document.form1;
     if(f.txttipo_retencion.value==""){alert("Tipo de Retencion no puede estar Vacio");return false;}
-    if(f.txtdescripcion_ret.value==""){alert("Descripción Tipo de Retenci0n no puede estar Vacia");return false; } else{f.txtdescripcion_ret.value=f.txtdescripcion_ret.value.toUpperCase();}
+    if(f.txtdescripcion_ret.value==""){alert("Descripciï¿½n Tipo de Retenci0n no puede estar Vacia");return false; } else{f.txtdescripcion_ret.value=f.txtdescripcion_ret.value.toUpperCase();}
     if(f.txttipo_retencion.value.length==3){f.txttipo_retencion.value=f.txttipo_retencion.value.toUpperCase();} else{alert("Longitud Tipo de Retenci0n Invalida");return false;}
     if(f.txttasa.value==""){alert("Tasa no puede estar Vacio");return false;}
     if(MontoValido(f.txttasa.value)) {Valido=true;} else{alert("Tasa debe tener valores numericos.");return false;}

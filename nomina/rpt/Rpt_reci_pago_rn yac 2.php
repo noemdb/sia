@@ -1,4 +1,4 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
    $tipo_nomina_d=$_GET["tipo_nomina_d"];   $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist=$_GET["act_hist"]; $fecha_nom=$_GET["fecha_nom"]; $tipo_concepto=$_GET["tipo_concepto"];
    $cod_empleado_d=$_GET["cod_empleado_d"]; $cod_empleado_h=$_GET["cod_empleado_h"];  $codigo_cargo_d=$_GET["codigo_cargo_d"];$codigo_cargo_h=$_GET["codigo_cargo_h"];
    $forma_pago=$_GET["forma_pago"];  $tipo_calculo=$_GET["tipo_calculo"]; $cod_departd=$_GET["cod_departamento_d"];  $cod_departh=$_GET["cod_departamento_h"];
@@ -12,7 +12,7 @@
    if($tipo_concepto=="VACACIONES"){$criterio=$criterio." and (concepto_vac='S') ";}
    
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3="";
 
     $sSQL = "SELECT *  FROM ".$criterio." and (tp_calculo='".$tipo_calculo."') and (tipo_nomina>='".$tipo_nomina_d."' and tipo_nomina<='".$tipo_nomina_h."') and (cod_empleado>='".$cod_empleado_d."' and cod_empleado<='".$cod_empleado_h."') and
@@ -200,7 +200,7 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
         header("Content-Disposition: attachment; filename=recibo.rtf");	
       ?>	    
       <table border="0" cellspacing='0' cellpadding='0' align="left">
-	  <?
+	  <?php 
 	  $i=0; $total_monto=0; $sub_total_monto_asignacion=0;  $sub_total_monto_deduccion=0; $sub_total_monto=0; $total_cantidad=0; $resultado1=0; $resultado2=0;   $resultado3=0;		 $prev_cod_empleado=""; $prev_cod_concepto=""; $prev_nombre="";   
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_empleado=$registro["cod_empleado"]; $cod_concepto=$registro["cod_concepto"]; $nombre=$registro["nombre"]; 
           $denominacion=$registro["denominacion"];$cedula=$registro["cedula"]; $des_cargo=$registro["des_cargo"]; $fechai=$registro["fechai"]; $des_departam=$registro["des_departam"];  
@@ -224,16 +224,16 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
 				?>	
                <tr><td><table width="800" border="0" cellpadding="0" cellspacing="0">				
 				   <tr>
-					 <td width="100" align="left"><? echo $prev_cod_concepto; ?></td>
-					 <td width="300" align="left"><? echo $prev_denominacion; ?></td>
-					 <td width="100" align="right"><? echo $total_cantidad; ?></td>
-					 <td width="100" align="right"><? echo $resultado1; ?></td>
-					 <td width="100" align="right"><? echo $resultado2; ?></td>
-					 <td width="100" align="right"><? echo $resultado3; ?></td>
+					 <td width="100" align="left"><?php  echo $prev_cod_concepto; ?></td>
+					 <td width="300" align="left"><?php  echo $prev_denominacion; ?></td>
+					 <td width="100" align="right"><?php  echo $total_cantidad; ?></td>
+					 <td width="100" align="right"><?php  echo $resultado1; ?></td>
+					 <td width="100" align="right"><?php  echo $resultado2; ?></td>
+					 <td width="100" align="right"><?php  echo $resultado3; ?></td>
 				   </tr>
 				   </table></td>
                 </tr>
-	           <?
+	           <?php 
 				
 				
 			 }	
@@ -257,8 +257,8 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
 					 <td width="100" align="left"></td>
 					 <td width="300" align="left"></td>
 					 <td width="100" align="right">Totales :</td>
-					 <td width="100" align="right"><? echo $sub_total_monto_asignacion; ?></td>
-					 <td width="100" align="right"><? echo $sub_total_monto_deduccion; ?></td>
+					 <td width="100" align="right"><?php  echo $sub_total_monto_asignacion; ?></td>
+					 <td width="100" align="right"><?php  echo $sub_total_monto_deduccion; ?></td>
 					 <td width="100" align="right"></td>
 				   </tr>
 				   <tr>
@@ -278,7 +278,7 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
 					 <td width="300" align="center">RECIBE CONFORME</td>	
 					 <td width="100" align="left"></td>	
 					 <td width="100" align="left"></td>	
-					 <td width="100" align="right"><? echo $sub_total_monto; ?></td>	
+					 <td width="100" align="right"><?php  echo $sub_total_monto; ?></td>	
 					 <td width="100" align="right"></td>					 
 				   </tr>
 				   <tr>
@@ -286,28 +286,28 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
 				   </tr>
 				   </table></td>
                 </tr>			   
-	           <?
+	           <?php 
 				
 				
 			   }	$temp_sueldo=formato_monto($sueldo_cargo_grupo);
 			   ?>	
 			    <tr><td><table width="800" border="0" cellpadding="0" cellspacing="0">
 			      <tr>
-				    <td width="600" align="left">Apellidos y Nombres: <? echo $nombre_grupo; ?></td>
-				    <td width="200" align="left">Cedula : <? echo $cedula_grupo; ?></td>				 
+				    <td width="600" align="left">Apellidos y Nombres: <?php  echo $nombre_grupo; ?></td>
+				    <td width="200" align="left">Cedula : <?php  echo $cedula_grupo; ?></td>				 
 			      </tr> 
 				  <tr>
-				    <td width="600" align="left">Cargo: <? echo $des_cargo_grupo; ?></td>
-				    <td width="200" align="left">Fecha Ingreso : <? echo $fechai_grupo; ?></td>				 
+				    <td width="600" align="left">Cargo: <?php  echo $des_cargo_grupo; ?></td>
+				    <td width="200" align="left">Fecha Ingreso : <?php  echo $fechai_grupo; ?></td>				 
 			      </tr> 
 				   <tr>
-				    <td width="600" align="left">Adscripcion: <? echo $des_departam_grupo; ?></td>
-				    <td width="200" align="left">Categoria : <? echo $cod_categ_grupo; ?></td>				 
+				    <td width="600" align="left">Adscripcion: <?php  echo $des_departam_grupo; ?></td>
+				    <td width="200" align="left">Categoria : <?php  echo $cod_categ_grupo; ?></td>				 
 			      </tr> 
 				  </tr> 
 				   <tr>
-				    <td width="600" align="left">Fecha Desde: <? echo $fechad_grupo; ?> Hasta  <? echo $fechah_grupo; ?></td>
-				    <td width="200" align="left">Sueldo Mensual: <? echo $temp_sueldo; ?></td>				 
+				    <td width="600" align="left">Fecha Desde: <?php  echo $fechad_grupo; ?> Hasta  <?php  echo $fechah_grupo; ?></td>
+				    <td width="200" align="left">Sueldo Mensual: <?php  echo $temp_sueldo; ?></td>				 
 			      </tr> 
 				  </table></td>
                 </tr>
@@ -325,7 +325,7 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
 				   </tr>
 				   </table></td>
 				</tr>
-			   <?
+			   <?php 
 				
 				
 				
@@ -343,7 +343,7 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} $criterio3=""
           $monto_asignacion=formato_monto($monto_asignacion); $monto_deduccion=formato_monto($monto_deduccion); $cantidad=formato_monto($cantidad); $saldo=formato_monto($saldo);$monto=formato_monto($monto);
           $total_monto=formato_monto($total_monto);
 		}?>
-	  </table><?
+	  </table><?php 
 	}
 		  
 }

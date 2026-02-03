@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);$fecha_h=formato_ddmmaaaa($Fec_Fin_Ejer);$codigo_partida="01-02-03-00-403-12-02-00";$codigo_contable="";$asociacion="";$vurl;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -94,12 +94,12 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
               <td width="266" align="center"><div align="left">FECHA ORDENES : </div></td>
               <td width="136" align="center">
                 <div align="left"><span class="Estilo5">
-                  <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                  <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                   <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></div></td>
               <td width="369" align="center">
                 <div align="left"><span class="Estilo5">
-                  <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+                  <input name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                   <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  /> </span></div></td>
             </tr>
@@ -114,7 +114,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
               <td width="271" height="26">
                 <div align="left">CODIGO PARTIDA: </div></td>
               <td width="188"><span class="Estilo5">
-                <input name="txtcod_partida" type="text" id="txtcod_partida" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $codigo_partida?>" size="30" maxlength="20">
+                <input name="txtcod_partida" type="text" id="txtcod_partida" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $codigo_partida?>" size="30" maxlength="20">
               </span></td>
               <td width="57"><span class="Estilo5">
                 <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo de Tipo Orden" onClick="VentanaCentrada('../Cat_partidad.php?criterio=','SIA','','750','500','true')" value="...">
@@ -195,4 +195,4 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

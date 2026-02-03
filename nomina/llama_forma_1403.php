@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="FORMA".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_empleado=$_GET["txtcod_empleado"];  $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -10,7 +10,7 @@ function Llamar_Inc_Calculo(mop){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
 $error=1; $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $fecha_ing=""; $fecha_ing_a=""; $ultima_fecha="2015-01-01"; $frec="Q";
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $campo_str1=""; $des_cargo=""; $fecha_egreso="";
 $nombre1=""; $nombre2=""; $apellido1=""; $apellido2=""; $sexo=""; $edo_civil=""; $cod_cargo=""; $fecha_nacimiento=""; $edad=""; $lugar_nacimiento=""; $direccion=""; $cod_postal=""; $telefono=""; $tlf_movil=""; $correo="";
@@ -35,32 +35,32 @@ $salario_semanal=formato_monto($salario_semanal);
 <form name="form2" method="post" action="/sia/nomina/rpt/Datos_forma_1403.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
-	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
-	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?echo $fecha_ingreso?>" ></td>
-	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?echo $nacionalidad?>"></td>
-	 <td width="5"><input name="txtnro_asegurado" type="hidden" id="txtnro_asegurado" value="<?echo $nro_asegurado?>" ></td>
-	 <td width="5"><input name="txtcod_suc" type="hidden" id="txtcod_suc" value="<?echo $cod_suc?>"></td>
-	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?echo $fecha_nacimiento?>" ></td>
-	 <td width="5"><input name="txtcond_trab" type="hidden" id="txtcond_trab" value="<?echo $cond_trab?>"></td>
-	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?echo $sexo?>"></td>
-	 <td width="5"><input name="txtsalario_semanal" type="hidden" id="txtsalario_semanal" value="<?echo $salario_semanal?>"></td>
-	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?echo $direccion?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
+	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
+	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?php echo $fecha_ingreso?>" ></td>
+	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?php echo $nacionalidad?>"></td>
+	 <td width="5"><input name="txtnro_asegurado" type="hidden" id="txtnro_asegurado" value="<?php echo $nro_asegurado?>" ></td>
+	 <td width="5"><input name="txtcod_suc" type="hidden" id="txtcod_suc" value="<?php echo $cod_suc?>"></td>
+	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?php echo $fecha_nacimiento?>" ></td>
+	 <td width="5"><input name="txtcond_trab" type="hidden" id="txtcond_trab" value="<?php echo $cond_trab?>"></td>
+	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?php echo $sexo?>"></td>
+	 <td width="5"><input name="txtsalario_semanal" type="hidden" id="txtsalario_semanal" value="<?php echo $salario_semanal?>"></td>
+	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?php echo $direccion?>"></td>
 	 
-	 <td width="5"><input name="txtocupacion" type="hidden" id="txtocupacion" value="<?echo $des_cargo?>"></td>
-	 <td width="5"><input name="txtcod_ocupacion" type="hidden" id="txtcod_ocupacion" value="<?echo $cod_ocupacion?>"></td>	
-	 <td width="5"><input name="txtfecha_egreso" type="hidden" id="txtfecha_egreso" value="<?echo $fecha_egreso?>" ></td>
+	 <td width="5"><input name="txtocupacion" type="hidden" id="txtocupacion" value="<?php echo $des_cargo?>"></td>
+	 <td width="5"><input name="txtcod_ocupacion" type="hidden" id="txtcod_ocupacion" value="<?php echo $cod_ocupacion?>"></td>	
+	 <td width="5"><input name="txtfecha_egreso" type="hidden" id="txtfecha_egreso" value="<?php echo $fecha_egreso?>" ></td>
 	 
-     <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>
-	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $Cod_Emp?>" ></td> 
-	 <td width="5"><input name="txtnom_emp" type="hidden" id="txtnom_emp" value="<?echo $Nom_Emp?>" ></td> 
+     <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>
+	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $Cod_Emp?>" ></td> 
+	 <td width="5"><input name="txtnom_emp" type="hidden" id="txtnom_emp" value="<?php echo $Nom_Emp?>" ></td> 
 	 
 	 
 	 
@@ -69,8 +69,8 @@ $salario_semanal=formato_monto($salario_semanal);
 </form>
 </body>
 </html>
-<?pg_close();
+<?php pg_close($conn);
 /* */
-if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 
 ?>

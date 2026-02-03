@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$codigo_mov='';$bloqueada="N";}else{$codigo_mov=$_GET["codigo_mov"];$bloqueada=$_GET["bloqueada"];}
 $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql);if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_cat=$registro["campo526"];}else{$formato_presup="XX-XX-XX-XXX-XX-XX-XX";$formato_cat="XX-XX-XX";}$len_cat=strlen($formato_cat);  $len_cod=strlen($formato_presup);
 ?>
@@ -11,20 +11,20 @@ $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql);if ($
 </head>
 <script language="JavaScript" type="text/JavaScript">
 function Llama_Modificar(codigo_mov,codigo,fuente,ref_imput,ref_comp,tipo_comp){var murl;
-var mbloq = '<?echo $bloqueada?>';
+var mbloq = '<?php echo $bloqueada?>';
   if ((codigo=="")||(mbloq=="S")) {alert("Codigo no puede ser Modificado");}
   else{ murl="Mod_codigo_ord.php?codigo_mov="+codigo_mov+"&codigo="+codigo+"&fuente="+fuente+"&ref_imput="+ref_imput+"&ref_comp="+ref_comp+"&tipo_comp="+tipo_comp; document.location=murl;}
 }
-function Llama_Iva(codigo_mov){var murl; Gcodigo_mov=codigo_mov;  murl="Inc_codiva_ord.php?codigo_mov="+Gcodigo_mov+"&formato=<?echo $formato_presup?>"; document.location=murl;}
+function Llama_Iva(codigo_mov){var murl; Gcodigo_mov=codigo_mov;  murl="Inc_codiva_ord.php?codigo_mov="+Gcodigo_mov+"&formato=<?php echo $formato_presup?>"; document.location=murl;}
 </script>
 <body>
 <table width="845" border="0" cellspacing="0" cellpadding="0">
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"> <? if($bloqueada=='N'){?> <input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Codigo a la Orden" onclick="javascript:LlamarURL('Inc_codigo_ord.php?codigo_mov=<?echo $codigo_mov?>&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>&formato=<?echo $formato_presup?>')"  ><? }?> </td>
+            <td width="222" align="center" valign="middle"> <?php  if($bloqueada=='N'){?> <input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Codigo a la Orden" onclick="javascript:LlamarURL('Inc_codigo_ord.php?codigo_mov=<?php echo $codigo_mov?>&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>&formato=<?php echo $formato_presup?>')"  ><?php }?> </td>
             <td width="150" align="center">&nbsp;</td>
-            <td width="170" align="center"><? if($bloqueada=='N'){?> <input name="btIva" type="button" id="btIva" value="IVA" title="Registra Codigo del IVA" onClick="JavaScript:Llama_Iva('<?echo $codigo_mov?>')" ><? }?> </td>
+            <td width="170" align="center"><?php  if($bloqueada=='N'){?> <input name="btIva" type="button" id="btIva" value="IVA" title="Registra Codigo del IVA" onClick="JavaScript:Llama_Iva('<?php echo $codigo_mov?>')" ><?php }?> </td>
             <td width="150" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar los Codigos de la Orden"></td>
           </tr>
@@ -54,24 +54,24 @@ $sql="SELECT * FROM CODIGOS_PRE026 where codigo_mov='$codigo_mov' order by cod_p
            <td width="100" align="left" bgcolor="#99CCFF" ><strong>Referencia Cred.</strong></td>
            <td width="110" align="left" bgcolor="#99CCFF" ><strong>Credito </strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res)){ $monto=formato_monto($registro["monto"]);
   $monto_credito=formato_monto($registro["monto_credito"]);  $total=$total+$registro["monto"];
   $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["ref_imput_presu"];
   if($tipo_imput_presu=="P"){$tipo_imput_presu="PRESUPUESTO";}else{$tipo_imput_presu="CRED. ADICIONAL";}
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["cod_presup"]; ?>','<? echo $registro["fuente_financ"]; ?>','<? echo $registro["ref_imput_presu"]; ?>','<? echo $registro["referencia_comp"]; ?>','<? echo $registro["tipo_compromiso"]; ?>');">
-           <td width="190" align="left"><? echo $registro["cod_presup"]; ?></td>
-           <td width="40" align="left"><? echo $registro["fuente_financ"]; ?></td>
-           <td width="500" align="left"><? echo $registro["denominacion"]; ?></td>
-           <td width="110" align="right"><? echo $monto; ?></td>
-           <td width="120" align="left"><? echo $registro["cod_con_g_pagar"]; ?></td>
-           <td width="400" align="left"><? echo $registro["nombre_cuenta"]; ?></td>
-           <td width="120" align="left"><? echo $tipo_imput_presu; ?></td>
-           <td width="100" align="left"><? echo $ref_imput_presu; ?></td>
-           <td width="110" align="right"><? echo $monto_credito; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["cod_presup"]; ?>','<?php  echo $registro["fuente_financ"]; ?>','<?php  echo $registro["ref_imput_presu"]; ?>','<?php  echo $registro["referencia_comp"]; ?>','<?php  echo $registro["tipo_compromiso"]; ?>');">
+           <td width="190" align="left"><?php  echo $registro["cod_presup"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["fuente_financ"]; ?></td>
+           <td width="500" align="left"><?php  echo $registro["denominacion"]; ?></td>
+           <td width="110" align="right"><?php  echo $monto; ?></td>
+           <td width="120" align="left"><?php  echo $registro["cod_con_g_pagar"]; ?></td>
+           <td width="400" align="left"><?php  echo $registro["nombre_cuenta"]; ?></td>
+           <td width="120" align="left"><?php  echo $tipo_imput_presu; ?></td>
+           <td width="100" align="left"><?php  echo $ref_imput_presu; ?></td>
+           <td width="110" align="right"><?php  echo $monto_credito; ?></td>
          </tr>
-         <?} $total=formato_monto($total);?>
+         <?php } $total=formato_monto($total);?>
        </table></td>
    </tr>
    <tr>
@@ -84,7 +84,7 @@ while($registro=pg_fetch_array($res)){ $monto=formato_monto($registro["monto"]);
          <td width="150" align="center"><span class="Estilo5">TOTAL CAUSADO :</span></td>
          <td><table width="125" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td width="123" align="right" class="Estilo5"><? echo $total; ?></td>
+             <td width="123" align="right" class="Estilo5"><?php  echo $total; ?></td>
            </tr>
          </table></td>
        </tr>
@@ -94,4 +94,4 @@ while($registro=pg_fetch_array($res)){ $monto=formato_monto($registro["monto"]);
  <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close(); ?>
+<?php  pg_close($conn); ?>

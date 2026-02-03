@@ -1,6 +1,6 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$codigod=$_GET["cod_cuenta_d"];$codigoh=$_GET["cod_cuenta_h"]; $tipo_rpt=$_GET["tipo_rpt"];}else{$codigod="";$codigoh="";$tipo_rpt="PDF";} $Sql="";
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } $efiscal=substr($Fec_Fin_Ejer,0, 4);   $criterio1="EJERCICIO FISCAL: ".$efiscal;
   $sSQL = "select codigo_cuenta,nombre_cuenta,cargable,tsaldo from con001 WHERE codigo_cuenta>='".$codigod."' and codigo_cuenta<='".$codigoh."' order by codigo_cuenta";
   if($tipo_rpt=="HTML"){ include ("../../class/phpreports/PHPReportMaker.php");
@@ -71,7 +71,7 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
               <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>CATALOGO DE CUENTAS</strong></font></td>
 	     </tr>
 	     <tr height="20">
-		    <td width="100" align="left" ><strong><? echo $criterio1; ?></strong></td>
+		    <td width="100" align="left" ><strong><?php  echo $criterio1; ?></strong></td>
             <td width="400" align="center" > <strong></font></td>
 		 </tr>
          <tr height="20">
@@ -80,21 +80,21 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>CARGABLE</strong></font></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>TP SALDO</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;	$codigo_cuenta=$registro["codigo_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; $cargable=$registro["cargable"]; $tsaldo=$registro["tsaldo"];  
 		$nombre_cuenta=conv_cadenas($nombre_cuenta,0);  
 	?>	   
 	   <tr>
-           <td width="100" align="left">'<? echo $codigo_cuenta; ?></td>
-           <td width="400" align="left"><? echo $nombre_cuenta; ?></td>
-           <td width="100" align="center"><? echo $cargable; ?></td>
-           <td width="100" align="center"><? echo $tsaldo; ?></td>
+           <td width="100" align="left">'<?php  echo $codigo_cuenta; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_cuenta; ?></td>
+           <td width="100" align="center"><?php  echo $cargable; ?></td>
+           <td width="100" align="center"><?php  echo $tsaldo; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr><td>&nbsp;</td>  </tr>	       
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

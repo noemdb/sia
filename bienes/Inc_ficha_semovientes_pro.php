@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $date = date("d/m/Y");
 $num="01";
 ?>
@@ -245,7 +245,7 @@ return true;}
                 </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="98" scope="col"><div align="left"><span class="Estilo5">FECHA DE ACTUALIZACION:</span></div></td>
                 <td width="555" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_actualizacion" type="text" id="txtfecha_actualizacion" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_actualizacion" type="text" id="txtfecha_actualizacion" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -304,7 +304,7 @@ return true;}
                 </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="126" scope="col"><div align="left"><span class="Estilo5">FECHA ROTULACI&Oacute;N : </span></div></td>
                 <td width="616" scope="col"><span class="Estilo5"><span class="Estilo10">
-                    <input name="txtfecha_rotulacion" type="text" id="txtfecha_rotulacion" size="15" maxlength="10"  value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" >
+                    <input name="txtfecha_rotulacion" type="text" id="txtfecha_rotulacion" size="15" maxlength="10"  value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" >
                 </span></span></td>
               </tr>
             </table></td>
@@ -456,7 +456,7 @@ return true;}
                 </strong></strong></span></span> </span></div></td>
                 <td width="141" scope="col"><div align="left"><span class="Estilo5">FECHA DE NACIMIENTO :</span></div></td>
                 <td width="542" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -466,7 +466,7 @@ return true;}
               <tr>
                 <td width="120" scope="col"><div align="left"><span class="Estilo5">EDAD (MESES) :</span></div></td>
                 <td width="116" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                    <input name="txtedad" type="text" id="txtedad" size="4" maxlength="2"  value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtedad" type="text" id="txtedad" size="4" maxlength="2"  value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="94" scope="col"><div align="left"><span class="Estilo5">TAMA&Ntilde;O/PESO :</span></div></td>
                 <td width="639" scope="col"><div align="left"><span class="Estilo5">
@@ -518,7 +518,7 @@ return true;}
                 </strong></strong></span></span> </span></div></td>
                 <td width="100" scope="col"><div align="left"><span class="Estilo5">TASA DEPRECIACI&Oacute;N :</span></div></td>
                 <td width="604" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txttasa_deprec" type="text" id="txttasa_deprec" size="25" maxlength="15" value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txttasa_deprec" type="text" id="txttasa_deprec" size="25" maxlength="15" value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong>
                 </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
@@ -529,11 +529,11 @@ return true;}
               <tr>
                 <td width="120" scope="col"><div align="left"><span class="Estilo5">VIDA &Uacute;TIL EN A&Ntilde;OS :</span></div></td>
                 <td width="107" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                    <input name="txtvida_util" type="text" id="txtvida_util" size="10" maxlength="15" value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtvida_util" type="text" id="txtvida_util" size="10" maxlength="15" value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="71" scope="col"><div align="left"><span class="Estilo5">VALOR RESIDUAL :</span></div></td>
                 <td width="701" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtvalor_residual" type="text" id="txtvalor_residual" size="20" maxlength="15" value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtvalor_residual" type="text" id="txtvalor_residual" size="20" maxlength="15" value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -549,7 +549,7 @@ return true;}
                 </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="133" scope="col"><div align="left"><span class="Estilo5">MONTO DEPRECIADO :</span></div></td>
                 <td width="300" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtmonto_depreciado" type="text" id="txtmonto_depreciado" size="15" maxlength="15" value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtmonto_depreciado" type="text" id="txtmonto_depreciado" size="15" maxlength="15" value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -571,7 +571,7 @@ return true;}
                 </strong></strong></span></span> </span></div></td>
                 <td width="164" scope="col"><span class="Estilo5">FECHA DESINCORPORCI&Oacute;N :</span></td>
                 <td width="578" scope="col"><span class="Estilo5">
-                 <input name="txtfecha_desincorporado" type="text" id="txtfecha_desincorporado" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?echo $date?>">
+                 <input name="txtfecha_desincorporado" type="text" id="txtfecha_desincorporado" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?php echo $date?>">
                 </span></td>
               </tr>
             </table></td>
@@ -617,7 +617,7 @@ return true;}
                 </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="98" scope="col"><div align="left"><span class="Estilo5">FECHA DE VERIFICACI&Oacute;N :</span></div></td>
                 <td width="555" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_verificacion" type="text" id="txtfecha_verificacion" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_verificacion" type="text" id="txtfecha_verificacion" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -698,11 +698,11 @@ return true;}
               <tr>
                 <td width="112" scope="col"><div align="left"><span class="Estilo5">VALOR INCORPORACI&Oacute;N :</span></div></td>
                 <td width="164" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                    <input name="txtvalor_incorporacion" type="text" id="txtvalor_incorporacion" size="20" maxlength="15" value="<?echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtvalor_incorporacion" type="text" id="txtvalor_incorporacion" size="20" maxlength="15" value="<?php echo $num?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="112" scope="col"><div align="left"><span class="Estilo5">FECHA INCORPORACI&Oacute;N :</span></div></td>
                 <td width="167" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_incorporacion" type="text" id="txtfecha_incorporacion" size="20" maxlength="15" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_incorporacion" type="text" id="txtfecha_incorporacion" size="20" maxlength="15" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               
                 
@@ -718,7 +718,7 @@ return true;}
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="89" scope="col"><div align="left"><span class="Estilo5">FECHA ORDEN DE COMPRA :</span></div></td>
                 <td width="620" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_oc" type="text" id="txtfecha_oc" size="20" maxlength="15" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_oc" type="text" id="txtfecha_oc" size="20" maxlength="15" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -732,7 +732,7 @@ return true;}
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="85" scope="col"><div align="left"><span class="Estilo5">FECHA ORDEN DE PAGO :</span></div></td>
                 <td width="615" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_op" type="text" id="txtfecha_op" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_op" type="text" id="txtfecha_op" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -753,7 +753,7 @@ return true;}
                 </span></div></td>
                 <td width="89" scope="col"><div align="left"><span class="Estilo5">FECHA DOCUMENTO :</span></div></td>
                 <td width="389" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_doc_cancela" type="text" id="txtfecha_doc_cancela" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_doc_cancela" type="text" id="txtfecha_doc_cancela" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                 </span></div></td>
               </tr>
             </table></td>
@@ -767,7 +767,7 @@ return true;}
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="66" scope="col"><div align="left"><span class="Estilo5">FECHA DE FACTURA :</span></div></td>
                 <td width="676" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_factura" type="text" id="txtfecha_factura" size="15" maxlength="10" value="<?echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
+                    <input name="txtfecha_factura" type="text" id="txtfecha_factura" size="15" maxlength="10" value="<?php echo $date?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>

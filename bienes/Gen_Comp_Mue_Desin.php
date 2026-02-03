@@ -1,9 +1,9 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);  $equipo=getenv("COMPUTERNAME");  $mcod_m="BIEN045".$usuario_sia.$equipo; 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);  $equipo=getenv("COMPUTERNAME");  $mcod_m="BIEN045".$usuario_sia.$equipo; 
 if (!$_GET){$codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];} $cod_contable="";
 
 $url="Det_inc_comp_desin.php?codigo_mov=".$codigo_mov; echo "GENERANDO COMPROBANTE....","<br>"; $error=0; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{
   $resultado=pg_exec($conn,"SELECT ELIMINA_CON010('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); 
  
@@ -16,28 +16,28 @@ if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURR
 	$sSQL="Select * from BIEN015 WHERE cod_bien_mue='$cod_bien'";  $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado); 
 	if ($filas>0){ $reg=pg_fetch_array($resultado); $codigo_cuenta=$reg["cod_contablea"]; $error=0;	
 	  $sSQL="Select * from con001 WHERE codigo_cuenta='$codigo_cuenta'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <? echo $codigo_cuenta; ?> NO EXISTE');</script><? }
-       else{ $registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <? echo $codigo_cuenta; ?> NO ES CARGABLE');</script><?}}
+      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <?php  echo $codigo_cuenta; ?> NO EXISTE');</script><?php }
+       else{ $registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <?php  echo $codigo_cuenta; ?> NO ES CARGABLE');</script><?php } }
 	   
-	} else { $error=1; ?> <script language="JavaScript"> muestra('CODIGO DE BIEN <? echo $cod_bien; ?> NO EXISTE');</script><?}
+	} else { $error=1; ?> <script language="JavaScript"> muestra('CODIGO DE BIEN <?php  echo $cod_bien; ?> NO EXISTE');</script><?php }
     if($error==0){	
 	  $sSQL="Select * from CON010 WHERE codigo_mov='$codigo_mov' and cod_cuenta='$codigo_cuenta' and debito_credito='C'";
 	  $resultado=pg_exec($conn,$sSQL); $filas=pg_numrows($resultado);
 	  if ($filas>0){ $reg=pg_fetch_array($resultado);    $monto_c=$monto_asiento+$reg["monto_asiento"];   $monto_c=formato_numero($monto_c);
 		 if ($monto_c>0){$resultado=pg_exec($conn,"SELECT MODIFICA_CUENTA_CON010('$codigo_mov','C','$codigo_cuenta',$monto_c,'DESINCORPORACION DE BIEN')");
-		 $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? } } }
+		 $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } } }
 	   else{  $resultado=pg_exec($conn,"SELECT INCLUYE_CON010('$codigo_mov','00000000','C','$codigo_cuenta','00000','',$monto_asiento,'D','C','N','01','0','DESINCORPORACION DE BIEN')");
-		$error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }}
+		$error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } }
 	}     
   }
   if($t_mov<>0){   $error=0;	
 	$sSQL="Select * from con001 WHERE codigo_cuenta='$cod_contable'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-    if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <? echo $cod_contable; ?> NO EXISTE');</script><? }
-     else{ $registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <? echo $cod_contable; ?> NO ES CARGABLE');</script><?}}
+    if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <?php  echo $cod_contable; ?> NO EXISTE');</script><?php }
+     else{ $registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CUENTA <?php  echo $cod_contable; ?> NO ES CARGABLE');</script><?php } }
 	if($error==0){	 $resultado=pg_exec($conn,"SELECT INCLUYE_CON010('$codigo_mov','00000000','D','$cod_contable','00000','',$t_mov,'D','C','N','01','0','DESINCORPORACION DE BIEN')");
-		$error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+		$error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     }
   }
    
 }
-pg_close();  error_reporting(E_ALL ^ E_WARNING); ?> <script language="JavaScript">document.location ='<? echo $url; ?>';</script>
+pg_close($conn);  error_reporting(E_ALL ^ E_WARNING); ?> <script language="JavaScript">document.location ='<?php  echo $url; ?>';</script>

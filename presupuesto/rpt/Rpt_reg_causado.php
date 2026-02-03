@@ -1,9 +1,9 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
 if (!$_GET){  $referencia_caus='';$tipo_causado='';$tipo_pago=''; $referencia_pago=''; $referencia_comp='';$tipo_compromiso=''; $cod_banco='';}
  else {  $referencia_caus=$_GET["txtreferencia_caus"];  $tipo_causado=$_GET["txttipo_causado"];  $referencia_comp = $_GET["txtreferencia_comp"];  $tipo_compromiso = $_GET["txttipo_compromiso"]; $cod_banco='';}
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else { $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";}}
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else { $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";}}
 $l_cat=0;  $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_cat=$registro["campo526"];$l_cat=strlen($formato_cat);} 
 $sql="Select * from CAUSADOS where tipo_causado='$tipo_causado' and referencia_caus='$referencia_caus' and  tipo_compromiso='$tipo_compromiso' and referencia_comp='$referencia_comp'" ;
   
@@ -118,5 +118,5 @@ class PDF extends FPDF{
 	$total_comp=$total_comp+$registro["monto"];
   }	
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 ?> 

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PRE006".$equipo;$codigo_mov=substr($mcod_m,0,49); $cod_cat="";$formato="XX-XX-XX-XXX-XX-XX-XX";}else{$codigo_mov=$_GET["codigo_mov"]; $cod_cat=$_GET["cod_cat"]; $formato=$_GET["formato"]; }  $mpatron="Array(2,2,2,2,2,3,2,2,2,2)";  $mpatron=arma_patron($formato);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -30,7 +30,7 @@ function daformatomonto (monto){var i;var str2 ="";
       if ((monto.charAt(i) == '.')){str2 = str2 + ",";} else{if ((monto.charAt(i) >= '0') && (monto.charAt(i) <= '9') ) {str2 = str2 + monto.charAt(i);} } }
    return str2;
 }
-function llamar_anterior(){ document.location ='Det_inc_compromisos.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_compromisos.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_monto(mform){
    if(mform.txttipo_imput_presu.value=="CRED. ADICIONAL"){mform.txtmonto_credito.value=mform.txtmonto.value;}
     else{mform.txtmonto_credito.value="0";}
@@ -57,7 +57,7 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $gtasa_iva=12;
 $sql="Select * from SIA005 where campo501='09'"; $resultado=pg_query($sql); $campo573="NNNNN"; $part_iva="403-18-01-00"; $campo509="";
 if ($registro=pg_fetch_array($resultado,0)){  $campo573=$registro["campo573"]; $campo509=$registro["campo509"]; }
@@ -73,7 +73,7 @@ $denominacion="";$monto=0;$montoc=0;$montod=0;
 $sql="SELECT * FROM PRE001 where cod_presup='$part_iva' and cod_fuente='$cod_fuente'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$denominacion=$registro["denominacion"];  $montod=$registro["disponible"]; $monto=$total*($gtasa_iva/100);}
 $monto=formato_monto($monto);$montoc=formato_monto($montoc);$montod=formato_monto($montod); $gtasa_iva=formato_monto($gtasa_iva);
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <form name="form1" method="post" action="Insert_cod_comp.php" onSubmit="return revisar()">
@@ -87,13 +87,13 @@ pg_close();
           <td><table width="679" border="0">
               <tr>
                 <td width="168"><span class="Estilo5">C&Oacute;DIGO PRESUPUESTARIO :</span></td>
-                <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el Codigo del IVA"  size="34" maxlength="34" onFocus="encender(this); " onBlur="apagar(this);" value="<? echo $part_iva ?>" onkeypress="return stabular(event,this)" onkeyup="mascara(this,'-',patroncodigo,true)"> </span></td>
-                <td width="55"><input class="Estilo10" name="btCodPre" type="button" id="btCodPre" title="Abrir Catalogo Codigos Presupuestarios"  onclick="VentanaCentrada('Cat_codigos_presup.php?criterio=<?echo $cod_cat?>','SIA','','750','500','true')" value="..." onkeypress="return stabular(event,this)"></td>
+                <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el Codigo del IVA"  size="34" maxlength="34" onFocus="encender(this); " onBlur="apagar(this);" value="<?php  echo $part_iva ?>" onkeypress="return stabular(event,this)" onkeyup="mascara(this,'-',patroncodigo,true)"> </span></td>
+                <td width="55"><input class="Estilo10" name="btCodPre" type="button" id="btCodPre" title="Abrir Catalogo Codigos Presupuestarios"  onclick="VentanaCentrada('Cat_codigos_presup.php?criterio=<?php echo $cod_cat?>','SIA','','750','500','true')" value="..." onkeypress="return stabular(event,this)"></td>
                 <td width="5"><input class="Estilo10" name="txtcod_contable" type="hidden" id="txtcod_contable"></td>
                 <td width="5"><input class="Estilo10" name="txtdes_contable" type="hidden" id="txtdes_contable"></td>
                 <td width="50"><span class="Estilo5">TASA: </span></td>
                 <td width="100"><span class="Estilo5"><div id="imp"> <select  class="Estilo10" name="txtimpuesto" size="1" id="txtimpuesto" onFocus="encender(this)" onBlur="apaga_tasa(this)" onkeypress="return stabular(event,this)"><option>0</option> <option>8</option> <option>12</option></select> </div> </span></td>
-<script language="JavaScript" type="text/JavaScript">ajaxSenddoc('GET', 'cargaimp.php?tasa=<?echo $gtasa_iva?>', 'imp', 'innerHTML'); </script>
+<script language="JavaScript" type="text/JavaScript">ajaxSenddoc('GET', 'cargaimp.php?tasa=<?php echo $gtasa_iva?>', 'imp', 'innerHTML'); </script>
               </tr>
           </table></td>
         </tr>
@@ -101,9 +101,9 @@ pg_close();
           <td><table width="677" border="0">
             <tr>
               <td width="222"><span class="Estilo5">FUENTE DE FINANCIAMIENTO : </span></td>
-              <td width="18"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" size="3"  value="<?echo $cod_fuente?>" maxlength="2" onFocus="encender(this); " onBlur="apagar(this)" onkeypress="return stabular(event,this)">  </span></td>
+              <td width="18"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" size="3"  value="<?php echo $cod_fuente?>" maxlength="2" onFocus="encender(this); " onBlur="apagar(this)" onkeypress="return stabular(event,this)">  </span></td>
               <td width="28"><input class="Estilo10" name="btfuente" type="button" id="btfuente" title="Abrir Catalogo Fuentes de Financiamiento" onclick="VentanaCentrada('Cat_fuentes.php?criterio=','SIA','','750','500','true')" value="..." onkeypress="return stabular(event,this)"></td>
-              <td width="391"><span class="Estilo5"> <input class="Estilo10" name="txtdes_fuente" type="text" id="txtdes_fuente" size="55"  value="<? echo $des_fuente ?>" readonly onkeypress="return stabular(event,this)"></span></td>
+              <td width="391"><span class="Estilo5"> <input class="Estilo10" name="txtdes_fuente" type="text" id="txtdes_fuente" size="55"  value="<?php  echo $des_fuente ?>" readonly onkeypress="return stabular(event,this)"></span></td>
             </tr>
           </table></td>
         </tr>
@@ -112,7 +112,7 @@ pg_close();
             <table width="674" border="0">
               <tr>
                 <td width="110"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                <td width="494"><span class="Estilo5"><textarea name="txtdenominacion" class="Estilo10" cols="65" rows="2" readonly="readonly" id="txtdenominacion" onkeypress="return stabular(event,this)"><? echo $denominacion ?></textarea>
+                <td width="494"><span class="Estilo5"><textarea name="txtdenominacion" class="Estilo10" cols="65" rows="2" readonly="readonly" id="txtdenominacion" onkeypress="return stabular(event,this)"><?php  echo $denominacion ?></textarea>
                 </span></td>
               </tr>
             </table>            </td>
@@ -136,9 +136,9 @@ pg_close();
               <table width="671" border="0">
                 <tr>
                   <td width="121"><span class="Estilo5">DISPONIBLE:</span></td>
-                  <td width="262"><span class="Estilo5"> <input class="Estilo10" name="txtdisponible" type="text" id="txtdisponible" size="25" style="text-align:right"  value="<? echo $montod ?>" readonly onkeypress="return stabular(event,this)"></span></td>
+                  <td width="262"><span class="Estilo5"> <input class="Estilo10" name="txtdisponible" type="text" id="txtdisponible" size="25" style="text-align:right"  value="<?php  echo $montod ?>" readonly onkeypress="return stabular(event,this)"></span></td>
                   <td width="69"><span class="Estilo5">MONTO :</span></td>
-                  <td width="201"><span class="Estilo5">  <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right"  maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<? echo $monto ?>" onKeypress="return validarNum(event,this)">  </span></td>
+                  <td width="201"><span class="Estilo5">  <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right"  maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?php  echo $monto ?>" onKeypress="return validarNum(event,this)">  </span></td>
                 </tr>
             </table></td>
         </tr>
@@ -165,8 +165,8 @@ pg_close();
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>
             <td width="110" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
             <td width="100">&nbsp;</td>
-			<td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="0"><input name="txttotal" type="hidden" id="txttotal" value="<?echo $total?>"></td>
+			<td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="0"><input name="txttotal" type="hidden" id="txttotal" value="<?php echo $total?>"></td>
           </tr>
         </table>      </td>
     </tr>

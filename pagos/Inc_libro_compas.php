@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
  $codigo_mov=$_POST["txtcodigo_mov"];  $fecha_hoy=asigna_fecha_hoy(); 
  $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"]; $ano_eje=$_POST["txtano_eje"];    
  $fecha_h = colocar_udiames($fecha_hoy); $mes_libro=substr($fecha_h,3,2); ?>
@@ -7,7 +7,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Libro de Compras)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Libro de Compras)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="Javascript" src="../class/sia.js" type="text/javascript"></script>
@@ -39,7 +39,7 @@ function revisar(){var f=document.form1; var Valido=true;
   document.form1.submit;
 return true;}
 </script>
-<? 
+<?php  
 
 
 ?>
@@ -85,7 +85,7 @@ return true;}
                         </select>
                       </span></td>
 <script language="Javascript" type="text/Javascript">
-var mvalor='<?echo $mes_libro ?>';
+var mvalor='<?php echo $mes_libro ?>';
     if(mvalor=="01"){document.form1.txtnomb_mes.options[0].selected = true;}
     if(mvalor=="02"){document.form1.txtnomb_mes.options[1].selected = true;}
     if(mvalor=="03"){document.form1.txtnomb_mes.options[2].selected = true;}
@@ -99,7 +99,7 @@ var mvalor='<?echo $mes_libro ?>';
 	if(mvalor=="11"){document.form1.txtnomb_mes.options[10].selected = true;}
 	if(mvalor=="12"){document.form1.txtnomb_mes.options[11].selected = true;}
 </script>
-                      <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" value='<?echo $mes_libro ?>' readonly ></span></td>
+                      <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" value='<?php echo $mes_libro ?>' readonly ></span></td>
                       <td width="250"><span class="Estilo5">SOLO FACTURAS DEL MES EN PROCESO :</span></td>
                       <td width="100"><span class="Estilo5"> <select  class="Estilo10" name="txtstatus_1" size="1" id="txtstatus_1" onFocus="encender(this)" onBlur="apagar(this)">
                             <option>NO</option> <option>SI</option>    </select>  </span></td>
@@ -110,13 +110,13 @@ var mvalor='<?echo $mes_libro ?>';
                 </tr>
           </table>
               <div id="T11" class="tab-body">
-              <iframe src="Det_inc_libro_comp.php?codigo_mov=<?echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_inc_libro_comp.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
               </div>
          <table width="863" border="0"> <tr> <td height="5">&nbsp;</td> </tr> </table>
          <table width="812">
           <tr>
             <td width="654">&nbsp;</td>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
             <td width="88"><input name="Blanquear" type="reset" value="Blanquear"></td>
           </tr>

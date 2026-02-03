@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
+<?php include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $fecha_hasta=$_POST["txtfecha_hasta"]; $fecha_desde=$_POST["txtfecha_desde"]; $fechad=formato_aaaammdd($fecha_desde); $fechah=formato_aaaammdd($fecha_hasta);
 $conc_prest=$_POST["txtcod_concepto"]; $tipo_nomina_d=$_POST["txttipo_nomina_d"]; $tipo_nomina_h=$_POST["txttipo_nomina_h"];
 $fechah1=$_POST["txtfecha_hasta"]; $fechah1=colocar_pdiames($fechah1);  $fechah1=nextano($fechah1,-1); $fechah2=nextano($fechah1,1);
@@ -31,11 +31,11 @@ while($reg=pg_fetch_array($res)){
 	  $tabla.="<tr><td>".$cod_empleado."</td><td>".$nombre."</td><td align=center>".$fechai."</td><td align=center>".$f."</td><td align=center>".$d."</td><td align=right>".$fmonto_p."</td><td align=right>".$fmonto_presta."</td></tr>";
       //echo $cod_empleado." ".$nombre." ".$fechai." ".$f." ".$d." ".$monto_p." ".$monto_presta,"<br>";
 	  $sSQL="Update nom011 set cantidad=$d,monto=$monto_p where cod_empleado='$cod_empleado' and cod_concepto='$conc_prest'"; 
-	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?  $error=1;}      
+	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php   $error=1;}      
     }else{ $tabla.="<tr><td>".$cod_empleado."</td><td>".$nombre."</td><td align=center>".$fechai."</td><td align=center>".$f."</td><td align=center>".$d."</td><td align=right>"."NO LOCALIZO"."</td><td align=right>"."HISTORICO"."</td></tr>"; }
   }
 }
 $tabla.="</table>";
-pg_close();
+pg_close($conn);
 echo $tabla;
 ?>

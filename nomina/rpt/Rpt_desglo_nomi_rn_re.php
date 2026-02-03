@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $tipo_nomina_d="";
    $tipo_nomina_h="zzzz";
    ?>
@@ -36,7 +36,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 -->
 </style>
 </head>
-<?
+<?php 
 $descripcion_d=""; $descripcion_h="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 "; $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$tipo_nomina_d=$registro["min_tipo_nomina"];$tipo_nomina_h=$registro["max_tipo_nomina"];   }
@@ -74,13 +74,13 @@ $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina
                  <td width="134" align="center" class="Estilo5"><div align="left">TIPO N&Oacute;MINA DESDE :</div></td>
                  <td width="49" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_d?>">
+                     <input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_d?>">
                  </span></div></td>
                  <td width="47" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Tipos de nóminas" onClick="VentanaCentrada('../Cat_tipo_nominad.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="612" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="50" maxlength="100" readonly value="<?echo $descripcion_d?>">
+                     <input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="50" maxlength="100" readonly value="<?php echo $descripcion_d?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -92,13 +92,13 @@ $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina
                  <td width="135" align="center" class="Estilo5"><div align="left">TIPO N&Oacute;MINA HASTA :</div></td>
                  <td width="49" align="center">
                    <div align="left"><span class="Estilo5">
-                     <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_h?>">
+                     <input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_h?>">
                  </span></div></td>
                  <td width="46" align="center"><div align="left"><span class="Estilo5">
                      <input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Tipos de nóminas" onClick="VentanaCentrada('../Cat_tipo_nominah.php?criterio=','SIA','','650','500','true')" value="...">
                  </span></div></td>
                  <td width="613" align="center"><div align="left"><span class="Estilo5">
-                     <input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="50" maxlength="100" readonly value="<?echo $descripcion_h?>">
+                     <input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="50" maxlength="100" readonly value="<?php echo $descripcion_h?>">
                  </span></div></td>
                </tr>
              </table></td>
@@ -150,4 +150,4 @@ $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

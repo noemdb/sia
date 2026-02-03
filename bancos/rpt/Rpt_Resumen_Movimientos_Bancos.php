@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $cod_banco_d="";$cod_banco_h="";$tipo_mov_d="";$tipo_mov_h="";$periodod='01';$periodoh='01';$vurl;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -50,7 +50,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url)}
 -->
 </style>
 </head>
-<?
+<?php 
 $sql="SELECT MAX(Cod_Banco) As Max_Cod_Banco, MIN(Cod_Banco) As Min_Cod_Banco FROM BAN002";
 $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$encontro=true;}else{$encontro=false;}
@@ -85,7 +85,7 @@ if($encontro=true){$tipo_mov_d=$registro["min_tipo_movimiento"];$tipo_mov_h=$reg
               <td width="259" height="26">
                 <div align="left">CODIGO DE BANCO DESDE : </div></td>
               <td width="41"><span class="Estilo5">
-                <input name="txtcod_banco_d" type="text" id="txtcod_banco_d" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_banco_d?>" size="5" maxlength="32">
+                <input name="txtcod_banco_d" type="text" id="txtcod_banco_d" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_banco_d?>" size="5" maxlength="32">
               </span></td>
               <td width="41"><span class="Estilo5">
                 <input name="Catalogo3" type="button" id="Catalogo32" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_Bancosd.php?criterio=','SIA','','750','500','true')" value="...">
@@ -105,7 +105,7 @@ if($encontro=true){$tipo_mov_d=$registro["min_tipo_movimiento"];$tipo_mov_h=$reg
               <td width="260" height="26">
                 <div align="left">CODIGO DE BANCO HASTA : </div></td>
               <td width="41"><span class="Estilo5">
-                <input name="txtcod_banco_h" type="text" id="txtcod_banco_h2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_banco_h?>" size="5" maxlength="32">
+                <input name="txtcod_banco_h" type="text" id="txtcod_banco_h2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_banco_h?>" size="5" maxlength="32">
               </span></td>
               <td width="40"><span class="Estilo5">
                 <input name="Catalogo32" type="button" id="Catalogo323" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_Bancosh.php?criterio=','SIA','','750','500','true')" value="...">
@@ -125,7 +125,7 @@ if($encontro=true){$tipo_mov_d=$registro["min_tipo_movimiento"];$tipo_mov_h=$reg
               <td width="260" height="26">
                 <div align="left">TIPO DE MOVIMIENTO DESDE : </div></td>
               <td width="40"><span class="Estilo5">
-                <input name="txttipo_mov_d" type="text" id="txttipo_mov_d4" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_mov_d?>" size="5" maxlength="32">
+                <input name="txttipo_mov_d" type="text" id="txttipo_mov_d4" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_mov_d?>" size="5" maxlength="32">
               </span></td>
               <td width="40"><span class="Estilo5">
                 <input name="Catalogo33" type="button" id="Catalogo332" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_Tipo_Movd.php?criterio=','SIA','','750','500','true')" value="...">
@@ -145,7 +145,7 @@ if($encontro=true){$tipo_mov_d=$registro["min_tipo_movimiento"];$tipo_mov_h=$reg
               <td width="262" height="26">
                 <div align="left">TIPO DE MOVIMIENTO HASTA : </div></td>
               <td width="38"><span class="Estilo5">
-                <input name="txttipo_mov_h" type="text" id="txttipo_mov_h2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_mov_h?>" size="5" maxlength="32">
+                <input name="txttipo_mov_h" type="text" id="txttipo_mov_h2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_mov_h?>" size="5" maxlength="32">
               </span></td>
               <td width="39"><span class="Estilo5">
                 <input name="Catalogo332" type="button" id="Catalogo3323" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_Tipo_Movh.php?criterio=','SIA','','750','500','true')" value="...">
@@ -249,4 +249,4 @@ if($encontro=true){$tipo_mov_d=$registro["min_tipo_movimiento"];$tipo_mov_h=$reg
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

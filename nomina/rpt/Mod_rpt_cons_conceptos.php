@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  $codigo=$_GET["codigo"];
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  $codigo=$_GET["codigo"];
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,13 +42,13 @@ return true;}
 </style>
 </head>
 
-<? $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php  $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $cod_reporte=""; $des_repote=""; $den_arch_rpt="";
 $StrSQL="select * from nom047 where cod_reporte='$codigo'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); 
 $cod_reporte=$registro["cod_reporte"]; $des_repote=$registro["des_repote"]; $den_arch_rpt=$registro["den_arch_rpt"]; }
-pg_close(); 
+pg_close($conn); 
 ?>
 <body>
 <form name="form1" method="post" action="Upadate_rpt_cons_concepto.php" onSubmit="return revisar()">
@@ -63,7 +63,7 @@ pg_close();
           <td><table width="730">
             <tr>
               <td width="130" ><span class="Estilo5">C&Oacute;DIGO : </span></td>
-              <td width="600" ><span class="Estilo5"> <input name="txtcod_reporte" type="text" id="txtcod_reporte" size="10" maxlength="8"  readonly value="<?echo $cod_reporte?>"   > </span></td>
+              <td width="600" ><span class="Estilo5"> <input name="txtcod_reporte" type="text" id="txtcod_reporte" size="10" maxlength="8"  readonly value="<?php echo $cod_reporte?>"   > </span></td>
              </tr>
           </table></td>
         </tr>
@@ -71,7 +71,7 @@ pg_close();
           <td><table width="730" border="0">
               <tr>
                 <td width="130" ><span class="Estilo5">DENOMINACI&Oacute;N : </span></td>
-                <td width="600"><span class="Estilo5"><input name="txtdes_repote" type="text" id="txtdes_repote"  onFocus="encender(this)" onBlur="apagar(this)" size="75" maxlength="150"  value="<?echo $des_repote?>" ></span></td>
+                <td width="600"><span class="Estilo5"><input name="txtdes_repote" type="text" id="txtdes_repote"  onFocus="encender(this)" onBlur="apagar(this)" size="75" maxlength="150"  value="<?php echo $des_repote?>" ></span></td>
               </tr>
           </table></td>
         </tr>
@@ -81,7 +81,7 @@ pg_close();
             <table width="730" border="0">
               <tr>
                 <td width="130"><span class="Estilo5">NOMBRE ARCHIVO :  </span></td>
-				<td width="600"><span class="Estilo5"><input name="txtden_arch_rpt" type="text" id="txtden_arch_rpt"  onFocus="encender(this)" onBlur="apagar(this)" size="75" maxlength="150"  value="<?echo $den_arch_rpt?>" ></span></td>
+				<td width="600"><span class="Estilo5"><input name="txtden_arch_rpt" type="text" id="txtden_arch_rpt"  onFocus="encender(this)" onBlur="apagar(this)" size="75" maxlength="150"  value="<?php echo $den_arch_rpt?>" ></span></td>
               </tr>
             </table></td>
         </tr>
@@ -94,7 +94,7 @@ pg_close();
             <td width="200">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-			<td width="100" align="center"><input name="Eliminar" type="button" id="Eliminar" value="Eliminar" onClick="JavaScript:llamar_eliminar('<?echo $cod_reporte?>')"></td>
+			<td width="100" align="center"><input name="Eliminar" type="button" id="Eliminar" value="Eliminar" onClick="JavaScript:llamar_eliminar('<?php echo $cod_reporte?>')"></td>
             
             <td width="200">&nbsp;</td>
           </tr>

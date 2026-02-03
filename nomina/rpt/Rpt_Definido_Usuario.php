@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");?>
-<?include ("../../class/funciones.php");?>
+<?php include ("../../class/seguridad.inc");?>
+<?php include ("../../class/funciones.php");?>
 <html>
 <head>
-<title>SIA CONTROL NÓMINA Y PERSONAL (Reporte Definido por el Usuario)</title>
+<title>SIPAP CONTROL Nï¿½MINA Y PERSONAL (Reporte Definido por el Usuario)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -14,7 +14,7 @@ var murl;
 var Gcodigo_cuenta=document.form1.txtCodigo_Cuenta.value;
     murl=url+Gcodigo_cuenta;
     if (Gcodigo_cuenta=="")
-        {alert("Código de Cuenta debe ser Seleccionada");}
+        {alert("Cï¿½digo de Cuenta debe ser Seleccionada");}
         else {document.location = murl;}
 }
 function Mover_Registro(MPos)

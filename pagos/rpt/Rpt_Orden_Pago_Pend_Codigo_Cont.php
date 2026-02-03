@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"];$cod_cuenta_d=$_GET["cod_cuenta_d"];$cod_cuenta_h=$_GET["cod_cuenta_h"];$criterio1="Desde ".$fecha_d." Al ".$fecha_h;$Sql="";
       //cambiar formato a la fecha
@@ -13,7 +13,7 @@ $date = date("d-m-Y");$hora = date("H:i:s a");
          // print_r($status_orden);
    //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{
     // LLAMAR A PHP_REPORT
    $sSQL = "SELECT PAG001.Nro_Orden, PAG001.Tipo_Causado, PAG001.Tipo_Orden, PAG008.Des_Tipo_Orden, PAG001.Fecha, PAG001.Ced_Rif, PRE099.Nombre, PAG001.Concepto,

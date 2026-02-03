@@ -1,4 +1,4 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$codigo_departamento="";} else{$codigo_departamento=$_GET["codigo"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -29,12 +29,12 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM005 where codigo_departamento='$codigo_departamento'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $descripcion_dep="";If($registro=pg_fetch_array($res,0)){$codigo_departamento=$registro["codigo_departamento"]; $descripcion_dep=$registro["descripcion_dep"]; }
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="52" border="0" bgcolor="#000066">
@@ -65,14 +65,14 @@ pg_close();
             <td><table width="866">
                 <tr>
                   <td width="105" ><span class="Estilo5">DEPARTAMENTO : </span></td>
-                  <td width="145" ><span class="Estilo5"> <input name="txtcodigo_departamento" type="text" id="txtcodigo_departamento" size="15" maxlength="15" readonly value="<?echo $codigo_departamento?>" > </span></td>
-                  <td width="615" ><span class="Estilo5"><input name="txtdescripcion_dep" type="text" id="txtdescripcion_dep" size="80" maxlength="100" readonly value="<?echo $descripcion_dep?>" ></span></td>
+                  <td width="145" ><span class="Estilo5"> <input name="txtcodigo_departamento" type="text" id="txtcodigo_departamento" size="15" maxlength="15" readonly value="<?php echo $codigo_departamento?>" > </span></td>
+                  <td width="615" ><span class="Estilo5"><input name="txtdescripcion_dep" type="text" id="txtdescripcion_dep" size="80" maxlength="100" readonly value="<?php echo $descripcion_dep?>" ></span></td>
                </tr>
             </table></td>
           </tr>
           <tr> <td>&nbsp;</td></tr>
         </table>
-        <iframe src="Det_cargo_dep.php?Gcodigo=<?echo $codigo_departamento?>" width="850" height="350" scrolling="auto" frameborder="1">
+        <iframe src="Det_cargo_dep.php?Gcodigo=<?php echo $codigo_departamento?>" width="850" height="350" scrolling="auto" frameborder="1">
         </iframe>
 
       </form>

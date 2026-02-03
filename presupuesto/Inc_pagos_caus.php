@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $equipo = getenv("COMPUTERNAME"); $mcod_m="PRE008".$equipo;
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $equipo = getenv("COMPUTERNAME"); $mcod_m="PRE008".$equipo;
  $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy(); $tipo_imput_presu="P"; $user=$_POST["txtuser2"]; $password=$_POST["txtpassword2"]; $dbname=$_POST["txtdbname2"]; $codigo_mov=$_POST["txtcodigo_mov2"];   $genera_comprobante="NO";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Pagos Presupuestario)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Pagos Presupuestario)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -74,7 +74,7 @@ var Valido=true;
      else{f.txtreferencia_pago.value=f.txtreferencia_pago.value;}
     if(f.txttipo_pago.value==""){alert("Tipo de pago no puede estar Vacio"); return false; }
       else{f.txttipo_pago.value=f.txttipo_pago.value.toUpperCase();}
-    if(f.txtdescripcion.value==""){alert("Descripción del pago no puede estar Vacia"); return false; }
+    if(f.txtdescripcion.value==""){alert("Descripciï¿½n del pago no puede estar Vacia"); return false; }
       else{f.txtdescripcion.value=f.txtdescripcion.value.toUpperCase();}
     if(f.txtreferencia_pago.value.length==8){f.txtreferencia_pago.value=f.txtreferencia_pago.value.toUpperCase();f.txtreferencia_pago.value=f.txtreferencia_pago.value;}
       else{alert("Longitud de Referencia Invalida");return false;}
@@ -132,7 +132,7 @@ return true;}
                           <td width="99"><span class="Estilo5">REFERENCIA :</span> </td>
                           <td width="185"><div id="refpago"><input name="txtreferencia_pago" type="text"  id="txtreferencia_pago" size="12" onFocus="encender(this); " onBlur="apagar(this);"  onchange="checkreferencia(this.form);"></div></td>
                           <td width="69"><span class="Estilo5">FECHA :</span> </td>
-                          <td width="116"><span class="Estilo5"> <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $fecha_hoy?>" onchange="checkrefecha(this.form)">
+                          <td width="116"><span class="Estilo5"> <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $fecha_hoy?>" onchange="checkrefecha(this.form)">
                           </span></td>
                         </tr>
                       </table></td>
@@ -221,7 +221,7 @@ return true;}
                             <input name="txtfunc_inv" type="text" id="txtfunc_inv" size="15" readonly>
                           </span> </span></td>
                           <td width="249" align="center"><div align="right"><span class="Estilo5">
-                            <input name="btcarga_caus" type="button" id="btcarga_caus" title="Cargar C&oacute;digos del Causado a Pagar" onClick="javascript:Cargar_Cod_Caus(this.form)" value="Cargar Códigos del Causado">
+                            <input name="btcarga_caus" type="button" id="btcarga_caus" title="Cargar C&oacute;digos del Causado a Pagar" onClick="javascript:Cargar_Cod_Caus(this.form)" value="Cargar Cï¿½digos del Causado">
                           </span></div></td>
                           <td width="25"><span class="Estilo5"> </span></td>
                         </tr>
@@ -231,7 +231,7 @@ return true;}
               </tr>
           </table>
         <div id="codcaus">
-        <iframe src="Det_inc_pagos_caus.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
+        <iframe src="Det_inc_pagos_caus.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
         </iframe>
         </div>
         <table width="870" border="0">
@@ -240,14 +240,14 @@ return true;}
          </tr>
         </table>
         <div id="gencomp">
-          <? if($genera_comprobante=='S'){?>
-             <iframe src="Det_inc_comp_caus.php?codigo_mov=<?echo $codigo_mov?>"  width="850" height="250" scrolling="auto" frameborder="1">
+          <?php  if($genera_comprobante=='S'){?>
+             <iframe src="Det_inc_comp_caus.php?codigo_mov=<?php echo $codigo_mov?>"  width="850" height="250" scrolling="auto" frameborder="1">
             </iframe>
-          <? }else{?>&nbsp;<? }?>
+          <?php }else{?>&nbsp;<?php }?>
         </div>
         <table width="768">
           <tr>
-            <td width="331"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="331"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="131">&nbsp;</td>
             <td width="131">&nbsp;</td>
             <td width="200">&nbsp;</td>

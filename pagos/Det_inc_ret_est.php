@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$codigo_mov='';}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -21,7 +21,7 @@ var murl;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Retencion a la Estructura" onclick="javascript:LlamarURL('Inc_ret_est.php?codigo_mov=<?echo $codigo_mov?>&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>')"></td>
+            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Retencion a la Estructura" onclick="javascript:LlamarURL('Inc_ret_est.php?codigo_mov=<?php echo $codigo_mov?>&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>')"></td>
             <td width="255" align="center">&nbsp;</td>
             <td width="215" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar los Retenciones de la Estructura"></td>
@@ -47,7 +47,7 @@ $sql="SELECT * FROM COD_RET where codigo_mov='$codigo_mov' order by tipo_retenci
            <td width="100" align="left" bgcolor="#99CCFF"><strong>Ced/Rif</strong></td>
            <td width="400" align="left" bgcolor="#99CCFF"><strong>Concepto</strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res))
 { $monto=$registro["monto_retencion"]; $monto=formato_monto($monto);$total=$total+$registro["monto_retencion"];
 $concepto_ret=$registro["des_orden_ret"]; $concepto_ret=substr($concepto_ret,0,150);
@@ -55,17 +55,17 @@ $tasa=$registro["tasa_retencion"];$tasa=formato_monto($tasa);
 $monto_objeto=$registro["monto_objeto_ret"];$monto_objeto=formato_monto($monto_objeto);
 $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["fuente_fin_ret"]." ".$registro["cod_presup_ret"];
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["tipo_retencion"]; ?>','<? echo $registro["tipo_comp_ret"]; ?>','<? echo $registro["ref_comp_ret"]; ?>','<? echo $registro["cod_presup_ret"]; ?>','<? echo $registro["fuente_fin_ret"]; ?>');">
-           <td width="50" align="left"><? echo $registro["tipo_retencion"]; ?></td>
-           <td width="300" align="left"><? echo $registro["descripcion_ret"]; ?></td>
-           <td width="50" align="right"><? echo $tasa; ?></td>
-           <td width="100" align="right"><? echo $monto_objeto; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-           <td width="300" align="left"><? echo $codigo; ?></td>
-           <td width="50" align="left"><? echo $registro["ced_rif_r"]; ?></td>
-           <td width="100" align="left"><? echo $concepto_ret; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["tipo_retencion"]; ?>','<?php  echo $registro["tipo_comp_ret"]; ?>','<?php  echo $registro["ref_comp_ret"]; ?>','<?php  echo $registro["cod_presup_ret"]; ?>','<?php  echo $registro["fuente_fin_ret"]; ?>');">
+           <td width="50" align="left"><?php  echo $registro["tipo_retencion"]; ?></td>
+           <td width="300" align="left"><?php  echo $registro["descripcion_ret"]; ?></td>
+           <td width="50" align="right"><?php  echo $tasa; ?></td>
+           <td width="100" align="right"><?php  echo $monto_objeto; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+           <td width="300" align="left"><?php  echo $codigo; ?></td>
+           <td width="50" align="left"><?php  echo $registro["ced_rif_r"]; ?></td>
+           <td width="100" align="left"><?php  echo $concepto_ret; ?></td>
          </tr>
-         <?}
+         <?php }
  $total=formato_monto($total);
 ?>
        </table></td>
@@ -81,7 +81,7 @@ $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["
          <td width="132"><span class="Estilo5">TOTAL RETENCIONES:</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td align="right" class="Estilo5"><? echo $total; ?></td>
+             <td align="right" class="Estilo5"><?php  echo $total; ?></td>
            </tr>
          </table></td>
        </tr>
@@ -91,6 +91,6 @@ $codigo=$registro["tipo_comp_ret"]." ".$registro["ref_comp_ret"]." ".$registro["
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

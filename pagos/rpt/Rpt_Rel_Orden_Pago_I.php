@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo=$_GET["tipo"];$criterio1="403-17-01-00";$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
       //cambiar formato a la fecha
@@ -12,7 +12,7 @@ $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo=$_GET["tipo"];$criteri
 
     //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else
    {
        // LLAMAR A PHP_REPORT

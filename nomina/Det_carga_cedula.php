@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"]; }  $cedula=substr($criterio,0,10);
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"]; }  $cedula=substr($criterio,0,10);
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -37,24 +37,24 @@ $res=pg_query($sql);
            <td width="80" align="center" bgcolor="#99CCFF" ><strong>Cantidad</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Monto</strong></td>
        </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res)) {$frec=$registro["frecuencia"]; $cantidad=$registro["cantidad"]; $monto=$registro["monto"]; $cantidad=formato_monto($cantidad); $monto=formato_monto($monto);
 if($frec=="1"){$frecuencia="PRIMERA QUINCENA";} if($frec=="2"){$frecuencia="SEGUNDA QUINCENA";} if($frec=="3"){$frecuencia="PRIMERA Y SEGUNDA QUINC.";}
 if($frec=="4"){$frecuencia="PRIMERA SEMANA";} if($frec=="5"){$frecuencia="SEGUNDA SEMANA";} if($frec=="6"){$frecuencia="TERCERA SEMANA";}
 if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="TODAS LAS SEMANAS";} if($frec=="9"){$frecuencia="ULTIMA SEMANA";}
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $registro["tipo_nomina"]; ?>','<? echo $registro["cod_concepto"]; ?>','<? echo $registro["cod_empleado"]; ?>','<? echo $registro["cedula"]; ?>');" >
-           <td width="50" align="left"><? echo $registro["tipo_nomina"]; ?></td>
-           <td width="100" align="left"><? echo $registro["cod_empleado"]; ?></td>
-           <td width="40" align="left"><? echo $registro["cod_concepto"]; ?></td>
-           <td width="290" align="left"><? echo $registro["denominacion"]; ?></td>
-           <td width="30" align="center"><? echo $registro["activoa"]; ?></td>
-           <td width="30" align="center"><? echo $registro["calculable"]; ?></td>
-           <td width="170" align="left"><? echo $frecuencia; ?></td>
-           <td width="80" align="right"><? echo $cantidad; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $registro["tipo_nomina"]; ?>','<?php  echo $registro["cod_concepto"]; ?>','<?php  echo $registro["cod_empleado"]; ?>','<?php  echo $registro["cedula"]; ?>');" >
+           <td width="50" align="left"><?php  echo $registro["tipo_nomina"]; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_empleado"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["cod_concepto"]; ?></td>
+           <td width="290" align="left"><?php  echo $registro["denominacion"]; ?></td>
+           <td width="30" align="center"><?php  echo $registro["activoa"]; ?></td>
+           <td width="30" align="center"><?php  echo $registro["calculable"]; ?></td>
+           <td width="170" align="left"><?php  echo $frecuencia; ?></td>
+           <td width="80" align="right"><?php  echo $cantidad; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
           </tr>
-         <?} ?>
+         <?php } ?>
        </table></td>
    </tr>
    <tr><td>&nbsp;</td>  </tr>
@@ -62,4 +62,4 @@ if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="TODAS L
 </body>
 </html>
 
-<?   pg_close(); ?>
+<?php    pg_close($conn); ?>

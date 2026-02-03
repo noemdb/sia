@@ -1,12 +1,12 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); ?>
-<? $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); ?>
+<?php  $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$nro_orden="";  $mcod_m="BAN027".$equipo;$codigo_mov=substr($mcod_m,0,49);$agregar="N";}  else{$nro_orden=$_GET["operacion"]; $codigo_mov=$_GET["codigo_mov"];$agregar=$_GET["agregar"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Modificar Comprobante IVA)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Modificar Comprobante IVA)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type=text/javascript></script>
@@ -32,13 +32,13 @@ function daformatomonto(monto){var i; var str2 ="";
    for (i = 0; i < monto.length; i++){if ((monto.charAt(i)=='.')){str2 = str2 + ",";} else{if ((monto.charAt(i) >= '0') && (monto.charAt(i) <= '9') ) {str2 = str2 + monto.charAt(i);} } }
    return str2;
 }
-function llamar_anterior(){document.location ='Det_inc_libro_comp.php?codigo_mov=<?echo $codigo_mov?>&agregar=<?echo $agregar?>';}
+function llamar_anterior(){document.location ='Det_inc_libro_comp.php?codigo_mov=<?php echo $codigo_mov?>&agregar=<?php echo $agregar?>';}
 function llamar_eliminar(){
 var murl; var r; var f=document.form1; var tipo_doc; var tipo_p; var orden;
   tipo_doc=f.txtdocumento.value; tipo_r=f.txttipo_retencion.value; orden=f.txtnro_orden.value;
   murl="Esta seguro en Eliminar el Documento del Libro de Compra ?"; r=confirm(murl);
   if(r==true){ r=confirm("Esta Realmente seguro en Eliminar el Documento del Libro de Compra  ?");
-      if(r==true){murl="Delete_fact_libro_comp.php?codigo_mov=<?echo $codigo_mov?>&agregar=<?echo $agregar?>&tipo="+tipo_r+"&orden="+orden;document.location=murl;}}
+      if(r==true){murl="Delete_fact_libro_comp.php?codigo_mov=<?php echo $codigo_mov?>&agregar=<?php echo $agregar?>&tipo="+tipo_r+"&orden="+orden;document.location=murl;}}
      else { url="Cancelado, no elimino"; }
 }
 function chequea_monto(mform){
@@ -75,13 +75,13 @@ return true;}
 function revisar(){
 var f=document.form1;
 var Valido=true;
-   if(f.txtced_rif.value==""){alert("Cédula/Rif no puede estar Vacio"); return false; }
+   if(f.txtced_rif.value==""){alert("Cï¿½dula/Rif no puede estar Vacio"); return false; }
    if(f.txtmonto.value==""){alert("Total Factura no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("Total Factura debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("Total Factura debe tener valores numï¿½ricos.");return false;}
    if(f.txtmontob.value==""){alert("Base Imponible no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmontob.value)) {Valido=true;} else{alert("Base Imponible debe tener valores numéricos.");return false;}
-   if(f.txtmontor.value==""){alert("Monto Retención no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmontor.value)) {Valido=true;} else{alert("Monto Retención  debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmontob.value)) {Valido=true;} else{alert("Base Imponible debe tener valores numï¿½ricos.");return false;}
+   if(f.txtmontor.value==""){alert("Monto Retenciï¿½n no puede estar Vacio");return false;}
+   if(MontoValido(f.txtmontor.value)) {Valido=true;} else{alert("Monto Retenciï¿½n  debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -91,7 +91,7 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $monto=0;$montob=0; $montoi=0; $montos=0; $montor=0; $tasa=0; $monto1=0; $monto2=0; $retenc=0; $tipo_en=""; $tipo_documento=""; $nro_documento=""; $nro_con_factura=""; $fecha=""; $nro_doc_afectado=""; $tipo_operacion=""; $nro_ncr=""; $nro_ndb=""; $nro_fact=""; $ced_rif="";  $nombre=""; $tipo_r="";
 $sql="SELECT * FROM fact_lib_comp where codigo_mov='$codigo_mov' and nro_orden='$nro_orden'"; $res=pg_query($sql);
@@ -116,8 +116,8 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="737" >
             <tr>
               <td width="100"><span class="Estilo5">CEDULA/RIF :</span></td>
-              <td width="87"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="12" maxlength="12" readonly value="<? echo $ced_rif ?>"  > </span></td>
-              <td width="479"></span><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" readonly value="<? echo $nombre ?>" > </span></td>
+              <td width="87"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="12" maxlength="12" readonly value="<?php  echo $ced_rif ?>"  > </span></td>
+              <td width="479"></span><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" readonly value="<?php  echo $nombre ?>" > </span></td>
             </tr>
           </table></td>
 		</tr>
@@ -125,11 +125,11 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="729" >
             <tr>
               <td width="143"><span class="Estilo5">OPERACI&Oacute;N N&Uacute;MERO :</span></td>
-              <td width="109"><span class="Estilo5"> <input class="Estilo10" name="txtnro_orden" type="text" id="txtnro_orden" size="3" maxlength="3" value="<? echo $nro_orden ?>"  readonly>  </span></td>
+              <td width="109"><span class="Estilo5"> <input class="Estilo10" name="txtnro_orden" type="text" id="txtnro_orden" size="3" maxlength="3" value="<?php  echo $nro_orden ?>"  readonly>  </span></td>
               <td width="92"><span class="Estilo5">DOCUMENTO :</span></td>
-              <td width="92"><span class="Estilo5"><input class="Estilo10" name="txtdocumento" type="text" id="txtdocumento" size="4" maxlength="2" readonly value="<? echo $tipo_documento ?>"> </span></td>
+              <td width="92"><span class="Estilo5"><input class="Estilo10" name="txtdocumento" type="text" id="txtdocumento" size="4" maxlength="2" readonly value="<?php  echo $tipo_documento ?>"> </span></td>
               <td width="145"><span class="Estilo5">FECHA DOCUMENTO:</span></td>
-              <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_doc" type="text" id="txtfecha_doc" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $fecha ?>"></span></span></td>
+              <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_doc" type="text" id="txtfecha_doc" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $fecha ?>"></span></span></td>
             </tr>
           </table></td>
         </tr>
@@ -137,9 +137,9 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="737">
             <tr>
               <td width="142"><span class="Estilo5">N&Uacute;MERO FACTURA :</span></td>
-              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnro_factura" type="text" id="txtnro_factura"  onFocus="encender(this)" onBlur="apagar(this)"  size="20" value="<? echo $nro_fact ?>"> </span></td>
+              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnro_factura" type="text" id="txtnro_factura"  onFocus="encender(this)" onBlur="apagar(this)"  size="20" value="<?php  echo $nro_fact ?>"> </span></td>
               <td width="185"><span class="Estilo5">N&Uacute;MERO DE CONTROL: </span></td>
-              <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtnro_con_factura" type="text" id="txtnro_con_factura" size="20" maxlength="20"  onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_con_factura ?>"></span></td>
+              <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtnro_con_factura" type="text" id="txtnro_con_factura" size="20" maxlength="20"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_con_factura ?>"></span></td>
             </tr>
           </table></td>
         </tr>
@@ -147,13 +147,13 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="733" border="0">
             <tr>
               <td width="142"><span class="Estilo5">NRO. NOTA CREDITO </span>:</td>
-              <td width="121"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_c" type="text" id="txtnro_nota_c" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_ncr ?>">
+              <td width="121"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_c" type="text" id="txtnro_nota_c" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_ncr ?>">
               </span></td>
               <td width="134"><span class="Estilo5">NRO. NOTA DEBITO </span>:</td>
-              <td width="119"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_d" type="text" id="txtnro_nota_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_ndb ?>">
+              <td width="119"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_d" type="text" id="txtnro_nota_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_ndb ?>">
               </span></td>
               <td width="128"><span class="Estilo5">TIPO TRANSACCI&Oacute;N :</span></td>
-              <td width="63"><span class="Estilo5"><input class="Estilo10" name="txttipo_trans" type="text" id="txttipo_trans" size="7" maxlength="7" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_planilla ?>">
+              <td width="63"><span class="Estilo5"><input class="Estilo10" name="txttipo_trans" type="text" id="txttipo_trans" size="7" maxlength="7" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_planilla ?>">
               </span></td>
             </tr>
           </table></td>
@@ -162,9 +162,9 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="733" border="0">
               <tr>
                 <td width="188"><span class="Estilo5">NRO. FACTURA AFECTADA  :</span></td>
-                <td width="192"><span class="Estilo5"><input class="Estilo10" name="txtnro_doc_afectado" type="text" id="txtnro_doc_afectado"  value="<? echo $nro_doc_afectado ?>"  size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" > </span></td>
+                <td width="192"><span class="Estilo5"><input class="Estilo10" name="txtnro_doc_afectado" type="text" id="txtnro_doc_afectado"  value="<?php  echo $nro_doc_afectado ?>"  size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" > </span></td>
                 <td width="140"><span class="Estilo5">TOTAL COMPRAS :</span></td>
-                <td width="195"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto"  size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar_monto(this)" value="<? echo $monto ?>"> </span></td>
+                <td width="195"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto"  size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar_monto(this)" value="<?php  echo $monto ?>"> </span></td>
               </tr>
           </table></td>
         </tr>
@@ -172,9 +172,9 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="737" border="0">
             <tr>
               <td width="188"><span class="Estilo5">COMPRAS S/DERECHO  :</span></td>
-              <td width="193"> <span class="Estilo5"><input class="Estilo10" name="txtmontos" type="text" id="txtmontos" size="20" maxlength="20" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<? echo $montos ?>">  </span> </td>
+              <td width="193"> <span class="Estilo5"><input class="Estilo10" name="txtmontos" type="text" id="txtmontos" size="20" maxlength="20" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<?php  echo $montos ?>">  </span> </td>
                <td width="137"><span class="Estilo5">BASE IMPONIBLE :  </span></td>
-              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontob" type="text" id="txtmontob" size="20" maxlength="20" align="right" onFocus="encender(this)"  onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);"  value="<? echo $montob ?>">  </span></td>
+              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontob" type="text" id="txtmontob" size="20" maxlength="20" align="right" onFocus="encender(this)"  onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);"  value="<?php  echo $montob ?>">  </span></td>
               </tr>
           </table></td>
         </tr>
@@ -182,9 +182,9 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="739" >
             <tr>
               <td width="188"><span class="Estilo5">PORCENTAJE (%) ALICUOTA: </span></td>
-              <td width="192"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="8"  align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_tasa(this.form);" value="<? echo $tasa ?>"> </span></td>
+              <td width="192"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="8"  align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_tasa(this.form);" value="<?php  echo $tasa ?>"> </span></td>
               <td width="138"><span class="Estilo5">MONTO IVA: </span></td>
-              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontoi" type="text" id="txtmontoi" size="20" maxlength="20" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" value="<? echo $montoi ?>"></span></td>
+              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontoi" type="text" id="txtmontoi" size="20" maxlength="20" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" value="<?php  echo $montoi ?>"></span></td>
               </tr>
           </table> </td>
         </tr>
@@ -192,9 +192,9 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="739" >
             <tr>
               <td width="187"><span class="Estilo5">PORCENTAJE (%) RETENCI&Oacute;N: </span></td>
-              <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtretenc" type="text" id="txtretenc" size="10" maxlength="10"  align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_retenc(this.form);" value="<? echo $retenc ?>"> </span></td>
+              <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtretenc" type="text" id="txtretenc" size="10" maxlength="10"  align="right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_retenc(this.form);" value="<?php  echo $retenc ?>"> </span></td>
               <td width="139"><span class="Estilo5"> IVA RETENIDO : </span></td>
-             <td width="203"><span class="Estilo5"><input class="Estilo10" name="txtmontor" type="text" id="txtmontor" size="15" maxlength="15" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<? echo $montor ?>"> </span></td>
+             <td width="203"><span class="Estilo5"><input class="Estilo10" name="txtmontor" type="text" id="txtmontor" size="15" maxlength="15" align="right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<?php  echo $montor ?>"> </span></td>
             </tr>
           </table></td>
         </tr>
@@ -203,15 +203,15 @@ if ($registro=pg_fetch_array($res,0)){
       </table>
         <table width="699" align="center">
           <tr>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="50"><input name="txttipo_operacion" type="hidden" id="txttipo_operacion" value="<?echo $tipo_operacion?>"></td>
-            <td width="50"><input name="txtagregar" type="hidden" id="txtagregar" value="<?echo $agregar?>"></td>
-            <td width="60"><input name="txttipo_retencion" type="hidden" id="txttipo_retencion" value="<?echo $tipo_r?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="50"><input name="txttipo_operacion" type="hidden" id="txttipo_operacion" value="<?php echo $tipo_operacion?>"></td>
+            <td width="50"><input name="txtagregar" type="hidden" id="txtagregar" value="<?php echo $agregar?>"></td>
+            <td width="60"><input name="txttipo_retencion" type="hidden" id="txttipo_retencion" value="<?php echo $tipo_r?>"></td>
             <td width="120" align="center"><input name="Modificar" type="submit" id="Modificar" value="Modificar"></td>
             <td width="120" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-            <?if ($agregar=="S"){?>
+            <?php if ($agregar=="S"){?>
             <td width="120" align="center"><input name="Eliminar" type="button" id="Eliminar" value="Eliminar" onClick="JavaScript:llamar_eliminar()"></td>
-            <?}else{?> <td width="120">&nbsp;</td> <?}?>
+            <?php }else{?> <td width="120">&nbsp;</td> <?php }?>
             <td width="170">&nbsp;</td>
           </tr>
         </table>      </td>

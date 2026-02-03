@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
 //$orden=$_GET["orden"];  $tipo_planilla=$_GET["tipo"]; $ano_fiscal="";$fecha_hoy=asigna_fecha_hoy();
 $orden="00000000";  
 $cod_banco=$_GET["cod_banco"]; $tipo_mov=$_GET["tipo_mov"]; $referencia=$_GET["referencia"]; $tipo_planilla=$_GET["tipo"]; $ano_fiscal="";
 $nombre_planilla="COMPROBANTE DE RETENCION DE 1*1000"; 
 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $direccion=""; $nombre_emp=""; $ced_rif_emp="";
 $sql="Select * from SIA000 order by campo001"; $resultado=pg_query($sql);
 if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"];
@@ -213,7 +213,7 @@ class PDF extends FPDF{
 	
 	}   
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 
 
 ?>

@@ -1,16 +1,16 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy(); $eofline="@"; $fechah=$_GET["fechah"]; $tfechah=$fechah;  $fechah=formato_aaaammdd($fechah);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy(); $eofline="@"; $fechah=$_GET["fechah"]; $tfechah=$fechah;  $fechah=formato_aaaammdd($fechah);
 $cod_empleado_d=$_GET["codigo_d"];  $cod_empleado_h=$_GET["codigo_h"]; $tipo_nomina_d=$_GET["tipod"]; $tipo_nomina_h=$_GET["tipoh"];
 $cod_empleado=""; $fecha_ingreso=formato_aaaammdd($fecha_hoy);  $dep_tercer_mes="N"; $dias_adic_primer="N"; $dep_diferencia="N"; $acum_dias_adic="N"; $prom_dias_adic="N"; $acum_intereses="S";$acum_int_anual="N"; $prom_sueldo="N";
 $sueldo_adic=0;  $valor_formula=36000; $fecha_ley="19/06/1997"; $fecha_dep_ley="19/07/1997"; $fecha_c=$tfechah;  $anos_cumplidos=0; $fecha_tope="30/04/2012"; $fecha_i_tope="01/01/2012"; $dias_dep_mes=5; $dias_dep_mes=6; $MNum_dias_dep=15;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf(); }
 function Grabar_Prestaciones($fecha_calculo,$mtipoc,$sueldoc,$sueldoa,$mprestaciones,$tprestaciones,$madelanto,$tadelanto,$sprestaciones,$minteres,$interes_noacum,$interes_acum,$interes_pagado,$tinteres,$tasa,$tiempo,$atotal,$mnum_dias,$mnum_dias_adic,$mpresta_adic){ global $cod_empleado,$conn;
   $ncalculo="0"; $mgraba=0;  $monto_presta=$mprestaciones+$mpresta_adic; $fecha_calculo=formato_aaaammdd($fecha_calculo);
   $sSQL="Select num_calculo FROM NOM030 Where cod_empleado='$cod_empleado' and fecha_calculo='$fecha_calculo' order by num_calculo desc";
   $resultado=pg_query($sSQL); if($registro=pg_fetch_array($resultado,0)){ $ncalculo=$registro["num_calculo"]; if($ncalculo=="1"){$ncalculo="2";}else{$ncalculo="1";} }
   if($mprestaciones==0){$mnum_dias=0;}  
   $sSQL="SELECT ACTUALIZA_NOM030(1,'$cod_empleado','$fecha_calculo','$ncalculo','$mtipoc',$sueldoc,$mnum_dias,$mprestaciones,$sueldoa,$mnum_dias_adic,$mpresta_adic,$monto_presta,$tprestaciones,$madelanto,$tadelanto,0,0,$sprestaciones,$minteres,$interes_noacum,$interes_acum,$interes_pagado,$tinteres,$tasa,$tiempo,$atotal)";
-  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){$mgraba=1; echo $sSQL,"<br>"; ?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?}else{$mgraba=0;}
+  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){$mgraba=1; echo $sSQL,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }else{$mgraba=0;}
 return $mgraba;}
 function Asigna_Sueldo($bfecha){ global $cod_empleado,$fecha_ingreso,$sueldo_adic,$status_trab,$prom_sueldo; $msueldo=0; $sueldo_adic=0;
    $fechab=formato_aaaammdd($bfecha); if($fechab<$fecha_ingreso){$fechab=$fecha_ingreso;}
@@ -18,7 +18,7 @@ function Asigna_Sueldo($bfecha){ global $cod_empleado,$fecha_ingreso,$sueldo_adi
    if(($status_trab=="PERMISO")OR($status_trab=="PERMISO NO")OR($status_trab=="PERMISO RE")){ $sSQL="Select * from NOM028 where cod_empleado='$cod_empleado' and fecha_sueldo<='$fechab' and monto_sueldo>0 order by fecha_sueldo desc";}
    //echo $sSQL,"<br>"; 
    $resultado=pg_query($sSQL); if($registro=pg_fetch_array($resultado,0)){$msueldo=$registro["monto_sueldo"]; $sueldo_adic=$registro["monto_sueldo_adic"]; }
-   else{echo "Codigo:".$cod_empleado.", Fecha Ingreso:".$fecha_ingreso.", Fecha Buscar:".$fechab,"<br>"; ?> <script language="JavaScript">muestra('CODIGO DE TRABAJADOR:<? echo $cod_empleado; ?> NO TIENE SUELDO DE PRESTACIONES');</script><?}
+   else{echo "Codigo:".$cod_empleado.", Fecha Ingreso:".$fecha_ingreso.", Fecha Buscar:".$fechab,"<br>"; ?> <script language="JavaScript">muestra('CODIGO DE TRABAJADOR:<?php  echo $cod_empleado; ?> NO TIENE SUELDO DE PRESTACIONES');</script><?php }
    if($prom_sueldo=="S"){$mesh=substr($bfecha,3,2); 
      if(($mesh=="03")or($mesh=="06")or($mesh=="09")or($mesh=="12")) { $mesd=$mesh*1; $mesd=$mesd-2; $tmesd=$mesd; if(strlen($tmesd)==1){ $tmesd="0".$tmesd; }
 	   if($bfecha=="30/06/2012"){ $tmesd="05"; }
@@ -115,7 +115,7 @@ global $fecha_mes,$mprestaciones,$tprestaciones,$tadelanto,$sprestaciones,$inter
   //echo $mcontinua,"<br>";
   if($mcontinua==0){ if($fecha_ingreso>$fecha_l){$fecha_ing=formato_ddmmaaaa($fecha_ingreso);} else{$sdia=substr($fecha_ing,0,2); if($sdia=="31"){$sdia="30";} $fecha_ing=$sdia.substr($fecha_ley,2,8);} }
    else{ $fecha_mes=$fecha_ing; $m1=FDate($fecha_ing); $m2=FDate($fecha_i_tope); $fecha_c=$fecha_mes;
-	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <? echo $cod_empleado; ?>');</script><?}
+	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <?php  echo $cod_empleado; ?>');</script><?php }
 	else{  $mesh=substr($tfechah,3,2); if(($mesh=="03")or($mesh=="06")or($mesh=="09")or($mesh=="12")) { $mcontinua=0; } else { $mcontinua=1; }  }
 	if($mcontinua==0){ $fecha_t="2012-06-30";
 	   $cant_mes_dep=2;	$mesi=substr($fecha_ing,3,2); $mesi=$mesi*1; $tmesp=4-$mesi; $cant_mes_dep=$cant_mes_dep+$tmesp;
@@ -175,7 +175,7 @@ global $fecha_mes,$mprestaciones,$tprestaciones,$tadelanto,$sprestaciones,$inter
   else{$sdia=substr($fecha_ing,0,2); if($sdia=="31"){$sdia="30";} 
     $fecha_ing=formato_ddmmaaaa($fecha_ingreso); $fecha_ing=$sdia.substr($fecha_ley,2,8);  } }
   else{ $fecha_mes=$fecha_ing; $m1=FDate($fecha_ing); $m2=FDate($fecha_i_tope); $fecha_c=$fecha_mes;
-	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <? echo $cod_empleado; ?>');</script><?}
+	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <?php  echo $cod_empleado; ?>');</script><?php }
 	else{  $mesh=substr($tfechah,3,2); if(($mesh=="03")or($mesh=="06")or($mesh=="09")or($mesh=="12")) { $mcontinua=0; } else { $mcontinua=1; }  }
 	if($mcontinua==0){ $fecha_t="2012-06-30";
 	   $cant_mes_dep=2;	$mesi=substr($fecha_ing,3,2); $mesi=$mesi*1; $tmesp=4-$mesi; $cant_mes_dep=$cant_mes_dep+$tmesp;
@@ -296,7 +296,7 @@ global $fecha_mes,$mprestaciones,$tprestaciones,$tadelanto,$sprestaciones,$inter
   //echo $mcontinua,"<br>";
   if($mcontinua==0){ if($fecha_ingreso>$fecha_l){$fecha_ing=formato_ddmmaaaa($fecha_ingreso);} else{$sdia=substr($fecha_ing,0,2); if($sdia=="31"){$sdia="30";} $fecha_ing=$sdia.substr($fecha_ley,2,8);} }
    else{ $fecha_mes=$fecha_ing; $m1=FDate($fecha_ing); $m2=FDate($fecha_i_tope); $fecha_c=$fecha_mes;
-	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <? echo $cod_empleado; ?>');</script><?}
+	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <?php  echo $cod_empleado; ?>');</script><?php }
 	else{  $mesh=substr($tfechah,3,2); if(($mesh=="03")or($mesh=="06")or($mesh=="09")or($mesh=="12")) { $mcontinua=0; } else { $mcontinua=1; }  }
 	if($mcontinua==0){ $fecha_t="2012-06-30";
 	   $cant_mes_dep=2;	$mesi=substr($fecha_ing,3,2); $mesi=$mesi*1; $tmesp=4-$mesi; $cant_mes_dep=$cant_mes_dep+$tmesp;
@@ -378,7 +378,7 @@ global $fecha_mes,$mprestaciones,$tprestaciones,$tadelanto,$sprestaciones,$inter
   //echo $mcontinua." ".$fecha_c,"<br>";
   if($mcontinua==0){ if($fecha_ingreso>$fecha_l){$fecha_ing=formato_ddmmaaaa($fecha_ingreso);} else{$sdia=substr($fecha_ing,0,2); if($sdia=="31"){$sdia="30";} $fecha_ing=$sdia.substr($fecha_ley,2,8);} }
    else{ $fecha_mes=$fecha_ing; $m1=FDate($fecha_ing); $m2=FDate($fecha_i_tope); $fecha_c=$fecha_mes;
-	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <? echo $cod_empleado; ?>');</script><?}
+	if($m1<$m2){ $mcontinua=1; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA PARA EL TRABAJADOR <?php  echo $cod_empleado; ?>');</script><?php }
 	else{  $mesh=substr($tfechah,3,2); 	     //if(($mesh=="03")or($mesh=="06")or($mesh=="09")or($mesh=="12")) { $mcontinua=0; } else { $mcontinua=1; } 
 	    $periodof=Calcula_dif_fechas_p($fecha_ing,$tfechah); $ant_ano=substr($periodof,0,4); $ant_mes=substr($periodof,4,2); $ant_dia=substr($periodof,6,2);
 		$tmes=$ant_mes*1; $tdia=$ant_dia*1; 
@@ -495,7 +495,7 @@ $url="Act_cal_prest_lott.php?Gcodigo=C".$cod_empleado_d; $cant_trab=0; $hora1=ti
 $sql="Select campo502,campo535,campo573 from SIA005 where campo501='04'";$resultado=pg_query($sql);if($registro=pg_fetch_array($resultado,0)){$campo502=$registro["campo502"]; $campo573=$registro["campo573"];}
 $acum_intereses=substr($campo502,0,1); $dep_diferencia=substr($campo502,1,1); $dias_adic_primer=substr($campo502,2,1);   $dep_tercer_mes=substr($campo502,3,1); $acum_dias_adic=substr($campo502,4,1);
 $cal_intereses=substr($campo502,10,1);  $prom_dias_adic=substr($campo502,11,1); $dep_prest_mes=substr($campo502,12,1); $acum_int_anual=substr($campo502,16,1); $dep_dias_adic=substr($campo573,0,1); $prom_sueldo=substr($campo573,1,1); if($Cod_Emp=="71"){$prom_sueldo="S";}
-$m1=FDate($tfechah); $m2=FDate($fecha_tope); if($m1<=$m2){  echo " Fecha Calculo:".$tfechah." numero:".$m1."     Fecha desde Valida mayor a:".$fecha_tope." numero:".$m2; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA');</script><? }
+$m1=FDate($tfechah); $m2=FDate($fecha_tope); if($m1<=$m2){  echo " Fecha Calculo:".$tfechah." numero:".$m1."     Fecha desde Valida mayor a:".$fecha_tope." numero:".$m2; $error=1;?><script language="JavaScript">muestra('FECHA CALCULO DE PRESTACIONES INVALIDA');</script><?php }
 if($error==0){ $sql= "SELECT nom006.cod_empleado,nom006.nombre,nom006.cedula,nom006.fecha_ingreso,nom006.fecha_ing_adm,nom006.status,nom001.tipo_nomina,nom001.status_tipo,nom001.cod_tipo_liq from NOM006,NOM001 Where (nom001.tipo_nomina=nom006.tipo_nomina) and (nom006.Status='ACTIVO' Or nom006.Status='VACACIONES' Or nom006.Status='PERMISO' Or nom006.Status='PERMISO NO') And (nom006.Status<>'JUBILADO') And (nom006.Status<>'PENSIONADO') And (nom001.tipo_nomina>='$tipo_nomina_d') And (nom001.tipo_nomina<='$tipo_nomina_h') And (nom006.cod_empleado>='$cod_empleado_d') And (nom006.cod_empleado<='$cod_empleado_h') order by nom006.cod_empleado"; $res=pg_query($sql);
 while($reg=pg_fetch_array($res)){ $cod_empleado=$reg["cod_empleado"]; $fecha_ingreso=$reg["fecha_ingreso"];  $status_trab=$reg["status"];  $status_tipo=$reg["status_tipo"]; $MNum_dias_dep=$reg["cod_tipo_liq"]; $MNum_dias_dep=$MNum_dias_dep*1; if($MNum_dias_dep==0){$MNum_dias_dep=15;}
  $fecha_mes=$fecha_ingreso;$mprestaciones=0;$tprestaciones=0;$tadelanto=0;$sprestaciones=0;$interes_noacum=0;$tinteres=0;$interes_acum=0; $mtotal=0; $mtasa=0; $fecha_m=formato_aaaammdd($tfechah);
@@ -510,7 +510,7 @@ while($reg=pg_fetch_array($res)){ $cod_empleado=$reg["cod_empleado"]; $fecha_ing
     $cant_trab=$cant_trab+$p;
  }
 } }
-pg_close();
+pg_close($conn);
 /* */
-if($error==0){?><script language="JavaScript"> muestra('FINALIZO CALCULO, CANTIDAD TRABAJADORES: '+'<? echo $cant_trab; ?>'); document.location ='<? echo $url; ?>'; </script> <?} else{ ?><script language="JavaScript">document.location ='<? echo $url; ?>'; </script> <? }
+if($error==0){?><script language="JavaScript"> muestra('FINALIZO CALCULO, CANTIDAD TRABAJADORES: '+'<?php  echo $cant_trab; ?>'); document.location ='<?php  echo $url; ?>'; </script> <?php } else{ ?><script language="JavaScript">document.location ='<?php  echo $url; ?>'; </script> <?php }
 ?>

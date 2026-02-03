@@ -1,6 +1,6 @@
-<?include ("../class/funciones.php");
+<?php include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){
   $ced_rif='';$p_letra="";
   $sql="SELECT * FROM PRE099 ORDER BY ced_rif";}
@@ -86,7 +86,7 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $nombre="";$cedula="";
 $rif="";$nit="";
 $direccion="";$tipo_benef="";
@@ -219,15 +219,15 @@ if($filas>=1){
    rows[1][1] = "Conceptos del Sueldo Antigüedad";        // Requiere: <div id="T11" class="tab-body">  ... </div>
    rows[1][2] = "Concepto del Sueldo Dias Adicionales";        // Requiere: <div id="T12" class="tab-body">  ... </div>
    </script>
-           <?include ("../class/class_tab.php");?>
+           <?php include ("../class/class_tab.php");?>
            <script type="text/javascript" language="javascript"> DrawTabs(); </script>
            <!-- PESTAÑA 1 -->
            <div id="T11" class="tab-body">
-             <iframe src="Det_concepto_liquidacion_antiguedad.php?criterio=<?echo $cod_estructura?>"  width="846" height="230" scrolling="auto" frameborder="0"> </iframe>
+             <iframe src="Det_concepto_liquidacion_antiguedad.php?criterio=<?php echo $cod_estructura?>"  width="846" height="230" scrolling="auto" frameborder="0"> </iframe>
            </div>
            <!--PESTAÑA 2 -->
            <div id="T12" class="tab-body" >
-             <iframe src="Det_concepto_sueldo_dias_adicionales.php?criterio=<?echo $cod_estructura?>"  width="846" height="230" scrolling="auto" frameborder="0"> </iframe>
+             <iframe src="Det_concepto_sueldo_dias_adicionales.php?criterio=<?php echo $cod_estructura?>"  width="846" height="230" scrolling="auto" frameborder="0"> </iframe>
            </div>
           </div>
          <p>&nbsp;</p>
@@ -245,4 +245,4 @@ if($filas>=1){
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

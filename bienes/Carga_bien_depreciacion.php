@@ -1,15 +1,15 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc");error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc");error_reporting(E_ALL);
 $codigo_mov=$_GET["codigo_mov"]; $fecha=asigna_fecha_hoy();
 $equipo = getenv("COMPUTERNAME");$MInf_Usuario = $equipo." ".date("d/m/y H:i a"); $url="Det_inc_bienes_mue_depreciacion.php?codigo_mov=".$codigo_mov;
 echo "ESPERE POR FAVOR CARGANDO....","<br>";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$error=0;
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else { $resultado=pg_exec($conn,"SELECT ELIMINA_BIEN050('$codigo_mov')"); $resultado=pg_exec($conn,"SELECT ELIMINA_CON010('$codigo_mov')");   $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  
 	$tipo_dep="M"; $tipo_causado="0004"; $cod_fuente="00"; $fecha_d=$fecha;
     $sSQL="Select * from pag036 where codigo_mov='$codigo_mov'"; $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
     if ($filas>0){ $registro=pg_fetch_array($resultado); $cod_fuente=$registro["tipo_orden"]; $tipo_causado=$registro["tipo_causado"]; $fecha_d=$registro["cod_contable_o"]; $tipo_dep=$registro["pasivo_comp"];   }
     //else{ echo $sSQL;}
-	if (checkData($fecha_d)=='1'){ $error=$error;} else{ echo $fecha_d; $fecha_d=$fecha; $error=1; ?><script language="JavaScript">muestra('FECHA NO ES VALIDA');</script><?}	
+	if (checkData($fecha_d)=='1'){ $error=$error;} else{ echo $fecha_d; $fecha_d=$fecha; $error=1; ?><script language="JavaScript">muestra('FECHA NO ES VALIDA');</script><?php }	
 	$sSQL="Select BIEN015.cod_bien_mue,BIEN015.cod_clasificacion,BIEN015.denominacion,BIEN015.valor_incorporacion,BIEN015.valor_residual,BIEN015.vida_util,BIEN015.cod_contablea,BIEN015.cod_contabled,BIEN015.monto_depreciado,BIEN015.cod_presup_dep,BIEN015.tipo_depreciacion,BIEN015.fecha_incorporacion,PRE001.cod_contable FROM BIEN015 LEFT JOIN PRE001 ON ((cod_presup_dep=PRE001.cod_presup) and (cod_fuente='$cod_fuente')) Where (BIEN015.tipo_depreciacion='LINEA RECTA') and (BIEN015.vida_util>0) and (BIEN015.cod_contabled<>'') And (BIEN015.desincorporado<>'S') Order by BIEN015.cod_bien_mue";
 	$res=pg_query($sSQL);	
 	while($registro=pg_fetch_array($res)){ $cod_bien_mue=$registro["cod_bien_mue"];  $cod_contablea=$registro["cod_contablea"]; $cod_contabled=$registro["cod_contabled"]; $codigo_cuenta=$registro["cod_contable"]; 
@@ -36,6 +36,6 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
 		//else{echo $tipo_depreciacion." ".$vida_util." ".$dif_mes." ".$fechai." ".$fecha_d; }	
 	}	
  }
-pg_close();
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? } 
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php } 
 ?>

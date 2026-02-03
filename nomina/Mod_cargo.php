@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");if (!$_GET){$codigo_cargo="";} else{$codigo_cargo=$_GET["Gcodigo"];}
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");if (!$_GET){$codigo_cargo="";} else{$codigo_cargo=$_GET["Gcodigo"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,15 +42,15 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php 
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM004 where codigo_cargo='$codigo_cargo'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $denominacion="";$grado=""; $inf_usuario=""; $paso="";$nro_cargos=0;$asignados=0;$sueldo_cargo=0;
 If ($registro=pg_fetch_array($res,0)){
   $codigo_cargo=$registro["codigo_cargo"]; $denominacion=$registro["denominacion"];
   $grado=$registro["grado"]; $paso=$registro["paso"]; $nro_cargos=$registro["nro_cargos"]; $asignados=$registro["asignados"]; $sueldo_cargo=$registro["sueldo_cargo"];
 } $sueldo_cargo=formato_monto($sueldo_cargo); $nro_cargos=intval($nro_cargos); $asignados=intval($asignados);
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -64,8 +64,8 @@ pg_close();
   <tr>
     <td width="92" height="403"><table width="92" height="403" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
      <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_cargo_ar.php?Gcodigo=C<?echo $codigo_cargo?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_cargo_ar.php?Gcodigo=C<?echo $codigo_cargo?>">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_cargo_ar.php?Gcodigo=C<?php echo $codigo_cargo?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_cargo_ar.php?Gcodigo=C<?php echo $codigo_cargo?>">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -83,7 +83,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="133" ><span class="Estilo5">C&Oacute;DIGO DEL CARGO  : </span></td>
-                 <td width="733" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo" type="text" id="txtcodigo_cargo" size="15" maxlength="10"  readonly value="<?echo $codigo_cargo?>" > </span></td>
+                 <td width="733" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo" type="text" id="txtcodigo_cargo" size="15" maxlength="10"  readonly value="<?php echo $codigo_cargo?>" > </span></td>
                </tr>
              </table></td>
            </tr>
@@ -91,7 +91,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="143" ><span class="Estilo5">DESCRIPCI&Oacute;N DEL CARGO  : </span></td>
-                 <td width="723" ><span class="Estilo5"><textarea name="txtdenominacion" cols="75" id="txtdenominacion" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" ><?echo $denominacion?></textarea></span></td>
+                 <td width="723" ><span class="Estilo5"><textarea name="txtdenominacion" cols="75" id="txtdenominacion" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" ><?php echo $denominacion?></textarea></span></td>
                </tr>
              </table></td>
            </tr>
@@ -99,9 +99,9 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="133" ><span class="Estilo5">GRADO DEL CARGO : </span></td>
-                 <td width="500" ><span class="Estilo5"><input class="Estilo10" name="txtgrado" type="text" id="txtgrado" size="5" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $grado?>"></span></td>
+                 <td width="500" ><span class="Estilo5"><input class="Estilo10" name="txtgrado" type="text" id="txtgrado" size="5" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $grado?>"></span></td>
                  <td width="133" ><span class="Estilo5">PASO DEL CARGO : </span></td>
-                 <td width="100" ><span class="Estilo5"><input class="Estilo10" name="txtpaso" type="text" id="txtpaso" size="5" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $paso?>"></span></td>
+                 <td width="100" ><span class="Estilo5"><input class="Estilo10" name="txtpaso" type="text" id="txtpaso" size="5" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $paso?>"></span></td>
               </tr>
              </table></td>
            </tr>
@@ -109,9 +109,9 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="133" ><span class="Estilo5">NUMERO DE CARGOS : </span></td>
-                 <td width="480" ><span class="Estilo5"><input class="Estilo10" name="txtnro_cargos" type="text" id="txtnro_cargos" size="5" maxlength="5" style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar(this)" value="<?echo $nro_cargos?>" onKeypress="return validarNum(event)"></span></td>
+                 <td width="480" ><span class="Estilo5"><input class="Estilo10" name="txtnro_cargos" type="text" id="txtnro_cargos" size="5" maxlength="5" style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar(this)" value="<?php echo $nro_cargos?>" onKeypress="return validarNum(event)"></span></td>
                  <td width="153" ><span class="Estilo5">CARGOS ASIGNADOS : </span></td>
-                 <td width="100" ><span class="Estilo5"><input class="Estilo10" name="txtasignados" type="text" id="txtasignados" size="5" maxlength="5"  style="text-align:right" readonly value="<?echo $asignados?>" onKeypress="return validarNum(event)"></span></td>
+                 <td width="100" ><span class="Estilo5"><input class="Estilo10" name="txtasignados" type="text" id="txtasignados" size="5" maxlength="5"  style="text-align:right" readonly value="<?php echo $asignados?>" onKeypress="return validarNum(event)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -119,7 +119,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="133" ><span class="Estilo5">SUELDO DEL CARGO : </span></td>
-                 <td width="733" ><span class="Estilo5"> <input class="Estilo10" name="txtsueldo_cargo" type="text" id="txtsueldo_cargo" size="20" maxlength="20"   style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar(this)" value="<?echo $sueldo_cargo?>" onKeypress="return validarNum(event)"></span></td>
+                 <td width="733" ><span class="Estilo5"> <input class="Estilo10" name="txtsueldo_cargo" type="text" id="txtsueldo_cargo" size="20" maxlength="20"   style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar(this)" value="<?php echo $sueldo_cargo?>" onKeypress="return validarNum(event)"></span></td>
                </tr>
              </table></td>
            </tr>

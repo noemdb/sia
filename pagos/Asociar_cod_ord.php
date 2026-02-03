@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$cod_presup=""; $cod_fuente="00";$codigo_mov="";$ref_imput_presu="";$ref_comp=""; $tipo_comp="0000";}
  else{ $cod_presup=$_GET["codigo"];$cod_fuente=$_GET["fuente"]; $ref_imput_presu=$_GET["ref_imput"]; $ref_comp=$_GET["ref_comp"]; $tipo_comp=$_GET["tipo_comp"];$codigo_mov=$_GET["codigo_mov"];}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $Formato_Cuenta="X-X-X-XX-XX-XX-XXX";
@@ -25,7 +25,7 @@ return str2;}
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value; mmonto=eliminapunto(mmonto);  mthis.value=mmonto; 
 }
-function llamar_anterior(){document.location ='Det_inc_cod_ord.php?codigo_mov=<?echo $codigo_mov?>&bloqueada=N';}
+function llamar_anterior(){document.location ='Det_inc_cod_ord.php?codigo_mov=<?php echo $codigo_mov?>&bloqueada=N';}
 
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_presup.value==""){alert("Codigo Presupuestario no puede estar Vacio");return false;}
@@ -42,7 +42,7 @@ return true;}
 </script>
 
 </head>
-<?
+<?php 
 
 $denominacion="";$des_fuente="";$cod_contable=""; $monto=0;$montoc=0;$montod=0;
 $sql="SELECT * FROM CODIGOS_PRE026 where codigo_mov='$codigo_mov' and cod_presup='$cod_presup' and fuente_financ='$cod_fuente' and ref_imput_presu='$ref_imput_presu'";$res=pg_query($sql);
@@ -74,10 +74,10 @@ if ($filas>0){  $registro=pg_fetch_array($res);
           <td><table width="620" border="0">
               <tr>
                 <td width="170"><span class="Estilo5">C&Oacute;DIGO PRESUPUESTARIO :</span></td>
-                <td width="220"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el C&oacute;digo de la Cuenta" value="<? echo $cod_presup ?>"  size="32" maxlength="32" readonly>  </span></td>
+                <td width="220"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el C&oacute;digo de la Cuenta" value="<?php  echo $cod_presup ?>"  size="32" maxlength="32" readonly>  </span></td>
                 <td width="60">&nbsp;</td>
                 <td width="100"><span class="Estilo5">FUENTE : </span></td>
-				<td width="70"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" value="<? echo $cod_fuente ?>" size="3" maxlength="2" readonly>  </span></td>
+				<td width="70"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" value="<?php  echo $cod_fuente ?>" size="3" maxlength="2" readonly>  </span></td>
               </tr>
           </table></td>
         </tr>
@@ -85,9 +85,9 @@ if ($filas>0){  $registro=pg_fetch_array($res);
           <td><table width="679">
             <tr>
               <td width="139"><span class="Estilo5">CODIGO CONTABLE : </span></td>
-              <td width="220"><span class="Estilo5"><input class="Estilo10" name="txtcod_contable" type="text" id="txtcod_contable" size="25" maxlength="30" value="<? echo $cod_contable?>" readonly >     </span></td>
+              <td width="220"><span class="Estilo5"><input class="Estilo10" name="txtcod_contable" type="text" id="txtcod_contable" size="25" maxlength="30" value="<?php  echo $cod_contable?>" readonly >     </span></td>
               <td width="132"><span class="Estilo5">MONTO CODIGO : </span></td>
-              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22"  value="<? echo $monto ?>" readonly>  </span></td>
+              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22"  value="<?php  echo $monto ?>" readonly>  </span></td>
             </tr>
           </table>  </td>
         </tr>
@@ -97,10 +97,10 @@ if ($filas>0){  $registro=pg_fetch_array($res);
           <td><table width="679">
             <tr>
               <td width="139"><span class="Estilo5">CODIGO ASOCIADO 1 : </span></td>
-              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo1" type="text" id="txtcodigo1" size="25" maxlength="30" value="<? echo $codigo1?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)" >     </span></td>
+              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo1" type="text" id="txtcodigo1" size="25" maxlength="30" value="<?php  echo $codigo1?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)" >     </span></td>
               <td width="60"><input class="Estilo10" name="btcatcta1" type="button" id="btcatcta1" title="Abrir Catalogo de Cuentas" onclick="VentanaCentrada('Cat_cuentasa1.php?criterio=','SIA','','750','500','true')" value="..."></td>
               <td width="132"><span class="Estilo5">MONTO CUENTA 1 : </span></td>
-              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto1" type="text" id="txtmonto1" size="25" style="text-align:right" maxlength="22"  value="<? echo $monto1 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
+              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto1" type="text" id="txtmonto1" size="25" style="text-align:right" maxlength="22"  value="<?php  echo $monto1 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table>  </td>
         </tr>
@@ -108,10 +108,10 @@ if ($filas>0){  $registro=pg_fetch_array($res);
           <td><table width="679">
             <tr>
               <td width="139"><span class="Estilo5">CODIGO ASOCIADO 2 : </span></td>
-              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo2" type="text" id="txtcodigo2" size="25" maxlength="30" value="<? echo $codigo2?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)">     </span></td>
+              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo2" type="text" id="txtcodigo2" size="25" maxlength="30" value="<?php  echo $codigo2?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)">     </span></td>
               <td width="60"><input class="Estilo10" name="btcatcta2" type="button" id="btcatcta2" title="Abrir Catalogo de Cuentas" onclick="VentanaCentrada('Cat_cuentasa2.php?criterio=','SIA','','750','500','true')" value="..."></td>
               <td width="132"><span class="Estilo5">MONTO CUENTA 2 : </span></td>
-              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto2" type="text" id="txtmonto2" size="25" style="text-align:right" maxlength="22"  value="<? echo $monto2 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
+              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto2" type="text" id="txtmonto2" size="25" style="text-align:right" maxlength="22"  value="<?php  echo $monto2 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table>  </td>
         </tr>
@@ -119,10 +119,10 @@ if ($filas>0){  $registro=pg_fetch_array($res);
           <td><table width="679">
             <tr>
               <td width="139"><span class="Estilo5">CODIGO ASOCIADO 3 : </span></td>
-              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo3" type="text" id="txtcodigo3" size="25" maxlength="30" value="<? echo $codigo3?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)">     </span></td>
+              <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtcodigo3" type="text" id="txtcodigo3" size="25" maxlength="30" value="<?php  echo $codigo3?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'-',patroncodigo,true)">     </span></td>
               <td width="60"><input class="Estilo10" name="btcatcta3" type="button" id="btcatcta3" title="Abrir Catalogo de Cuentas" onclick="VentanaCentrada('Cat_cuentasa3.php?criterio=','SIA','','750','500','true')" value="..."></td>
               <td width="132"><span class="Estilo5">MONTO CUENTA 3: </span></td>
-              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto3" type="text" id="txtmonto3" size="25" style="text-align:right" maxlength="22"  value="<? echo $monto3 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
+              <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtmonto3" type="text" id="txtmonto3" size="25" style="text-align:right" maxlength="22"  value="<?php  echo $monto3 ?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table>  </td>
         </tr>
@@ -132,11 +132,11 @@ if ($filas>0){  $registro=pg_fetch_array($res);
       </table>
         <table width="629" align="center">
           <tr>
-            <td width="7"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="5"><input class="Estilo10" name="txtref_comp" type="hidden" id="txtref_comp" value="<?echo $ref_comp?>"></td>
-            <td width="5"><input class="Estilo10" name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?echo $tipo_comp?>"></td>
-			<td width="5"><input class="Estilo10" name="txtref_imput_presu" type="hidden" id="txtref_imput_presu" value="<?echo $ref_imput_presu?>"></td>
-			<td width="5"><input class="Estilo10" name="txttipo_imput_presu" type="hidden" id="txttipo_imput_presu" value="<?echo $tipo_imput_presu?>"></td>
+            <td width="7"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="5"><input class="Estilo10" name="txtref_comp" type="hidden" id="txtref_comp" value="<?php echo $ref_comp?>"></td>
+            <td width="5"><input class="Estilo10" name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?php echo $tipo_comp?>"></td>
+			<td width="5"><input class="Estilo10" name="txtref_imput_presu" type="hidden" id="txtref_imput_presu" value="<?php echo $ref_imput_presu?>"></td>
+			<td width="5"><input class="Estilo10" name="txttipo_imput_presu" type="hidden" id="txttipo_imput_presu" value="<?php echo $tipo_imput_presu?>"></td>
 			<td width="5"><input class="Estilo10" name="txtcodigo4" type="hidden" id="txtcodigo4" value=""></td>
             <td width="5"><input class="Estilo10" name="txtmonto4" type="hidden" id="txtmonto4" value="0"></td>
 			<td width="5"><input class="Estilo10" name="txtcodigo5" type="hidden" id="txtcodigo5" value=""></td>
@@ -153,4 +153,4 @@ if ($filas>0){  $registro=pg_fetch_array($res);
 </form>
 </body>
 </html>
-<? pg_close(); ?>
+<?php  pg_close($conn); ?>

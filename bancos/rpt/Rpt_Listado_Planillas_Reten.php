@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc");
    $tipo_planilla_d=$_GET["tipo_planilla_d"];   $tipo_planilla_h=$_GET["tipo_planilla_h"];   $numero_planilla_d=$_GET["numero_planilla_d"];   $numero_planilla_h=$_GET["numero_planilla_h"];
    $fecha_d=$_GET["fecha_d"];   $fecha_h=$_GET["fecha_h"];   $tasa_d=$_GET["tasa_d"];   $tasa_h=$_GET["tasa_h"];   $tipo_en_d=$_GET["tipo_en_d"];   $tipo_en_h=$_GET["tipo_en_h"];
    $tipo_bene_d=$_GET["tipo_bene_d"];   $tipo_bene_h=$_GET["tipo_bene_h"];  $ordenado=$_GET["ordenado"]; $tipo_comp=$_GET["tipo_comp"];  $generado=$_GET["generado"];$tipo_rpt=$_GET["tipo_rpt"];
@@ -10,7 +10,7 @@ $criterio_s="  (BAN012.fecha_emision>='".$fecha_desde."') And (BAN012.fecha_emis
 if($tipo_comp==="ORDEN CANCELADA") { $criterio_s="  BAN012.fecha_emision<='".$fecha_hasta."' and BAN012.tipo_mov='O/P' and BAN012.referencia in (select nro_orden  from pag001 where status='I' and fecha_cheque>='".$fecha_desde."' and fecha_cheque<='".$fecha_hasta."') ";}
 if($tipo_comp==="CHEQUE ENTREGADO"){ $criterio_s="  BAN012.fecha_emision<='".$fecha_hasta."' and BAN012.tipo_mov='O/P' and ((BAN012.referencia='00000000' and BAN012.fecha_emision>='".$fecha_desde."' AND BAN012.fecha_emision<='".$fecha_hasta."') OR (BAN012.referencia in (select nro_orden  from pag001 where Status='I' and text(cod_banco)||text(nro_cheque) in (select text(cod_banco)||text(num_cheque) from ban006 where entregado='S' and fecha_entregado>='".$fecha_desde."' and fecha_entregado<='".$fecha_hasta."') )) )"; }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else {  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";}
 if($tipo_planilla_d==$tipo_planilla_h){$sql="SELECT descripcion,codigo FROM ban011 where codigo='".$tipo_planilla_d."'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
@@ -138,7 +138,7 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>NUMERO PLANILLA</strong></td>
@@ -152,7 +152,7 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>TASA</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO RETENC</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_planilla=$registro["nro_planilla"]; $fechae=$registro["fechae"]; $tipo_planilla=$registro["tipo_planilla"]; 
@@ -164,18 +164,18 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
            $nombre=conv_cadenas($nombre,0);  
 	?>	   
         <tr>
-           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_planilla; ?></td>
-           <td width="100" align="left"><? echo $fechae; ?></td>
-           <td width="100" align="left">'<? echo $tipo_planilla; ?></td>
-           <td width="100" align="left">'<? echo $referencia; ?></td>
-		   <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="justify"><? echo $nombre; ?></td>
-           <td width="100" align="right"><? echo $monto_pago; ?></td>
-           <td width="100" align="right"><? echo $monto_objeto; ?></td>
-           <td width="100" align="right"><? echo $tasa; ?></td>
-           <td width="100" align="right"><? echo $monto_retencion; ?></td>
+           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_planilla; ?></td>
+           <td width="100" align="left"><?php  echo $fechae; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_planilla; ?></td>
+           <td width="100" align="left">'<?php  echo $referencia; ?></td>
+		   <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre; ?></td>
+           <td width="100" align="right"><?php  echo $monto_pago; ?></td>
+           <td width="100" align="right"><?php  echo $monto_objeto; ?></td>
+           <td width="100" align="right"><?php  echo $tasa; ?></td>
+           <td width="100" align="right"><?php  echo $monto_retencion; ?></td>
          </tr>
-	<? } $totalp=formato_monto($totalp); $totalo=formato_monto($totalo); $totalr=formato_monto($totalr);
+	<?php } $totalp=formato_monto($totalp); $totalo=formato_monto($totalo); $totalr=formato_monto($totalr);
         ?>
 	   <tr> <td>&nbsp;</td>
 	   <tr>
@@ -184,13 +184,13 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="400" align="right"><strong>TOTAL :</strong></td>
-		<td width="100" align="right"><strong><? echo $totalp; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totalo; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalp; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalo; ?></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
-		<td width="100" align="right"><strong><? echo $totalr; ?></strong></font></td>
+		<td width="100" align="right"><strong><?php  echo $totalr; ?></strong></font></td>
       </tr>
       
-	  </table><?
+	  </table><?php 
 	}
 
    }

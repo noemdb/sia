@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <?php include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $codigo_mov=$_POST["txtcodigo_mov"]; $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"]; $p_apellido=$_POST["txtprimero_apellido"];
 $region_e=$_POST["txtregion_e"]; $estado_e=$_POST["txtestado_e"];  $municipio_e=$_POST["txtmunicipio_e"];  $ciudad_e=$_POST["txtciudad_e"]; $parroquia_e=$_POST["txtparroquia_e"]; $cod_estado=$_POST["txtcod_estado"];  $cod_muni=$_POST["txtcod_municipio"];
 ?>
@@ -6,7 +6,7 @@ $region_e=$_POST["txtregion_e"]; $estado_e=$_POST["txtestado_e"];  $municipio_e=
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Informaci&oacute;n Elegibles)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Informaci&oacute;n Elegibles)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -36,14 +36,14 @@ var mnombre; var mnombre2; var mnombre2; var mapellido1; var mapellido2;
 return true;}
 
 function chequea_estado(mform){ var cod_edo;  var cod_mun; cod_edo=mform.txtestado.value;  cod_mun=mform.txtestado.value+'01';
-ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<? echo $municipio_e;?>&cod_estado='+cod_edo, 'municipio', 'innerHTML');
-ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<? echo $ciudad_e;?>&cod_estado='+cod_edo, 'ciudad', 'innerHTML');
-ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia_e;?>&cod_muni='+cod_mun, 'parro', 'innerHTML');
+ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<?php  echo $municipio_e;?>&cod_estado='+cod_edo, 'municipio', 'innerHTML');
+ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<?php  echo $ciudad_e;?>&cod_estado='+cod_edo, 'ciudad', 'innerHTML');
+ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia_e;?>&cod_muni='+cod_mun, 'parro', 'innerHTML');
 return true;}
 function apaga_municipio(mthis){
 var mcod_mun;  apagar(mthis); mcod_mun=mthis.value;}
 function chequea_municipio(mform){ var mcod_mun; mcod_mun=mform.txtmunicipio.value;
-ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia_e;?>&cod_muni='+mcod_mun, 'parro', 'innerHTML');
+ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia_e;?>&cod_muni='+mcod_mun, 'parro', 'innerHTML');
 return true;}
 function chequea_fecha_nac(mform){ var mfecha; var mref=mform.txtfecha_nacimiento.value; var mfec; var yearn; var miFecha; var dif;
 var mhoy=new Date();  var year=mhoy.getFullYear(); var mmonth=mhoy.getMonth(); var mday=mhoy.getDay(); var ano=2000; var mes; var dia; mfecha=mref;
@@ -162,7 +162,7 @@ return true;}
                  <td width="57"><span class="Estilo5">SEXO : </span></td>
                  <td width="228"><span class="Estilo5"> <select name="txtsexo" size="1" id="txtsexo" onFocus="encender(this)" onBlur="apagar(this)"> <option>MASCULINO</option><option>FEMENINO</option> </select> </span></td>
                  <td width="161"><span class="Estilo5">FECHA DE NACIMIENTO  :</span></td>
-                 <td width="189"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onchange="chequea_fecha_nac(this.form)" > </span></td>
+                 <td width="189"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onchange="chequea_fecha_nac(this.form)" > </span></td>
                  <td width="75"><span class="Estilo5">EDAD : </span></td>
                  <td width="117"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="4" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
@@ -189,12 +189,12 @@ return true;}
                <tr>
                  <td width="73"><span class="Estilo5">ESTADO :</span></td>
                  <td width="323"><span class="Estilo5"> <div id="estado"><select name="txtestado" id="txtestado" onFocus="encender(this)" onBlur="apagar(this);" onchange="chequea_estado(this.form)">
-                    <option value="<? echo $cod_estado;?>"><? echo $estado_e;?></option></div></span></td>
-<script language="JavaScript" type="text/JavaScript">ajaxSenddoc('GET', 'cargaentidades.php?mestado=<? echo $estado_e;?>', 'estado', 'innerHTML'); </script>
+                    <option value="<?php  echo $cod_estado;?>"><?php  echo $estado_e;?></option></div></span></td>
+<script language="JavaScript" type="text/JavaScript">ajaxSenddoc('GET', 'cargaentidades.php?mestado=<?php  echo $estado_e;?>', 'estado', 'innerHTML'); </script>
                  <td width="92"><span class="Estilo5">MUNICIPIO  : </span></td>
                  <td width="355"><span class="Estilo5"><div id="municipio"><select name="txtmunicipio" id="txtmunicipio" onFocus="encender(this)" onBlur="apagar(this);" onchange="chequea_municipio(this.form)" >
-                     <option value="<? echo $cod_muni;?>"><? echo $municipio_e;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<? echo $municipio_e;?>&cod_estado='+cod_e, 'municipio', 'innerHTML'); </script>
+                     <option value="<?php  echo $cod_muni;?>"><?php  echo $municipio_e;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<?php  echo $municipio_e;?>&cod_estado='+cod_e, 'municipio', 'innerHTML'); </script>
                </tr>
              </table></td>
            </tr>
@@ -203,12 +203,12 @@ return true;}
                <tr>
                  <td width="73"><span class="Estilo5">CIUDAD  : </span></td>
                  <td width="333"><span class="Estilo5"> <div id="ciudad"><select name="txtciudad" id="txtciudad" onFocus="encender(this)" onBlur="apagar(this);">
-                    <option><? echo $ciudad_e;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<? echo $ciudad_e;?>&cod_estado='+cod_e, 'ciudad', 'innerHTML'); </script>
+                    <option><?php  echo $ciudad_e;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<?php  echo $ciudad_e;?>&cod_estado='+cod_e, 'ciudad', 'innerHTML'); </script>
                  <td width="92"><span class="Estilo5">PARROQUIA  : </span></td>
                  <td width="355"><span class="Estilo5"><div id="parro"><select name="txtparroquia" id="txtparroquia" onFocus="encender(this)" onBlur="apagar(this);">
-                    <option><? echo $parroquia_e;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtmunicipio.value; ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia_e;?>&cod_muni='+cod_e, 'parro', 'innerHTML'); </script>
+                    <option><?php  echo $parroquia_e;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtmunicipio.value; ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia_e;?>&cod_muni='+cod_e, 'parro', 'innerHTML'); </script>
                </tr>
              </table></td>
            </tr>
@@ -260,19 +260,19 @@ return true;}
    rows[1][2] = "Experiencia Laboral";
    rows[1][3] = "Informaci&oacute;n Familiar";
               </script>
-                <?include ("../class/class_tab.php");?>
+                <?php include ("../class/class_tab.php");?>
                 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
-                <!-- PESTAÑA 1 -->
+                <!-- PESTAï¿½A 1 -->
                 <div id="T11" class="tab-body" >
-                  <iframe src="Det_inc_inf_curricular_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_inf_curricular_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
-                <!-- PESTAÑA 2 -->
+                <!-- PESTAï¿½A 2 -->
                 <div id="T12" class="tab-body">
-                  <iframe src="Det_inc_exp_laboral_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_exp_laboral_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
-                <!-- PESTAÑA 3 -->
+                <!-- PESTAï¿½A 3 -->
                 <div id="T13" class="tab-body">
-                  <iframe src="Det_inc_inf_familiar_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_inf_familiar_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
               </div>
               </td>
@@ -281,7 +281,7 @@ return true;}
                   <div id="Layer3" style="position:absolute; width:859px; height:37px; z-index:2; left: 0px; top: 785px;">
           <table width="859">
                 <tr>
-                  <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+                  <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
                   <td width="564">&nbsp;</td>
                   <td width="88"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
                   <td width="88"><input name="Blanquear" type="reset" value="Blanquear"></td>

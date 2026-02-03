@@ -6,4 +6,4 @@ $StrSQL="select * from pre026 where codigo_mov='$codigo_mov' and cod_presup='$co
 $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $montoc=$registro["monto"];}$montoc=formato_monto($montoc);
 ?><input class="Estilo10" name="txtmonto_objeto" type="text" id="txtmonto_objeto" size="15" style="text-align:right" maxlength="22" onFocus="encender(this)" onBlur="apaga_objeto(this)"  onchange="chequea_objeto(this.form);" value="<?php echo $montoc ?>" onKeypress="return validarNum(event)" >
-<?pg_close();?>
+<?php pg_close($conn);?>

@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
 if (!$_GET){ $referencia_comp=''; $tipo_compromiso=''; $cod_comp='';}
  else { $nro_orden = $_GET["txtnro_orden"]; $tipo_compromiso = $_GET["txttipo_compromiso"]; $cod_comp = $tipo_compromiso;}
 
 $rif_emp="G-20000831-8"; $flete="NUESTRO CARGO";   $direccion_emp="CALLEJON LA MOSCA ENTRE AV. CEDEÑO Y YARACUY";
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * from ORD_COMPRA where tipo_compromiso='$tipo_compromiso' and nro_orden='$nro_orden'";
 $fecha_orden=""; $unidad_solicitante=""; $tipo_documento=""; $nro_documento=""; $rif_proveedor=""; $nro_requisicion=""; $inf_canc=""; $nombre_abrev_comp=""; $nombre=""; $des_fuente_financ=""; $concepto="";
 $fecha_requisicion=""; $tiempo_entrega=""; $lugar_entrega=""; $direccion_entrega=""; $operacion=""; $dias_credito=""; $afecta_presupuesto=""; $fuente_financ=""; $anulado=""; $fecha_anulado=""; $cancelada="";
@@ -297,5 +297,5 @@ class PDF extends FPDF{
 	$pdf->MultiCell($w,3,$denominacion,0); 	 
   }  
   $pdf->Output();
-  pg_close();
+  pg_close($conn);
 ?>

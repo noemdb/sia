@@ -1,8 +1,8 @@
-<?include ("../class/seguridad.inc");?>
-<?include ("../class/funciones.php");?>
+<?php include ("../class/seguridad.inc");?>
+<?php include ("../class/funciones.php");?>
 <?php include ("../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $tipo_nomina_d="";
    $tipo_nomina_h="";
    ?>
@@ -63,7 +63,7 @@ var url;
 -->
 </style>
 </head>
-<?  $descripcion_d="";
+<?php   $descripcion_d="";
  $descripcion_h="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ";
 $res=pg_query($sql);
@@ -283,4 +283,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

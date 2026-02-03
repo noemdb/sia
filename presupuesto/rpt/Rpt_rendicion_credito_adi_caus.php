@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");
 $ref_credito=$_GET["ref_credito"]; $cod_presup_d=$_GET["cod_presup_d"]; $cod_presup_h=$_GET["cod_presup_h"]; $fecha_d=$_GET["fecha_d"];  $fecha_h=$_GET["fecha_h"];$tipo_rep=$_GET["tipo_rep"]; $subt_cod=$_GET["subt_cod"];
 $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a"); $cod_fuented="00"; $cod_fuenteh="99";
 $criterio1=""; $criterio2="";  $php_os=PHP_OS; 
@@ -13,7 +13,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{
   $sql="Select * from SIA000 order by campo001";$resultado=pg_query($sql);if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"]; $Rif_Emp=$registro["campo007"]; $criterio3=$registro["campo005"]; }
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
@@ -45,15 +45,15 @@ else{
    }else{$criterio="cod_presup>='".$cod_presupd."' and cod_presup<='".$cod_presuph."' and  cod_fuente>='".$cod_fuented."' and cod_fuente<='".$cod_fuenteh."'";}
   
   
-    $res=pg_exec($conn,"SELECT ACTUALIZA_REND_CREDITO('E','$cod_mov','A','$ref_credito','$sfechad','$sfechah')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+    $res=pg_exec($conn,"SELECT ACTUALIZA_REND_CREDITO('E','$cod_mov','A','$ref_credito','$sfechad','$sfechah')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
     $StrSQL= "INSERT INTO pre020 SELECT '".$cod_mov."' as nombre_usuario,'A' as Tipo_Registro, cod_presup, cod_fuente, denominacion,substr(cod_presup,1,".$c.") as cod_categoria,"."'' as Denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as Denomina_Par,Status_Dist,Func_Inv,Ord_Cord,Aplicacion,Cod_Unidad_Ejec, ";
     $StrSQL=$StrSQL."asignado,disponible,disp_diferida,0 as compromiso,0 as causado, 0 as pagado, 0 as traslados, 0 as trasladon, 0 as adicion, 0 as disminucion, 0 as Diferido,0 as CompromisoM,0 as CausadoM, 0 as PagadoM, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
     $StrSQL=$StrSQL." FROM pre001 WHERE (length(cod_presup)=".$l_c.") and (text(cod_presup)||text(cod_fuente) in (select text(cod_presup)||text(fuente_financ) from pre039 where pre039.referencia_modif='$ref_credito') ) and ".$criterio;  
-    $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+    $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
  
     
-    $res=pg_exec($conn,"SELECT ACTUALIZA_REND_CREDITO('C','$cod_mov','A','$ref_credito','$sfechad','$sfechah')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+    $res=pg_exec($conn,"SELECT ACTUALIZA_REND_CREDITO('C','$cod_mov','A','$ref_credito','$sfechad','$sfechah')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 	$ordenado="ORDER BY PRE012.Fecha_Doc, PRE012.Tipo_Registro, PRE012.Referencia_Doc";
 	if($subt_cod=="S"){$ordenado="ORDER BY PRE012.Cod_Presup, PRE012.Fecha_Doc, PRE012.Tipo_Registro, PRE012.Referencia_Doc";}
@@ -190,15 +190,15 @@ else{
        <table border="1" cellspacing='0' cellpadding='0' align="left">
 	     <tr height="20">
 		  <td width="100" align="left" ><strong></strong></td>
-		  <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio3; ?></strong></font></td>
+		  <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio3; ?></strong></font></td>
 	    </tr>
 	    <tr height="20">
 		  <td width="100" align="left" ><strong></strong></td>
-		  <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		  <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	    </tr>
 		<tr height="20">
 		  <td width="100" align="left" ><strong></strong></td>
-		  <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio2; ?></strong></font></td>
+		  <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio2; ?></strong></font></td>
 	    </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Nro Orden Pago</strong></td>
@@ -206,29 +206,29 @@ else{
            <td width="500" align="center" bgcolor="#99CCFF" ><strong>Concepto</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Monto</strong></td>
          </tr>
-         <?  $i=0; $total_monto=0; $sub_total_monto=0; $prev_cod_presup=""; $res=pg_query($sSQL);
+         <?php   $i=0; $total_monto=0; $sub_total_monto=0; $prev_cod_presup=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"];  $cod_presup_grupo=$cod_presup; $denominacion_grupo=$denominacion;
 			  if(($prev_cod_presup<>$cod_presup_grupo)and($subt_cod=="S")){
 			    if($sub_total_monto>0){ $sub_total_monto=formato_monto($sub_total_monto);?>	 
 				    <tr>
 			    	   <td width="100" align="left"></td>
 			    	   <td width="400" align="right"></td>
-			           <td width="500" align="right">SUB-TOTAL : <strong><? echo $prev_cod_presup; ?></strong></td>
-			           <td width="100" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="500" align="right">SUB-TOTAL : <strong><?php  echo $prev_cod_presup; ?></strong></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>	
 			        <tr>
 				        <td width="100" align="left"></td>
 			        </tr>	
-                  <?} ?>	   
+                  <?php } ?>	   
 			      <tr>
 				   <td width="100" align="left"></td>
-				   <td width="400" align="left"><? echo $cod_presup_grupo; ?></td>
-				   <td width="500" align="left"><? echo $denominacion_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $cod_presup_grupo; ?></td>
+				   <td width="500" align="left"><?php  echo $denominacion_grupo; ?></td>
 			      </tr>
 			      <tr>
 				    <td width="100" align="left"></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_presup=$cod_presup_grupo; $sub_total_monto=0; }
 
 			   $referencia_doc=$registro["referencia_doc"]; $referencia_caus=$registro["referencia_caus"]; $nombre=$registro["nombre"]; $descripcion_doc=$registro["descripcion_doc"]; 			   $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; $monto=$registro["monto"]; 
@@ -236,32 +236,32 @@ else{
 			   $monto=formato_monto($monto);	  $nombre=conv_cadenas($nombre,0);  $descripcion_doc=conv_cadenas($descripcion_doc,0); 
 			    ?>	   
         		<tr>
-           			<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $referencia_caus; ?></td>
-           			<td width="400" align="justify"><? echo $nombre; ?></td>
-           			<td width="500" align="justify"><? echo $descripcion_doc; ?></td>
-           			<td width="100" align="right"><? echo $monto; ?></td>
+           			<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $referencia_caus; ?></td>
+           			<td width="400" align="justify"><?php  echo $nombre; ?></td>
+           			<td width="500" align="justify"><?php  echo $descripcion_doc; ?></td>
+           			<td width="100" align="right"><?php  echo $monto; ?></td>
          		</tr>
-	<?      } $total_monto=formato_monto($total_monto); 
+	<?php       } $total_monto=formato_monto($total_monto); 
 			    if(($sub_total_monto>0)and($subt_cod=="S")){ $sub_total_monto=formato_monto($sub_total_monto);  		
 			     ?>	 				 
 					<tr>
 			    	   <td width="100" align="left"></td>
 			    	   <td width="400" align="right"></td>
-			           <td width="500" align="right"><strong>SUB-TOTAL : <? echo $prev_cod_presup; ?></strong></td>
-			           <td width="100" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="500" align="right"><strong>SUB-TOTAL : <?php  echo $prev_cod_presup; ?></strong></td>
+			           <td width="100" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>			
 			        <tr>
 				        <td width="100" align="left"></td>
 			        </tr>	
-                <?}	?>	 	
+                <?php }	?>	 	
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="400" align="left"></td>
 			    <td width="500" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="100" align="right"><strong><? echo $total_monto; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total_monto; ?></strong></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?
+		       <?php  				  
+		  ?></table><?php 
         }
 }		  
 ?>

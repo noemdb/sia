@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");$php_os=PHP_OS; 
+<?php  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");$php_os=PHP_OS; 
    $tipo_nominad=$_GET["tipo_nominad"];   $tipo_nominah=$_GET["tipo_nominah"];   $cod_empleado_d=$_GET["cod_empleado_d"]; $tipo_rpt=$_GET["tipo_rpt"];   $cod_empleado_h=$_GET["cod_empleado_h"];   $cedula_d=$_GET["cedula_d"];   $cedula_h=$_GET["cedula_h"];
    $sexo=$_GET["sexo"];   $estado_civil=$_GET["estado_civil"];   $fecha_d=$_GET["fecha_d"];   $fecha_h=$_GET["fecha_h"];   $edad_d=$_GET["edad_d"];   $edad_h=$_GET["edad_h"];  $mesnac_d=$_GET["mesnac_d"];   $mesnac_h=$_GET["mesnac_h"]; 
    $fecha_ingreso_d=$_GET["fecha_ingreso_d"];   $fecha_ingreso_h=$_GET["fecha_ingreso_h"];   $fecha_egreso_d=$_GET["fecha_egreso_d"];   $fecha_egreso_h=$_GET["fecha_egreso_h"];
@@ -405,7 +405,7 @@
    }
    $nomb_rpt="Rpt_list_trab_cri.xml"; $rpdf=1; if(($c3=="S")or($c4=="S")){$nomb_rpt="Rpt_list_trab_cri_col.xml"; $rpdf=2;}
    $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    
         $sSQL = "SELECT nom006.cod_empleado, nom006.nombre, nom006.cedula, nom006.Nacionalidad, nom006.fecha_ingreso, nom006.Status, nom006.tipo_nomina, nom001.Descripcion, nom006.cod_categoria, nom006.tipo_pago, nom006.cta_empleado, nom006.cod_banco, nom006.nombre_banco, nom006.cta_empresa, 
@@ -613,16 +613,16 @@
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>CEDULA</strong></td>
            <td width="300" align="left" bgcolor="#99CCFF"><strong>NOMBRE</strong></td>
-           <td width="200" align="left" bgcolor="#99CCFF"><strong><? echo $enc1; ?></strong></td> 
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc2; ?></strong></td>
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc3; ?></strong></td>
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc4; ?> </strong></td>
-		   <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc5; ?></strong></td> 
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc6; ?></strong></td>
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc7; ?></strong></td>
-           <td width="200" align="center" bgcolor="#99CCFF"><strong><? echo $enc8; ?> </strong></td>
+           <td width="200" align="left" bgcolor="#99CCFF"><strong><?php  echo $enc1; ?></strong></td> 
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc2; ?></strong></td>
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc3; ?></strong></td>
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc4; ?> </strong></td>
+		   <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc5; ?></strong></td> 
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc6; ?></strong></td>
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc7; ?></strong></td>
+           <td width="200" align="center" bgcolor="#99CCFF"><strong><?php  echo $enc8; ?> </strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; $alin1="left"; $alin2="left"; $alin3="left"; $alin4="left"; $alin5="left"; $alin6="left"; $alin7="left"; $alin8="left";
 		   
@@ -650,25 +650,25 @@
 	
 	?>	   
 		   <tr>
-           <td width="100" align="left" style="<? echo $stiloc; ?>"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cedula; ?></td>
-           <td width="300" align="left"><? echo $nombre; ?></td>
-           <td width="200" align="<? echo $alin1; ?>" style="<? echo $stilo1; ?>"><? echo $col1; ?></td>
-           <td width="200" align="<? echo $alin2; ?>" style="<? echo $stilo2; ?>"><? echo $col2; ?></td>
-           <td width="200" align="<? echo $alin3; ?>" style="<? echo $stilo3; ?>"><? echo $col3; ?></td>
-           <td width="200" align="<? echo $alin4; ?>" style="<? echo $stilo4; ?>"><? echo $col4; ?></td>
+           <td width="100" align="left" style="<?php  echo $stiloc; ?>"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cedula; ?></td>
+           <td width="300" align="left"><?php  echo $nombre; ?></td>
+           <td width="200" align="<?php  echo $alin1; ?>" style="<?php  echo $stilo1; ?>"><?php  echo $col1; ?></td>
+           <td width="200" align="<?php  echo $alin2; ?>" style="<?php  echo $stilo2; ?>"><?php  echo $col2; ?></td>
+           <td width="200" align="<?php  echo $alin3; ?>" style="<?php  echo $stilo3; ?>"><?php  echo $col3; ?></td>
+           <td width="200" align="<?php  echo $alin4; ?>" style="<?php  echo $stilo4; ?>"><?php  echo $col4; ?></td>
 		   
 		   
-		   <td width="200" align="<? echo $alin5; ?>" style="<? echo $stilo5; ?>"><? echo $col5; ?></td>
-           <td width="200" align="<? echo $alin6; ?>" style="<? echo $stilo6; ?>"><? echo $col6; ?></td>
-           <td width="200" align="<? echo $alin7; ?>" style="<? echo $stilo7; ?>"><? echo $col7; ?></td>
-           <td width="200" align="<? echo $alin8; ?>" style="<? echo $stilo8; ?>"><? echo $col8; ?></td>
+		   <td width="200" align="<?php  echo $alin5; ?>" style="<?php  echo $stilo5; ?>"><?php  echo $col5; ?></td>
+           <td width="200" align="<?php  echo $alin6; ?>" style="<?php  echo $stilo6; ?>"><?php  echo $col6; ?></td>
+           <td width="200" align="<?php  echo $alin7; ?>" style="<?php  echo $stilo7; ?>"><?php  echo $col7; ?></td>
+           <td width="200" align="<?php  echo $alin8; ?>" style="<?php  echo $stilo8; ?>"><?php  echo $col8; ?></td>
          </tr>
-	<? }   ?>
+	<?php }   ?>
 	  <tr>
            <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"></td>
-           <td width="300" align="left"><strong>CANTIDAD TRABAJADORES: <? echo $cant; ?></strong></td>
+           <td width="300" align="left"><strong>CANTIDAD TRABAJADORES: <?php  echo $cant; ?></strong></td>
          </tr>
-	  </table><?
+	  </table><?php 
 	}
 		
 	}	

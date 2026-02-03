@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME"); if (!$_GET){$cod_tipo_personal="";} else{$cod_tipo_personal=$_GET["codigo"];} ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME"); if (!$_GET){$cod_tipo_personal="";} else{$cod_tipo_personal=$_GET["codigo"];} ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -28,13 +28,13 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM015 where cod_tipo_personal='$cod_tipo_personal'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $des_tipo_personal=""; $fijo_cont=""; $emp_obr="";
 If($registro=pg_fetch_array($res,0)){$cod_tipo_personal=$registro["cod_tipo_personal"]; $des_tipo_personal=$registro["des_tipo_personal"]; $fijo_cont=$registro["fijo_cont"]; $emp_obr=$registro["emp_obr"]; }
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="52" border="0" bgcolor="#000066">
@@ -66,7 +66,7 @@ pg_close();
             <td><table width="866">
                 <tr>
                   <td width="204" ><span class="Estilo5">C&Oacute;DIGO TIPO DE PERSONAL : </span></td>
-                  <td width="660" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_tipo_personal" type="text" id="txtcod_tipo_personal" size="15" maxlength="5"  readonly value="<?echo $cod_tipo_personal?>" > </span></td>
+                  <td width="660" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_tipo_personal" type="text" id="txtcod_tipo_personal" size="15" maxlength="5"  readonly value="<?php echo $cod_tipo_personal?>" > </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -74,7 +74,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="205" ><span class="Estilo5">DESCRIPCI&Oacute;N TIPO DE PERSONAL : </span></td>
-                 <td width="660" ><span class="Estilo5"><textarea name="txtdes_tipo_personal" cols="70" maxlength="100" class="Estilo10" id="txtdes_tipo_personal" onFocus="encender(this)" onBlur="apagar(this)" ><?echo $des_tipo_personal?></textarea></span></td>
+                 <td width="660" ><span class="Estilo5"><textarea name="txtdes_tipo_personal" cols="70" maxlength="100" class="Estilo10" id="txtdes_tipo_personal" onFocus="encender(this)" onBlur="apagar(this)" ><?php echo $des_tipo_personal?></textarea></span></td>
                </tr>
              </table></td>
           </tr>

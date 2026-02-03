@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103, campo104 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U"; $modulo="09";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $Nom_usuario=$registro["campo104"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  $posicion=strpos($Mcamino,'S'); $criterio="";
-if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 $equipo = getenv("COMPUTERNAME"); $codigo_mov=""; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -72,12 +72,12 @@ return true;}
           </table>
 
               <div id="T11" class="tab-body">
-              <iframe src="Det_nom_usuarios.php?criterio=<?echo $criterio?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_nom_usuarios.php?criterio=<?php echo $criterio?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
               </div>
          <table width="863" border="0"> <tr> <td height="10">&nbsp;</td> </tr> </table>
         <table width="923">
           <tr>
-            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="139"><input name="Submit" type="reset" value="Blanquear"></td>
             <td width="142" valign="middle"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>
           </tr>
@@ -89,4 +89,4 @@ return true;}
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
    $tipo_nomina_d=$_GET["tipo_nomina_d"];
    $tipo_nomina_h=$_GET["tipo_nomina_h"];
@@ -19,7 +19,7 @@ include ("../../class/conect.php");
       $fecha_hasta=$ano1.$mes1.$dia1;
 //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else
    {
 

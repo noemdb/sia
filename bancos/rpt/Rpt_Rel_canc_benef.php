@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"]; $tipo_rep=$_GET["tipo_rpt"]; $det_benef=$_GET["det_benef"]; $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
  $sSQLb="select sum(monto_mov_libro) from ban004 where (ban004.ced_rif='$cedula_d') and (anulado='N')"; 
  $sSQLb="select ban006.ced_rif,pre099.nombre,pre099.direccion,pre099.rif,pre099.representante_legal,ban006.cod_banco,ban006.num_cheque,ban006.fecha,ban006.nro_Orden_pago,ban006.concepto,ban006.monto_cheque
@@ -160,7 +160,7 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
            <td width="300" align="center" bgcolor="#99CCFF"><strong>Representante</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Cancelado</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL); $total=0;
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$ced_rif=$registro["ced_rif"]; $nombre=$registro["nombre"]; $direccion=$registro["direccion"]; $monto_tot=$registro["monto_tot"];
@@ -168,16 +168,16 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
 		$nombre=conv_cadenas($nombre,0); $direccion=conv_cadenas($direccion,0);  $representante_legal=conv_cadenas($representante_legal,0); 
 	?>	   
 	    <tr>
-           <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="left"><? echo $nombre; ?></td>
-           <td width="400" align="left"><? echo $direccion; ?></td>
-           <td width="300" align="left"><? echo $representante_legal; ?></td>
-           <td width="100" align="right"><? echo $monto_tot; ?></td>
+           <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="left"><?php  echo $nombre; ?></td>
+           <td width="400" align="left"><?php  echo $direccion; ?></td>
+           <td width="300" align="left"><?php  echo $representante_legal; ?></td>
+           <td width="100" align="right"><?php  echo $monto_tot; ?></td>
          </tr>
 	
-	<? } ?>
+	<?php } ?>
 	      
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

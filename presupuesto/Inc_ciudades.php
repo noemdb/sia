@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Ciudades)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Ciudades)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -19,11 +19,11 @@ function LlamarURL(url){  document.location = url; }
 function revisar(){
 var f=document.form1;
 var Valido;
-    if(f.txtCodigo_Ciudad.value==""){alert("Código de la Ciudad no puede estar Vacio");return false;}
+    if(f.txtCodigo_Ciudad.value==""){alert("Cï¿½digo de la Ciudad no puede estar Vacio");return false;}
     if(f.txtNombre_Ciudad.value==""){alert("Nombre de la Ciudad no puede estar Vacia"); return false; }
        else{f.txtNombre_Ciudad.value=f.txtNombre_Ciudad.value.toUpperCase();}
     if(f.txtCodigo_Ciudad.value.length==4){f.txtCodigo_Ciudad.value=f.txtCodigo_Ciudad.value.toUpperCase();}
-       else{alert("Longitud Código de la Ciudad Invalido");return false;}
+       else{alert("Longitud Cï¿½digo de la Ciudad Invalido");return false;}
 document.form1.submit;
 return true;}
 function chequea_codigo(mform){

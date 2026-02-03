@@ -1,9 +1,9 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
 if (!$_GET){$cod_banco='';$num_cheque=''; }  else{$cod_banco=$_GET["cod_banco"];$num_cheque=$_GET["num_cheque"];}  $fecha_hoy=asigna_fecha_hoy(); 
 $tipo_rpt="PDF"; $tipo_rpt="TXT";
 $sql="Select * from EDO_CHEQUES where cod_banco='$cod_banco' and num_cheque='$num_cheque'";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos; .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos; .</b></p>"; exit; }
 $nombre_banco="";$nro_cuenta="";$concepto="";$num_cheque=""; $nro_ordenp=""; $nro_orden=""; $tipo_causado=""; $nombre_benef=""; $ced_rif=""; $concepto=""; $monto_cheque=0; $fecha=""; $mes=""; $inf_usuario=""; $anulado="N";  $fecha_anulado="";  $tipo_pago=""; $edo_cheque=""; $entregado="N";$fecha_entregado="";$ced_rif_recib="";$nombre_recib="";
 $res=pg_query($sql);$filas=pg_num_rows($res); 
 //$resm=pg_query($sqlm);$filasm=pg_num_rows($resm);
@@ -254,5 +254,5 @@ if($tipo_rpt=="TXT"){ $nombre_benef=utf8_decode($nombre_benef); $concepto=utf8_d
 	   
  
 } 
- pg_close();
+ pg_close($conn);
 ?>

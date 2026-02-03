@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $mes=$_GET["mes"]; $ano=$_GET["ano"];  $codigo_mov=$_GET["codigo_mov"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $fecha_d="01-".$mes."-".$ano; $fecha_h=colocar_udiames($fecha_d); $fecha_1=formato_aaaammdd($fecha_d);  $fecha_2=formato_aaaammdd($fecha_h);
@@ -176,6 +176,6 @@ $ced_rif=$registro["ced_rif"]; $chq_o_f_c=$registro["chq_o_f_c"]; $tipo_pago=$re
    }        
 }
 }
-pg_close();?>
+pg_close($conn);?>
 <!-- -->
-<iframe src="Det_inc_gasto_flujo.php?criterio=<?echo $mes?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+<iframe src="Det_inc_gasto_flujo.php?criterio=<?php echo $mes?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>

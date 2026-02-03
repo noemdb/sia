@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$tipo_comp_d=$_GET["tipo_comp_d"];$tipo_comp_h=$_GET["tipo_comp_h"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_comp_d="";$tipo_comp_h="zzzz";$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
    $sSQL = "select tipo_comp, des_tipo_Comp, cod_Contable, cod_part_iva, func_inv_tpcomp, c_imp_unico from pre016 where pre016.tipo_comp>='".$tipo_comp_d."' and pre016.tipo_comp<='".$tipo_comp_h."' order by tipo_comp";
 
@@ -96,21 +96,21 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="left" bgcolor="#99CCFF"><strong>TIPO GASTO</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>PARTIDA IVA FIJA</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_comp=$registro["tipo_comp"]; $des_tipo_comp=$registro["des_tipo_comp"]; $cod_contable=$registro["cod_contable"]; $cod_part_iva=$registro["cod_part_iva"]; $func_inv_tpcomp=$registro["func_inv_tpcomp"]; $c_imp_unico=$registro["c_imp_unico"];
 		$des_tipo_comp=conv_cadenas($des_tipo_comp,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_comp; ?></td>
-           <td width="400" align="left"><? echo $des_tipo_comp; ?></td>
-           <td width="100" align="left">'<? echo $cod_contable; ?></td>
-           <td width="100" align="left">'<? echo $cod_part_iva; ?></td>
-           <td width="100" align="left">'<? echo $func_inv_tpcomp; ?></td>
-           <td width="100" align="left">'<? echo $c_imp_unico; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_comp; ?></td>
+           <td width="400" align="left"><?php  echo $des_tipo_comp; ?></td>
+           <td width="100" align="left">'<?php  echo $cod_contable; ?></td>
+           <td width="100" align="left">'<?php  echo $cod_part_iva; ?></td>
+           <td width="100" align="left">'<?php  echo $func_inv_tpcomp; ?></td>
+           <td width="100" align="left">'<?php  echo $c_imp_unico; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -119,7 +119,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

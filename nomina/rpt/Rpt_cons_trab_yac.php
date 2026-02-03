@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
 
 $nomb_firma="Ing. Yetzi Machado"; $cargo_firma="Director de Recursos Humanos (E)";
 $ciudade="Barquisimeto"; $mesd="Enero"; $diad="01"; $anod="2012";
@@ -7,7 +7,7 @@ $diad=substr($fecha_emi,0,2); $mes_emi=substr($fecha_emi,3,2); $anod=substr($fec
 if ($mes_emi=='01'){$mesd="Enero";}elseif ($mes_emi=='02'){$mesd="Febrero";}elseif ($mes_emi=='03'){$mesd="Marzo";}elseif ($mes_emi=='04'){$mesd="Abril";}elseif ($mes_emi=='05'){$mesd="Mayo";}elseif ($mes_emi=='06'){$mesd="Junio";}elseif ($mes_emi=='07'){$mesd="Julio";}elseif ($mes_emi=='08'){$mesd="Agosto";}elseif ($mes_emi=='09'){$mesd="Septiembre";}elseif ($mes_emi=='10'){$mesd="Octubre";}elseif ($mes_emi=='11'){$mesd="Noviembre";}elseif ($mes_emi=='12'){$mesd="Diciembre";}
 $dfechan=formato_aaaammdd($fecha_desde); $hfechan=formato_aaaammdd($fecha_hasta);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  alert('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  alert('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 
 $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $descripcion_dep=""; $des_cargo="";
@@ -32,7 +32,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $cod_empleado=$registro["cod_em
   $tiene_aus_pro=$registro["tiene_aus_pro"]; $motivo_ausencia=$registro["motivo_ausencia"];  $fecha_aus_desde=$registro["fecha_aus_desde"]; $fecha_aus_hasta=$registro["fecha_aus_hasta"];  $fecha_aus_desde=formato_ddmmaaaa($fecha_aus_desde); $fecha_aus_hasta=formato_ddmmaaaa($fecha_aus_hasta);
   $inf_usuario=$registro["inf_usuario"]; $monto_declaracion=formato_monto($monto_declaracion); $edad=round($edad);
   $sueldo=$registro["sueldo"]; $prima=$registro["prima"]; $compensacion=$registro["compensacion"]; $otros=$registro["otros"]; $sueldo_integral=$registro["sueldo_integral"];
-} else { $error=1; ?> <script language="JavaScript">  alert('CODIGO DE TRABAJADOR NO LOCALIZADO'); </script>   <?}
+} else { $error=1; ?> <script language="JavaScript">  alert('CODIGO DE TRABAJADOR NO LOCALIZADO'); </script>   <?php }
 
 if($error==0){ $con_sue_bas=""; $con_compen=""; $con_sue_int=""; $con_sue_tot=""; 
   $sql="Select * from NOM001 where tipo_nomina='$tipo_nomina'";  $res=pg_query($sql); $filas=pg_num_rows($res);

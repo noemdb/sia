@@ -1,7 +1,7 @@
-<?include ("../../class/phpreports/PHPReportMaker.php");?>
-<?include ("../../class/conect.php");
+<?php include ("../../class/phpreports/PHPReportMaker.php");?>
+<?php include ("../../class/conect.php");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{
  }
    $partida_d=$_GET["partida_d"];

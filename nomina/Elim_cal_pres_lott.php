@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");   $fecha_tope="30/04/2012";  $fecha_hoy=asigna_fecha_hoy(); $fecha_hoy="01".substr($fecha_hoy,2,8);
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");   $fecha_tope="30/04/2012";  $fecha_hoy=asigna_fecha_hoy(); $fecha_hoy="01".substr($fecha_hoy,2,8);
 if (!$_GET){$criterio="";} else{$criterio=$_GET["Gcriterio"];}  $cod_empleado=$criterio;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -40,11 +40,11 @@ return true;}
 
 </script>
 </head>
-<? $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php  $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select cod_empleado,nombre,cedula,fecha_ingreso,tipo_nomina FROM NOM006 where (cod_empleado='$cod_empleado')"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $nombre=""; $cedula=""; $fecha_ingreso=""; $tipo_nomina="00"; if($filas>=1){ $registro=pg_fetch_array($res,0);
 $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $tipo_nomina=$registro["tipo_nomina"]; $fecha_ingreso=$registro["fecha_ingreso"];  $fecha_ingreso=formato_ddmmaaaa($fecha_ingreso); $cod_empleado=$registro["cod_empleado"];  }
-pg_close(); $fecha_hoy=colocar_pdiames($fecha_hoy); 
+pg_close($conn); $fecha_hoy=colocar_pdiames($fecha_hoy); 
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -58,8 +58,8 @@ pg_close(); $fecha_hoy=colocar_pdiames($fecha_hoy);
   <tr>
     <td width="92" height="403"><table width="92" height="403" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
     <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('Act_cal_prest_lott.php?Gcodigo=C<?echo $cod_empleado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llamar_Ventana('Act_cal_prest_lott.php?Gcodigo=C<?echo $cod_empleado?>');">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('Act_cal_prest_lott.php?Gcodigo=C<?php echo $cod_empleado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="javascript:Llamar_Ventana('Act_cal_prest_lott.php?Gcodigo=C<?php echo $cod_empleado?>');">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -78,9 +78,9 @@ pg_close(); $fecha_hoy=colocar_pdiames($fecha_hoy);
              <td><table width="866">
                  <tr>
                    <td width="156"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR  : </span></td>
-                   <td width="110"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_empleado?>" > </span></td>
+                   <td width="110"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_empleado?>" > </span></td>
                    <td width="50"><input class="Estilo10" name="btconcepto" type="button" id="bttrabajador" title="Abrir Catalogo Trabajadores"  onClick="VentanaCentrada('Cat_trabajadores.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?echo $nombre?>"> </span></td>
+                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?php echo $nombre?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -88,7 +88,7 @@ pg_close(); $fecha_hoy=colocar_pdiames($fecha_hoy);
            <td><table width="866">
                  <tr>
                    <td width="150"><span class="Estilo5">TIPO DE NOMINA : </span></td>
-                   <td width="286"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?echo $tipo_nomina?>"> </span></td>
+                   <td width="286"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="2" value="<?php echo $tipo_nomina?>"> </span></td>
                    <td width="430"><span class="Estilo5"> </span></td>
                  </tr>
              </table></td>
@@ -98,7 +98,7 @@ pg_close(); $fecha_hoy=colocar_pdiames($fecha_hoy);
              <td><table width="876">
                <tr>
                  <td width="146"><span class="Estilo5">FECHA ELIMINAR DESDE :</span></td>
-                 <td width="730"><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" ></span></td>
+                 <td width="730"><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" ></span></td>
                </tr>
              </table></td>
            </tr>

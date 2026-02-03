@@ -1,7 +1,7 @@
-<? include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_nomina_d=$_GET["tipo_nomina_d"];$tipo_nomina_h=$_GET["tipo_nomina_h"];$cod_concepto_d=$_GET["cod_concepto_d"];$cod_concepto_h=$_GET["cod_concepto_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
     
    $sSQL = "SELECT nom011.tipo_nomina, nom001.Descripcion, nom011.cod_empleado, nom006.nombre, nom011.cod_concepto, nom002.denominacion, nom011.cantidad, nom011.Monto, nom011.Fecha_Ini, nom011.Fecha_Exp, nom011.Acumulado, nom011.Saldo, nom011.Calculable, nom011.Activo, nom011.Cod_Presup, nom011.Prestamo, nom011.Monto_Prestamo, nom011.Nro_Cuotas, nom011.Nro_Cuotas_C, nom006.Cedula, nom006.Cedula,to_char(Fecha_Ini,'DD/MM/YYYY') as fechai,to_char(Fecha_Exp,'DD/MM/YYYY') as fechae
@@ -132,7 +132,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 		 </tr>
 		 <tr height="20">
 		    	<td width="100" align="left" ><strong>Tipo Nomina: </strong></td>
-		    	<td width="400" align="left" ><strong>'<? echo $tipo_nomina."    ".$descripcion; ?></strong></td>
+		    	<td width="400" align="left" ><strong>'<?php  echo $tipo_nomina."    ".$descripcion; ?></strong></td>
 		 </tr>
 		 <tr height="20">
 		   <td width="100" align="left"  bgcolor="#99CCFF"><strong>Codigo</strong></td>
@@ -148,7 +148,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 		 </tr>
 		 <tr height="20">
 		 </tr>
-		<?  $i=0; $cantidad=0; $total_cantidad=0; $sub_total_monto=0; $prev_cod_concepto=""; $res=pg_query($sSQL);
+		<?php   $i=0; $cantidad=0; $total_cantidad=0; $sub_total_monto=0; $prev_cod_concepto=""; $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		    $cod_concepto=$registro["cod_concepto"]; $denominacion=$registro["denominacion"]; $cod_empleado=$registro["cod_empleado"];
             $cod_concepto_grupo=$cod_concepto; $denominacion_grupo=$denominacion; $cod_empleado_grupo=$cod_empleado; 
@@ -166,21 +166,21 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
          			</tr>
 			        <tr>
            				<td width="100" align="left"></td>
-           				<td width="400" align="left"><? echo 'Nro. Trabajadores:'.$cantidad; ?></td>
+           				<td width="400" align="left"><?php  echo 'Nro. Trabajadores:'.$cantidad; ?></td>
            				<td width="100" align="left"></td>
            				<td width="100" align="left"></td>
            				<td width="100" align="left"></td>
            				<td width="100" align="left"></td>
-           				<td width="100" align="right"><? echo $sub_total_monto; ?></td>
+           				<td width="100" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>
-				<?}
+				<?php }
 				?>	   
 				<tr>
            			<td width="100" align="left"><strong>CONCEPTO: </strong></td>
-           			<td width="400" align="left"><strong><? echo $cod_concepto_grupo."   ".$denominacion_grupo; ?></strong></td>
+           			<td width="400" align="left"><strong><?php  echo $cod_concepto_grupo."   ".$denominacion_grupo; ?></strong></td>
 
          			</tr>
-				<?
+				<?php 
 				 $prev_cod_concepto=$cod_concepto_grupo; $sub_total_monto=0; $cantidad=0;} 
 		    $cod_concepto=$registro["cod_concepto"]; $cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $cod_concepto=$registro["cod_concepto"];
 	        $denominacion=$registro["denominacion"]; $fechai=$registro["fechai"]; $fechae=$registro["fechae"]; $nro_cuotas=$registro["nro_cuotas"]; 
@@ -191,18 +191,18 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 
 			?>	 				 
 			<tr>
-			  <td width="100" align="left">'<? echo $cod_concepto; ?></td>
-			  <td width="400" align="left"><? echo $nombre; ?></td>
-			  <td width="100" align="center"><? echo $fechai; ?></td>
-			  <td width="100" align="center"><? echo $fechae; ?></td>
-			  <td width="100" align="right"><? echo $nro_cuotas; ?></td>
-			  <td width="100" align="right"><? echo $nro_cuotas_c; ?></td>		
-			  <td width="100" align="right"><? echo $monto; ?></td>
-			  <td width="100" align="right"><? echo $monto_prestamo; ?></td>	
-			  <td width="100" align="right"><? echo $acumulado; ?></td>
-			  <td width="100" align="right"><? echo $saldo; ?></td>	
+			  <td width="100" align="left">'<?php  echo $cod_concepto; ?></td>
+			  <td width="400" align="left"><?php  echo $nombre; ?></td>
+			  <td width="100" align="center"><?php  echo $fechai; ?></td>
+			  <td width="100" align="center"><?php  echo $fechae; ?></td>
+			  <td width="100" align="right"><?php  echo $nro_cuotas; ?></td>
+			  <td width="100" align="right"><?php  echo $nro_cuotas_c; ?></td>		
+			  <td width="100" align="right"><?php  echo $monto; ?></td>
+			  <td width="100" align="right"><?php  echo $monto_prestamo; ?></td>	
+			  <td width="100" align="right"><?php  echo $acumulado; ?></td>
+			  <td width="100" align="right"><?php  echo $saldo; ?></td>	
 			</tr>
-            <?  }
+            <?php   }
 			if($sub_total_monto>0){ $sub_total_monto=formato_monto($sub_total_monto);
 			?>	   
 				<tr>
@@ -216,23 +216,23 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				</tr>
 				<tr>
 					<td width="100" align="left"></td>
-					<td width="400" align="left"><? echo 'Nro. Trabajadores:'.$cantidad; ?></td>
+					<td width="400" align="left"><?php  echo 'Nro. Trabajadores:'.$cantidad; ?></td>
 					<td width="100" align="left"></td>
 					<td width="100" align="left"></td>
 					<td width="100" align="left"></td>
 					<td width="100" align="left"></td>
-					<td width="100" align="right"><? echo $sub_total_monto; ?></td>
+					<td width="100" align="right"><?php  echo $sub_total_monto; ?></td>
 				</tr>
-				<?}
+				<?php }
          ?>
 	     <tr>
             <td>&nbsp;</td>
           </tr>
 	    <tr>
             <td width="100" align="center"></td>
-		    <td width="400" align="left"><strong>TOTAL CONCEPTOS ASIGNADOS: <? echo $total_cantidad; ?></strong></td>	
+		    <td width="400" align="left"><strong>TOTAL CONCEPTOS ASIGNADOS: <?php  echo $total_cantidad; ?></strong></td>	
         </tr>      
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

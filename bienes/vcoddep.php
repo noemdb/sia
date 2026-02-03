@@ -4,4 +4,4 @@ $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$u
 $StrSQL="select * from pag036 where codigo_mov='$codigo_mov'";$resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado); 
 if($filas==0){ $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(1,'$codigo_mov','$nro_orden','$tipo_caus','$cedrif','$tipo_ord','$cod_contable_o','NO')"); }
 else{ $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(2,'$codigo_mov','$nro_orden','$tipo_caus','$cedrif','$tipo_ord','$cod_contable_o','NO')"); }
-pg_close();?>C&Oacute;DIGO DEPENDENCIA :
+pg_close($conn);?>C&Oacute;DIGO DEPENDENCIA :

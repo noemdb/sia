@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$num_orden_d=$_GET["num_orden_d"];$num_orden_h=$_GET["num_orden_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo_rep=$_GET["tipo_rep"];$Sql="";
 $criterio1="Fecha Desde: ".$fecha_d." Hasta: ".$fecha_h; $criterio2="";if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
      $sSQL = "SELECT BAN004.Cod_Banco, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN004.Referencia, BAN004.Tipo_Mov_Libro,
                 BAN004.Fecha_Mov_Libro,BAN004.Descrip_Mov_Libro, BAN004.Anulado, BAN004.Fecha_Anulado, BAN004.Ced_Rif, PRE099.Nombre,
@@ -155,7 +155,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <strong><?	echo $criterio1?></strong></td>
+				<td width="400" align="center" > <strong><?php 	echo $criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Referencia</strong></td>
@@ -164,7 +164,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="100" align="left" bgcolor="#99CCFF"><strong></strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0;   $totalm=0; $sub_totalm=0;  $prev_cod_banco="";  $prev_referencia=""; $prev_nombre_banco=""; $prev_nro_cuenta=""; $res=pg_query($sSQL);
+		  <?php   $i=0;   $totalm=0; $sub_totalm=0;  $prev_cod_banco="";  $prev_referencia=""; $prev_nombre_banco=""; $prev_nro_cuenta=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $referencia=$registro["referencia"]; $fecham=$registro["fecham"];  $monto_mov_libro=$registro["monto_mov_libro"]; $descrip_mov_libro=$registro["descrip_mov_libro"]; 
 			   $descrip_mov_libro=conv_cadenas($descrip_mov_libro,0); $nombre_banco=conv_cadenas($nombre_banco,0);
@@ -184,31 +184,31 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			      <tr>
 			          <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
-			          <td width="400" align="right"><? echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
+			          <td width="400" align="right"><?php  echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
 				      <td width="100" align="left"></td>
-				      <td width="100" align="right"><? echo $sub_totalm; ?></td>
+				      <td width="100" align="right"><?php  echo $sub_totalm; ?></td>
 			      </tr>	
 			      <tr>
 				  <td width="100" align="left"></td>
 			      </tr>	
-                 <?}
+                 <?php }
 			      ?>	   
 			      <tr>
-				  <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>'<? echo $cod_banco; ?></strong></td>
+				  <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>'<?php  echo $cod_banco; ?></strong></td>
 				  <td width="100" align="left"></td>
-				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $nombre_banco."    ".$nro_cuenta; ?></strong></td>
+				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $nombre_banco."    ".$nro_cuenta; ?></strong></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_banco=$cod_banco_grupo; $prev_nombre_banco=$nombre_banco_grupo;  $prev_nro_cuenta=$nro_cuenta_grupo; $sub_totalm=0;}
 
 			   if($prev_referencia<>$referencia_grupo){ $monto_mov_libro_grupo=$registro["monto_mov_libro"]; $monto_mov_libro_grupo=formato_monto($monto_mov_libro_grupo);
 			      ?>	   
 			      <tr>
-				  <td width="100" align="right">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $referencia; ?></td>
-				  <td width="100" align="left"><? echo $fecham; ?></td>
-				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $concepto; ?></td>
+				  <td width="100" align="right">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $referencia; ?></td>
+				  <td width="100" align="left"><?php  echo $fecham; ?></td>
+				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $concepto; ?></td>
 				  <td width="100" align="left"></td>
-				  <td width="100" align="right"><? echo $monto_mov_libro; ?></td>
+				  <td width="100" align="right"><?php  echo $monto_mov_libro; ?></td>
 			      </tr>	
 			      <tr>
 			   	<td width="100" align="right"><strong>Orden</strong></td>
@@ -216,7 +216,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   	<td width="400" align="left"><strong>Concepto</strong></td>
 			   	<td width="100" align="right"><strong>Monto</strong></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_referencia=$referencia_grupo;}
 		       $nro_orden=$registro["nro_orden"]; $fechao=$registro["fechao"]; $concepto=$registro["concepto"]; $num_cheque=$registro["num_cheque"];  
 			   $nombre=$registro["nombre"]; $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
@@ -225,15 +225,15 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   $monto_orden=formato_monto($monto_orden);  $monto_mov_libro=formato_monto($monto_mov_libro);   $concepto=conv_cadenas($concepto,0); 
 			   ?>	   
 				<tr>
-				   <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_orden; ?></td>
-				   <td width="100" align="left">'<? echo $fechao; ?></td>
-				   <td width="400" align="justify"><? echo $concepto; ?></td>
-				   <td width="100" align="right"><? echo $monto_orden; ?></td>
+				   <td width="100" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_orden; ?></td>
+				   <td width="100" align="left">'<?php  echo $fechao; ?></td>
+				   <td width="400" align="justify"><?php  echo $concepto; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_orden; ?></td>
 				 </tr>	
 			      <tr>
 				  <td width="100" align="left"></td>
 			      </tr>
-			   <? 		  
+			   <?php  		  
 		  }$totalm=formato_monto($totalm);
 		  if($sub_totalm>0){ $sub_totalm=formato_monto($sub_totalm); 
 			?>	 				 
@@ -247,11 +247,11 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
-			    <td width="400" align="right"><? echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
+			    <td width="400" align="right"><?php  echo "Total Banco: ".$prev_cod_banco."    ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
 			    <td width="100" align="left"></td>
-			    <td width="100" align="right"><? echo $sub_totalm; ?></td>
+			    <td width="100" align="right"><?php  echo $sub_totalm; ?></td>
 			</tr>	
-		    <? } ?>	 				 
+		    <?php } ?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
@@ -265,10 +265,10 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			    <td width="100" align="left"></td>
 			    <td width="400" align="left"></td>
 			    <td width="100" align="right"><strong>TOTAL</strong></td>
-			    <td width="100" align="right"><? echo $totalm; ?></td>
+			    <td width="100" align="right"><?php  echo $totalm; ?></td>
 			    <td width="100" align="right"></td>
-			</tr>	<?  
-		  ?></table><?
+			</tr>	<?php   
+		  ?></table><?php 
     }
  }
 ?>

@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -25,18 +25,18 @@ $sql="SELECT * FROM NOM009 where cod_empleado='$cod_empleado' order by ci_partid
            <td width="50" align="center" bgcolor="#99CCFF" ><strong>Edad (A&ntilde;os)</strong></td>
 		   <td width="80" align="center" bgcolor="#99CCFF" ><strong>Tiene HCM </strong></td>
            </tr>
-<? while($registro=pg_fetch_array($res)){ $sfecha=$registro["fecha_nac"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
+<?php  while($registro=pg_fetch_array($res)){ $sfecha=$registro["fecha_nac"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="90" align="left"><? echo $registro["ci_partida"]; ?></td>
-           <td width="340" align="left"><? echo $registro["nombre"]; ?></td>
-           <td width="90" align="center"><? echo $registro["parentesco"]; ?></td>
-           <td width="50" align="center"><? echo $registro["sexo"]; ?></td>
-           <td width="90" align="left"><? echo $fecha; ?></td>
-           <td width="50" align="right"><? echo round($registro["edad"],0); ?></td>
-		   <td width="80" align="center"><? echo $registro["status"]; ?></td>
+           <td width="90" align="left"><?php  echo $registro["ci_partida"]; ?></td>
+           <td width="340" align="left"><?php  echo $registro["nombre"]; ?></td>
+           <td width="90" align="center"><?php  echo $registro["parentesco"]; ?></td>
+           <td width="50" align="center"><?php  echo $registro["sexo"]; ?></td>
+           <td width="90" align="left"><?php  echo $fecha; ?></td>
+           <td width="50" align="right"><?php  echo round($registro["edad"],0); ?></td>
+		   <td width="80" align="center"><?php  echo $registro["status"]; ?></td>
            </tr>
-         <?}
+         <?php }
 ?>
        </table></td>
    </tr>
@@ -45,4 +45,4 @@ $sql="SELECT * FROM NOM009 where cod_empleado='$cod_empleado' order by ci_partid
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

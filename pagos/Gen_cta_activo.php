@@ -14,7 +14,7 @@ $sit_finan=$registro["campo513"]; $sit_fiscal=$registro["campo514"]; $ejec_presu
 $superavit=$registro["campo517"]; $caja=$registro["campo518"]; $anticipo=$registro["campo520"]; $fondo_avance=$registro["campo519"];
 }
 $url="Det_inc_pas_orden.php?codigo_mov=".$codigo_mov;
-$resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG030 (4,'$codigo_mov','','',0)");  $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG030 (4,'$codigo_mov','','',0)");  $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
  
 $total=0;
 $sql="Select * from CODIGOS_PRE026 where codigo_mov='$codigo_mov' and monto>0 order by cod_presup";  $res=pg_query($sql);
@@ -27,8 +27,8 @@ while(($registro=pg_fetch_array($res))){
    if ($filas>0){  $reg=pg_fetch_array($resultado);      $cod_contable=$reg["cod_contab_asoc"];
       echo $cod_contable." ".$monto_asiento,"<br>";
       $sSQL="Select * from con001 WHERE codigo_cuenta='$cod_contable'";  $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);  $error=0;
-      if ($filas==0){echo "Codigo Presupuestario:".$cod_presup." Cuenta Asociada:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA ASOCIADA NO EXISTE');</script><? }
-      else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){ echo "Codigo Presupuestario:".$cod_presup." Cuenta Asociada:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA ASOCIADA NO ES CARGABLE');</script><?} }
+      if ($filas==0){echo "Codigo Presupuestario:".$cod_presup." Cuenta Asociada:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA ASOCIADA NO EXISTE');</script><?php }
+      else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){ echo "Codigo Presupuestario:".$cod_presup." Cuenta Asociada:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA ASOCIADA NO ES CARGABLE');</script><?php } }
       $mexiste=0;
 	  if ($error==0){ $sSQL="Select * from PAG030 WHERE codigo_mov='$codigo_mov' and cod_cuenta='$cod_contable' and debito_credito='$debito_credito'";   $resultado=pg_exec($conn,$sSQL);  $filas=pg_numrows($resultado);
          if ($filas>0){  $mexiste=1;  $reg=pg_fetch_array($resultado);      $monto_a=$reg["monto_pasivo"]; }
@@ -36,10 +36,10 @@ while(($registro=pg_fetch_array($res))){
 	  if($error==0){ $total=$total+$monto_asiento; $debito_credito="D";	  
 	    if($mexiste==0){
 	      $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG030 ('1','$codigo_mov','$cod_contable','$debito_credito','$monto_asiento')");
-          $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+          $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 		} else{ $monto_a=$monto_a+$monto_asiento;
           $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG030 ('2','$codigo_mov','$cod_contable','$debito_credito','$monto_a')");
-          $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61);  if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+          $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61);  if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 	  
         }		
 	  }   
@@ -47,17 +47,17 @@ while(($registro=pg_fetch_array($res))){
 }
 if(($total>0)and($error==0)){ $cod_contable=$hacienda; $monto_asiento=$total;
    $sSQL="Select * from con001 WHERE codigo_cuenta='$cod_contable'";  $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);  $error=0;
-   if ($filas==0){echo " Cuenta Hacienda:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA HACIENDA NO EXISTE');</script><? }
-   else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){ echo "Cuenta Hacienda:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA HACIENDA NO ES CARGABLE');</script><?} }
+   if ($filas==0){echo " Cuenta Hacienda:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA HACIENDA NO EXISTE');</script><?php }
+   else{$registro=pg_fetch_array($resultado); if ($registro["cargable"]=="N"){ echo "Cuenta Hacienda:".$cod_contable; $error=1; ?> <script language="JavaScript"> muestra('CUENTA HACIENDA NO ES CARGABLE');</script><?php } }
    if($error==0){ $debito_credito="C";
      $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG030 ('1','$codigo_mov','$cod_contable','$debito_credito','$monto_asiento')");
-          $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+          $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
    }   
 }
-pg_close(); 
+pg_close($conn); 
 
 
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? } else {?>  <script language="JavaScript">history.back();</script> <? } 
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php } else {?>  <script language="JavaScript">history.back();</script> <?php } 
 
 
 ?>

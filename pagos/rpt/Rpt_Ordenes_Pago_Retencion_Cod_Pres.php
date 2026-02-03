@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $tipo_retencion_d=$_GET["tipo_retencion_d"];$tipo_retencion_h=$_GET["tipo_retencion_h"];$nro_orden_d=$_GET["nro_orden_d"];$nro_orden_h=$_GET["nro_orden_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$partidas_d=$_GET["partidas_d"];$partidas_h=$_GET["partidas_h"];
 $informacion_beneficiario=$_GET["informacion_beneficiario"];$imprimir_monto=$_GET["imprimir_monto"];$imprimir_orden=$_GET["imprimir_orden"];$fecha_cancelada_d=$_GET["fecha_cancelada_d"];$fecha_cancelada_h=$_GET["fecha_cancelada_h"];$status_orden=$_GET["status_orden"];$informacion_cancelada=$_GET["informacion_cancelada"];$criterio1="Desde ".$fecha_d." Al ".$fecha_h;
@@ -16,7 +16,7 @@ if ($informacion_beneficiario=='N')
 {
 
       $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-           if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+           if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
            else
            {
            // LLAMAR A PHP_REPORT
@@ -50,7 +50,7 @@ if ($informacion_beneficiario=='N')
 elseif ($informacion_beneficiario=='S')
 {
            $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-           if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+           if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
            else
            {
            // LLAMAR A PHP_REPORT

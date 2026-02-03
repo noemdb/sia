@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
+<?php  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
 
    $tipo_nominad=$_GET["tipo_nominad"];   $tipo_nominah=$_GET["tipo_nominah"];   $cod_empleado_d=$_GET["cod_empleado_d"];$tipo_rpt=$_GET["tipo_rpt"];
    $cod_empleado_h=$_GET["cod_empleado_h"];   $cedula_d=$_GET["cedula_d"];   $cedula_h=$_GET["cedula_h"];
@@ -20,7 +20,7 @@
    
 $nomb_rpt="Rpt_info_expe_labo_mp_mit_re.xml";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    
         $sSQL = "SELECT nom006.cod_empleado, nom006.Cedula, nom006.Nombre, nom006.Status, to_char(nom010.Fecha_desde,'DD/MM/YYYY') as fechad, to_char(nom010.Fecha_hasta,'DD/MM/YYYY') as fechah, nom010.Empresa, nom010.Departamento, nom010.Cargo, nom010.Sueldo

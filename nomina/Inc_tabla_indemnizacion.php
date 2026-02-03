@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); 
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); 
 $desde=0;$hasta=0;$antiguedad=0;$preaviso=0;$vacaciones=0;$vac_adicional=0;$bono_vacacional=0;$auxiliar1=0;?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Tabla de Indemnizaci&oacute;n)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Tabla de Indemnizaci&oacute;n)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -86,10 +86,10 @@ return true;}
                    <td width="120"><span class="Estilo5">CONSECUTIVO :</span></td>
                    <td width="166"><span class="Estilo5"> <input class="Estilo10" name="txtconsecutivo" type="text" id="txtconsecutivo" size="5" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_consecutivo(this.form);"> </span></td>
                    <td width="100"><span class="Estilo5">RANGO DESDE :</span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtdesde" type="text" id="txtdesde" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $desde?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtdesde" type="text" id="txtdesde" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $desde?>"> </span></td>
                    <td width="100"><span class="Estilo5">MESES</span></td>
                    <td width="60"><span class="Estilo5">HASTA :</span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txthasta" type="text" id="txthasta" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $hasta?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txthasta" type="text" id="txthasta" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $hasta?>"> </span></td>
                    <td width="120"><span class="Estilo5">MESES</span></td>
                   </tr>
              </table></td>
@@ -99,9 +99,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS ANTIGUEDAD  :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtantiguedad" type="text" id="txtantiguedad"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $antiguedad?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtantiguedad" type="text" id="txtantiguedad"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $antiguedad?>"> </span></td>
                    <td width="280"><span class="Estilo5">CANTIDAD DIAS PREAVISO  :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtpreaviso" type="text" id="txtpreaviso" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $preaviso?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtpreaviso" type="text" id="txtpreaviso" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $preaviso?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -109,9 +109,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS VACACIONES :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtvacaciones" type="text" id="txtvacaciones"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $vacaciones?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtvacaciones" type="text" id="txtvacaciones"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $vacaciones?>"> </span></td>
                    <td width="280"><span class="Estilo5">CANTIDAD DIAS VACACIONES ADICIONALES :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtvac_adicional" type="text" id="txtvac_adicional" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $vac_adicional?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtvac_adicional" type="text" id="txtvac_adicional" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $vac_adicional?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -119,9 +119,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="230"><span class="Estilo5">CANTIDAD DIAS BONO VACACIONAL :</span></td>
-                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtbono_vacacional" type="text" id="txtbono_vacacional"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $bono_vacacional?>"> </span></td>
+                   <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtbono_vacacional" type="text" id="txtbono_vacacional"  style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $bono_vacacional?>"> </span></td>
                    <td width="280"><span class="Estilo5">DIAS ADICIONALES BONO VACACIONAL  :</span></td>
-                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtauxiliar1" type="text" id="txtauxiliar1" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?echo $auxiliar1?>"> </span></td>
+                   <td width="156"><span class="Estilo5"><input class="Estilo10" name="txtauxiliar1" type="text" id="txtauxiliar1" style="text-align:right" size="8" maxlength="8" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" onKeypress="return validarNum(event)" value="<?php echo $auxiliar1?>"> </span></td>
                  </tr>
              </table></td>
            </tr>

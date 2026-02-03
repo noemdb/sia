@@ -1,10 +1,10 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $mes_proceso=$_GET["mes_proceso"];$tipo_rep=$_GET["tipo_rep"];  $date = date("d-m-Y");$hora = date("H:i:s a");$Sql=""; $php_os=PHP_OS;  
 $fecha_d="01/".substr($mes_proceso,0,2)."/".substr($mes_proceso,3,4);if (checkData($fecha_d)=='1'){$error=0; $sfecha=formato_aaaammdd($fecha_d);} else {$fecha_d="01/01/2011";}
 $fecha_h=colocar_udiames($fecha_d);$sfechad=formato_aaaammdd($fecha_d); $sfechah=formato_aaaammdd($fecha_h); $mes=substr($mes_proceso,0,2); $des_mes=""; $ano=substr($mes_proceso,3,4);
 if ($mes=='01'){$des_mes="Enero";}elseif ($mes=='02'){$des_mes="Febrero";}elseif ($mes=='03'){$des_mes="Marzo";}elseif ($mes=='04'){$des_mes="Abril";}elseif ($mes=='05'){$des_mes="Mayo";}elseif ($mes=='06'){$des_mes="Junio";}elseif ($mes=='07'){$des_mes="Julio";}elseif ($mes=='08'){$des_mes="Agosto";}elseif ($mes=='09'){$des_mes="Septiembre";}elseif ($mes=='10'){$des_mes="Octubre";}elseif ($mes=='11'){$des_mes="Noviembre";}elseif ($mes=='12'){$des_mes="Diciembre";}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }  
    $saldo_anterior=0; $incorp=0; $desincorp=0; $desincorp60=0;
    $fsql = "SELECT sum(saldo_inicial) as saldo_ini from bien001";

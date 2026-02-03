@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$codigo_mov="";$fecha="";} else{$fecha=$_GET["fecha"];$codigo_mov=$_GET["codigo_mov"];}
 ?>
 
@@ -14,9 +14,9 @@ if (!$_GET){$codigo_mov="";$fecha="";} else{$fecha=$_GET["fecha"];$codigo_mov=$_
 function llamar_eliminar(){var murl; var r;
   murl="Esta seguro en Eliminar Hoja de Vida ?"; r=confirm(murl);
   if(r==true){r=confirm("Esta Realmente seguro en Eliminar la Hoja de Vida ?");
-    if(r==true){murl="Delete_hoja_vida.php?codigo_mov=<?echo $codigo_mov?>&fecha=<?echo $fecha?>"; document.location=murl;}}  else{url="Cancelado, no elimino";}
+    if(r==true){murl="Delete_hoja_vida.php?codigo_mov=<?php echo $codigo_mov?>&fecha=<?php echo $fecha?>"; document.location=murl;}}  else{url="Cancelado, no elimino";}
 }
-function llamar_anterior(){ document.location ='Det_inc_hoja_vida.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_hoja_vida.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){
 var f=document.form1;
 var Valido=true;
@@ -31,10 +31,10 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $observacion="";
 $sql="SELECT * FROM NOM071 where codigo_mov='$codigo_mov' and fecha='$fecha'";$res=pg_query($sql);
-if ($registro=pg_fetch_array($res,0)){   $observacion=$registro["observacion"];}pg_close(); $fechac=formato_ddmmaaaa($fecha);
+if ($registro=pg_fetch_array($res,0)){   $observacion=$registro["observacion"];}pg_close($conn); $fechac=formato_ddmmaaaa($fecha);
 ?>
 <body>
 <form name="form1" method="post" action="Update_hoja_vida.php" onSubmit="return revisar()">
@@ -51,7 +51,7 @@ if ($registro=pg_fetch_array($res,0)){   $observacion=$registro["observacion"];}
           <td><table width="660" border="0">
               <tr>
                 <td width="126"><span class="Estilo5"> FECHA :</span> </td>
-                <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?echo $fechac?>" readonly ></span></td>
+                <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?php echo $fechac?>" readonly ></span></td>
                </tr>
           </table></td>
         </tr>
@@ -59,7 +59,7 @@ if ($registro=pg_fetch_array($res,0)){   $observacion=$registro["observacion"];}
           <td><table width="660" border="0">
               <tr>
                 <td width="126"><span class="Estilo5">OBSERVACION : </span></td>
-                <td width="534"><textarea name="txtobservacion" cols="80" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" id="txtobservacion"><? echo $observacion ?></textarea></td>
+                <td width="534"><textarea name="txtobservacion" cols="80" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" id="txtobservacion"><?php  echo $observacion ?></textarea></td>
               </tr>
            </table></td>
         </tr>
@@ -69,7 +69,7 @@ if ($registro=pg_fetch_array($res,0)){   $observacion=$registro["observacion"];}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

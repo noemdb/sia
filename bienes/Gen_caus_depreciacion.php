@@ -1,8 +1,8 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../presupuesto/Ver_dispon.php"); error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../presupuesto/Ver_dispon.php"); error_reporting(E_ALL);
 $codigo_mov=$_GET["codigo_mov"]; $url="Det_inc_causado_depreciacion.php?codigo_mov=".$codigo_mov; $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
 echo "GENERANDO COMPROBANTE....","<br>"; $error=0; $fecha=asigna_fecha_hoy(); $cod_modulo="13";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{
   $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);   $i=0;
   
@@ -17,8 +17,8 @@ if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURR
   if ($filas>0){ $registro=pg_fetch_array($resultado); $cod_fuente=$registro["tipo_orden"]; $tipo_causado=$registro["tipo_causado"]; $fecha_d=$registro["cod_contable_o"]; $tipo_dep=$registro["pasivo_comp"]; $gen_comp=$registro["status_1"]; $afecta_presup=$registro["status_2"];  }
   
   if($error==0){$sSQL="Select * from pre003 WHERE tipo_causado='$tipo_causado'"; $resultado=pg_exec($conn,$sSQL);$filas=pg_numrows($resultado);
-    if ($filas==0){$error=1;?><script language="JavaScript">muestra('DOCUMENTO DE CAUSADO NO EXISTE');</script><?}
-     else{if(($tipo_causado=="0000")or(substr($tipo_causado,0,1)=='A')){$error=1;?><script language="JavaScript">  muestra('DOCUMENTO DE CAUSADO NO VALIDO');</script><?}
+    if ($filas==0){$error=1;?><script language="JavaScript">muestra('DOCUMENTO DE CAUSADO NO EXISTE');</script><?php }
+     else{if(($tipo_causado=="0000")or(substr($tipo_causado,0,1)=='A')){$error=1;?><script language="JavaScript">  muestra('DOCUMENTO DE CAUSADO NO VALIDO');</script><?php }
       else{ $registro=pg_fetch_array($resultado); $ref_compromiso=$registro["ref_compromiso"];   }}
   }
   $tipo_compromiso=$doc_comp; $referencia_comp=$ref_comp; $fuente_financ=$cod_fuente;
@@ -33,29 +33,29 @@ if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURR
 	    //echo $cod_presup." ".$ref_compromiso,"<br>";
 	    $sSQL="Select * from PRE036 WHERE (referencia_comp='$referencia_comp') and (tipo_compromiso='$tipo_compromiso') and (cod_presup='$cod_presup') and (fuente_financ='$fuente_financ')";
         $resultado=pg_query($sSQL);$filas=pg_num_rows($resultado);
-        if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('NO EXISTE EN EL COMPROMISO EL CODIGO PRESUPUESTARIO:<? echo $cod_presup; ?> FUENTE:<? echo $fuente_financ; ?>');</script><?}
+        if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('NO EXISTE EN EL COMPROMISO EL CODIGO PRESUPUESTARIO:<?php  echo $cod_presup; ?> FUENTE:<?php  echo $fuente_financ; ?>');</script><?php }
          else{$regc=pg_fetch_array($resultado);$compromiso=$regc["monto"]-$regc["causado"]-$regc["ajustado"];
 		    $tipo_imput_presu=$regc["tipo_imput_presu"]; $ref_imput_presu=$regc["ref_imput_presu"];
 			if ($compromiso>$monto_c){$diferencia=$compromiso-$monto_c; }else{$diferencia=$monto_c-$compromiso; } 
-            if(($monto_c>$compromiso)and($diferencia>0.001)){$error=1; echo $cod_presup." Monto a Causar:".$monto_c." Disponibilidad Compromiso:".$compromiso,"<br>"; ?> <script language="JavaScript"> muestra('MONTO A CAUSAR MAYOR AL MONTO POR COMPROMETER  DEL CODIGO <? echo $cod_presup; ?> FUENTE:<? echo $fuente_financ; ?> ');</script><? }
+            if(($monto_c>$compromiso)and($diferencia>0.001)){$error=1; echo $cod_presup." Monto a Causar:".$monto_c." Disponibilidad Compromiso:".$compromiso,"<br>"; ?> <script language="JavaScript"> muestra('MONTO A CAUSAR MAYOR AL MONTO POR COMPROMETER  DEL CODIGO <?php  echo $cod_presup; ?> FUENTE:<?php  echo $fuente_financ; ?> ');</script><?php }
             if($tipo_imput_presu=="C"){ $monto_credito=$monto_c;}
 		 }
 	  
 	  }else{  $tipo_compromiso="0000"; $referencia_comp="";
 	       if(strlen($cod_presup)==strlen($formato_presup)){ if (verifica_disponibilidad($conn,$cod_presup,$cod_fuente,$fecha_d,$monto_c)==0){$error=0;}else{$error=1;}}
-           else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD DE CODIGO PRESUPUESTARIO INVALIDA');</script><? }
+           else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD DE CODIGO PRESUPUESTARIO INVALIDA');</script><?php }
 	  }
 	
 	if($error==0){ $sfecha=formato_aaaammdd($fecha);
       $resultado=pg_exec($conn,"SELECT INCLUYE_PRE026('$codigo_mov','$cod_presup','$cod_fuente','$referencia_comp','$tipo_compromiso','','$tipo_causado','','0000','','0000','','','','','','','$sfecha','C','$tipo_imput_presu','$ref_imput_presu','$sfecha',$monto_c,0,$monto_credito,0)");
-      $error=pg_errormessage($conn);   $error="ERROR GRABANDO: ".substr($error, 0, 61);  if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+      $error=pg_errormessage($conn);   $error="ERROR GRABANDO: ".substr($error, 0, 61);  if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     }
   } 
   $resultado=pg_exec($conn,"update pag036 set status_2='S',campo_str1='$tipo_compromiso',campo_str2='$referencia_comp' where codigo_mov='$codigo_mov'"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); 
 }
-pg_close();  error_reporting(E_ALL ^ E_WARNING);
+pg_close($conn);  error_reporting(E_ALL ^ E_WARNING);
 ?> 
-<script language="JavaScript">document.location ='<? echo $url; ?>';</script>
+<script language="JavaScript">document.location ='<?php  echo $url; ?>';</script>
 <!--
 
 //-->

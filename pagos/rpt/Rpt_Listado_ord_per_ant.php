@@ -1,6 +1,6 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS; 
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS; 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";}
    $nro_orden_d=$_GET["nro_orden_d"];$nro_orden_h=$_GET["nro_orden_h"];$doc_causado_d=$_GET["doc_causado_d"];$doc_causado_h=$_GET["doc_causado_h"]; $tipo_rpt=$_GET["tipo_rpt"];
    $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"];$status_orden=$_GET["status_orden"];
@@ -164,7 +164,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT
 		 <tr height="20">
 		   <td width="80" align="left" ><strong></strong></td>
 		   <td width="200" align="left" ><strong></strong></td>
-		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -175,7 +175,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT
            <td width="110" align="center" bgcolor="#99CCFF" ><strong>NETO </strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Estatus</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_orden=$registro["nro_orden"];  $tipo_causado=$registro["tipo_causado"];  $fecha=$registro["fecha"]; $concepto=$registro["concepto"]; 
@@ -188,28 +188,28 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT
 		   $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	?>	   
 		   <tr>
-           <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_orden; ?></td>
-           <td width="200" align="left"><? echo $nombre; ?></td>
-           <td width="400" align="justify"><? echo $concepto; ?></td>
-           <td width="110" align="right"><? echo $total_causado; ?></td>
-           <td width="110" align="right"><? echo $monto_ret; ?></td>
-           <td width="110" align="right"><? echo $monto_orden; ?></td>
-           <td width="100" align="center"><? echo $st_orden; ?></td>
+           <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_orden; ?></td>
+           <td width="200" align="left"><?php  echo $nombre; ?></td>
+           <td width="400" align="justify"><?php  echo $concepto; ?></td>
+           <td width="110" align="right"><?php  echo $total_causado; ?></td>
+           <td width="110" align="right"><?php  echo $monto_ret; ?></td>
+           <td width="110" align="right"><?php  echo $monto_orden; ?></td>
+           <td width="100" align="center"><?php  echo $st_orden; ?></td>
          </tr>
-	<? }  $total=formato_monto($total); $totaln=formato_monto($totaln); $totalr=formato_monto($totalr); ?>
+	<?php }  $total=formato_monto($total); $totaln=formato_monto($totaln); $totalr=formato_monto($totalr); ?>
 	   <tr>
         <td>&nbsp;</td>
       </tr>
 	  <tr>
         <td width="80"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong></strong></td>
-		<td width="200"><strong>CANTIDAD ORDENES : <? echo $cantidad; ?></strong></td>	
+		<td width="200"><strong>CANTIDAD ORDENES : <?php  echo $cantidad; ?></strong></td>	
 		<td width="400" align="right"><strong>TOTAL ORDENES:</strong></td>
-		<td width="110" align="right"><strong><? echo $totaln; ?></strong></td>
-		<td width="110" align="right"><strong><? echo $totalr; ?></strong></td>
-		<td width="110" align="right"><strong><? echo $total; ?></strong></font></td>
+		<td width="110" align="right"><strong><?php  echo $totaln; ?></strong></td>
+		<td width="110" align="right"><strong><?php  echo $totalr; ?></strong></td>
+		<td width="110" align="right"><strong><?php  echo $total; ?></strong></font></td>
       </tr>
       
-	  </table><?
+	  </table><?php 
 	}
 
    }

@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT";
 if (!$_GET){ $cod_bien_mue=""; } else{$cod_bien_mue=$_GET["Gcod_bien_mue"];}
 
 $sql="Select * from BIEN015 where cod_bien_mue='$cod_bien_mue' ";
 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $rif_emp=""; $nom_completo=""; $direccion="";
 $sqle="Select * from SIA000 order by campo001"; $resultado=pg_query($sqle);
 $filas=pg_num_rows($resultado); if($filas>=1){  $registro=pg_fetch_array($resultado,0); $cod_emp=$registro["campo001"];
@@ -250,5 +250,5 @@ class PDF extends FPDF{
  $pdf->Output();
 
  
-pg_close();
+pg_close($conn);
 ?>

@@ -1,7 +1,7 @@
-<?include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
 if (!$_GET){$codigo_mov="";$ivag=0;$ref_comp="N";$ced_rif="";$tipo_comp="";$ref_compromiso="";$monto=0;}
 else{$codigo_mov=$_GET["codigo_mov"];$ivag=$_GET["ivag"];$ref_comp=$_GET["ref_comp"];$ced_rif=$_GET["ced_rif"];$tipo_comp=$_GET["tipo_comp"];$ref_compromiso=$_GET["ref_compromiso"];$monto=$_GET["monto"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $campo502=""; $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$campo502=$registro["campo502"];} $g_comprobante=substr($campo502,3,1); $aprueba_comp=substr($campo502,15,1);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -22,13 +22,13 @@ function carga_monto(mced_rif,mtipo_comp,mref_comp){
 }
 function llama_ant(mced_rif,mtipo_comp,mref_comp){var mmonto;var murl;
   mmonto=document.form1.txtmonto_sin_iva.value;
-  murl="Inc_fact_ord.php?codigo_mov=<?echo $codigo_mov?>&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>&ivag=<?echo$ivag;?>&ref_comp=<?echo$ref_comp;?>&ced_rif="+mced_rif+"&tipo_comp="+mtipo_comp+"&ref_compromiso="+mref_comp+"&monto="+mmonto;
+  murl="Inc_fact_ord.php?codigo_mov=<?php echo $codigo_mov?>&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>&ivag=<?php echo$ivag;?>&ref_comp=<?php echo$ref_comp;?>&ced_rif="+mced_rif+"&tipo_comp="+mtipo_comp+"&ref_compromiso="+mref_comp+"&monto="+mmonto;
   document.location=murl;
  }
 function cerrar_catalogo(mced_rif,mtipo_comp,mref_comp){ carga_monto(mced_rif,mtipo_comp,mref_comp);   llama_ant(mced_rif,mtipo_comp,mref_comp); }
 </script></head>
 <body>
-<?      $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $numPags=1;
+<?php       $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $numPags=1;
         if (!$_GET){$codigo_mov="";$ivag=0;$ref_comp="N";$ced_rif="";$tipo_comp="";$ref_compromiso="";}else{$codigo_mov=$_GET["codigo_mov"];$ivag=$_GET["ivag"];$ref_comp=$_GET["ref_comp"];$ced_rif=$_GET["ced_rif"];$tipo_comp=$_GET["tipo_comp"];$ref_compromiso=$_GET["ref_compromiso"];}
         $criterio = "and (ced_rif='$ced_rif') and (anulado='N') "; if($aprueba_comp=="S"){ $criterio = $criterio."and  pre006.aprobado='S'";}
         $sql="select pre006.referencia_comp,pre006.tipo_compromiso,pre006.cod_comp,pre006.fecha_compromiso,pre006.cod_tipo_comp,pre006.descripcion_comp from pre006 where (text(pre006.referencia_comp)||text(pre006.tipo_compromiso)||text(pre006.cod_comp) in (select text(pre036.referencia_comp)||text(pre036.tipo_compromiso)||text(pre036.cod_comp) from pre036 where (monto-causado-ajustado>0) and (tipo_compromiso<>'0000') and (tipo_compromiso<>'A000'))) ".$criterio;
@@ -53,18 +53,18 @@ function cerrar_catalogo(mced_rif,mtipo_comp,mref_comp){ carga_monto(mced_rif,mt
                 $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
                 if  ($linea>$limitInf+$tamPag){$Salir=true;}   if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $ced_rif;?>','<? echo $registro["tipo_compromiso"];?>','<? echo $registro["referencia_comp"];?>');" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["tipo_compromiso"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["referencia_comp"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $fecha; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $descripcion; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $ced_rif;?>','<?php  echo $registro["tipo_compromiso"];?>','<?php  echo $registro["referencia_comp"];?>');" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["tipo_compromiso"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["referencia_comp"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $fecha; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $descripcion; ?></b></font></td>
   </tr>
-<?}} echo "</table>"; }
+<?php } } echo "</table>"; }
 ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-  <?    if($pagina>1){
+  <?php     if($pagina>1){
           echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."&codigo_mov=".$codigo_mov."&ivag=".$ivag."&ref_comp=".$ref_comp."&ced_rif=".$ced_rif."'>";
           echo "<font face='verdana' size='-2'>Principio</font>";
           echo "</a>&nbsp;";
@@ -92,4 +92,4 @@ function cerrar_catalogo(mced_rif,mtipo_comp,mref_comp){ carga_monto(mced_rif,mt
 </form>
 </body>
 </html>
-<? pg_close(); ?>
+<?php  pg_close($conn); ?>

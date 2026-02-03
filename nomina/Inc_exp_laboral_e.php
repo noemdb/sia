@@ -5,11 +5,11 @@ if (!$_GET){$mcod_m="NOM053".$equipo;$codigo_mov=substr($mcod_m,0,49);}else{$cod
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Experencia Laboral)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Experencia Laboral)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_exp_laboral_e.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_exp_laboral_e.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){
 var f=document.form1;
 var Valido=true;
@@ -45,9 +45,9 @@ return true;}
           <td><table width="660" border="0">
               <tr>
                 <td width="133"><span class="Estilo5"> FECHA DESDE :</span> </td>
-                <td width="200"><span class="Estilo5"><input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"></span></td>
+                <td width="200"><span class="Estilo5"><input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"></span></td>
                 <td width="127"><span class="Estilo5"> FECHA HASTA :</span> </td>
-                <td width="200"><span class="Estilo5"><input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"></span></td>
+                <td width="200"><span class="Estilo5"><input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="15" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"></span></td>
 
                </tr>
           </table></td>
@@ -93,7 +93,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

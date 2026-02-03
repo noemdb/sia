@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$cod_banco_d;$num_cheque_d=$_GET["num_cheque_d"];$num_cheque_h=$_GET["num_cheque_h"];$ult_cheque_d=$_GET["ult_cheque_d"];$ult_cheque_h=$_GET["ult_cheque_h"]; 
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $ordenar=$_GET["ordenado"]; $tipo_rep=$_GET["tipo_rep"];
 $firma1=$_GET["firma1"]; $cargo1=$_GET["cargo1"]; $firma2=$_GET["firma2"]; $cargo2=$_GET["cargo2"]; $firma3=$_GET["firma3"]; $cargo3=$_GET["cargo3"];
@@ -6,7 +6,7 @@ $criterio1="PERIODO DEL : ".$fecha_d." AL : ".$fecha_h;  $criterio2="";
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';}        $fecha_hasta=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }  $criterio2=$Nom_Emp;
         $sformula= " and (ban006.anulado='N') ";
         $sSQL = "SELECT ban006.cod_banco, ban002.nombre_banco, ban002.nro_cuenta, ban006.num_cheque, ban006.fecha, text(to_char(EXTRACT(day from ban006.fecha),'09'))||text('/')||text (to_char(EXTRACT(month from ban006.fecha),'09'))||text('/')||text (to_char(EXTRACT(year from ban006.fecha),'0009')) as fechae,

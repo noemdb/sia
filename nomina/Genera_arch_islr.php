@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
+<?php include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $fecha_hasta=$_POST["txtfecha_hasta"]; $fecha_desde=$_POST["txtfecha_desde"]; $fechad=formato_aaaammdd($fecha_desde); $fechah=formato_aaaammdd($fecha_hasta);
 $cod_concepto1=$_POST["txtcod_concepto"]; $cod_concepto2=$_POST["txtcod_concepto_d"]; $tipo_nomina_d=$_POST["txttipo_nomina_d"]; $tipo_nomina_h=$_POST["txttipo_nomina_h"];
 $tipo_formato=$_POST["txttipo_formato"]; $formato=1; $formato=2; $formato=3;
@@ -31,7 +31,7 @@ if($error==0){ $mformula="";
 		   <td width="100" align="center" bgcolor="#99CCFF"><strong>RETENIDO</strong></td>
 		   <td width="100" align="center" bgcolor="#99CCFF"><strong>% RETENCION</strong></td>
          </tr>
-     <?	 
+     <?php 	 
 	
  	$leidos=0; $num_linea=0; $prev_cedula=""; $prev_nombre=""; $prev_status=""; $prev_fecha=""; $num_emp=0; $monto_te=0; $monto_ta=0; $monto_r=0; $monto_e=0; $monto_a=0; $res=pg_query($sql);
 	while($reg=pg_fetch_array($res)){ $cedula=$reg["cedula"]; $nombre=$reg["nombre"]; $status_calculo=$reg["status_calculo"]; $fecha_ingreso=$reg["fecha_ingreso"];
@@ -57,14 +57,14 @@ if($error==0){ $mformula="";
 		  $detalle=$detalle.$rif_empleado.";".$cedula1.";".$prev_nombre.";".$monto1.";".$monto2.";".$monto3.";".$str_campo;			  
 		  ?>	   
 		   <tr>
-             <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $rif_empleado; ?></td>
-             <td width="100" align="left"><? echo $cedula1; ?></td>
-             <td width="400" align="left"><? echo $prev_nombre; ?></td>
-             <td width="100" align="right"><? echo $monto1; ?></td>
-             <td width="100" align="right"><? echo $monto2; ?></td>
-             <td width="100" align="right"><? echo $monto3; ?></td>
+             <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $rif_empleado; ?></td>
+             <td width="100" align="left"><?php  echo $cedula1; ?></td>
+             <td width="400" align="left"><?php  echo $prev_nombre; ?></td>
+             <td width="100" align="right"><?php  echo $monto1; ?></td>
+             <td width="100" align="right"><?php  echo $monto2; ?></td>
+             <td width="100" align="right"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 		}		
 		$prev_cedula=$cedula; $prev_nombre=$nombre;	$prev_status=$status_calculo; $prev_fecha=$fecha_ingreso;
 		$monto_rem=0; $monto_ret=0; $tasa_ret=0;
@@ -87,14 +87,14 @@ if($error==0){ $mformula="";
 		  $detalle=$detalle.$rif_empleado.";".$cedula1.";".$prev_nombre.";".$monto1.";".$monto2.";".$monto3.";".$str_campo;	
 		  ?>	   
 		   <tr>
-             <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $rif_empleado; ?></td>
-             <td width="100" align="left"><? echo $cedula1; ?></td>
-             <td width="300" align="left"><? echo $prev_nombre; ?></td>
-             <td width="150" align="right"><? echo $monto1; ?></td>
-             <td width="150" align="right"><? echo $monto2; ?></td>
-             <td width="150" align="right"><? echo $monto3; ?></td>
+             <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $rif_empleado; ?></td>
+             <td width="100" align="left"><?php  echo $cedula1; ?></td>
+             <td width="300" align="left"><?php  echo $prev_nombre; ?></td>
+             <td width="150" align="right"><?php  echo $monto1; ?></td>
+             <td width="150" align="right"><?php  echo $monto2; ?></td>
+             <td width="150" align="right"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 	}
     }
 
@@ -111,7 +111,7 @@ if($error==0){ $mformula="";
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>RETENIDO</strong></td>
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>% RETENCION</strong></td>
          </tr>
-     <?	 
+     <?php 	 
 	
  	$leidos=0; $num_linea=0; $prev_cedula=""; $prev_nombre=""; $prev_status=""; $prev_fecha=""; $num_emp=0; $monto_te=0; $monto_ta=0; $monto_r=0; $monto_e=0; $monto_a=0; $res=pg_query($sql);
 	while($reg=pg_fetch_array($res)){ $cedula=$reg["cedula"]; $nombre=$reg["nombre"]; $status_calculo=$reg["status_calculo"]; $fecha_ingreso=$reg["fecha_ingreso"];
@@ -133,16 +133,16 @@ if($error==0){ $mformula="";
 		  $detalle=$detalle.$rif_empleado.";".$cedula1.";".$prev_nombre.";".$monto1.";".$monto2.";".$monto3.";".$str_campo;			  
 		  ?>	   
 		   <tr>
-             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $rif_empleado; ?></td>
-             <td width="400" align="left"><? echo $prev_nombre; ?></td>
-			 <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '01'; ?></td>
-             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto1; ?></td>
-             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto2; ?></td>
-             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto3; ?></td>
+             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $rif_empleado; ?></td>
+             <td width="400" align="left"><?php  echo $prev_nombre; ?></td>
+			 <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '01'; ?></td>
+             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto1; ?></td>
+             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto2; ?></td>
+             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 		}		
 		$prev_cedula=$cedula; $prev_nombre=$nombre;	$prev_status=$status_calculo; $prev_fecha=$fecha_ingreso;
 		$monto_rem=0; $monto_ret=0; $tasa_ret=0;
@@ -165,16 +165,16 @@ if($error==0){ $mformula="";
 		  $detalle=$detalle.$rif_empleado.";".$cedula1.";".$prev_nombre.";".$monto1.";".$monto2.";".$monto3.";".$str_campo;	
 		  ?>	   
 		   <tr>
-             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $rif_empleado; ?></td>
-             <td width="300" align="left"><? echo $prev_nombre; ?></td>
-			 <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '01'; ?></td>
-             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto1; ?></td>
-             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto2; ?></td>
-             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto3; ?></td>
+             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $rif_empleado; ?></td>
+             <td width="300" align="left"><?php  echo $prev_nombre; ?></td>
+			 <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '01'; ?></td>
+             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto1; ?></td>
+             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto2; ?></td>
+             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 	}
     }
 
@@ -191,7 +191,7 @@ if($error==0){ $mformula="";
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>INGRESOS MES</strong></td>
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>% RETENCION</strong></td>
          </tr>
-     <?	 
+     <?php 	 
 	
  	$leidos=0; $num_linea=0; $prev_cedula=""; $prev_nombre=""; $prev_status=""; $prev_fecha=""; $num_emp=0; $monto_te=0; $monto_ta=0; $monto_r=0; $monto_e=0; $monto_a=0; $res=pg_query($sql);
 	while($reg=pg_fetch_array($res)){ $cedula=$reg["cedula"]; $nombre=$reg["nombre"]; $status_calculo=$reg["status_calculo"]; $fecha_ingreso=$reg["fecha_ingreso"];
@@ -217,15 +217,15 @@ if($error==0){ $mformula="";
           if(($monto_ret>0)and($tasa_ret>0)){	$num_linea=$num_linea+1; 	  
 		  ?>	   
 		   <tr>
-             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $rif_empleado; ?></td>
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-			 <td width="100" align="left"><? echo $fecha_hasta; ?></td>
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '1'; ?></td>
-             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto1; ?></td>
-             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto3; ?></td>
+             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $rif_empleado; ?></td>
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+			 <td width="100" align="left"><?php  echo $fecha_hasta; ?></td>
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '1'; ?></td>
+             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto1; ?></td>
+             <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 		  }
 		}		
 		$prev_cedula=$cedula; $prev_nombre=$nombre;	$prev_status=$status_calculo; $prev_fecha=$fecha_ingreso;
@@ -253,23 +253,23 @@ if($error==0){ $mformula="";
 		  if(($monto_ret>0)and($tasa_ret>0)){ $num_linea=$num_linea+1; 
 		  ?>	   
 		   <tr>
-             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $rif_empleado; ?></td>
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '0'; ?></td>	
-			 <td width="100" align="left"><? echo $fecha_hasta; ?></td>
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo '1'; ?></td>
-             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto1; ?></td>
-             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto3; ?></td>
+             <td width="100" align="left" style="mso-number-format:'@';"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $rif_empleado; ?></td>
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '0'; ?></td>	
+			 <td width="100" align="left"><?php  echo $fecha_hasta; ?></td>
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo '1'; ?></td>
+             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto1; ?></td>
+             <td width="150" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto3; ?></td>
            </tr>
-	      <?
+	      <?php 
 		  }
 	}
     }	
-    ?><script language="JavaScript">alert('Archivo Generado,\n Cantidad de Trabajadores :<? echo $num_linea; ?> \n'); </script><?	
+    ?><script language="JavaScript">alert('Archivo Generado,\n Cantidad de Trabajadores :<?php  echo $num_linea; ?> \n'); </script><?php 	
     if($num_linea==0){$error=0;}    else{	/*echo $detalle;*/ }
-	?></table><?	
+	?></table><?php 	
    } 
 }
-pg_close();
-if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?} 
+pg_close($conn);
+if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?php } 
 ?>

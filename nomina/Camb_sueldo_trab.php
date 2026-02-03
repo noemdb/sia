@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 if (!$_GET){$tipo_nomina="";$cod_sueldo=""; $cod_ret="";} else{$tipo_nomina=$_GET["Gtipo_nomina"];$cod_sueldo=$_GET["Gcod_sueldo"]; $cod_ret=$_GET["Gcod_ret"]; }
 $codigo_cargo_d="";$codigo_cargo_h="zzzzzzzzzzz";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
@@ -10,7 +10,7 @@ if($registro=pg_fetch_array($resultado,0)){$cod_modulo=$registro["campo501"]; $c
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Trabjadores)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Trabjadores)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -44,7 +44,7 @@ return true;}
 -->
 </style>
 </head>
-<? $cod_desde="000000000000000"; $cod_hasta="999999999999999";
+<?php  $cod_desde="000000000000000"; $cod_hasta="999999999999999";
 ?>
 <body>
 <form name="form1" method="post" action="Update_sueldos_trab.php" onSubmit="return revisar()">
@@ -59,9 +59,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">TIPO DE NOMINA DESDE :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_hasta" type="text" id="txttipo_hasta" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>
@@ -69,9 +69,9 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR DESDE :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="18" maxlength="15"  value="<?echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_desde" type="text" id="txtcod_desde" size="18" maxlength="15"  value="<?php echo $cod_desde?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="50"><span class="Estilo5">HASTA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="18" maxlength="15"  value="<?echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_hasta" type="text" id="txtcodo_hasta" size="18" maxlength="15"  value="<?php echo $cod_hasta?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                </tr>
              </table></td>
         </tr>
@@ -80,12 +80,12 @@ return true;}
               <td align="center"><table width="550" border="0">
                  <tr>
                    <td width="150"><span class="Estilo5">CARGO DESDE : </span></td>
-				   <td width="100" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?echo $codigo_cargo_d?>">  </span></td>
+				   <td width="100" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?php echo $codigo_cargo_d?>">  </span></td>
                    <td width="40" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargod" type="button" id="cat_cargod" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosd.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="10"><input name="txtdenominacion_d" type="hidden" id="txtdenominacion_d" ></td>
 				 
                    <td width="50"><span class="Estilo5">HASTA : </span></td>
-				   <td width="100" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?echo $codigo_cargo_h?>"> </span></td>
+				   <td width="100" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?php echo $codigo_cargo_h?>"> </span></td>
                    <td width="40" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargoh" type="button" id="cat_cargoh" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosh.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="10"><input name="txtdenominacion_h" type="hidden" id="txtdenominacion_h" ></td>
 				  </tr>
@@ -96,7 +96,7 @@ return true;}
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="210" ><span class="Estilo5">CODIGO CONCEPTO SUELDO :</span> </td>
-                <td width="340"><span class="Estilo5"><input class="Estilo10" name="txtcod_sueldo" type="text" id="txtcod_sueldo" size="3" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_sueldo;?>"></span></td>
+                <td width="340"><span class="Estilo5"><input class="Estilo10" name="txtcod_sueldo" type="text" id="txtcod_sueldo" size="3" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_sueldo;?>"></span></td>
               </tr>
           </table></td>
         </tr>
@@ -104,7 +104,7 @@ return true;}
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="210" ><span class="Estilo5">CODIGO CONCEPTO RETROACTIVO :</span> </td>
-                <td width="340"><span class="Estilo5"><input class="Estilo10" name="txtcod_ret" type="text" id="txtcod_ret" size="3" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_ret;?>"></span></td>
+                <td width="340"><span class="Estilo5"><input class="Estilo10" name="txtcod_ret" type="text" id="txtcod_ret" size="3" maxlength="3"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_ret;?>"></span></td>
               </tr>
           </table></td>
         </tr>
@@ -115,11 +115,11 @@ return true;}
                 <td width="230"><span class="Estilo5">FECHA ASIGNACION DEL CARGO :</span> </td>
                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_asigna" type="text" id="txtfecha_asigna" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                 <td width="60"><span class="Estilo5">USAR : </span></td> 
-				<?if($trab_grado_paso=="S"){?>					
+				<?php if($trab_grado_paso=="S"){?>					
 				<td width="110"><span class="Estilo5"><select class="Estilo10" name="txtusar" size="1" id="txtusar" onFocus="encender(this)" onBlur="apagar(this)"><option>SUELDO TRABAJADOR</option> <option>TABLA GRADOS Y PASOS</option> <option>SUELDO CARGO</option></select>  </span></td>
-                <?} else{?>
+                <?php } else{?>
                 <td width="110"><span class="Estilo5"><select class="Estilo10" name="txtusar" size="1" id="txtusar" onFocus="encender(this)" onBlur="apagar(this)"><option>SUELDO TRABAJADOR</option> <option>SUELDO CARGO</option></select>  </span></td>
-                <?} ?>
+                <?php } ?>
 				<!--
 				<td width="280"><input class="Estilo10" name="txtusar" type="hidden" id="txtusar" value="SUELDO TRABAJADOR" ></td>
 				-->

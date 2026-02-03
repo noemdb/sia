@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$codigo_partida=$_GET["codigo_partida"];$codigo_contable=$_GET["codigo_contable"];$asociacion=$_GET["asociacion"];$criterio1="Partida Presupuestaria ";$Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
       //cambiar formato a la fecha
@@ -10,7 +10,7 @@ $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$codigo_partida=$_GET["codig
         $fecha_hasta=$ano1.$mes1.$dia1;
    //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{
     // LLAMAR A PHP_REPORT
    $sSQL = "SELECT PAG001.Nro_Orden, PAG001.Tipo_Causado, PAG001.Fecha, PAG001.Ced_Rif,

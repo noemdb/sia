@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $equipo = getenv("COMPUTERNAME"); $mcod_m="ban04L".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$tipo_mov_d=$_GET["tipo_mov_d"];$tipo_mov_h=$_GET["tipo_mov_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$periodod=$_GET["periodod"]; $imp_benef=$_GET["imp_benef"]; $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];  
 $periodoh=$_GET["periodoh"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$subtotales=$_GET["subtotales"];$ordenarcheque=$_GET["ordenarcheque"];$imprimirbene=$_GET["imprimirbene"];$imprimircuen=$_GET["imprimircuen"];$imprimirorden="N";$imp_sinmov=$_GET["imp_sinmov"]; $tipo_rep=$_GET["tipo_rep"];
@@ -7,11 +7,11 @@ $criterio1="Desde ".$fecha_d." Al ".$fecha_h;    $des_mov=", ban035.descrip_mov_
 if($imp_benef=="B"){ $des_mov=", pre099.nombre as des_mov ";}
 if($fecha_d==""){$sfecha_d="2012-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}  if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){ $php_os="WINNT";} 
    $Sql="SELECT RPT_MOV_DOLARES_BAN035('".$codigo_mov."','0','".$sfecha_d."','".$sfecha_h."','".$cod_banco_d."','".$cod_banco_h."','".$tipo_mov_d."','".$tipo_mov_h."','".$imprimirorden."','".$imp_sinmov."')";
     
-    $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);      $error="ERROR GRABANDO: ".substr($error,0,91);if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);      $error="ERROR GRABANDO: ".substr($error,0,91);if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 	$sSQL = "SELECT ban042.cod_banco, ban042.nombre_banco, ban042.nro_cuenta,ban035.nro_linea, ban035.tipo_mov_libro, ban035.referencia,ban035.descrip_mov_libro, ban035.fecha_mov_libro,ban035.monto_mov_libro,
 				ban035.columna1, ban035.columna2, ban035.columna3, ban035.columna4, ban035.columna5, ban035.ced_rif, ban035.anulado, ban035.campo_str1,ban003.tipo, ban003.operacion, pre099.nombre, 
 				extract(month from fecha_mov_libro) as mes_mov, to_char( ban035.fecha_mov_libro,'DD/MM/YYYY') as fecham ".$des_mov."
@@ -165,7 +165,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" ><strong><?	echo $criterio1?></strong></td>
+				<td width="400" align="center" ><strong><?php 	echo $criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Tipo</strong></td>
@@ -177,7 +177,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Creditos</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Saldo</strong></td>
 			 </tr>
-		  <?  $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cod_banco="";  $prev_mes_mov="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cod_banco="";  $prev_mes_mov="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $mes_mov=$registro["mes_mov"];	$cod_banco_grupo=$cod_banco; $nombre_banco_grupo=$nombre_banco; $nro_cuenta_grupo=$nro_cuenta; $mes_mov_grupo=$mes_mov; 
                if(($prev_mes_mov<>$mes_mov_grupo)or($prev_cod_banco<>$cod_banco_grupo)){ 
@@ -199,11 +199,11 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			          <td width="400" align="left"></td>
 					  <td width="100" align="left"></td>
 			          <td width="100" align="left">Sub-Total</td>
-				      <td width="100" align="right"><? echo $sub_totald; ?></td>
-				      <td width="100" align="right"><? echo $sub_totalh; ?></td>
+				      <td width="100" align="right"><?php  echo $sub_totald; ?></td>
+				      <td width="100" align="right"><?php  echo $sub_totalh; ?></td>
 				      <td width="100" align="right"></td>
 			        </tr>	
-			     <?}					 
+			     <?php }					 
 			     $prev_mes_mov=$mes_mov_grupo; $sub_totald=0; $sub_totalh=0;}
 
 			   if($prev_cod_banco<>$cod_banco_grupo){ $saldo_anterior=$registro["columna3"]; $saldo_anterior=formato_monto($saldo_anterior);
@@ -225,23 +225,23 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			          <td width="400" align="left"></td>
 					  <td width="100" align="left"></td>
 			          <td width="100" align="left">Totales</td>
-				      <td width="100" align="right"><? echo $totald; ?></td>
-				      <td width="100" align="right"><? echo $totalh; ?></td>
+				      <td width="100" align="right"><?php  echo $totald; ?></td>
+				      <td width="100" align="right"><?php  echo $totalh; ?></td>
 				      <td width="100" align="right"></td>
 			        </tr>	
-			     <?}
+			     <?php }
 			      ?>	   
 			      <tr>
 				    <td width="100" align="left"></td>
-				    <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $cod_banco; ?></td>
-				    <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nombre_banco."    ".$nro_cuenta; ?></td>
+				    <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $cod_banco; ?></td>
+				    <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nombre_banco."    ".$nro_cuenta; ?></td>
 				    <td width="100" align="left"></td>
 					<td width="100" align="left"></td>
 					<td width="100" align="left"></td>
 					<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">Saldo Anterior:</td>
-				    <td width="100" align="right"><? echo $saldo_anterior; ?></td>
+				    <td width="100" align="right"><?php  echo $saldo_anterior; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_banco=$cod_banco_grupo; $totald=0; $totalh=0;}
 		       $tipo_mov_libro=$registro["tipo_mov_libro"]; $referencia=$registro["referencia"]; $descrip_mov_libro=$registro["descrip_mov_libro"]; $fecham=$registro["fecham"]; 
 			   $nombre=$registro["nombre"]; $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
@@ -252,16 +252,16 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   $descrip_mov_libro=conv_cadenas($descrip_mov_libro,0); $des_mov=conv_cadenas($des_mov,0); if(($monto_mov_libro==0)and($referencia=="00000000")){ $tipo_mov_libro=""; $referencia=""; }
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $tipo_mov_libro; ?></td>
-				   <td width="100" align="left">'<? echo $referencia; ?></td>
-				   <td width="400" align="justify"><? echo $des_mov; ?></td>
-				   <td width="100" align="center"><? echo $fecham; ?></td>
-				   <td width="100" align="left"><? echo $campo_str1; ?></td>
-				   <td width="100" align="right"><? echo $columna1; ?></td>
-				   <td width="100" align="right"><? echo $columna2; ?></td>
-				   <td width="100" align="right"><? echo $columna4; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $tipo_mov_libro; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia; ?></td>
+				   <td width="400" align="justify"><?php  echo $des_mov; ?></td>
+				   <td width="100" align="center"><?php  echo $fecham; ?></td>
+				   <td width="100" align="left"><?php  echo $campo_str1; ?></td>
+				   <td width="100" align="right"><?php  echo $columna1; ?></td>
+				   <td width="100" align="right"><?php  echo $columna2; ?></td>
+				   <td width="100" align="right"><?php  echo $columna4; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 		  if(($sub_totald>0)or($sub_totalh>0)){ $sub_totald=formato_monto($sub_totald); $sub_totalh=formato_monto($sub_totalh); 
 			?>	 				 
@@ -281,11 +281,11 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			    <td width="400" align="left"></td>
 				<td width="100" align="left"></td>
 			    <td width="100" align="left">Sub-Total</td>
-			    <td width="100" align="right"><? echo $sub_totald; ?></td>
-			    <td width="100" align="right"><? echo $sub_totalh; ?></td>
+			    <td width="100" align="right"><?php  echo $sub_totald; ?></td>
+			    <td width="100" align="right"><?php  echo $sub_totalh; ?></td>
 			    <td width="100" align="right"></td>
 			</tr>	
-		  <? }
+		  <?php }
 
 		  if(($totald>0)or($totalh>0)){ $totald=formato_monto($totald); $totalh=formato_monto($totalh); 
 			?>	 				 
@@ -305,12 +305,12 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			    <td width="400" align="left"></td>
 				<td width="100" align="left"></td>
 			    <td width="100" align="left"><strong>Totales</strong></td>
-			    <td width="100" align="right"><strong><? echo $totald; ?></strong></td>
-			    <td width="100" align="right"><strong><? echo $totalh; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $totald; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $totalh; ?></strong></td>
 			    <td width="100" align="right"></td>
 			</tr>	
-	     <? } ?>		
-		 </table><?
+	     <?php } ?>		
+		 </table><?php 
     }	
 }
 ?>

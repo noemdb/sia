@@ -1,5 +1,5 @@
-<?include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);include ("../class/ventana.php");
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);include ("../class/ventana.php");
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <script language="JavaScript">
 function Llamar_cat(){
@@ -22,7 +22,7 @@ function cerrar_catalogo(mcod_presup,mdenominacion,mcod_contable){
 <meta http-equiv="Pragma" content="no-cache" />
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 </head><body>
-<?
+<?php 
        $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1;
         if ($_GET){if ($_GET["criterio"]!=""){        $txt_criterio = $_GET["criterio"];        $txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where cod_presup like '%" . $txt_criterio . "%' or denominacion like '%" . $txt_criterio . "%' or cod_contable like '%" . $txt_criterio . "%'";        }}
@@ -46,17 +46,17 @@ function cerrar_catalogo(mcod_presup,mdenominacion,mcod_contable){
                 if  ($linea>$limitInf+$tamPag){$Salir=true;}
                 if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $registro["cod_presup"]?>', '<? echo $registro["denominacion"]?>', '<? echo $registro["cod_contable"]; ?>')" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_presup"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["denominacion"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_contable"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["cod_presup"]?>', '<?php  echo $registro["denominacion"]?>', '<?php  echo $registro["cod_contable"]; ?>')" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_presup"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["denominacion"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_contable"]; ?></b></font></td>
   </tr>
-<?}} echo "</table>"; }
+<?php } } echo "</table>"; }
 ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."'>";
+<?php       echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."'>";
         echo "<font face='verdana' size='-2'>Principio</font>";
         echo "</a>&nbsp;";
         if($pagina>1){
@@ -86,6 +86,6 @@ Criterio de b&uacute;squeda:
 </form>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

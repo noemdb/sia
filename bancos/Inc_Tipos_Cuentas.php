@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");?>
+<?php include ("../class/seguridad.inc");?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Tipos de Cuentas)</title>
+<title>SIPAP CONTROL BANCARIO (Tipos de Cuentas)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -16,7 +16,7 @@ var murl;
 var Gcodigo_cuenta=document.form1.txtCodigo_Cuenta.value;
     murl=url+Gcodigo_cuenta;
     if (Gcodigo_cuenta=="")
-        {alert("Código de Cuenta debe ser Seleccionada");}
+        {alert("Cï¿½digo de Cuenta debe ser Seleccionada");}
         else {document.location = murl;}
 }
 function Mover_Registro(MPos)

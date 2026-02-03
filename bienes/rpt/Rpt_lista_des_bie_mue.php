@@ -58,7 +58,7 @@ $criterio .= " bien015.desincorporado='S' ";
 //$criterio .= " and bien015.desincorporado='S' ";
 
 $conn        = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
-if (pg_ErrorMessage($conn)) {
+if (pg_last_error($conn)) {
 ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php
 } else {
     $php_os  = PHP_OS;

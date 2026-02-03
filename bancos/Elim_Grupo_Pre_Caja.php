@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$codigo_grupo='';} else {$codigo_grupo=$_GET["Gcodigo_grupo"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Grupos de Bancos)</title>
+<title>SIPAP CONTROL BANCARIO (Grupos de Bancos)</title>
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type="text/javascript"></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
@@ -28,7 +28,7 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $denominacion="";
 $sql="Select codigo_grupo,denominacion from ban014 where codigo_grupo='$codigo_grupo'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){  $codigo_grupo=$registro["codigo_grupo"];  $denominacion=$registro["denominacion"];}
@@ -66,7 +66,7 @@ if ($registro=pg_fetch_array($res,0)){  $codigo_grupo=$registro["codigo_grupo"];
                   <td width="820"><table width="820" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="200"><span class="Estilo5">C&Oacute;DIGO GRUPO :</span></td>
-                      <td width="620"><span class="Estilo5"> <input name="txtcodigo_grupo" type="text" class="Estilo5" id="txtcodigo_grupo" readonly value="<?echo $codigo_grupo?>" >
+                      <td width="620"><span class="Estilo5"> <input name="txtcodigo_grupo" type="text" class="Estilo5" id="txtcodigo_grupo" readonly value="<?php echo $codigo_grupo?>" >
                       </span></td>
                     </tr>
                   </table></td>
@@ -76,7 +76,7 @@ if ($registro=pg_fetch_array($res,0)){  $codigo_grupo=$registro["codigo_grupo"];
                   <td><table width="820" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="200"><span class="Estilo5">DENOMINACI&Oacute;N DEL GRUPO : </span></td>
-                      <td width="620"><div align="left"><span class="Estilo5"><input name="txtdenominacion" type="text" class="Estilo5" id="txtdenominacion"  value="<?echo $denominacion?>" readonly size="100" maxlength="100">
+                      <td width="620"><div align="left"><span class="Estilo5"><input name="txtdenominacion" type="text" class="Estilo5" id="txtdenominacion"  value="<?php echo $denominacion?>" readonly size="100" maxlength="100">
                       </span></div></td>
                     </tr>
                   </table></td>

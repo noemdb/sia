@@ -1,8 +1,8 @@
-<? 
+<?php  
 error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); require ("../../class/fun_numeros.php"); require ("../../class/fun_fechas.php"); $php_os=PHP_OS; 
 $fecha_hoy=asigna_fecha_hoy();
 
-$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT * FROM TRABAJADORES where (tipo_nomina>='01' and tipo_nomina<='03') and (nom006.Status='ACTIVO' or nom006.Status='VACACIONES' or nom006.Status='REPOSO') ORDER BY cod_empleado";
 
 $sql = "SELECT nom006.cod_empleado, nom006.nombre, nom006.cedula, nom006.Nacionalidad, nom006.fecha_ingreso, nom006.Status, nom006.tipo_nomina, nom001.Descripcion, nom006.cod_categoria, nom006.tipo_pago, nom006.cta_empleado, nom006.cod_banco, nom006.nombre_banco, nom006.cta_empresa, 
@@ -39,7 +39,7 @@ header("Content-Disposition: attachment; filename=Trabajadores.xls");
 
            <td width="150" align="center" bgcolor="#99CCFF" ><strong>CANT. CARGA</strong></td>		   
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sql);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $cod_empleado=$registro["cod_empleado"];  $cedula=$registro["cedula"]; $nombre=conv_cadenas($registro["nombre"],0);
@@ -75,28 +75,28 @@ header("Content-Disposition: attachment; filename=Trabajadores.xls");
 			$sueldo_obr_ant=formato_monto($sueldo_obr_ant); $sueldo_emp_ant=formato_monto($sueldo_emp_ant);
 	?>	   
 		   <tr>
-           <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nombre; ?></td>
-           <td width="100" align="left"><? echo $cedula; ?></td>
-           <td width="150" align="center"><? echo $ven; ?></td>
-           <td width="150" align="center"><? echo $ext; ?></td>
-           <td width="100" align="center"><? echo $homb; ?></td>
-           <td width="100" align="center"><? echo $muj; ?></td>
-		   <td width="150" align="center"><? echo $lugar_nacimiento; ?></td>
-		   <td width="100" align="right"><? echo $edad; ?></td>
-		   <td width="100" align="center"><? echo substr($edo_civil,0,1); ?></td>
-		   <td width="100" align="center"><? echo $rama; ?></td>
-		   <td width="400" align="left"><? echo $denominacion; ?></td>
-		   <td width="100" align="right"><? echo $a; ?></td>
-           <td width="100" align="right"><? echo $m; ?></td>
-		   <td width="150" align="right"><? echo $sueldo_emp_ant; ?></td>
-		   <td width="150" align="right"><? echo $sueldo_obr_ant; ?></td>
-		   <td width="150" align="right"><? echo $sueldo_emp; ?></td>
-		   <td width="150" align="right"><? echo $sueldo_obr; ?></td>
-		   <td width="150" align="right"><? echo $cant_carga; ?></td>
+           <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nombre; ?></td>
+           <td width="100" align="left"><?php  echo $cedula; ?></td>
+           <td width="150" align="center"><?php  echo $ven; ?></td>
+           <td width="150" align="center"><?php  echo $ext; ?></td>
+           <td width="100" align="center"><?php  echo $homb; ?></td>
+           <td width="100" align="center"><?php  echo $muj; ?></td>
+		   <td width="150" align="center"><?php  echo $lugar_nacimiento; ?></td>
+		   <td width="100" align="right"><?php  echo $edad; ?></td>
+		   <td width="100" align="center"><?php  echo substr($edo_civil,0,1); ?></td>
+		   <td width="100" align="center"><?php  echo $rama; ?></td>
+		   <td width="400" align="left"><?php  echo $denominacion; ?></td>
+		   <td width="100" align="right"><?php  echo $a; ?></td>
+           <td width="100" align="right"><?php  echo $m; ?></td>
+		   <td width="150" align="right"><?php  echo $sueldo_emp_ant; ?></td>
+		   <td width="150" align="right"><?php  echo $sueldo_obr_ant; ?></td>
+		   <td width="150" align="right"><?php  echo $sueldo_emp; ?></td>
+		   <td width="150" align="right"><?php  echo $sueldo_obr; ?></td>
+		   <td width="150" align="right"><?php  echo $cant_carga; ?></td>
          </tr>
-	<? }   ?>
-	  </table><?
+	<?php }   ?>
+	  </table><?php 
 	  
-pg_close();
+pg_close($conn);
 	  
 ?>

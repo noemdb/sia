@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
  $fecha_h=formato_ddmmaaaa($Fec_Fin_Ejer);
 
@@ -64,15 +64,15 @@ var url;
    rows[1][1] = "Criterios Generales";        // Requiere: <div id="T11" class="tab-body">  ... </div>
    rows[1][2] = "Ordenar Por :";        // Requiere: <div id="T12" class="tab-body">  ... </div>
    </script>
-        <?include ("../../class/class_tab.php");?>
+        <?php include ("../../class/class_tab.php");?>
         <script type="text/javascript" language="javascript"> DrawTabs(); </script>
         <!-- PESTA&Ntilde;A 1 -->
         <div id="T11" class="tab-body">
-          <iframe src="Det_criterio_generales_rn_re.php?criterio=<?echo $cod_estructura?>"  width="950" height="470" scrolling="auto" frameborder="0"> </iframe>
+          <iframe src="Det_criterio_generales_rn_re.php?criterio=<?php echo $cod_estructura?>"  width="950" height="470" scrolling="auto" frameborder="0"> </iframe>
         </div>
         <!--PESTA&Ntilde;A 2 -->
         <div id="T12" class="tab-body" >
-          <iframe src="Det_criterio_campos_rn_re.php?criterio=<?echo $cod_estructura?>"  width="850" height="300" scrolling="auto" frameborder="0"> </iframe>
+          <iframe src="Det_criterio_campos_rn_re.php?criterio=<?php echo $cod_estructura?>"  width="850" height="300" scrolling="auto" frameborder="0"> </iframe>
         </div>
 </div>
 

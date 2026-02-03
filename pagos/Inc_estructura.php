@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
  $equipo = getenv("COMPUTERNAME"); $mcod_m="PAG006".$equipo;  $fecha_hoy=asigna_fecha_hoy();
  if (!$_GET){$codigo_mov=substr($mcod_m,0,49);} else{$codigo_mov=$_GET["codigo_mov"];} 
  ?>
@@ -7,7 +7,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Estructura de Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Estructura de Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="javascript" src="../class/sia.js" type="text/javascript"></script>
@@ -34,12 +34,12 @@ return true;}
 function revisar(){var f=document.form1;var Valido=true;
     if(f.txtfecha_hasta_est.value==""){alert("Fecha hasta no puede estar Vacia");return false;}
     if(f.txtfecha_desde_est.value==""){alert("Fecha desde no puede estar Vacia");return false;}
-    if(f.txtcod_estructura.value==""){alert("Código de Estructura no puede estar Vacia");return false;}
+    if(f.txtcod_estructura.value==""){alert("Cï¿½digo de Estructura no puede estar Vacia");return false;}
       else{f.txtcod_estructura.value=f.txtcod_estructura.value;}
     if(f.txtdescripcion_est.value==""){alert("Descripci&oacute;n de Estructura no puede estar Vacia"); return false; }
       else{f.txtdescripcion_est.value=f.txtdescripcion_est.value.toUpperCase();}
     if(f.txtcod_estructura.value.length==8){f.txtcod_estructura.value=f.txtcod_estructura.value.toUpperCase();}
-      else{alert("Longitud Código de Estructura Invalida");return false;}
+      else{alert("Longitud Cï¿½digo de Estructura Invalida");return false;}
     if(f.txtced_rif.value==""){alert("Cedula/Rif no puede estar Vacia"); return false; }
       else{f.txtced_rif.value=f.txtced_rif.value.toUpperCase();}
     if(f.txttipo_orden.value==""){alert("Tipo de Orden no puede estar Vacia"); return false; }
@@ -139,9 +139,9 @@ return true;}
                       <td><table width="846">
                         <tr>
                           <td width="123"><span class="Estilo5">FECHA DESDE :</span></td>
-                          <td width="370"><span class="Estilo5"><input class="Estilo10" name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" onchange="checkrefecha_desde(this.form)" onFocus="encender(this);" onBlur="apagar(this);" value="<?echo $fecha_hoy?>" >  </span></td>
+                          <td width="370"><span class="Estilo5"><input class="Estilo10" name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" onchange="checkrefecha_desde(this.form)" onFocus="encender(this);" onBlur="apagar(this);" value="<?php echo $fecha_hoy?>" >  </span></td>
                            <td width="107"><span class="Estilo5">FECHA HASTA :</span></td>
-                          <td width="226"><input class="Estilo10" name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" onFocus="encender(this);" onchange="checkrefecha_hasta(this.form)" onBlur="apagar(this);" size="15" value="<?echo $fecha_hoy?>" > </td>
+                          <td width="226"><input class="Estilo10" name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" onFocus="encender(this);" onchange="checkrefecha_hasta(this.form)" onBlur="apagar(this);" size="15" value="<?php echo $fecha_hoy?>" > </td>
                         </tr>
                       </table></td>
                     </tr>
@@ -158,21 +158,21 @@ return true;}
    rows[1][2] = "Retenciones";        // Requiere: <div id="T12" class="tab-body">  ... </div>
    rows[1][3] = "Otros Pasivos";
 </script>
-<?include ("../class/class_tab.php");?>
+<?php include ("../class/class_tab.php");?>
 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
-<!-- PESTAÑA 1 -->
+<!-- PESTAï¿½A 1 -->
 <div id="T11" class="tab-body">
-   <iframe src="Det_inc_cod_est.php?codigo_mov=<?echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <iframe src="Det_inc_cod_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
 </div>
-<!--PESTAÑA 2 -->
+<!--PESTAï¿½A 2 -->
 <div id="T12" class="tab-body" >
-   <iframe src="Det_inc_ret_est.php?codigo_mov=<?echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <iframe src="Det_inc_ret_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
 </div>
-<!--PESTAÑA 3 -->
+<!--PESTAï¿½A 3 -->
 <div id="T13" class="tab-body" >
-    <iframe src="Det_inc_pas_est.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+    <iframe src="Det_inc_pas_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
   </div>
 </div>
 <div id="Layer3">
@@ -188,7 +188,7 @@ return true;}
   <p>&nbsp;</p>
   <table width="758">
     <tr>
-      <td width="586"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+      <td width="586"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
       <td width="68" valign="middle"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
       <td width="78"><input name="Blanquear" type="reset" value="Blanquear"></td>
     </tr>

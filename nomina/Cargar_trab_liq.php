@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME"); $nombre="";$cod_empleado=""; $fecha_hoy=asigna_fecha_hoy();
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME"); $nombre="";$cod_empleado=""; $fecha_hoy=asigna_fecha_hoy();
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $fecha_liquidacion=$fecha_hoy; $error=0;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -52,7 +52,7 @@ return true;}
             <table width="740" border="0">
               <tr>
                 <td width="92"><span class="Estilo5">NOMBRE :</span></td>
-                <td width="589"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="95" maxlength="250" readonly value="<?echo $nombre?>">
+                <td width="589"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="95" maxlength="250" readonly value="<?php echo $nombre?>">
                 </span></td>
               </tr>
             </table> </td>
@@ -62,7 +62,7 @@ return true;}
              <td><table width="740">
                <tr>
                  <td width="150"><span class="Estilo5">FECHA DE LIQUIDACION :</span></td>
-                 <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtfecha_liquidacion" type="text" id="txtfecha_liquidacion" size="10" maxlength="10"  value="<?echo $fecha_liquidacion?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtfecha_liquidacion" type="text" id="txtfecha_liquidacion" size="10" maxlength="10"  value="<?php echo $fecha_liquidacion?>" onFocus="encender(this)" onBlur="apagar(this)" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="150"><span class="Estilo5">TIPO DE LIQUIDACION :</span></td>
 				 <td width="250"><span class="Estilo5"><select class="Estilo10" name="txttipo_liquidacion" size="1" id="txttipo_liquidacion" onFocus="encender(this)" onBlur="apagar(this)">
                       <option>JUSTIFICADO</option> <option>RENUNCIA</option> <option>INJUSTIFICADO</option> <option>FALLECIDO</option> <option>INCAPACITADO</option> <option>FIN CONTRATO</option>  <option>JUBILACION</option> </select>  </span></td>
@@ -78,9 +78,9 @@ return true;}
           <tr>
             <td width="32"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value=""></td>
             <td width="80"><input name="txtref_comp" type="hidden" id="txtref_comp" value=""></td>
-			<?if($error==0){?>
+			<?php if($error==0){?>
             <td width="97" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
-			<?}?>
+			<?php }?>
             <td width="94" align="center">&nbsp;</td>
             <td width="96" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
             <td width="113">&nbsp;</td>

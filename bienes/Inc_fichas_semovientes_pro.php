@@ -1,9 +1,9 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Ficha De Semovientes)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Ficha De Semovientes)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -24,7 +24,7 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtced_rif.value==""){alert("Cédula/Rif del beneficiario no puede estar Vacio");return false;}
+    if(f.txtced_rif.value==""){alert("Cï¿½dula/Rif del beneficiario no puede estar Vacio");return false;}
           else{f.txtced_rif.value=f.txtced_rif.value.toUpperCase();}
     if(f.txtnombre.value==""){alert("Nombre del Beneficiario no puede estar Vacia"); return false; }
        else{f.txtnombre.value=f.txtnombre.value.toUpperCase();}
@@ -242,7 +242,7 @@ return true;}
               <tr>
                 <td width="81" scope="col"><div align="left"><span class="Estilo5">DIRECCI&Oacute;N :</span></div></td>
                 <td width="869" scope="col"><div align="left">
-                    <textarea name="textarea2" cols="70" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" class="headers" id="textarea2"><?echo $direccion?></textarea>
+                    <textarea name="textarea2" cols="70" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" class="headers" id="textarea2"><?php echo $direccion?></textarea>
                 </div></td>
               </tr>
             </table></td>
@@ -336,7 +336,7 @@ return true;}
               <tr>
                 <td width="118" scope="col"><div align="left"><span class="Estilo5">CARACTERISTICAS DEL BIEN INMUEBLE:</span></div></td>
                 <td width="832" scope="col"><div align="left">
-                    <textarea name="textarea3" cols="70" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" class="headers" id="textarea3"><?echo $direccion?></textarea>
+                    <textarea name="textarea3" cols="70" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" class="headers" id="textarea3"><?php echo $direccion?></textarea>
                 </div></td>
               </tr>
             </table></td>

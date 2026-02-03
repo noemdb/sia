@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");   include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");   include ("../class/configura.inc");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="TRAB".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy();
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="01-0000045"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 if (!$_GET){ $cod_empleado='';  $p_letra=''; $sql="SELECT * FROM TRABAJADORES ".$criterion." Order by cod_empleado";}
 else {$cod_empleado = $_GET["Gcod_empleado"];$p_letra=substr($cod_empleado, 0, 1);
@@ -130,7 +130,7 @@ MM_reloadPage(true);
 //-->
 </script>
 </head>
-<?
+<?php 
 $nombre="";$cod_empleado=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $campo_str1="";  $campo_num1=0;
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $tipo_cuenta=""; $cod_banco=""; $nombre_banco=""; $cta_empresa=""; $calculo_grupos=""; $fecha_asigna_cargo=""; $cod_cargo=""; $cod_departam=""; $cod_tipo_personal=""; $paso=""; $grado=""; $sueldo=""; $prima=""; $compensacion=""; $otros=""; $sueldo_integral=""; $tipo_vacaciones="N"; $pago_vaciones="N"; $fecha_pago=""; $tiene_lph=""; $banco_lph=""; $cta_lph=""; $fecha_lph=""; $fecha_des_lph=""; $modif_lph=""; $tiene_dec_jurada=""; $fecha_declaracion=""; $monto_declaracion=""; $fecha_fin_con=""; $fecha_egreso=""; $motivo_egreso=""; $cont_fijo=""; $cod_cont_colec=""; $tipo_nom_ant=""; $cod_emp_ant=""; $fecha_camb_n=""; $motivo_camb_n=""; $tiene_aus_pro=""; $motivo_ausencia=""; $fecha_aus_desde=""; $fecha_aus_hasta="";  $motivo_suplen=""; $cedula_titular="";
 $nombre1=""; $nombre2=""; $apellido1=""; $apellido2=""; $sexo=""; $edo_civil=""; $fecha_nacimiento=""; $edad=""; $lugar_nacimiento=""; $direccion=""; $cod_postal=""; $telefono=""; $tlf_movil=""; $correo=""; $profesion=""; $grado_inst=""; $tiempo_e=""; $poliza=""; $fecha_seguro=""; $estado=""; $ciudad=""; $municipio=""; $parroquia=""; $observacion=""; $talla_camisa=""; $talla_pantalon=""; $talla_calzado=""; $peso=""; $estatura=""; $aptdo_postal=""; 
@@ -182,17 +182,17 @@ $temp_des_nomina=$descripcion;
 <table width="977" height="1292" border="1" id="tablacuerpo">
   <tr>
    <td width="92" height="1290"><table width="92" height="1290" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
-      <?if ($Mcamino{0}=="S"){?>
+      <?php if ($Mcamino{0}=="S"){?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Incluir()";
                 onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="30"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Incluir()">Incluir</A></td>
       </tr>
-	  <?} if ($Mcamino{1}=="S"){?>
+	  <?php } if ($Mcamino{1}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_modificar('Mod_info_trabajadores.php?Gcod_empleado=')";
                 onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="javascript:Llamar_modificar('Mod_info_trabajadores.php?Gcod_empleado=');">Modificar</A></td>
       </tr>
-	  <?} if ($Mcamino{2}=="S"){?>
+	  <?php } if ($Mcamino{2}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('P')";
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Mover_Registro('P');">Primero</A></td>
@@ -213,12 +213,12 @@ $temp_des_nomina=$descripcion;
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cat_act_trabajadores.php')";
                           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Cat_act_trabajadores.php" class="menu">Catalogo</a></td>
       </tr>
-	  <?} if ($Mcamino{6}=="S"){?>
+	  <?php } if ($Mcamino{6}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" ;
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="javascript:Llama_Eliminar();">Eliminar</A></td>
       </tr>
-	  <?} if ($Mcamino{10}=="S"){?>
+	  <?php } if ($Mcamino{10}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" ;
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="javascript:Llama_Asignar();">Asignar Conceptos</A></td>
@@ -268,14 +268,14 @@ $temp_des_nomina=$descripcion;
       </tr>
 	  
 	  
-	    <?if(($Cod_Emp=="32")and(($tipo_nomina=="27")or($tipo_nomina=="37")or($tipo_nomina=="47"))){?>
+	    <?php if(($Cod_Emp=="32")and(($tipo_nomina=="27")or($tipo_nomina=="37")or($tipo_nomina=="47"))){?>
 		  <tr>
-            <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Desactiva_trab('<?echo $tipo_nomina ?>') ";
-               onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Desactiva_trab('<?echo $tipo_nomina?>');">Desactivar Trabajadores</A></td>
+            <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Desactiva_trab('<?php echo $tipo_nomina ?>') ";
+               onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Desactiva_trab('<?php echo $tipo_nomina?>');">Desactivar Trabajadores</A></td>
           </tr>
-		<?}?>
+		<?php }?>
 		
-	  <?} if ($Mcamino{3}=="S"){?>
+	  <?php } if ($Mcamino{3}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" ;
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="javascript:Llama_Rpt_info_ho_vid_mp_mit('/sia/nomina/rpt/Rpt_info_ho_vid_mp_mit.php');">Formato Hoja de Vida</A></td>
@@ -289,7 +289,7 @@ $temp_des_nomina=$descripcion;
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" ;
                onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu  href="javascript:Llama_forma_sso('llama_forma_1403.php?txtcod_empleado=');">Forma 14-03</A></td>
       </tr>
-	  <?} ?>
+	  <?php } ?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Ventana_002('/sia/nomina/ayuda/ayuda_inf_trabaja.htm','Ayuda Trabajadores','','900','600','true');";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Ventana_002('/sia/nomina/ayuda/ayuda_inf_trabaja.htm','Ayuda Trabajadores','','900','600','true');" class="menu">Ayuda </a></td>
@@ -308,12 +308,12 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                  <td width="150"><span class="Estilo5">C&Eacute;DULA DE IDENTIDAD :</span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="110"><span class="Estilo5">NACIONALIDAD : </span></td>
-                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?echo $nacionalidad?>" readonly></span></td>
-                 <td width="20"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
+                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?php echo $nacionalidad?>" readonly></span></td>
+                 <td width="20"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
                </tr>
              </table></td>
            </tr>
@@ -321,7 +321,7 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -329,11 +329,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="75"><span class="Estilo5">NOMBRES :</span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre1" type="text" id="txtnombre1" size="20" maxlength="20" value="<?echo $nombre1?>" readonly> </span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre2" type="text" id="txtnombre2" size="20" maxlength="20" value="<?echo $nombre2?>" readonly> </span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre1" type="text" id="txtnombre1" size="20" maxlength="20" value="<?php echo $nombre1?>" readonly> </span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre2" type="text" id="txtnombre2" size="20" maxlength="20" value="<?php echo $nombre2?>" readonly> </span></td>
                  <td width="75"><span class="Estilo5">APELLIDOS :</span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido1" type="text" id="txtapellido1" size="20" maxlength="20" value="<?echo $apellido1?>" readonly></span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido2" type="text" id="txtapellido2" size="20" maxlength="20" value="<?echo $apellido2?>" readonly></span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido1" type="text" id="txtapellido1" size="20" maxlength="20" value="<?php echo $apellido1?>" readonly></span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido2" type="text" id="txtapellido2" size="20" maxlength="20" value="<?php echo $apellido2?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -341,11 +341,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="110"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
                  <td width="214"><span class="Estilo5">FECHA ING. ADMINIST. PUBLICA :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_ing_adm" type="text" id="txtfecha_ing_adm" size="12" maxlength="10"  value="<?echo $fecha_ing_adm?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_ing_adm" type="text" id="txtfecha_ing_adm" size="12" maxlength="10"  value="<?php echo $fecha_ing_adm?>" readonly></span></td>
                  <td width="200"><span class="Estilo5">A&Ntilde;OS ANTIGUEDAD ACUMULADO   :</span></td>
-				 <td width="70"><span class="Estilo5"> <input class="Estilo10" name="txtcampo_num1" type="text" id="txtcampo_num1" size="2" maxlength="2"   value="<?echo $campo_num1?>" readonly > </span></td>
+				 <td width="70"><span class="Estilo5"> <input class="Estilo10" name="txtcampo_num1" type="text" id="txtcampo_num1" size="2" maxlength="2"   value="<?php echo $campo_num1?>" readonly > </span></td>
                 </tr>
              </table></td>
            </tr>
@@ -355,7 +355,7 @@ $temp_des_nomina=$descripcion;
                <tr>
                  
 				 <td width="200"><span class="Estilo5">ESTATUS : </span></td>
-                 <td width="664"><span class="Estilo5"> <input class="Estilo10" name="txtstatus" type="text" id="txtstatus" size="15" maxlength="15"   value="<?echo $status?>" readonly></span></td>
+                 <td width="664"><span class="Estilo5"> <input class="Estilo10" name="txtstatus" type="text" id="txtstatus" size="15" maxlength="15"   value="<?php echo $status?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -363,8 +363,8 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" readonly></span></td>
-                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion" type="text" id="txtdescripcion" size="90" maxlength="100"  value="<?echo $descripcion?>" readonly> </span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" readonly></span></td>
+                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion" type="text" id="txtdescripcion" size="90" maxlength="100"  value="<?php echo $descripcion?>" readonly> </span></td>
                 </tr>
              </table></td>
            </tr>
@@ -373,9 +373,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">CODIGO CATEGORIA : </span></td>
-                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtcod_categoria" type="text" id="txtcod_categoria" size="18" maxlength="16"   value="<?echo $cod_categoria?>" readonly></span></td>
+                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtcod_categoria" type="text" id="txtcod_categoria" size="18" maxlength="16"   value="<?php echo $cod_categoria?>" readonly></span></td>
                  <td width="200"><span class="Estilo5">FUENTE DE FINANCIAMIENTO :</span></td>
-				 <td width="300"><span class="Estilo5"><span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" readonly value="<?echo $campo_str1?>">  </span></td>
+				 <td width="300"><span class="Estilo5"><span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" readonly value="<?php echo $campo_str1?>">  </span></td>
 				</tr>
              </table></td>
            </tr>
@@ -383,11 +383,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="110"><span class="Estilo5">FORMA DE PAGO  :</span></td>
-                 <td width="104"><span class="Estilo5"><input class="Estilo10" name="txttipo_pago" type="text" id="txttipo_pago" size="10" maxlength="10" value="<?echo $tipo_pago?>" readonly></span></td>
+                 <td width="104"><span class="Estilo5"><input class="Estilo10" name="txttipo_pago" type="text" id="txttipo_pago" size="10" maxlength="10" value="<?php echo $tipo_pago?>" readonly></span></td>
                  <td width="200"><span class="Estilo5">N&Uacute;MERO CUENTA TRABAJADOR : </span></td>
-                 <td width="230"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empleado" type="text" id="txtcta_empleado" size="28" maxlength="20" value="<?echo $cta_empleado?>" readonly></span></td>
+                 <td width="230"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empleado" type="text" id="txtcta_empleado" size="28" maxlength="20" value="<?php echo $cta_empleado?>" readonly></span></td>
                  <td width="115"><span class="Estilo5">TIPO DE CUENTA  :</span></td>
-                 <td width="105"><span class="Estilo5"><input class="Estilo10" name="txttipo_cuenta" type="text" id="txttipo_cuenta" size="12" maxlength="10"  value="<?echo $tipo_cuenta?>" readonly></span></td>
+                 <td width="105"><span class="Estilo5"><input class="Estilo10" name="txttipo_cuenta" type="text" id="txttipo_cuenta" size="12" maxlength="10"  value="<?php echo $tipo_cuenta?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -395,10 +395,10 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="120"><span class="Estilo5">CUENTA EMPRESA :</span></td>
-                 <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco" size="4" maxlength="4" value="<?echo $cod_banco?>" readonly></span></td>
-                 <td width="394"><span class="Estilo5"><input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" size="60" maxlength="100" value="<?echo $nombre_banco?>" readonly> </span></td>
+                 <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco" size="4" maxlength="4" value="<?php echo $cod_banco?>" readonly></span></td>
+                 <td width="394"><span class="Estilo5"><input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" size="60" maxlength="100" value="<?php echo $nombre_banco?>" readonly> </span></td>
                  <td width="80"><span class="Estilo5">NUMERO : </span></td>
-                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empresa" type="text" id="txtcta_empresa" size="27" maxlength="20" value="<?echo $cta_empresa?>" readonly></span></td>
+                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empresa" type="text" id="txtcta_empresa" size="27" maxlength="20" value="<?php echo $cta_empresa?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -406,11 +406,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="205"><span class="Estilo5">PRESENTA DECLARACI&Oacute;N JURADA :</span></td>
-                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttiene_dec_jurada" type="text" id="txttiene_dec_jurada" size="3" maxlength="2"  value="<?echo $tiene_dec_jurada?>" readonly></span></td>
+                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttiene_dec_jurada" type="text" id="txttiene_dec_jurada" size="3" maxlength="2"  value="<?php echo $tiene_dec_jurada?>" readonly></span></td>
                  <td width="194"><span class="Estilo5">FECHA DECLARACI&Oacute;N JURADA :</span></td>
-                 <td width="125"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_declaracion" type="text" id="txtfecha_declaracion" size="11" maxlength="10" value="<?echo $fecha_declaracion?>" readonly></span></td>
+                 <td width="125"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_declaracion" type="text" id="txtfecha_declaracion" size="11" maxlength="10" value="<?php echo $fecha_declaracion?>" readonly></span></td>
                  <td width="140"><span class="Estilo5">MONTO DECLARACI&Oacute;N : </span></td>
-                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtmonto_declaracion" type="text" id="txtmonto_declaracion" size="14" maxlength="14" value="<?echo $monto_declaracion?>" style="text-align:right" readonly></span></td>
+                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtmonto_declaracion" type="text" id="txtmonto_declaracion" size="14" maxlength="14" value="<?php echo $monto_declaracion?>" style="text-align:right" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -418,11 +418,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="115"><span class="Estilo5">COTIZA L.P.H. :</span></td>
-                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttiene_lph" type="text" id="txttiene_lph" size="3" maxlength="2"  value="<?echo $tiene_lph?>" readonly></span></td>
+                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttiene_lph" type="text" id="txttiene_lph" size="3" maxlength="2"  value="<?php echo $tiene_lph?>" readonly></span></td>
                  <td width="65"><span class="Estilo5">BANCO :</span></td>
-                 <td width="334"><span class="Estilo5"> <input class="Estilo10" name="txtbanco_lph" type="text" id="txtbanco_lph" size="45" maxlength="45"  value="<?echo $banco_lph?>" readonly></span></td>
+                 <td width="334"><span class="Estilo5"> <input class="Estilo10" name="txtbanco_lph" type="text" id="txtbanco_lph" size="45" maxlength="45"  value="<?php echo $banco_lph?>" readonly></span></td>
                  <td width="70"><span class="Estilo5">CUENTA : </span></td>
-                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_lph" type="text" id="txtcta_lph" size="27" maxlength="20"   value="<?echo $cta_lph?>" readonly></span></td>
+                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_lph" type="text" id="txtcta_lph" size="27" maxlength="20"   value="<?php echo $cta_lph?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -430,11 +430,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="174"><span class="Estilo5">FECHA INSCRIPCI&Oacute;N L.P.H. :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_lph" type="text" id="txtfecha_lph" size="12" maxlength="10"  value="<?echo $fecha_lph?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_lph" type="text" id="txtfecha_lph" size="12" maxlength="10"  value="<?php echo $fecha_lph?>" readonly></span></td>
                  <td width="180"><span class="Estilo5">FECHA DESINCORP. L.P.H :</span></td>
-                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_des_lph" type="text" id="txtfecha_des_lph" size="12" maxlength="10"  value="<?echo $fecha_des_lph?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_des_lph" type="text" id="txtfecha_des_lph" size="12" maxlength="10"  value="<?php echo $fecha_des_lph?>" readonly></span></td>
                  <td width="150"><span class="Estilo5">TIPO DE TRABAJADOR :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcont_fijo" type="text" id="txtcont_fijo" size="13" maxlength="13"  value="<?echo $cont_fijo?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcont_fijo" type="text" id="txtcont_fijo" size="13" maxlength="13"  value="<?php echo $cont_fijo?>" readonly></span></td>
 
                </tr>
              </table></td>
@@ -442,11 +442,11 @@ $temp_des_nomina=$descripcion;
            <tr>
              <td><table width="864">
                <tr>
-                 <?if($egresado=="N"){?><td width="170"><span class="Estilo5">FECHA PROGRAMADO EGRESO :</span></td>
-                 <?}else{?><td width="170"><span class="Estilo5">FECHA DEL EGRESO :</span></td> <?}?>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_egreso" type="text" id="txtfecha_egreso" size="12" maxlength="10"  value="<?echo $fecha_egreso?>" readonly></span></td>
+                 <?php if($egresado=="N"){?><td width="170"><span class="Estilo5">FECHA PROGRAMADO EGRESO :</span></td>
+                 <?php }else{?><td width="170"><span class="Estilo5">FECHA DEL EGRESO :</span></td> <?php }?>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_egreso" type="text" id="txtfecha_egreso" size="12" maxlength="10"  value="<?php echo $fecha_egreso?>" readonly></span></td>
                  <td width="124"><span class="Estilo5">MOTIVO DEL EGRESO :</span></td>
-                 <td width="350"><span class="Estilo5"> <input class="Estilo10" name="txtmotivo_egreso" type="text" id="txtmotivo_egreso" size="55" maxlength="55" value="<?echo $motivo_egreso?>" readonly></span></td>
+                 <td width="350"><span class="Estilo5"> <input class="Estilo10" name="txtmotivo_egreso" type="text" id="txtmotivo_egreso" size="55" maxlength="55" value="<?php echo $motivo_egreso?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -454,9 +454,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="174"><span class="Estilo5">FECHA FIN DEL CONTRATO :</span></td>
-                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_fin_con" type="text" id="txtfecha_fin_con" size="12" maxlength="10"  value="<?echo $fecha_fin_con?>" readonly></span></td>
+                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_fin_con" type="text" id="txtfecha_fin_con" size="12" maxlength="10"  value="<?php echo $fecha_fin_con?>" readonly></span></td>
                  <td width="190"><span class="Estilo5">JERARQUIA DEL TRABAJADOR :</span></td>
-                 <td width="280"><span class="Estilo5"><input class="Estilo10" name="txtjerarquia" type="text" id="txtjerarquia" size="35" maxlength="25"  value="<?echo $jerarquia?>" readonly></span></td>
+                 <td width="280"><span class="Estilo5"><input class="Estilo10" name="txtjerarquia" type="text" id="txtjerarquia" size="35" maxlength="25"  value="<?php echo $jerarquia?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -464,11 +464,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="204"><span class="Estilo5">PAGO VACACIONES POR N&Oacute;MINA :</span></td>
-                 <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txttipo_vacaciones" type="text" id="txttipo_vacaciones" size="4" maxlength="2"  value="<?echo $tipo_vacaciones?>" readonly></span></td>
+                 <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txttipo_vacaciones" type="text" id="txttipo_vacaciones" size="4" maxlength="2"  value="<?php echo $tipo_vacaciones?>" readonly></span></td>
                  <td width="190"><span class="Estilo5">FECHA RETORNO VACACIONES  :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="10" maxlength="10"  value="<?echo $fecha_pago?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="10" maxlength="10"  value="<?php echo $fecha_pago?>" readonly></span></td>
 				 <td width="120"><span class="Estilo5">RIF TRABAJADOR :</span></td>
-				 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtrif_empleado" type="text" id="txtrif_empleado" size="12" maxlength="12"  value="<?echo $rif_empleado?>" readonly></span></td>
+				 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtrif_empleado" type="text" id="txtrif_empleado" size="12" maxlength="12"  value="<?php echo $rif_empleado?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -476,8 +476,8 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="175"><span class="Estilo5">CODIGO DE UBICACION :</span></td>
-                 <td width="155"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="12" maxlength="15"  value="<?echo $codigo_ubicacion?>" readonly></span></td>
-                 <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ubi" type="text" id="txtdescripcion_ubi" size="70" maxlength="100"  value="<?echo $descripcion_ubi?>" readonly> </span></td>
+                 <td width="155"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="12" maxlength="15"  value="<?php echo $codigo_ubicacion?>" readonly></span></td>
+                 <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ubi" type="text" id="txtdescripcion_ubi" size="70" maxlength="100"  value="<?php echo $descripcion_ubi?>" readonly> </span></td>
                  </tr>
              </table></td>
            </tr>           
@@ -485,9 +485,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="160"><span class="Estilo5">GRADO DE INSTRUCCI&Oacute;N : </span></td>
-                 <td width="206"><span class="Estilo5"><input class="Estilo10" name="txgrado_inst" type="text" id="txtgrado_inst" size="25" maxlength="25" value="<?echo $grado_inst?>" readonly> </span></td>
+                 <td width="206"><span class="Estilo5"><input class="Estilo10" name="txgrado_inst" type="text" id="txtgrado_inst" size="25" maxlength="25" value="<?php echo $grado_inst?>" readonly> </span></td>
                  <td width="82"><span class="Estilo5">PROFESI&Oacute;N : </span></td>
-                 <td width="396"><span class="Estilo5"> <input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" size="60" maxlength="55" value="<?echo $profesion?>" readonly></span></td>
+                 <td width="396"><span class="Estilo5"> <input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" size="60" maxlength="55" value="<?php echo $profesion?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -495,13 +495,13 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="100"><span class="Estilo5">ESTADO CIVIL  : </span></td>
-                 <td width="139"><span class="Estilo5"><input class="Estilo10" name="txtedo_civil" type="text" id="txtedo_civil" size="12" maxlength="12"  value="<?echo $edo_civil?>" readonly></span></td>
+                 <td width="139"><span class="Estilo5"><input class="Estilo10" name="txtedo_civil" type="text" id="txtedo_civil" size="12" maxlength="12"  value="<?php echo $edo_civil?>" readonly></span></td>
                  <td width="55"><span class="Estilo5">SEXO : </span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtsexo" type="text" id="txtsexo" size="12" maxlength="12"  value="<?echo $sexo?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtsexo" type="text" id="txtsexo" size="12" maxlength="12"  value="<?php echo $sexo?>" readonly></span></td>
                  <td width="150"><span class="Estilo5">FECHA DE NACIMIENTO  :</span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  value="<?echo $fecha_nacimiento?>" readonly> </span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  value="<?php echo $fecha_nacimiento?>" readonly> </span></td>
                  <td width="50"><span class="Estilo5">EDAD : </span></td>
-                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="4" maxlength="4" value="<?echo $edad?>" readonly></span></td>
+                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="4" maxlength="4" value="<?php echo $edad?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -509,7 +509,7 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="154"><span class="Estilo5">LUGAR DE NACIMIENTO : </span></td>
-                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtlugar_nacimiento" type="text" id="txtlugar_nacimiento" size="75" maxlength="85"  value="<?echo $lugar_nacimiento?>" readonly></span></td>
+                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtlugar_nacimiento" type="text" id="txtlugar_nacimiento" size="75" maxlength="85"  value="<?php echo $lugar_nacimiento?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -517,7 +517,7 @@ $temp_des_nomina=$descripcion;
              <td><table width="860">
                <tr>
                  <td width="85"><span class="Estilo5">DIRECCI&Oacute;N :</span></td>
-                 <td width="745"><textarea name="txtdireccion" cols="84" readonly="readonly" class="Estilo10" id="txtdireccion"><?echo $direccion?></textarea></td>
+                 <td width="745"><textarea name="txtdireccion" cols="84" readonly="readonly" class="Estilo10" id="txtdireccion"><?php echo $direccion?></textarea></td>
                </tr>
              </table></td>
            </tr>
@@ -525,9 +525,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                              <td width="73"><span class="Estilo5">ESTADO :</span></td>
-                 <td width="323"><span class="Estilo5"><input class="Estilo10" name="txtestado" type="text" id="txtestado" size="30"  value="<?echo $estado?>" readonly>  </span></td>
+                 <td width="323"><span class="Estilo5"><input class="Estilo10" name="txtestado" type="text" id="txtestado" size="30"  value="<?php echo $estado?>" readonly>  </span></td>
                  <td width="92"><span class="Estilo5">MUNICIPIO  : </span></td>
-                 <td width="355"><span class="Estilo5"><input class="Estilo10" name="txtmunicipio" type="text" id="txtmunicipio" size="40"  value="<?echo $municipio?>" readonly></span></td>
+                 <td width="355"><span class="Estilo5"><input class="Estilo10" name="txtmunicipio" type="text" id="txtmunicipio" size="40"  value="<?php echo $municipio?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -535,9 +535,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="73"><span class="Estilo5">CIUDAD  : </span></td>
-                 <td width="323"><span class="Estilo5"><input class="Estilo10" name="txtciudad" type="text" id="txtciudad" size="30"  value="<?echo $ciudad?>" readonly>  </span></td>
+                 <td width="323"><span class="Estilo5"><input class="Estilo10" name="txtciudad" type="text" id="txtciudad" size="30"  value="<?php echo $ciudad?>" readonly>  </span></td>
                  <td width="92"><span class="Estilo5">PARROQUIA  : </span></td>
-                 <td width="355"><span class="Estilo5"><input class="Estilo10" name="txtparroquia" type="text" id="txtparroquia" size="40"  value="<?echo $parroquia?>" readonly></span></td>
+                 <td width="355"><span class="Estilo5"><input class="Estilo10" name="txtparroquia" type="text" id="txtparroquia" size="40"  value="<?php echo $parroquia?>" readonly></span></td>
               </tr>
              </table></td>
            </tr>
@@ -545,11 +545,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="149"><span class="Estilo5">TELEFONO HABITACI&Oacute;N : </span></td>
-                 <td width="163"><span class="Estilo5"> <input class="Estilo10" name="txttelefono" type="text" id="txttelefono" size="20" maxlength="20" value="<?echo $telefono?>" readonly></span></td>
+                 <td width="163"><span class="Estilo5"> <input class="Estilo10" name="txttelefono" type="text" id="txttelefono" size="20" maxlength="20" value="<?php echo $telefono?>" readonly></span></td>
                  <td width="165"><span class="Estilo5">TELEFONO MOVIL/CELULAR : </span></td>
-                 <td width="172"><span class="Estilo5"> <input class="Estilo10" name="txttlf_movil" type="text" id="txttlf_movil" size="20" maxlength="20"  value="<?echo $tlf_movil?>" readonly></td>
+                 <td width="172"><span class="Estilo5"> <input class="Estilo10" name="txttlf_movil" type="text" id="txttlf_movil" size="20" maxlength="20"  value="<?php echo $tlf_movil?>" readonly></td>
                  <td width="109"><span class="Estilo5">C&Oacute;DIGO POSTAL : </span></td>
-                 <td width="78"><span class="Estilo5"><input class="Estilo10" name="txtcod_postal" type="text" id="txtcod_postal" size="5" maxlength="5"  value="<?echo $cod_postal?>" readonly></span></td>
+                 <td width="78"><span class="Estilo5"><input class="Estilo10" name="txtcod_postal" type="text" id="txtcod_postal" size="5" maxlength="5"  value="<?php echo $cod_postal?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -557,9 +557,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="149"><span class="Estilo5">CORREO ELECTRONICO  :</span></td>
-                 <td width="308"><span class="Estilo5"> <input class="Estilo10" name="txtcorreo" type="text" id="txtcorreo" size="30" maxlength="40"  value="<?echo $correo?>" readonly></span></td>
+                 <td width="308"><span class="Estilo5"> <input class="Estilo10" name="txtcorreo" type="text" id="txtcorreo" size="30" maxlength="40"  value="<?php echo $correo?>" readonly></span></td>
                  <td width="142"><span class="Estilo5">APARTADO POSTAL  : </span></td>
-                 <td width="241"><span class="Estilo5"> <input class="Estilo10" name="txtaptdo_postal" type="text" id="txtaptdo_postal" size="15" maxlength="20"  value="<?echo $aptdo_postal?>" readonly></span></td>
+                 <td width="241"><span class="Estilo5"> <input class="Estilo10" name="txtaptdo_postal" type="text" id="txtaptdo_postal" size="15" maxlength="20"  value="<?php echo $aptdo_postal?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -567,13 +567,13 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">NRO. POLIZA SEGURO : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtpoliza" type="text" id="txttalla_camisa" size="15" maxlength="15" value="<?echo $poliza?>" readonly> </span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtpoliza" type="text" id="txttalla_camisa" size="15" maxlength="15" value="<?php echo $poliza?>" readonly> </span></td>
                  <td width="100"><span class="Estilo5">TALLA CAMISA  : </span></td>
-                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_camisa" type="text" id="txttalla_camisa" size="3" maxlength="3" value="<?echo $talla_camisa?>" readonly> </span></td>
+                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_camisa" type="text" id="txttalla_camisa" size="3" maxlength="3" value="<?php echo $talla_camisa?>" readonly> </span></td>
                  <td width="110"><span class="Estilo5">TALLA PANTALON  : </span></td>
-                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_pantalon" type="text" id="txttalla_pantalon" size="3" maxlength="3" value="<?echo $talla_pantalon?>" readonly></span></td>
+                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_pantalon" type="text" id="txttalla_pantalon" size="3" maxlength="3" value="<?php echo $talla_pantalon?>" readonly></span></td>
                  <td width="110"><span class="Estilo5">TALLA CALZADO  : </span></td>
-                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttalla_calzado" type="text" id="txttalla_calzado" size="3" maxlength="3" value="<?echo $talla_calzado?>" readonly> </span></td>
+                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttalla_calzado" type="text" id="txttalla_calzado" size="3" maxlength="3" value="<?php echo $talla_calzado?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -581,11 +581,11 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="200"><span class="Estilo5">TIENE AUSENCIA PROGRAMADA :</span></td>
-                 <td width="84"><span class="Estilo5"> <input class="Estilo10" name="txttiene_aus_pro" type="text" id="txttiene_aus_pro" size="3" maxlength="3"  value="<?echo $tiene_aus_pro?>" readonly></span></td>
+                 <td width="84"><span class="Estilo5"> <input class="Estilo10" name="txttiene_aus_pro" type="text" id="txttiene_aus_pro" size="3" maxlength="3"  value="<?php echo $tiene_aus_pro?>" readonly></span></td>
                  <td width="250"><span class="Estilo5">FECHA PROGRAMADA AUSENCIA DESDE : </span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_desde" type="text" id="txtfecha_aus_desde" size="10" maxlength="10"  value="<?echo $fecha_aus_desde?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_desde" type="text" id="txtfecha_aus_desde" size="10" maxlength="10"  value="<?php echo $fecha_aus_desde?>" readonly></span></td>
                  <td width="70"><span class="Estilo5">HASTA : </span></td>
-                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_hasta" type="text" id="txtfecha_aus_hasta" size="10" maxlength="10"  value="<?echo $fecha_aus_hasta?>" readonly></span></td>
+                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_hasta" type="text" id="txtfecha_aus_hasta" size="10" maxlength="10"  value="<?php echo $fecha_aus_hasta?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -593,9 +593,9 @@ $temp_des_nomina=$descripcion;
              <td><table width="864">
                <tr>
                  <td width="164" ><span class="Estilo5">MOTIVO DE LA AUSENCIA  :</span></td>
-                 <td width="690" ><span class="Estilo5"><input class="Estilo10" name="txtmotivo_ausencia" type="text" id="txtmotivo_ausencia" size="80" maxlength="100"  value="<?echo $motivo_ausencia?>" readonly> </span></td>
-                 <td width="5"><input class="Estilo10" name="txtcod_cargo" type="hidden" id="txtcod_cargo" value="<?echo $cod_cargo?>" ></td>
-                 <td width="5"><input class="Estilo10" name="txtcod_dep" type="hidden" id="txtcod_dep" value="<?echo $cod_departam?>" ></td>
+                 <td width="690" ><span class="Estilo5"><input class="Estilo10" name="txtmotivo_ausencia" type="text" id="txtmotivo_ausencia" size="80" maxlength="100"  value="<?php echo $motivo_ausencia?>" readonly> </span></td>
+                 <td width="5"><input class="Estilo10" name="txtcod_cargo" type="hidden" id="txtcod_cargo" value="<?php echo $cod_cargo?>" ></td>
+                 <td width="5"><input class="Estilo10" name="txtcod_dep" type="hidden" id="txtcod_dep" value="<?php echo $cod_departam?>" ></td>
                     
 			  </tr>
              </table></td>
@@ -617,31 +617,31 @@ $temp_des_nomina=$descripcion;
    rows[1][5] = "Informaci&oacute;n Curricular";        // Requiere: <div id="T14" class="tab-body">  ... </div>
    rows[1][6] = "Conceptos";        // Requiere: <div id="T14" class="tab-body">  ... </div>
               </script>
-                <?include ("../class/class_tab.php");?>
+                <?php include ("../class/class_tab.php");?>
                 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
                  <!--PESTAÑA 1 -->
                 <div id="T11" class="tab-body">
-                  <iframe src="Det_cons_asig_cargo.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_asig_cargo.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 2 -->
                 <div id="T12" class="tab-body" >
-                  <iframe src="Det_cons_hoja_vida.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_hoja_vida.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!--PESTAÑA 3 -->
                 <div id="T13" class="tab-body" >
-                  <iframe src="Det_cons_inf_familiar.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_inf_familiar.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 4 -->
                 <div id="T14" class="tab-body">
-                  <iframe src="Det_cons_exp_laboral.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_exp_laboral.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 5 -->
                 <div id="T15" class="tab-body">
-                  <iframe src="Det_cons_inf_curricular.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_inf_curricular.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 6 -->
                 <div id="T16" class="tab-body">
-                  <iframe src="Det_cons_conc_asig.php?cod_empleado=<?echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_cons_conc_asig.php?cod_empleado=<?php echo $cod_empleado?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
               </div>
               </td>
@@ -652,24 +652,24 @@ $temp_des_nomina=$descripcion;
 <form name="form2" method="post" action="Inc_info_trabajadores.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
 	 <td width="5"><input class="Estilo10" name="txtcedula_c" type="hidden" id="txtcedula_c" value="" ></td>	 
-     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $temp_nomina?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?echo $temp_des_nomina?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtregion_e" type="hidden" id="txtregion_e" value="<?echo $reg_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtestado_e" type="hidden" id="txtestado_e" value="<?echo $edo_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?echo $mun_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?echo $ciu_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtparroquia_e" type="hidden" id="txtparroquia_e" value="<?echo $mun_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?echo $cod_e?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtcod_municipio" type="hidden" id="txtcod_municipio" value="<?echo $cod_m?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtformato_trab" type="hidden" id="txtformato_trab" value="<?echo $formato_trab?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtprimero_apellido" type="hidden" id="txtprimero_apellido" value="<?echo $primero_apellido?>" ></td>
+     <td width="5"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $temp_nomina?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtdes_nomina" type="hidden" id="txtdes_nomina" value="<?php echo $temp_des_nomina?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtregion_e" type="hidden" id="txtregion_e" value="<?php echo $reg_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtestado_e" type="hidden" id="txtestado_e" value="<?php echo $edo_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtmunicipio_e" type="hidden" id="txtmunicipio_e" value="<?php echo $mun_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtciudad_e" type="hidden" id="txtciudad_e" value="<?php echo $ciu_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtparroquia_e" type="hidden" id="txtparroquia_e" value="<?php echo $mun_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcod_estado" type="hidden" id="txtcod_estado" value="<?php echo $cod_e?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtcod_municipio" type="hidden" id="txtcod_municipio" value="<?php echo $cod_m?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtformato_trab" type="hidden" id="txtformato_trab" value="<?php echo $formato_trab?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtprimero_apellido" type="hidden" id="txtprimero_apellido" value="<?php echo $primero_apellido?>" ></td>
   </tr>
 </table>
 </form>
@@ -678,4 +678,4 @@ $temp_des_nomina=$descripcion;
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

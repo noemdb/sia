@@ -1,8 +1,8 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); error_reporting(E_ALL);
 $codigo_mov=$_GET["codigo_mov"]; $url="Det_inc_bienes_semo_movimientos.php?codigo_mov=".$codigo_mov;
 echo "GENERANDO COMPROBANTE....","<br>"; $error=0; $cod_contable=""; $pasivo_comp="NO"; $tipo_ord="0000";
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{
   $resultado=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); 
  
@@ -15,14 +15,14 @@ if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURR
           if ($filas>0){ $reg=pg_fetch_array($resultado);
              $monto_c=$monto_asiento+$reg["monto_asiento"];   $monto_c=formato_numero($monto_c);
              if ($monto_c>0){$resultado=pg_exec($conn,"SELECT MODIFICA_CUENTA_CON008('$codigo_mov','C','$codigo_cuenta',$monto_c,'CAUSADO PRESUPUESTARIO')");
-             $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? } } }
+             $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } } }
            else{
             $resultado=pg_exec($conn,"SELECT INCLUYE_CON008('$codigo_mov','00000000','C','$codigo_cuenta','00000','',$monto_asiento,'D','C','N','01','0','')");
-            $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }}
+            $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } }
         }
      
   }
 
    
 }
-pg_close();  error_reporting(E_ALL ^ E_WARNING); ?> <script language="JavaScript">document.location ='<? echo $url; ?>';</script>
+pg_close($conn);  error_reporting(E_ALL ^ E_WARNING); ?> <script language="JavaScript">document.location ='<?php  echo $url; ?>';</script>

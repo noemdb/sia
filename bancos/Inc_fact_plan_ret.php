@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
 if (!$_GET){$codigo_mov="";$ivag=0;$tasa_ret=0;$ced_rif="";$monto=0; $tipo_planilla="";}
 else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];
 $ivag=$_GET["ivag"];$tasa_ret=$_GET["tasa_ret"];$ced_rif=$_GET["ced_rif"]; $tipo_planilla=$_GET["tipo_planilla"]; $monto=0;}
@@ -8,7 +8,7 @@ $tasa_iva=formato_monto($ivag);$fecha_hoy=asigna_fecha_hoy();$tasa_ret=formato_m
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Factura en la Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Factura en la Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -31,7 +31,7 @@ function encender_monto(mthis){var mmonto; encender(mthis);
 function apagar_monto(mthis){var mref; var mmonto;
    apagar(mthis);    mmonto=mthis.value;  mmonto=camb_punto_coma(mmonto); mthis.value=mmonto;
  return true;}
-function llamar_anterior(){ document.location ='Det_inc_plan_ret.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_plan_ret.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function daformatomonto (monto){var i; var str2 ="";
    for (i = 0; i < monto.length; i++){if ((monto.charAt(i) == '.')){str2 = str2 + ",";} else{if (((monto.charAt(i) >= '0') && (monto.charAt(i) <= '9')) || (monto.charAt(i) == '-') ) {str2 = str2 + monto.charAt(i);} } }
    return str2;
@@ -146,7 +146,7 @@ return true;}
               <td width="153"><span class="Estilo5">N&Uacute;MERO FACTURA:</span></td>
               <td width="183"><input class="Estilo10" name="txtnro_factura" type="text"  id="txtnro_factura" size="22" maxlength="20" onFocus="encender(this);" onBlur="apaga_fact(this)"  onchange="chequea_factura(this.form);"></td>
               <td width="123"><span class="Estilo5">FECHA FACTURA:</span></td>
-              <td width="175"><input class="Estilo10" name="txtfecha_factura" type="text" id="txtfecha_factura" size="12" maxlength="10" onFocus="encender(this);" onBlur="apaga_fecha(this)"  onchange="chequea_fecha(this.form);" value="<?echo $fecha_hoy?>"></td>
+              <td width="175"><input class="Estilo10" name="txtfecha_factura" type="text" id="txtfecha_factura" size="12" maxlength="10" onFocus="encender(this);" onBlur="apaga_fecha(this)"  onchange="chequea_fecha(this.form);" value="<?php echo $fecha_hoy?>"></td>
             </tr>
           </table></td>
         </tr>
@@ -156,7 +156,7 @@ return true;}
                 <td width="154"><span class="Estilo5">N&Uacute;MERO DE CONTROL:</span></td>
                 <td width="182"><span class="Estilo5"><input class="Estilo10" name="txtnro_con_factura" type="text" id="txtnro_con_factura"  size="22" maxlength="20" onFocus="encender(this); " onBlur="apaga_cont(this)"  onchange="chequea_control(this.form);">  </span></td>
                 <td width="126"><span class="Estilo5">RIF FACTURA :</span></td>
-                <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtrif_fact" type="text"  id="txtrif_fact"  value="<?echo $ced_rif?>" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)"> </span> </td>
+                <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtrif_fact" type="text"  id="txtrif_fact"  value="<?php echo $ced_rif?>" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)"> </span> </td>
             
               </tr>
           </table></td>
@@ -165,9 +165,9 @@ return true;}
           <td><table width="655" border="0">
             <tr>
               <td width="154"><span class="Estilo5">MONTO SIN IVA: </span></td>
-              <td width="182"><span class="Estilo5"><div id="montOb"><input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right"  onFocus="encender_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?echo $monto?>" onKeypress="return validarNum(event)">  </div> </span></td>
+              <td width="182"><span class="Estilo5"><div id="montOb"><input class="Estilo10" name="txtmonto_sin_iva" type="text" id="txtmonto_sin_iva" size="22" style="text-align:right"  onFocus="encender_monto(this);" onBlur="apaga_monto(this)"  onchange="chequea_monto(this.form);" value="<?php echo $monto?>" onKeypress="return validarNum(event)">  </div> </span></td>
               <td width="124"><span class="Estilo5">TASA DE IVA:</span></td>
-              <td width="177"><span class="Estilo5"><input class="Estilo10" name="txttasa_iva" type="text" id="txttasa_iva" size="6" maxlength="5" style="text-align:right"  onFocus="encender_monto(this);" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<?echo $tasa_iva?>" onKeypress="return validarNum(event)">  </span></td>
+              <td width="177"><span class="Estilo5"><input class="Estilo10" name="txttasa_iva" type="text" id="txttasa_iva" size="6" maxlength="5" style="text-align:right"  onFocus="encender_monto(this);" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<?php echo $tasa_iva?>" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table></td>
         </tr>
@@ -187,7 +187,7 @@ return true;}
               <td width="154"><span class="Estilo5">MONTO OBJETO RETENCION:</span></td>
               <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtmonto_iva4_so" type="text" id="txtmonto_iva4_so" size="20" style="text-align:right"  onFocus="encende_obj_ret(this);" onBlur="apaga_obj_ret(this)" onKeypress="return validarNum(event)"> </span> </td>
 			  <td width="50"><span class="Estilo5">TASA :</span></td>
-              <td width="60"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="4" maxlength="4" style="text-align:right"  readonly value="<? echo $tasa_ret ?>" > </span></td>
+              <td width="60"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="4" maxlength="4" style="text-align:right"  readonly value="<?php  echo $tasa_ret ?>" > </span></td>
               <td width="90"><span class="Estilo5">RETENCION:</span></td>
 			  <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtmonto_iva3" type="text" id="txtmonto_iva3" size="20" style="text-align:right"  onFocus="encender_monto(this);" onBlur="apagar_monto(this)" onKeypress="return validarNum(event)"> </span> </td>
 			</tr>
@@ -200,12 +200,12 @@ return true;}
       </table>
         <table width="595" align="center">
           <tr>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-			<td width="10"><input name="txttipo_planilla" type="hidden" id="txttipo_planilla" value="<?echo $tipo_planilla?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+			<td width="10"><input name="txttipo_planilla" type="hidden" id="txttipo_planilla" value="<?php echo $tipo_planilla?>"></td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>
             <td width="96" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-            <td width="117"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?echo $ced_rif?>"></td>
+            <td width="117"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?php echo $ced_rif?>"></td>
           </tr>
         </table>      </td>
     </tr>

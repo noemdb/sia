@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$timestre=$_GET["timestre"];$cod_cat=$_GET["cod_cat"];$cod_part=$_GET["cod_part"]; $tipo_rep=$_GET["tipo_rep"]; } 
 else { $timestre="01"; $cod_cat=""; $cod_part=""; $tipo_rep="PDF"; }  $mes_desde="01"; $mes_hasta="03"; $mdes_trim="I-TRIMESTRE";
 $asig_global="S"; $equipo=getenv("COMPUTERNAME"); $cod_mov="Mpre020".$usuario_sia; $php_os=PHP_OS;
@@ -19,7 +19,7 @@ function Rellenarcerosizq($str,$n){$numeroarellenar=$n-strlen($str); $texto=""; 
 if ($mes_desde=='01'){$mesd="Enero";}elseif ($mes_desde=='02'){$mesd="Febrero";}elseif ($mes_desde=='03'){$mesd="Marzo";}elseif ($mes_desde=='04'){$mesd="Abril";}elseif ($mes_desde=='05'){$mesd="Mayo";}elseif ($mes_desde=='06'){$mesd="Junio";}elseif ($mes_desde=='07'){$mesd="Julio";}elseif ($mes_desde=='08'){$mesd="Agosto";}elseif ($mes_desde=='09'){$mesd="Septiembre";}elseif ($mes_desde=='10'){$mesd="Octubre";}elseif ($mes_desde=='11'){$mesd="Noviembre";}elseif ($mes_desde=='12'){$mesd="Diciembre";}
 if ($mes_hasta=='01'){$mesh="Enero";}elseif ($mes_hasta=='02'){$mesh="Febrero";}elseif ($mes_hasta=='03'){$mesh="Marzo";}elseif ($mes_hasta=='04'){$mesh="Abril";}elseif ($mes_hasta=='05'){$mesh="Mayo";}elseif ($mes_hasta=='06'){$mesh="Junio";}elseif ($mes_hasta=='07'){$mesh="Julio";}elseif ($mes_hasta=='08'){$mesh="Agosto";}elseif ($mes_hasta=='09'){$mesh="Septiembre";}elseif ($mes_hasta=='10'){$mesh="Octubre";}elseif ($mes_hasta=='11'){$mesh="Noviembre";}elseif ($mes_hasta=='12'){$mesh="Diciembre";}
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
    $mano=substr($Fec_Fin_Ejer,0,4);    $criterio1="EJECUCION FINANCIERA DEL ".$mdes_trim." DEL AÑO ".$mano;    $criterio2="";
    
     
@@ -98,12 +98,12 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
    }   
    $sql_Asignacion="sum(asignado),";   
   $StrSQL = "DELETE FROM pre020 Where (tipo_registro='M') and (nombre_usuario='".$cod_mov."')";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
   $sql_codigo="substr(cod_presup,".$ini.",".$p."),cod_fuente"; $sql_grupo="substr(cod_presup,".$ini.",".$p."),cod_fuente";
   $StrSQL= "INSERT INTO pre020 SELECT '".$cod_mov."' as nombre_usuario,'M' as tipo_registro, ".$sql_codigo.",'','','','','','A','F','O','T','', ";
   $StrSQL=$StrSQL."sum(asignado),".$sql_Asignacion."sum(disp_diferida),".$sql_compromiso.$sql_causado.$sql_pagado.$sql_traslados.$sql_trasladon.$sql_adicion.$sql_disminucion.$sql_diferido.",".$sql_compromisom.$sql_causadom.$sql_pagadom.$sql_trasladosM.$sql_trasladonM.$sql_adicionM.$sql_disminucionM.$sql_diferidoM;
   $StrSQL=$StrSQL." FROM PRE001 WHERE length(Cod_Presup)=".$l_c." and ".$criterio."  group by ".$sql_grupo;    //echo $StrSQL,"<br>";  
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
   /*  */
   for ($i=1; $i<=$cant_par-2; $i++) { $pa=$cant_cat+$i-1;
@@ -114,7 +114,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
      $StrSQL=$StrSQL.$sql_Asignacion."sum(disponible),sum(disp_diferida),".$sql_compromiso.$sql_causado.$sql_pagado.$sql_traslados.$sql_trasladon.$sql_adicion.$sql_disminucion.$sql_diferido.",".$sql_compromisom.$sql_causadom.$sql_pagadom.$sql_trasladosM.$sql_trasladonM.$sql_adicionM.$sql_disminucionM.$sql_diferidoM;
      $StrSQL=$StrSQL." FROM PRE001 WHERE length(cod_presup)=".$l_c." and ".$criterio.$criterioc." group by ".$sql_grupo;
      //echo $StrSQL,"<br>";
-	 $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
      $sl=$mcontrol[$pa];
 	 $sql_codigo="substr(cod_presup,".$ini.",".$m.") as cod_partida,cod_fuente,denominacion"; $sql_grupo="cod_partida,cod_fuente,denominacion";
 	 if($i<$cant_par) { $sql_codigo="substr(cod_presup,".$ini.",".$m.") as cod_partida,'00' as cod_fuente,denominacion"; $sql_grupo="cod_partida,cod_fuente,denominacion";}
@@ -297,15 +297,15 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
          <td><table border="0" cellspacing='0' cellpadding='0' align="left">
 		 <tr height="20">
 			<td width="150" align="left" ><strong></strong></td>
-			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1; ?></strong></font></td>
+			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1; ?></strong></font></td>
 		 </tr>
 		 <tr height="20">
 		    <td width="150" align="left" ><strong></strong></td>
-			<td width="500" align="center" colspan="5"  > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $Nom_Emp; ?></strong></font></td>
+			<td width="500" align="center" colspan="5"  > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $Nom_Emp; ?></strong></font></td>
 		 </tr>
 		 <tr height="20">
 			<td width="150" align="left" ><strong></strong></td>
-			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio_s; ?></strong></font></td>
+			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio_s; ?></strong></font></td>
 		 </tr>
 		 <tr>
 			<td width="150" align="left"></td>
@@ -332,7 +332,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
            <td width="150" align="justify" bgcolor="#99CCFF" ><strong>POR PAGAR ACUMULADO</strong></td> 				   
 		 </tr>
 		
-		<?
+		<?php 
 		$totalg=0; $totalf=0; $totald=0; $totale=0; $totalc=0; $totala=0; $totalp=0; $totalac=0;$totalcm=0; $totalam=0; $totalpm=0; $totalau=0; $totaldi=0; $totalt=0; $totaltn=0; $totaldc=0; $totaldp=0; $totaldt=0; $totaldat=0;
 	    $res=pg_query($sSQL); $filas=pg_num_rows($res); 
 		while($registro=pg_fetch_array($res)){ 
@@ -373,25 +373,25 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 			
 			?>	   
 			<tr>
-			   <td width="150" align="center" style="<? echo $stilo1; ?>"><? echo $mpartida; ?></td>
-			   <td width="500" align="justify"><? echo $denomina_par; ?></td>				   
-			   <td width="150" align="right"><? echo $asignado; ?></td>
-			   <td width="150" align="right"><? echo $adicion; ?></td>
-			   <td width="150" align="right"><? echo $disminucion; ?></td>
-			   <td width="150" align="right"><? echo $traslados; ?></td>
-			   <td width="150" align="right"><? echo $trasladon; ?></td>
+			   <td width="150" align="center" style="<?php  echo $stilo1; ?>"><?php  echo $mpartida; ?></td>
+			   <td width="500" align="justify"><?php  echo $denomina_par; ?></td>				   
+			   <td width="150" align="right"><?php  echo $asignado; ?></td>
+			   <td width="150" align="right"><?php  echo $adicion; ?></td>
+			   <td width="150" align="right"><?php  echo $disminucion; ?></td>
+			   <td width="150" align="right"><?php  echo $traslados; ?></td>
+			   <td width="150" align="right"><?php  echo $trasladon; ?></td>
 			   
-			   <td width="150" align="right"><? echo $asig_actualizada; ?></td>
-			   <td width="150" align="right"><? echo $comprometidom; ?></td>
-			   <td width="150" align="right"><? echo $causadom; ?></td>
-			   <td width="150" align="right"><? echo $pagadom; ?></td>
+			   <td width="150" align="right"><?php  echo $asig_actualizada; ?></td>
+			   <td width="150" align="right"><?php  echo $comprometidom; ?></td>
+			   <td width="150" align="right"><?php  echo $causadom; ?></td>
+			   <td width="150" align="right"><?php  echo $pagadom; ?></td>
 			   
-			   <td width="150" align="right"><? echo $dispon; ?></td>
-			   <td width="150" align="right"><? echo $deudat; ?></td>
-			   <td width="150" align="right"><? echo $deudaat; ?></td>
-			   <td width="150" align="right"><? echo $deuda; ?></td>
+			   <td width="150" align="right"><?php  echo $dispon; ?></td>
+			   <td width="150" align="right"><?php  echo $deudat; ?></td>
+			   <td width="150" align="right"><?php  echo $deudaat; ?></td>
+			   <td width="150" align="right"><?php  echo $deuda; ?></td>
 			 </tr>
-			<? 			
+			<?php  			
 		}
 		
 		
@@ -404,29 +404,29 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 		<tr>
 			   <td width="150" align="center"><strong></strong></td>  
 			   <td width="500" align="justify"><strong>TOTALES</strong></td>				   
-			   <td width="150" align="right"><strong><? echo $stotalg; ?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotalau;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotaldi;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotalt;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotaltn;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotalf;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotalc;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotala;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotalp;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotald;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotaldt;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotaldat;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotaldp; ?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalg; ?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalau;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotaldi;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalt;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotaltn;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalf;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalc;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotala;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalp;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotald;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotaldt;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotaldat;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotaldp; ?></strong></td>
 			 </tr>
 		</table></td>
          </tr>				
 		 </table>
-		<?  
+		<?php   
 		
   }	 
   
 /*  
   $StrSQL = "DELETE FROM pre020 Where (tipo_registro='M') And (nombre_usuario='".$cod_mov."')";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
  */ 
 ?>

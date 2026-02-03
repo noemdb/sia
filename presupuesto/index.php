@@ -2,7 +2,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language=JavaScript  src="../class/sia.js"   type=text/javascript></SCRIPT>
 <style type="text/css">
@@ -76,6 +76,6 @@ return true;}
     </tr>
   </table>
 </form>
-<?if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?}}?>
+<?php if ($_GET){if ($_GET["errorusuario"]=="si"){?><script language="JavaScript"> muestra('DATOS DEL USUARIO NO VALIDO'); </script> <?php } }?>
 </body>
 </html>

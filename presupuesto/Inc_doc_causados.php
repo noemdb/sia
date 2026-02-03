@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Compromisos)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Compromisos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -17,14 +17,14 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtdoc_compromiso.value==""){alert("Código de Documento Compromiso no puede estar Vacio");return false;}
+    if(f.txtdoc_compromiso.value==""){alert("Cï¿½digo de Documento Compromiso no puede estar Vacio");return false;}
         if(f.txtdoc_compromiso.value.charAt(0)=='A'){alert("Documento de Compromiso no valido");return false;}
     if(f.txtnombre_doc_compromiso.value==""){alert("Nombre del Documento Compromiso no puede estar Vacio");return false; }
        else{f.txtnombre_doc_compromiso.value=f.txtnombre_doc_compromiso.value.toUpperCase();}
     if(f.txtnombre_abrev.value==""){alert("Nombre Abreviado del Documento Compromiso no puede estar Vacio");return false; }
        else{f.txtnombre_abrev.value=f.txtnombre_abrev.value.toUpperCase();}
     if(f.txtdoc_compromiso.value.length==4){f.txtdoc_compromiso.value=f.txtdoc_compromiso.value.toUpperCase();}
-       else{alert("Longitud Código de Documento Compromiso Invalida");return false;}
+       else{alert("Longitud Cï¿½digo de Documento Compromiso Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -68,7 +68,7 @@ return true;}
         <table width="859" height="111" border="0" id="tabcampos">
           <tr>
             <td height="45" valign="middle"><blockquote class="Estilo5">C&Oacute;DIGO :
-                            <input name="txtdoc_compromiso" type="text" id="txtdoc_compromiso" title="Registre el código del documento compromiso" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
+                            <input name="txtdoc_compromiso" type="text" id="txtdoc_compromiso" title="Registre el cï¿½digo del documento compromiso" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
 </blockquote></td>
           </tr>
           <tr>

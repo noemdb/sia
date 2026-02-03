@@ -3,15 +3,15 @@
  phpinfo();
 ?>
 
-<?
+<?php 
  echo 'hola CORTO';*/
 ?>
 
-<? $tempresa=$_POST["txtempresa"]; $tclave=$_POST["txtclave"]; $tusuario=$_POST["txtusuario"];  $tusuario=str_replace("-","",$tusuario); $tusuario=str_replace("'","",$tusuario); $tusuario=str_replace(";","",$tusuario);  $tusuario=str_replace("*","",$tusuario);  $tusuario=str_replace("%","",$tusuario); $tusuario=str_replace("[","",$tusuario); $tusuario=str_replace("#","",$tusuario);  $tusuario=str_replace("/","",$tusuario);  $tusuario=str_replace("=","",$tusuario); $tclave=str_replace("/","",$tclave); $tclave=str_replace("-","",$tclave); $tclave=str_replace("'","",$tclave);   $tclave=str_replace(";","",$tclave);  $tclave=str_replace("=","",$tclave);   
+<?php  $tempresa=$_POST["txtempresa"]; $tclave=$_POST["txtclave"]; $tusuario=$_POST["txtusuario"];  $tusuario=str_replace("-","",$tusuario); $tusuario=str_replace("'","",$tusuario); $tusuario=str_replace(";","",$tusuario);  $tusuario=str_replace("*","",$tusuario);  $tusuario=str_replace("%","",$tusuario); $tusuario=str_replace("[","",$tusuario); $tusuario=str_replace("#","",$tusuario);  $tusuario=str_replace("/","",$tusuario);  $tusuario=str_replace("=","",$tusuario); $tclave=str_replace("/","",$tclave); $tclave=str_replace("-","",$tclave); $tclave=str_replace("'","",$tclave);   $tclave=str_replace(";","",$tclave);  $tclave=str_replace("=","",$tclave);   
 $port=5432;$host="localhost";$existdb="N";$user="invsia";$key="0agi6s";$conn = pg_connect("host=".$host." port=".$port." password=".$key." user=".$user." dbname=".$tempresa."");
-if (!$conn) { echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS 1","<br>"; }else{ $sql="Select * from SIA000";  $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){$user=$registro["campo038"];$key=$registro["campo039"];$existdb="S";} pg_close(); }
+if (!$conn) { echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS 1","<br>"; }else{ $sql="Select * from SIA000";  $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){$user=$registro["campo038"];$key=$registro["campo039"];$existdb="S";} pg_close($conn); }
 if($existdb=="S"){$conn = pg_connect("host=".$host." port=".$port." password=".$key." user=".$user." dbname=".$tempresa."");
-if (pg_ErrorMessage($conn)) { echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS 2","<br>";}
+if (pg_last_error($conn)) { echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS 2","<br>";}
  else{ $sql="Select * from SIA001 WHERE campo101='$tusuario' and campo102='$tclave'"; $res=pg_query($sql); $filas=pg_num_rows($res); $sql="select busca_sia001('$tusuario','$tclave');"; $res=pg_query($sql);$filas=pg_num_rows($res);
  if ($filas>=1){  $registro=pg_fetch_array($res);$filas=$registro[0]; }
  if ($filas==1){ $sql="Select * from SIA001 WHERE campo101='$tusuario'"; $res=pg_query($sql); $filas=pg_num_rows($res); }
@@ -23,5 +23,5 @@ if (pg_ErrorMessage($conn)) { echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS
   // echo $existdb,"<br>";
   if($existdb=="S"){header ("Location: menu.php");}  else { header("Location: index.php?errorusuario=si"); }
  }
-pg_close();
+pg_close($conn);
 }

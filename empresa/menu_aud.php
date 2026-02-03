@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");include ("../class/configura.inc");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ $Nom_Emp=busca_conf(); }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -74,7 +74,7 @@ MM_reloadPage(true);
         </div>
     </div>
       <div id="Layer3" style="position:absolute; width:804px; height:36px; z-index:3; left: 149px; top: 83px;">
-        <div align="center" class="Estilo4"><? echo $Nom_Emp ?></div>
+        <div align="center" class="Estilo4"><?php  echo $Nom_Emp ?></div>
       </div>
       <div align="left"></div>
       <div align="center"></div>
@@ -84,4 +84,4 @@ MM_reloadPage(true);
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

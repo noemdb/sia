@@ -19,8 +19,8 @@ function MM_reloadPage(init) {  //reloads the window if Nav4 resized
 MM_reloadPage(true);
 </script>
 </head>
-<?
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+<?php 
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{  $sql="Select * from SIA001 WHERE campo101='$login'";   $res=pg_query($sql);
   if($registro=pg_fetch_array($res,0)){ $nombre=$registro["campo104"];  $cargo=$registro["campo105"]; $departamento=$registro["campo106"];
       $cat_prog=$registro["campo107"]; $cod_almacen=$registro["campo108"]; $unidad_sol=$registro["campo111"];} }
@@ -53,14 +53,14 @@ $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".
           <tr>
             <td><table width="811" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="200"><span class="Estilo5">LOGIN : <input  class="Estilo10" name="txtLogin" type="text" id="txtLogin" size="20" maxlength="15" readonly  value="<?echo $login?>"> </span></td>
-                <td width="565"><span class="Estilo5">NOMBRE USUARIO:</span> <input  class="Estilo10" name="txtNombre" type="text" id="txtNombre" value="<?echo $nombre?>" readonly size="60" maxlength="200" ></td>
+                <td width="200"><span class="Estilo5">LOGIN : <input  class="Estilo10" name="txtLogin" type="text" id="txtLogin" size="20" maxlength="15" readonly  value="<?php echo $login?>"> </span></td>
+                <td width="565"><span class="Estilo5">NOMBRE USUARIO:</span> <input  class="Estilo10" name="txtNombre" type="text" id="txtNombre" value="<?php echo $nombre?>" readonly size="60" maxlength="200" ></td>
               </tr>
             </table></td>
           </tr>
           <tr> <td>&nbsp;</td>  </tr>
         </table>
-        <iframe src="Det_asig_part.php?musuario=<?echo $login?>"  width="860" height="380" scrolling="auto" frameborder="1">
+        <iframe src="Det_asig_part.php?musuario=<?php echo $login?>"  width="860" height="380" scrolling="auto" frameborder="1">
         </iframe>
         </form>
     </div>

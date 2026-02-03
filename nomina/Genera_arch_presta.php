@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); require ("../class/fun_num_otros.php"); require ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; 
+<?php include ("../class/conect.php"); require ("../class/fun_num_otros.php"); require ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; 
 $equipo=getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $cod_arch_banco=$_POST["txtcod_arch_banco"];  $tipo_arch_banco=$_POST["txttipo_arch_banco"];  
 $mes=$_POST["txtperiodo_h"]; $ano=$_POST["txtperiodo_d"];$tipo_formato=$_POST["txttipo_formato"];
@@ -10,7 +10,7 @@ $mformula=""; $fechah=formato_aaaammdd($fecha_h);  $fechad=formato_aaaammdd($fec
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); 
 $sSQL="Select * from nom045 WHERE cod_arch_banco='$cod_arch_banco' and tipo_arch_banco='$tipo_arch_banco'"; $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
 if($filas>=1){  $registro=pg_fetch_array($resultado,0); $den_arch_banco=$registro["den_arch_banco"];}
-else{  $error=1;?> <script language="JavaScript">muestra('CODIGO DE ARCHIVO NO DEFINIDO');</script><? }
+else{  $error=1;?> <script language="JavaScript">muestra('CODIGO DE ARCHIVO NO DEFINIDO');</script><?php }
 $criterio="  and (nom030.tipo_calculo='P') and (nom006.tipo_nomina>='".$tipo_nominad."' and nom006.tipo_nomina<='".$tipo_nominah."') 
 	   and (nom030.fecha_calculo>='".$fechad."' and nom030.fecha_calculo<='".$fechah."')  ";
 $mformula=$criterio." and (nom030.cod_empleado>='".$cod_empleado_d."' and nom030.cod_empleado<='".$cod_empleado_h."') and (nom006.cod_departam>='".$cod_departd."' and nom006.cod_departam<='".$cod_departh."') and (nom006.cod_cargo>='".$codigo_cargo_d."' and nom006.cod_cargo<='".$codigo_cargo_h."')"; 
@@ -35,7 +35,7 @@ while($reg=pg_fetch_array($res)){ $cod_empleado=$reg["cod_empleado"];
   } 
   $monto_tot=$monto_tot+$monto_emp; if($monto_emp<>0){$monto_emp=0;$leidos=$leidos+1;}
   if($monto_tot<0){$monto_tot=$monto_tot*-1;}
-if($leidos==0){ echo $leidos; $error=1;?> <script language="JavaScript">muestra('INFORMACION DE PRESTACIONES NO LOCALIZADA');</script><? }
+if($leidos==0){ echo $leidos; $error=1;?> <script language="JavaScript">muestra('INFORMACION DE PRESTACIONES NO LOCALIZADA');</script><?php }
 else{ $encabezado=""; $detalle="";  $pie_pagina=""; if($tipo_formato=="TABULADO"){$encabezado="<tr>";}
   $StrSQL="SELECT * FROM nom052 Where (cod_arch_banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco') And (status2_campo='E') Order by Pos_Campo";  $res=pg_query($StrSQL);
   while($registro=pg_fetch_array($res)){ $str_campo=""; $l=0; $cod_campo=$registro["cod_campo"]; $car_especial=$registro["car_especial"]; $tipo_campo=$registro["tipo_campo"];
@@ -213,6 +213,6 @@ else{$encabezado="<pre>".$encabezado; $pie_pagina.="</pre>"; }
 if($tipo_rpt=="EXCEL"){	 header("Content-type: application/vnd.ms-excel");   header("Content-Disposition: attachment; filename=prestaciones.xls");	}	  
 echo $encabezado.$detalle.$pie_pagina;	  
 } 
-pg_close();
-if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?} 
+pg_close($conn);
+if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?php } 
 ?>

@@ -1,9 +1,9 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$fecha_d=$_GET["fecha_d"];$imprimir=$_GET["imprimir"];
 $criterio1="Al : ".$fecha_d;$Sql="";$date = date("d-m-Y"); $tipo_rep=$_GET["tipo_rep"];$hora = date("H:i:s a"); 
 if($fecha_d==""){$sfecha_d="2010-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);} $mcod_m="DBAN023".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS","<br>"; }
+if (pg_last_error($conn)){ echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS","<br>"; }
 else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){ $php_os="WINNT";} 
     $cuenta_dep_trans="";  $sql="Select campo504,campo510 from SIA005 where campo501='02'";    $resultado=pg_query($sql);
     if ($registro=pg_fetch_array($resultado,0)){$cuenta_dep_trans=$registro["campo510"]; }

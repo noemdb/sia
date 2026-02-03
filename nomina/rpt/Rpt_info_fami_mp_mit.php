@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
+<?php  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
 
    $tipo_nominad=$_GET["tipo_nominad"];   $tipo_nominah=$_GET["tipo_nominah"];   $cod_empleado_d=$_GET["cod_empleado_d"]; $parentesco=$_GET["parentesco"]; $tipo_rpt=$_GET["tipo_rpt"];
    $cod_empleado_h=$_GET["cod_empleado_h"];   $cedula_d=$_GET["cedula_d"];   $cedula_h=$_GET["cedula_h"];
@@ -35,7 +35,7 @@
 				  
 $nomb_rpt="Rpt_info_fami_mp_mit_re.xml";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
         
 		$fsql = "SELECT count(distinct NOM006.cod_empleado) as cant_trab  FROM NOM001, NOM006, NOM007, NOM009 WHERE NOM006.Cod_Empleado=NOM007.Cod_Empleado AND NOM006.Tipo_Nomina=NOM001.Tipo_Nomina and NOM006.Cod_Empleado = NOM009.Cod_Empleado and  ".$criterio;
@@ -151,7 +151,7 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 		 </tr>
 		 <tr height="20">
 		 </tr>
-		<?  $i=0; $prev_cod_empleado=""; $prev_ci_partida=""; $cantidad=0; $res=pg_query($sSQL);
+		<?php   $i=0; $prev_cod_empleado=""; $prev_ci_partida=""; $cantidad=0; $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_empleado=$registro["cod_empleado"];  $nombre=$registro["nombre"]; 
           $cedula=$registro["cedula"];  $status=$registro["status"]; $ci_partida=$registro["ci_partida"];
           $cod_empleado_grupo=$cod_empleado; $nombre_grupo=$nombre; $cedula_grupo=$cedula; $status_grupo=$status; $ci_partida_grupo=$ci_partida;
@@ -164,11 +164,11 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 					  <td width="400" align="left"></td>
 					  <td width="100" align="left"></td>	
 					  <td width="100" align="right">Cantidad Familiares : </td>			
-					  <td width="100" align="right"><? echo $cantidad; ?></td>
+					  <td width="100" align="right"><?php  echo $cantidad; ?></td>
 				    </tr> 
 				    <tr>
 				    </tr> 
-				<? }?>	
+				<?php }?>	
 				    <tr>
 				    </tr> 
 			 	    <tr>
@@ -185,9 +185,9 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 					  <td width="400" align="left">Nombre: </td>
 				    </tr> 				 
                     <tr>
-					  <td width="100" align="left">'<? echo $cod_empleado_grupo; ?></td>
-					  <td width="400" align="left">'<? echo $cedula_grupo; ?></td>
-					  <td width="400" align="left"><? echo $nombre_grupo; ?></td>	
+					  <td width="100" align="left">'<?php  echo $cod_empleado_grupo; ?></td>
+					  <td width="400" align="left">'<?php  echo $cedula_grupo; ?></td>
+					  <td width="400" align="left"><?php  echo $nombre_grupo; ?></td>	
 				    </tr>
                      <tr>
 					  <td width="100" align="left"></td>
@@ -202,20 +202,20 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 					  <td width="100" align="center">Edad: </td>
 					  <td width="100" align="left">Parentesco: </td>
 				    </tr> 
-            <? $prev_cod_empleado=$cod_empleado_grupo; $cantidad=0; } 
+            <?php  $prev_cod_empleado=$cod_empleado_grupo; $cantidad=0; } 
           $cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $ci_partida=$registro["ci_partida"]; $nomb_fam=$registro["nomb_fam"]; 
 	      $sexo=$registro["sexo"]; $fechan=$registro["fechan"];$edad=$registro["edad"]; $parentesco=$registro["parentesco"]; $cantidad=$cantidad+1; $total_cantidad=$total_cantidad+1;
           $edad=formato_monto($total_cantidad);
 		  ?> 
              <tr>
-			    <td width="100" align="left">'<? echo $ci_partida; ?></td>
-			    <td width="400" align="left"><? echo $nomb_fam; ?></td>	
-			    <td width="400" align="left"><? echo $sexo; ?></td>
-			    <td width="100" align="left"><? echo $fechan; ?></td>
-			    <td width="100" align="center"><? echo $edad; ?></td>
-			    <td width="100" align="left"><? echo $parentesco; ?></td>
+			    <td width="100" align="left">'<?php  echo $ci_partida; ?></td>
+			    <td width="400" align="left"><?php  echo $nomb_fam; ?></td>	
+			    <td width="400" align="left"><?php  echo $sexo; ?></td>
+			    <td width="100" align="left"><?php  echo $fechan; ?></td>
+			    <td width="100" align="center"><?php  echo $edad; ?></td>
+			    <td width="100" align="left"><?php  echo $parentesco; ?></td>
 			</tr>
-        <?} $total_cantidad=formato_monto($total_cantidad);
+        <?php } $total_cantidad=formato_monto($total_cantidad);
                 if($cantidad>0){ $cantidad=formato_monto($cantidad);
 				?>
                      <tr>
@@ -224,9 +224,9 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 					  <td width="400" align="left"></td>
 					  <td width="100" align="left"></td>	
 					  <td width="100" align="right">Cantidad Familiares : </td>			
-					  <td width="100" align="right"><? echo $cantidad; ?></td>
+					  <td width="100" align="right"><?php  echo $cantidad; ?></td>
 				    </tr> 				    
-				<? }	?>
+				<?php }	?>
 				<tr>
 				</tr>    
 			    <tr>
@@ -235,10 +235,10 @@ else {   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="
 				  <td width="400" align="left"></td>
 				  <td width="100" align="left"></td>	
 				  <td width="100" align="right">Total Cantidad Familiares : </td>			
-				  <td width="100" align="right"><? echo $total_cantidad; ?></td>
+				  <td width="100" align="right"><?php  echo $total_cantidad; ?></td>
 				</tr> 
 		 </tr>
-		 </table><?
+		 </table><?php 
 	}
 	
 }	

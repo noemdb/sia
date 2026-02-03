@@ -1,7 +1,7 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT"; error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; $php_os="WINNT"; error_reporting(E_ALL ^ E_NOTICE); 
 if (!$_GET){ $cod_empleado=''; $letra='A';} else{$cod_empleado=$_GET["txtcod_empleado"]; $letra=$_GET["letra"]; } 
 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $nombre="";$cedula=""; $fecha_ingreso=""; $fecha_liquidacion=""; $referencia=""; $total_asignacion=0;  $total_deduccion=0;
 $ant_ano="";$ant_mes="";$ant_dia="";$cod_sue_int="";$monto_sue_int=0;$sueldo_basico=0;$tiempo_servicio=0;$campo_str1="";$campo_str2="";$campo_num1="";$campo_num2="";$inf_usuario="";
 $tipo_liquidacion="";$sueldo_liquidacion=0;$sueldo_vacaciones=0;$dias_preaviso=0;$monto_preaviso=0; $total_adelantos=0; $total_intereses=0; $int_fraccionados=0;
@@ -205,7 +205,7 @@ class PDF extends FPDF{
   $pdf->Cell(100,6,'',0,1,'R');; 
   $monto_letras=monto_letras($total);
   $pdf->Output();
-  pg_close();
+  pg_close($conn);
 ?>
 
 <

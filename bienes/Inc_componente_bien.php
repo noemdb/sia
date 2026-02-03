@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); if (!$_GET){$cod_bien_mue=""; $cod_componente=""; }
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); if (!$_GET){$cod_bien_mue=""; $cod_componente=""; }
 else{$cod_bien_mue=$_GET["cod_bien_mue"]; $cod_componente=$_GET["cod_componente"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA COMPRAS,SERVICIOS Y AMAC&Eacute;N( Componentes)</title>
+<title>SIPAP COMPRAS,SERVICIOS Y AMAC&Eacute;N( Componentes)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -19,7 +19,7 @@ MM_reloadPage(true);
 //-->
 </script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_componentes_bienes.php?cod_bien_mue=<?echo $cod_bien_mue?>'; }
+function llamar_anterior(){ document.location ='Det_componentes_bienes.php?cod_bien_mue=<?php echo $cod_bien_mue?>'; }
 
 function revisar(){
 var f=document.form1;
@@ -47,7 +47,7 @@ return true;}
           <td><table width="730">
             <tr>
               <td width="130" ><span class="Estilo5">C&Oacute;DIGO : </span></td>
-              <td width="200" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_componente" type="text" id="txtcod_componente" size="5" maxlength="5"  value="<?echo $cod_componente?>" onFocus="encender(this)" onBlur="apagar(this)"  > </span></td>
+              <td width="200" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_componente" type="text" id="txtcod_componente" size="5" maxlength="5"  value="<?php echo $cod_componente?>" onFocus="encender(this)" onBlur="apagar(this)"  > </span></td>
               <td width="400"><span class="Estilo5"></span></td>  
 		   </tr>
           </table></td>
@@ -80,7 +80,7 @@ return true;}
          <td>
            <table width="730" align="center">
           <tr>
-            <td width="30"><input name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue" value="<?echo $cod_bien_mue?>"></td>
+            <td width="30"><input name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue" value="<?php echo $cod_bien_mue?>"></td>
             <td width="200">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

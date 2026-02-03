@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 if (!$_GET){  $tipo_orden='';  $sql="SELECT * FROM TIPOS_ORDEN ORDER BY tipo_orden";}
 else {  $tipo_orden = $_GET["Gtipo_orden"];  $sql="Select * from TIPOS_ORDEN where tipo_orden='$tipo_orden'";}
 ?>
@@ -42,9 +42,9 @@ return true;}
 </script>
 
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $res=pg_query($sql);$filas=pg_num_rows($res);$des_tipo_orden="";$cod_contable="";$gen_tributo="";$cod_banco="";
 if($filas>=1){  $registro=pg_fetch_array($res,0);  $tipo_orden=$registro["tipo_orden"];  $des_tipo_orden=$registro["des_tipo_orden"];
   $cod_contable=$registro["cod_contable_t"];  $cod_banco=$registro["cod_banco_t"];  $gen_tributo=$registro["gen_tributo"];  $status_1=$registro["status_1"];
@@ -64,8 +64,8 @@ if($gen_tributo=="S"){$gen_tributo="SI";}else{$gen_tributo="NO";}
   <tr>
     <td width="92"><table width="92" height="395" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_tipos_orden.php?Gtipo_orden=<? echo $tipo_orden; ?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_tipos_orden.php?Gtipo_orden=<? echo $tipo_orden; ?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_tipos_orden.php?Gtipo_orden=<?php  echo $tipo_orden; ?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_tipos_orden.php?Gtipo_orden=<?php  echo $tipo_orden; ?>">Atras</A></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -86,7 +86,7 @@ if($gen_tributo=="S"){$gen_tributo="SI";}else{$gen_tributo="NO";}
                 <tr>
                   <td width="163"><span class="Estilo5">C&Oacute;DIGO TIPO DE ORDEN:</span></td>
                   <td width="121"><div align="left"><span class="Estilo5">
-                      <input class="Estilo10" name="txttipo_orden" type="text" id="txttipo_orden" readonly value="<?echo $tipo_orden?>" size="8" maxlength="4">
+                      <input class="Estilo10" name="txttipo_orden" type="text" id="txttipo_orden" readonly value="<?php echo $tipo_orden?>" size="8" maxlength="4">
                   </span></div></td>
                   <td width="204">&nbsp;</td>
                   <td width="356"><span class="Estilo5"> </span></td>
@@ -101,7 +101,7 @@ if($gen_tributo=="S"){$gen_tributo="SI";}else{$gen_tributo="NO";}
                 <tr>
                   <td width="190"><span class="Estilo5">DESCRIPCI&Oacute;N TIPO DE ORDEN:</span></td>
                   <td width="634"><span class="Estilo5">
-                    <input class="Estilo10" name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $des_tipo_orden?>" size="100">
+                    <input class="Estilo10" name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $des_tipo_orden?>" size="100">
                   </span></td>
                 </tr>
             </table></td>
@@ -114,14 +114,14 @@ if($gen_tributo=="S"){$gen_tributo="SI";}else{$gen_tributo="NO";}
                 <tr>
                   <td width="135"><span class="Estilo5">C&Oacute;DIGO CONTABLE :</span></td>
                   <td width="188"><span class="Estilo5">
-                    <input class="Estilo10" name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_contable?>" size="25">
+                    <input class="Estilo10" name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_contable?>" size="25">
                   </span></td>
                   <td width="50"><div align="left"><span class="Estilo10"><span class="Estilo5">
                     <input class="Estilo10" name="btcuentas" type="button" id="btcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onClick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=','SIA','','750','500','true')" value="...">
                   </span>
                   </span></div></td>
                   <td width="470"><span class="Estilo5">
-                    <input class="Estilo10" name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" value="<?echo $nombre_cuenta?>"  size="70"  readonly>
+                    <input class="Estilo10" name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" value="<?php echo $nombre_cuenta?>"  size="70"  readonly>
                   </span></td>
                 </tr>
             </table></td>
@@ -134,13 +134,13 @@ if($gen_tributo=="S"){$gen_tributo="SI";}else{$gen_tributo="NO";}
                 <tr>
                   <td width="135"><span class="Estilo5">C&Oacute;DIGO DE BANCO :</span></td>
                   <td width="88"><div align="left"><span class="Estilo5">
-                      <input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_banco?>"size="8" maxlength="15">
+                      <input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_banco?>"size="8" maxlength="15">
                   </span></div></td>
                                   <td width="50"><div align="left"><span class="Estilo10"><span class="Estilo5">
                     <input class="Estilo10" name="btcuentas" type="button" id="btcuentas" title="Abrir Catalogo C&oacute;digo de Bancos"  onClick="VentanaCentrada('Cat_bancos.php?criterio=','SIA','','750','500','true')" value="...">
                   </span>
                   <td width="570"><span class="Estilo5">
-                    <input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" value="<?echo $nombre_banco?>" size="80"  readonly>
+                    <input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" value="<?php echo $nombre_banco?>" size="80"  readonly>
                   </span></td>
                 </tr>
             </table></td>
@@ -163,7 +163,7 @@ var f=document.form1;
                       <option>NO</option>
                       <option>SI</option>
                     </select>
-<script language="JavaScript" type="text/JavaScript"> asig_gen_tributo('<?echo $gen_tributo;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_gen_tributo('<?php echo $gen_tributo;?>');</script>
                   </span>
                   </span></td>
                   <td width="354"><input class="Estilo10" name="txtnro_cuenta" type="hidden" id="txtnro_cuenta"></td>
@@ -189,4 +189,4 @@ var f=document.form1;
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

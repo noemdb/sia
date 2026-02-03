@@ -5,5 +5,5 @@ $StrSQL="select sum(monto) as total_comp from pre036 where referencia_comp='$ref
 if($filas>0){$registro=pg_fetch_array($resultado); $tot_comp=$registro["total_comp"]; }
 $StrSQL="select * from pag036 where codigo_mov='$codigo_mov'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$StrSQL="SELECT UPDATE_PAG036_MONTO(2,'$codigo_mov',0,$tot_comp)"; $resultado=pg_exec($conn,$StrSQL); } $tot_comp=formato_monto($tot_comp);
-?> <input class="Estilo10" name="txttotal_comp" type="text" id="txttotal_comp" size="20" align="right" maxlength="20" readonly  value="<? echo $tot_comp?>" onkeypress="return stabular(event,this)" ><?
-pg_close();?>
+?> <input class="Estilo10" name="txttotal_comp" type="text" id="txttotal_comp" size="20" align="right" maxlength="20" readonly  value="<?php  echo $tot_comp?>" onkeypress="return stabular(event,this)" ><?php 
+pg_close($conn);?>

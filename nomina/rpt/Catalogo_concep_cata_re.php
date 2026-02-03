@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_nomina_d=$_GET["tipo_nomina_d"];$tipo_nomina_h=$_GET["tipo_nomina_h"];$cod_concepto_d=$_GET["cod_concepto_d"];$cod_concepto_h=$_GET["cod_concepto_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 
   $sSQL = "SELECT nom002.tipo_nomina, nom001.descripcion, nom002.cod_concepto, nom002.denominacion, nom002.Cod_Partida, nom002.Asignacion,
@@ -119,7 +119,7 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="
            	<td width="100" align="center" bgcolor="#99CCFF" ><strong>ACUM</strong></font></td>
            	<td width="100" align="center" bgcolor="#99CCFF" ><strong>FREC</strong></font></td>
            </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0;  $total_cantidad=0; $prev_tipo_nomina=""; $prev_descripcion=""; $prev_cod_concepto="";
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		    $tipo_nomina=$registro["tipo_nomina"]; $descripcion=$registro["descripcion"]; $cod_concepto=$registro["cod_concepto"];
@@ -129,56 +129,56 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="
                 if($cantidad>0){ ?>	   
 				<tr>
            			<td width="100" align="left"><strong>CONCEPTOS DE:</strong></td>
-           			<td width="400" align="left"><strong><? echo $prev_descripcion."    ".$cantidad; ?></strong></td>
+           			<td width="400" align="left"><strong><?php  echo $prev_descripcion."    ".$cantidad; ?></strong></td>
                 </tr>
 			    <tr>
 				  <td width="100" align="left"></td>
 			     </tr>
-				<?}?>	   
+				<?php }?>	   
 				<tr>
-           			<td width="100" align="left"><strong>'<? echo $tipo_nomina_grupo; ?></strong></td>
-           			<td width="400" align="left"><strong><? echo $descripcion_grupo; ?></strong></td>
+           			<td width="100" align="left"><strong>'<?php  echo $tipo_nomina_grupo; ?></strong></td>
+           			<td width="400" align="left"><strong><?php  echo $descripcion_grupo; ?></strong></td>
          		</tr>
 			    <tr>
 				  <td width="100" align="left"></td>
 			     </tr>
-			<?$prev_tipo_nomina=$tipo_nomina_grupo; $prev_descripcion=$descripcion_grupo; $cantidad=0; } 
+			<?php $prev_tipo_nomina=$tipo_nomina_grupo; $prev_descripcion=$descripcion_grupo; $cantidad=0; } 
 			$tipo_nomina=$registro["tipo_nomina"]; $descripcion=$registro["descripcion"]; $cod_concepto=$registro["cod_concepto"]; $denominacion=$registro["denominacion"]; 
 			$cod_partida=$registro["cod_partida"]; $cod_retencion=$registro["cod_retencion"]; $asignacion=$registro["asignacion"]; $activo=$registro["activo"];  
 			$inicializable=$registro["inicializable"]; $tipo_grupo=$registro["tipo_grupo"]; $oculto=$registro["oculto"]; $acumula=$registro["acumula"];  
 			$frecuencia=$registro["frecuencia"]; $cantidad=$cantidad+1; $total_cantidad=$total_cantidad+1;$denominacion=conv_cadenas($denominacion,0);  
 			?>	 
 			<tr>
-           			<td width="100" align="left">'<? echo $cod_concepto; ?></td>
-           			<td width="400" align="left"><? echo $denominacion; ?></td>
-           			<td width="100" align="center"><? echo $cod_partida; ?></td>
-           			<td width="100" align="center"><? echo $cod_retencion; ?></td>
-           			<td width="100" align="center"><? echo $asignacion; ?></td>
-           			<td width="100" align="center"><? echo $activo; ?></td>
-           			<td width="100" align="center"><? echo $inicializable; ?></td>
-           			<td width="100" align="center"><? echo $tipo_grupo; ?></td>
-           			<td width="100" align="center"><? echo $oculto; ?></td>
-           			<td width="100" align="center"><? echo $acumula; ?></td>
-           			<td width="100" align="center"><? echo $frecuencia; ?></td>
+           			<td width="100" align="left">'<?php  echo $cod_concepto; ?></td>
+           			<td width="400" align="left"><?php  echo $denominacion; ?></td>
+           			<td width="100" align="center"><?php  echo $cod_partida; ?></td>
+           			<td width="100" align="center"><?php  echo $cod_retencion; ?></td>
+           			<td width="100" align="center"><?php  echo $asignacion; ?></td>
+           			<td width="100" align="center"><?php  echo $activo; ?></td>
+           			<td width="100" align="center"><?php  echo $inicializable; ?></td>
+           			<td width="100" align="center"><?php  echo $tipo_grupo; ?></td>
+           			<td width="100" align="center"><?php  echo $oculto; ?></td>
+           			<td width="100" align="center"><?php  echo $acumula; ?></td>
+           			<td width="100" align="center"><?php  echo $frecuencia; ?></td>
          	</tr>
-		<? }
+		<?php }
             if($cantidad>0){ ?>	   
 				<tr>
 					<td width="100" align="left"><strong>CONCEPTOS DE:</strong></td>
-					<td width="400" align="left"><strong><? echo $prev_descripcion."    ".$cantidad; ?></strong></td>
+					<td width="400" align="left"><strong><?php  echo $prev_descripcion."    ".$cantidad; ?></strong></td>
          		</tr>
 			   <tr>
 				  <td width="100" align="left"></td>
 			    </tr>
-			<?}  ?>
+			<?php }  ?>
 	       <tr>
               <td>&nbsp;</td>
            </tr>
 	        <tr>
                 <td width="100" align="center"></td>
-		       <td width="400" align="left"><strong>TOTAL CONCEPTOS: : <? echo $total_cantidad; ?></strong></td>	
+		       <td width="400" align="left"><strong>TOTAL CONCEPTOS: : <?php  echo $total_cantidad; ?></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
 }

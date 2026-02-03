@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_inmd=$_GET["cod_bien_inmd"];$cod_bien_inmh=$_GET["cod_bien_inmh"];$cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"];
 $cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"];
 $cod_departamentod=$_GET["cod_departamentod"]; $cod_departamentoh=$_GET["cod_departamentoh"]; $tipo_regis=$_GET["tipo_regis"]; $denominacion=$_GET["denominacion"]; $tipo_rep=$_GET["tipo_rep"];
@@ -12,7 +12,7 @@ $criterio=" (bien014.cod_bien_inm>='$cod_bien_inmd' and bien014.cod_bien_inm<='$
 if($denominacion<>""){ $criterio=$criterio." and (bien014.denominacion Like '%".$denominacion."%')"; } 
 if ($tipo_regis=="D"){ $criterio=$criterio." and (bien014.desincorporado='S')"; }
 if ($tipo_regis=="A"){ $criterio=$criterio." and (bien014.desincorporado='N')"; }
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }  
     
 	$mordenado=" bien014.cod_clasificacion,bien014.cod_bien_inm";  $num_reporte=1;
@@ -350,7 +350,7 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>VALOR INCORP.</strong></td>
 			   <td width="400" align="left" bgcolor="#99CCFF" ><strong>CODIGO - DENOMINACION DEPARTAMENTO</strong></td>
 			 </tr>
-		  <?  $i=0;  $totalg=0; $subtotal=0;  $prev_cod_clasificacion=""; $c=0;   $res=pg_query($sSQL);
+		  <?php   $i=0;  $totalg=0; $subtotal=0;  $prev_cod_clasificacion=""; $c=0;   $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  
 		    $cod_clasificacion=$registro["cod_clasificacion"]; $denominacion_c=$registro["denominacion_c"];	$cod_bien_inm=$registro["cod_bien_inm"]; 
             $denominacion_c=conv_cadenas($denominacion_c,0); 
@@ -373,17 +373,17 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 					  <td width="100" align="left"></td>
 			          <td width="100" align="left"></td>
 					  <td width="100" align="left"></td>
-			          <td width="100" align="left">Sub-Total <? echo $prev_cod_clasificacion; ?></td>
-				      <td width="100" align="right"><? echo $subtotal; ?></td>
+			          <td width="100" align="left">Sub-Total <?php  echo $prev_cod_clasificacion; ?></td>
+				      <td width="100" align="right"><?php  echo $subtotal; ?></td>
 				      <td width="400" align="right"></td>
 			        </tr>	
-			     <?
+			     <?php 
 			  }
 			  $subtotal=0;  $prev_cod_clasificacion=$cod_clasificacion; $c=0;
 			  ?>
 			   <tr>
-			          <td width="100" align="left"><? echo $cod_clasificacion; ?></td>
-			          <td width="400" align="left"><? echo $denominacion_c; ?></td>
+			          <td width="100" align="left"><?php  echo $cod_clasificacion; ?></td>
+			          <td width="400" align="left"><?php  echo $denominacion_c; ?></td>
 			          <td width="100" align="left"></td>
 			          <td width="100" align="left"></td>
 					  <td width="100" align="left"></td>
@@ -391,7 +391,7 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 			          <td width="100" align="right"></td>
 			          <td width="400" align="right"></td>
 			    </tr>	
-			  <?   
+			  <?php    
 			}
 			$cod_bien_inm=$registro["cod_bien_inm"]; $denominacion=$registro["denominacion"]; $fechai=$registro["fechai"]; $denom_departamento=$registro["denom_departamento"]; $cod_departamento=$registro["cod_departamento"]; 
 			$valor_incorporacion=$registro["valor_incorporacion"]; $cod_dependencia=$registro["cod_dependencia"]; $denominacion_dep=$registro["denominacion_dep"];
@@ -401,16 +401,16 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 			$monto=formato_monto($valor_incorporacion); $totalg=$totalg+$valor_incorporacion; $subtotal=$subtotal+$valor_incorporacion; $c=$c+1;
 			?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_bien_inm; ?></td>				   
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
-				   <td width="100" align="left"><? echo $marca; ?></td>
-				   <td width="100" align="left"><? echo $modelo; ?></td>
-				   <td width="100" align="left"><? echo $serial1; ?></td>
-				   <td width="100" align="center"><? echo $fechai; ?></td>
-				   <td width="100" align="right"><? echo $monto; ?></td>
-				   <td width="400" align="justify"><? echo $cod_departamento." ".$denom_departamento; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_bien_inm; ?></td>				   
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+				   <td width="100" align="left"><?php  echo $marca; ?></td>
+				   <td width="100" align="left"><?php  echo $modelo; ?></td>
+				   <td width="100" align="left"><?php  echo $serial1; ?></td>
+				   <td width="100" align="center"><?php  echo $fechai; ?></td>
+				   <td width="100" align="right"><?php  echo $monto; ?></td>
+				   <td width="400" align="justify"><?php  echo $cod_departamento." ".$denom_departamento; ?></td>
 				</tr>
-			 <? 		  
+			 <?php  		  
 		  }
 		  if(($subtotal>0)){ $subtotal=formato_monto($subtotal);	
 			?>	 				 
@@ -430,11 +430,11 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				  <td width="100" align="left"></td>
 				  <td width="100" align="left"></td>
 				  <td width="100" align="left"></td>
-				  <td width="100" align="left">Sub-Total <? echo $prev_cod_clasificacion; ?></td>
-				  <td width="100" align="right"><? echo $subtotal; ?></td>
+				  <td width="100" align="left">Sub-Total <?php  echo $prev_cod_clasificacion; ?></td>
+				  <td width="100" align="right"><?php  echo $subtotal; ?></td>
 				  <td width="400" align="right"></td>
 			</tr>	
-		  <? } $totalg=formato_monto($totalg);?>	 				 
+		  <?php } $totalg=formato_monto($totalg);?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>			    
 			    <td width="400" align="left"></td>
@@ -452,11 +452,11 @@ else {  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				<td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"><strong>Totales</strong></td>
-			    <td width="100" align="right"><strong><? echo $totalg; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $totalg; ?></strong></td>
 			    <td width="400" align="right"></td>
 			</tr>	
 	     	
-		 </table><?
+		 </table><?php 
     }
 	
 	$sql="delete from bien056 where codigo_mov='".$cod_mov."'";

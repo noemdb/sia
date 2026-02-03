@@ -1,6 +1,6 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");
+<?php include ("../class/conect.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -29,18 +29,18 @@ $sql="select distinct tp_calculo,fecha_p_desde,fecha_p_hasta,concepto_vac,num_pe
            <td width="120" align="left" bgcolor="#99CCFF"><strong>Fechas Hasta</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF" ><strong>Conceptos</strong></td>
          </tr>
-         <? while($registro=pg_fetch_array($res)){  $fecha_p_desde=$registro["fecha_p_desde"]; $fecha_p_desde = substr($fecha_p_desde,8,2)."/".substr($fecha_p_desde,5,2)."/".substr($fecha_p_desde,0,4);
+         <?php  while($registro=pg_fetch_array($res)){  $fecha_p_desde=$registro["fecha_p_desde"]; $fecha_p_desde = substr($fecha_p_desde,8,2)."/".substr($fecha_p_desde,5,2)."/".substr($fecha_p_desde,0,4);
  $fecha_p_hasta=$registro["fecha_p_hasta"]; $fecha_p_hasta = substr($fecha_p_hasta,8,2)."/".substr($fecha_p_hasta,5,2)."/".substr($fecha_p_hasta,0,4); $num_periodos=$registro["num_periodos"];
  if ($registro["tp_calculo"]=="E"){$tp_calculo="EXTRAORDINARIA"; if ($registro["concepto_vac"]=="S"){$concepto_vac="VACACIONES - ".$num_periodos;}else{ $concepto_vac="NOMINA - ".$num_periodos;}
  }else{ $tp_calculo="NORMAL"; if ($registro["concepto_vac"]=="S"){$concepto_vac="VACACIONES";}else{ $concepto_vac="NOMINA";} }   $tfecha_p_hasta=$registro["fecha_p_hasta"];
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Detalle_nomina('<? echo $tipo_nomina; ?>','<? echo $registro["tp_calculo"]; ?>','<? echo $tfecha_p_hasta; ?>','<? echo $concepto_vac; ?>','<? echo $num_periodos; ?>') " >
-   		   <td width="120" align="center"><? echo $tp_calculo; ?></td>
-		   <td width="120" align="left"><? echo $fecha_p_desde; ?></td>
-		   <td width="120" align="left"><? echo $fecha_p_hasta; ?></td>
-		   <td width="120" align="center"><? echo $concepto_vac; ?></td>           
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Detalle_nomina('<?php  echo $tipo_nomina; ?>','<?php  echo $registro["tp_calculo"]; ?>','<?php  echo $tfecha_p_hasta; ?>','<?php  echo $concepto_vac; ?>','<?php  echo $num_periodos; ?>') " >
+   		   <td width="120" align="center"><?php  echo $tp_calculo; ?></td>
+		   <td width="120" align="left"><?php  echo $fecha_p_desde; ?></td>
+		   <td width="120" align="left"><?php  echo $fecha_p_hasta; ?></td>
+		   <td width="120" align="center"><?php  echo $concepto_vac; ?></td>           
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
    <tr>
@@ -53,4 +53,4 @@ $sql="select distinct tp_calculo,fecha_p_desde,fecha_p_hasta,concepto_vac,num_pe
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close(); ?>
+<?php   pg_close($conn); ?>

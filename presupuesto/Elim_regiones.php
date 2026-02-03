@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$cod_region='';} else {$cod_region=$_GET["Gregion"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,7 +27,7 @@ document.form1.submit;
 return true;}
 </script>
 
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $den_region="";
 $sql="Select cod_region,nombre_region from pre092 where cod_region='$cod_region'";$res=pg_query($sql);
@@ -69,7 +69,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_region=$registro["cod_region"];   $
                   <tr>
                     <td width="96"><span class="Estilo5">C&Oacute;DIGO  :</span></td>
                     <td width="720"><span class="Estilo5">
-                      <input name="txtCodigo_Region" type="text" id="txtCodigo_Region" title="Registre el C&oacute;digo de la Región" size="10" maxlength="2"  readonly value="<?ECHO $cod_region?>">
+                      <input name="txtCodigo_Region" type="text" id="txtCodigo_Region" title="Registre el C&oacute;digo de la Región" size="10" maxlength="2"  readonly value="<?php ECHO $cod_region?>">
                     </span></td>
                   </tr>
                 </table></td>
@@ -82,7 +82,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_region=$registro["cod_region"];   $
                   <table width="816" border="0">
                     <tr>
                       <td width="96"><span class="Estilo5">NOMBRE :</span></td>
-                      <td width="720"><input name="txtNombre_Region" type="text" id="txtNombre_Region" title="Registre el nombre de la Región" size="100" maxlength="200"  value="<?ECHO $den_region?>" readonly ></td>
+                      <td width="720"><input name="txtNombre_Region" type="text" id="txtNombre_Region" title="Registre el nombre de la Región" size="100" maxlength="200"  value="<?php ECHO $den_region?>" readonly ></td>
                     </tr>
                   </table>                  </td>
               </tr>
@@ -111,4 +111,4 @@ if ($registro=pg_fetch_array($res,0)){  $cod_region=$registro["cod_region"];   $
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

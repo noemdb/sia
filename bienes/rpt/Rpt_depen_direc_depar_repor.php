@@ -1,6 +1,6 @@
-<? include ("../../class/conect.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $tipo_rpt="PDF"; //$tipo_rpt="HTML";
+<?php  include ("../../class/conect.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $tipo_rpt="PDF"; //$tipo_rpt="HTML";
 $cod_dependenciad=$_GET["cod_dependenciad"];$cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direciond=$_GET["cod_direciond"];$cod_direcionh=$_GET["cod_direcionh"]; $date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 
     $sSQL = "SELECT bien006.cod_dependencia, bien001.denominacion_dep, bien006.cod_direccion, bien005.denominacion_dir,bien006.cod_departamento, bien006.denominacion_dep as denomina_dep, bien006.Direccion_dep, bien006.Nombre_Contacto_d, bien006.Observacion_dep FROM bien006 LEFT JOIN bien001 ON (bien001.cod_dependencia=bien006.cod_dependencia) LEFT JOIN bien005 ON (bien005.cod_direccion=bien006.cod_direccion) 

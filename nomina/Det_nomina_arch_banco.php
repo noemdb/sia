@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}$tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6);
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}$tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6);
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -28,14 +28,14 @@ $sql="SELECT NOM046.tipo_nomina,NOM001.descripcion FROM NOM046,NOM001 Where (NOM
            <td width="120" align="center" bgcolor="#99CCFF"><strong>C&oacute;digo n&oacute;mina</strong></td>
            <td width="620" align="center" bgcolor="#99CCFF"><strong>Denominaci&oacute;n</strong></td>
          </tr>
-         <?
+         <?php 
 while($registro=pg_fetch_array($res)){
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:llamar_eliminar('<? echo $registro["tipo_nomina"]; ?>');" >
-           <td width="120" align="left"><? echo $registro["tipo_nomina"]; ?></td>
-           <td width="620" align="left"><? echo $registro["descripcion"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:llamar_eliminar('<?php  echo $registro["tipo_nomina"]; ?>');" >
+           <td width="120" align="left"><?php  echo $registro["tipo_nomina"]; ?></td>
+           <td width="620" align="left"><?php  echo $registro["descripcion"]; ?></td>
          </tr>
-         <?}
+         <?php }
 ?>
        </table></td>
    </tr>
@@ -44,20 +44,20 @@ while($registro=pg_fetch_array($res)){
  <p>&nbsp;</p>
 </body>
 </html>
-<?   pg_close(); ?>
+<?php    pg_close($conn); ?>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_agregar(){var mcodigo='<?echo $cod_arch_banco?>';
+function llamar_agregar(){var mcodigo='<?php echo $cod_arch_banco?>';
 if(mcodigo==""){ alert('Codigo de Banco Invalido');}
 else{
-//document.location='Inc_nomina_arch_banco.php?cod_arch_banco=<?echo $cod_arch_banco?>'+'&tipo_arch_banco=<?echo $tipo_arch_banco?>'; 
-document.location='Inc_nomina_arch_banco.php?criterio=<?echo $criterio?>'; 
+//document.location='Inc_nomina_arch_banco.php?cod_arch_banco=<?php echo $cod_arch_banco?>'+'&tipo_arch_banco=<?php echo $tipo_arch_banco?>'; 
+document.location='Inc_nomina_arch_banco.php?criterio=<?php echo $criterio?>'; 
 
 } }
 function llamar_eliminar(mtipo){ var r;
   r=confirm("Esta seguro en Eliminar el Tipo de Nomina del Archivo ?");
   if(r==true){ r=confirm("Esta Realmente seguro en Eliminar el Tipo de N&oacute;mina del Archivo ?");
-    if(r==true){document.location='Delete_nom_arch_banco.php?cod_arch_banco=<?echo $cod_arch_banco?>'+'&tipo_arch_banco=<?echo $tipo_arch_banco?>'+'&tipo_nomina='+mtipo;  }}
+    if(r==true){document.location='Delete_nom_arch_banco.php?cod_arch_banco=<?php echo $cod_arch_banco?>'+'&tipo_arch_banco=<?php echo $tipo_arch_banco?>'+'&tipo_nomina='+mtipo;  }}
       else { url="Cancelado, no elimino"; }
 }
 

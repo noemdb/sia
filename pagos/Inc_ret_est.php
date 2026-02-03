@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php");$equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PAG006".$equipo;$codigo_mov=substr($mcod_m,0,49);}
 else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];}
 ?>
@@ -6,7 +6,7 @@ else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["passwo
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Retencion en la Estructura)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Retencion en la Estructura)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -25,7 +25,7 @@ function daformatomonto (monto){var i;var str2 ="";
       if ((monto.charAt(i) == '.')){str2 = str2 + ",";} else{if ((monto.charAt(i) >= '0') && (monto.charAt(i) <= '9') ) {str2 = str2 + monto.charAt(i);} } }
    return str2;
 }
-function llamar_anterior(){ document.location ='Det_inc_ret_est.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_ret_est.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_tipo(mform){var mref;
    mref=mform.txttipo_retencion.value; mref=Rellenarizq(mref,"0",3);  mform.txttipo_retencion.value=mref;
 return true;}
@@ -51,7 +51,7 @@ var Valido=true;
    f.txtdes_orden_ret.value=f.txtdes_orden_ret.value.toUpperCase();
    if(f.txtced_rif.value==""){alert("Cedula/Rif no puede estar Vacia"); return false; } else{f.txtced_rif.value=f.txtced_rif.value.toUpperCase();}
    if(f.txtmonto_retencion.value==""){alert("Monto Retencion no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto_retencion.value)) {Valido=true;} else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto_retencion.value)) {Valido=true;} else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -133,7 +133,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="10"><input name="txtsustraendo" type="hidden" id="txtsustraendo" value=""></td>
             <td width="90">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>

@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $tipo_nomina_d=$_GET["tipo_asiento_d"];
 $tipo_nomina_h=$_GET["tipo_asiento_h"];
@@ -9,7 +9,7 @@ if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_
 if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 //echo "ESPERE GENERANDO REPORTE DIARIO GENERAL....","<br>";
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','1')";
     $resultado=pg_exec($conn,$Sql);
@@ -21,7 +21,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
     $resultado=pg_exec($conn,$Sql);
     $error=pg_errormessage($conn);
     $error="ERROR GRABANDO: ".substr($error, 0, 61);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
        else{
           // LLAMAR A PHP_REPORT
           //   $oRpt->setPageSize(30);                        // 30 lines page
@@ -48,5 +48,5 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
               print "Your report was created on $iSec seconds.";
            }
 }
-// pg_close();
+// pg_close($conn);
 ?>

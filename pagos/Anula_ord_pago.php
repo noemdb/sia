@@ -7,7 +7,7 @@ if(FDate($fecha_hoy)>FDate($fecha_fin)){$fecha_hoy=$fecha_fin;}
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (ANULAR ORDENES DE PAGO)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (ANULAR ORDENES DE PAGO)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -47,7 +47,7 @@ return true;}
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
-                <td width="270"><span class="Estilo5"><span class="Estilo10"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >  </span> </span></td>
+                <td width="270"><span class="Estilo5"><span class="Estilo10"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >  </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
             </table></td>
@@ -67,9 +67,9 @@ return true;}
           </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input name="txtnro_orden" type="hidden" id="txtnro_orden" value="<?echo $nro_orden?>"></td>
-            <td width="40"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?echo $tipo_causado?>"></td>
-			<td width="40"><input name="txtcomp_automatico" type="hidden" id="txtcomp_automatico" value="<?echo $comp_automatico?>"></td>
+            <td width="40"><input name="txtnro_orden" type="hidden" id="txtnro_orden" value="<?php echo $nro_orden?>"></td>
+            <td width="40"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?php echo $tipo_causado?>"></td>
+			<td width="40"><input name="txtcomp_automatico" type="hidden" id="txtcomp_automatico" value="<?php echo $comp_automatico?>"></td>
           </tr></table></td>
           </tr>
           <tr>

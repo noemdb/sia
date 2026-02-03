@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nomina_d=$_GET["tipo_nomina_d"]; $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist="S";  $fecha_desde=$_GET["fecha_desde"]; $fecha_hasta=$_GET["fecha_hasta"]; $fecha_nom=$_GET["fecha_hasta"];    
    $cod_conceptod=$_GET["cod_conceptod"]; $cod_conceptoh=$_GET["cod_conceptoh"]; $tipo_concepto=$_GET["tipo_concepto"]; $tipo_personal_d=$_GET["tipo_personal_d"];   $tipo_personal_h=$_GET["tipo_personal_h"]; 
    $cod_departd=$_GET["cod_departd"];  $cod_departh=$_GET["cod_departh"]; $estatus_trab_d=$_GET["estatus_trab_d"]; $tipo_calculo=$_GET["tipo_calculo"]; $forma_pago=$_GET["forma_pago"];
@@ -9,7 +9,7 @@
 if ($mes_desde=='01'){$mesd="Enero";}elseif ($mes_desde=='02'){$mesd="Febrero";}elseif ($mes_desde=='03'){$mesd="Marzo";}elseif ($mes_desde=='04'){$mesd="Abril";}elseif ($mes_desde=='05'){$mesd="Mayo";}elseif ($mes_desde=='06'){$mesd="Junio";}elseif ($mes_desde=='07'){$mesd="Julio";}elseif ($mes_desde=='08'){$mesd="Agosto";}elseif ($mes_desde=='09'){$mesd="Septiembre";}elseif ($mes_desde=='10'){$mesd="Octubre";}elseif ($mes_desde=='11'){$mesd="Noviembre";}elseif ($mes_desde=='12'){$mesd="Diciembre";}
 if ($mes_hasta=='01'){$mesh="Enero";}elseif ($mes_hasta=='02'){$mesh="Febrero";}elseif ($mes_hasta=='03'){$mesh="Marzo";}elseif ($mes_hasta=='04'){$mesh="Abril";}elseif ($mes_hasta=='05'){$mesh="Mayo";}elseif ($mes_hasta=='06'){$mesh="Junio";}elseif ($mes_hasta=='07'){$mesh="Julio";}elseif ($mes_hasta=='08'){$mesh="Agosto";}elseif ($mes_hasta=='09'){$mesh="Septiembre";}elseif ($mes_hasta=='10'){$mesh="Octubre";}elseif ($mes_hasta=='11'){$mesh="Noviembre";}elseif ($mes_hasta=='12'){$mesh="Diciembre";}
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";} 
    if($tipo_calculo=="T"){ $cri_tp=" and ((tp_calculo='N')or(tp_calculo='E'))  "; } else { $cri_tp=" and (tp_calculo='".$tipo_calculo."') "; }   
    $cfechan=formato_aaaammdd($fecha_nom);  $Sql="";   $date = date("d-m-Y");   $hora = date("H:i:s a");
@@ -56,15 +56,15 @@ else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		 </tr>
 		 <tr height="20">
 		 </tr>
-		 <?if($tipo_nomina_d==$tipo_nomina_h){ ?>
+		 <?php if($tipo_nomina_d==$tipo_nomina_h){ ?>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong>Nomina: </strong></td>
-		    <td width="400" align="left" ><strong><? echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
+		    <td width="400" align="left" ><strong><?php  echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
 		 </tr>
-		 <?} ?>
+		 <?php } ?>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong></strong></td>
-			<td width="400" align="left" ><strong><? echo $criterio1; ?></strong></td>
+			<td width="400" align="left" ><strong><?php  echo $criterio1; ?></strong></td>
 		 </tr>
 		 <tr height="20">
 		 </tr>
@@ -77,7 +77,7 @@ else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		   <td width="100" align="center" bgcolor="#99CCFF"><strong>DIAS TRABAJADOS CALCULO DE VACACIONES</strong></td>
 		   <td width="100" align="center" bgcolor="#99CCFF"><strong>FERIADO EN VACACIONES</strong></td>
 		 </tr>
-	  <? 
+	  <?php  
 	  $i=0; $can_conc=0; $cant_emp=0;  $tot1=0; $tot2=0; $tot3=0; $tot4=0; $tot5=0; $conc1=0; $conc2=0; $conc3=0; $conc4=0; $conc5=0;
 	  $sub_tot1=0; $sub_tot2=0; $sub_tot3=0; $sub_tot4=0; $sub_tot5=0;
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_emp=$registro["cod_empleado"]; $tipo_nom=$registro["tipo_nomina"];	$cod_cat=$registro["cod_categ"]; $fecha_p_desde=$registro["fecha_p_desde"]; 
@@ -90,15 +90,15 @@ else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 			//else{ echo $sql25." ".$filas25,"<br>"; }
 			?>
 		      <tr>
-				  <td width="100" align="left" style="mso-number-format:'@';" ><? echo $cod_empleado; ?></td>
-				  <td width="400" align="left"><? echo $nombre; ?></td>	
-                  <td width="200" align="left"><? echo $des_cargo; ?></td>	
-                  <td width="100" align="left"><? echo $fecha_reincorp; ?></td>	                  
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc1; ?></td>
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc2; ?></td>
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc3; ?></td>
+				  <td width="100" align="left" style="mso-number-format:'@';" ><?php  echo $cod_empleado; ?></td>
+				  <td width="400" align="left"><?php  echo $nombre; ?></td>	
+                  <td width="200" align="left"><?php  echo $des_cargo; ?></td>	
+                  <td width="100" align="left"><?php  echo $fecha_reincorp; ?></td>	                  
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc1; ?></td>
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc2; ?></td>
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc3; ?></td>
 			  </tr>
-		    <? 
+		    <?php  
 			$prev_cod_empleado=$cod_emp; $prev_fecha=$fecha_p_desde; $conc1=0; $conc2=0; $conc3=0; $conc4=0; $conc5=0; 			
 		}
 		$tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"]; $fecha_p_desde=$registro["fecha_p_desde"]; 
@@ -120,15 +120,15 @@ else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 			if($filas25>=1){ $reg25=pg_fetch_array($res25,0); 	$fecha_reincorp=$reg25["fecha_reincorp"]; $fecha_reincorp=formato_ddmmaaaa($fecha_reincorp); }			
 			?>
 		      <tr>
-				  <td width="100" align="left" style="mso-number-format:'@';" ><? echo $cod_empleado; ?></td>
-				  <td width="400" align="left"><? echo $nombre; ?></td>	  
-                  <td width="200" align="left"><? echo $des_cargo; ?></td>	
-                  <td width="100" align="left"><? echo $fecha_reincorp; ?></td>	   				  
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc1; ?></td>
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc2; ?></td>
-				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $conc3; ?></td>
+				  <td width="100" align="left" style="mso-number-format:'@';" ><?php  echo $cod_empleado; ?></td>
+				  <td width="400" align="left"><?php  echo $nombre; ?></td>	  
+                  <td width="200" align="left"><?php  echo $des_cargo; ?></td>	
+                  <td width="100" align="left"><?php  echo $fecha_reincorp; ?></td>	   				  
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc1; ?></td>
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc2; ?></td>
+				  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $conc3; ?></td>
 			  </tr>
-		    <? ;  
+		    <?php  ;  
 			$prev_cod_empleado=$cod_emp;
 			$conc1=0; $conc2=0; $conc3=0; $conc4=0; $conc5=0; 
 		$tot1=formato_monto($tot1); $tot2=formato_monto($tot2); $tot3=formato_monto($tot3); $tot4=formato_monto($tot4); $tot5=formato_monto($tot5);
@@ -147,13 +147,13 @@ else{  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 			  <td width="400" align="left">TOTAL GENERAL : </td>
               <td width="200" align="left"></td>
               <td width="100" align="left"></td>			  
-			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $tot1; ?></td>
-			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $tot2; ?></td>
-			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $tot3; ?></td>
+			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $tot1; ?></td>
+			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $tot2; ?></td>
+			  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $tot3; ?></td>
 		  </tr>
 		  <tr height="20">
 		  </tr>
-		 <?
+		 <?php 
 }
 ?>
 

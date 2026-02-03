@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $Nom_usuario=""; $tiene_acceso="N";
 $sql="SELECT campo103, campo104 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U"; $modulo="04";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $Nom_usuario=$registro["campo104"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
@@ -47,20 +47,20 @@ MM_reloadPage(true);
                   <td><table width="920">
                         <tr>
                           <td width="100"><p><span class="Estilo5">USUARIO:</span></p></td>
-                          <td width="130"><input class="Estilo10" name="txtLogin" type="text"  id="txtLogin" size="20" readonly value="<?echo $criterio?>"></td>
+                          <td width="130"><input class="Estilo10" name="txtLogin" type="text"  id="txtLogin" size="20" readonly value="<?php echo $criterio?>"></td>
                           <td width="70"><p><span class="Estilo5">NOMBRE:</span></p></td>
-						  <td width="620"><input class="Estilo10" name="txtNombre" type="text"  id="txtNombre" size="75" readonly value="<?echo $Nom_usuario?>"></td>
+						  <td width="620"><input class="Estilo10" name="txtNombre" type="text"  id="txtNombre" size="75" readonly value="<?php echo $Nom_usuario?>"></td>
                         </tr>
                   </table></td>
                 </tr>                
             </table>
             <div id="T11" class="tab-body">
-              <iframe src="Det_sel_nom_usuarios.php?criterio=<?echo $criterio?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_sel_nom_usuarios.php?criterio=<?php echo $criterio?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
             </div>    
         <table width="863" border="0"> <tr> <td height="10">&nbsp;</td> </tr> </table>
         <table width="923">
           <tr>
-            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="626"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="139"><input name="Submit" type="reset" value="Blanquear"></td>
             <td width="142" valign="middle"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>
           </tr>
@@ -72,4 +72,4 @@ MM_reloadPage(true);
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

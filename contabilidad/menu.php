@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf(); }
 if($dbname<>"DATOS"){ $Nom_Emp=$Nom_Emp." (".$dbname.")"; }  $nombre_menu="stmenu.js"; if($Cod_Emp=="57"){$nombre_menu="stmenu_con.js";}  if($Cod_Emp=="95"){$nombre_menu="stmenu_vi.js";} 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -38,7 +38,7 @@ function Llamar_comp(def,url){
 <script type="text/javascript" language="JavaScript1.2" src="../class/tree-menu/dtree1.js"></script>
 <script type="text/javascript" language="JavaScript1.2" src="<?php echo $nombre_menu ?>"></script>
 </head>
-<?$sql="SELECT campo103, campo104 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
+<?php $sql="SELECT campo103, campo104 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $Nom_usuario=$registro["campo104"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 $Nom_usuario="USUARIO: ".$Nom_usuario;
 error_reporting(E_ALL ^ E_NOTICE); $userAgent = $_SERVER[HTTP_USER_AGENT]; $nombre_serv=$_SERVER[SERVER_NAME]; error_reporting(E_ALL); 
@@ -64,10 +64,10 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
         </tr>
         </table></td>
         <td width="823" align="center" valign="middle"><div id="Layer3" style="position:absolute; width:573px; height:65px; z-index:3; left: 190px; top: 83px;">
-            <div align="center" class="Estilo4"> <? echo $Nom_Emp ?></div>
+            <div align="center" class="Estilo4"> <?php  echo $Nom_Emp ?></div>
             </div>
             <div>
-              <div id="Layer4" style="position:absolute; width:229px; height:33px; z-index:4; left: 690px; top: 640px;" class="Estilo9  Estilo14 Estilo15"><? echo $Nom_usuario ?></div>
+              <div id="Layer4" style="position:absolute; width:229px; height:33px; z-index:4; left: 690px; top: 640px;" class="Estilo9  Estilo14 Estilo15"><?php  echo $Nom_usuario ?></div>
             </div>
 			<div id="Layer5" style="position:absolute; width:83px; height:294px; z-index:4; left: 861px; top: 75px;">
               <table width="140" height="146" border="0" cellpadding="0" cellspacing="0">
@@ -75,7 +75,7 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
                   <td height="55" align="center"><img src="../imagenes/note.gif" width="24" height="26" border="0" title="Cuentas" onclick="document.location='Act_cuentas.php';"></td>
                 </tr>				
 				<tr>
-                  <td height="55" align="center"><img src="../imagenes/scrollbu.gif" width="25" height="25" title="Comprobantes" onclick="javascript:Llamar_comp('<? echo $SIA_Definicion ?>','Act_comprobantes.php');"></td>
+                  <td height="55" align="center"><img src="../imagenes/scrollbu.gif" width="25" height="25" title="Comprobantes" onclick="javascript:Llamar_comp('<?php  echo $SIA_Definicion ?>','Act_comprobantes.php');"></td>
                 </tr>
 				<tr>
                   <td height="55" align="center"><img src="../imagenes/printer.gif" width="30" height="30" title="Reporte Diario General" onclick="javascript:document.location='/sia/contabilidad/rpt/Rpt_Diario_General.php';"></td>
@@ -119,7 +119,7 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
             <div align="left"></div>
             <div align="center"></div>
             <div id="Layer2" style="position:absolute; width:230px; height:226px; z-index:2; left: 360px; top: 200px;"><img src="../imagenes/Logo_empresa.gif" width="204" height="221" border="0"></div></td>
-            <div id="Layer6" style="position:absolute; width:300px; height:33px; z-index:4; left: 26px; top: 630px;" class="Estilo9  Estilo14 Estilo15"><? echo $var_so ?></div>
+            <div id="Layer6" style="position:absolute; width:300px; height:33px; z-index:4; left: 26px; top: 630px;" class="Estilo9  Estilo14 Estilo15"><?php  echo $var_so ?></div>
 	  </tr>
     </table></td>
   </tr>
@@ -127,4 +127,4 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

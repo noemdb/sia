@@ -1,4 +1,4 @@
-<?error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc");
+<?php error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc");
    $tipo_planilla_d=$_GET["tipo_planilla_d"];   $tipo_planilla_h=$_GET["tipo_planilla_h"];   $numero_planilla_d=$_GET["numero_planilla_d"];   $numero_planilla_h=$_GET["numero_planilla_h"];
    $fecha_d=$_GET["fecha_d"];   $fecha_h=$_GET["fecha_h"];   $tasa_d=$_GET["tasa_d"];   $tasa_h=$_GET["tasa_h"];   $tipo_en_d=$_GET["tipo_en_d"];   $tipo_en_h=$_GET["tipo_en_h"];
    $tipo_bene_d=$_GET["tipo_bene_d"];   $tipo_bene_h=$_GET["tipo_bene_h"];  $ordenado=$_GET["ordenado"];   $generado=$_GET["generado"];$tipo_rpt=$_GET["tipo_rpt"];
@@ -7,7 +7,7 @@
    if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}$fecha_desde=$ano1.$mes1.$dia1;
    if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}  else{$fecha_h='';} $fecha_hasta=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else {  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 if($tipo_planilla_d==$tipo_planilla_h){$sql="SELECT descripcion,codigo FROM ban011 where codigo='".$tipo_planilla_d."'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
@@ -147,7 +147,7 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>NUMERO PLANILLA</strong></td>
@@ -161,7 +161,7 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>TASA</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO RETENC</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $totaln=0; $totalr=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_planilla=$registro["nro_planilla"]; $fechae=$registro["fechae"]; $tipo_planilla=$registro["tipo_planilla"]; 
@@ -173,18 +173,18 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
            $nombre=conv_cadenas($nombre,0);  
 	?>	   
         <tr>
-           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_planilla; ?></td>
-           <td width="100" align="left"><? echo $fechae; ?></td>
-           <td width="100" align="left">'<? echo $tipo_planilla; ?></td>
-           <td width="100" align="left">'<? echo $referencia; ?></td>
-		   <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="justify"><? echo $nombre; ?></td>
-           <td width="100" align="right"><? echo $monto_pago; ?></td>
-           <td width="100" align="right"><? echo $monto_objeto; ?></td>
-           <td width="100" align="right"><? echo $tasa; ?></td>
-           <td width="100" align="right"><? echo $monto_retencion; ?></td>
+           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_planilla; ?></td>
+           <td width="100" align="left"><?php  echo $fechae; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_planilla; ?></td>
+           <td width="100" align="left">'<?php  echo $referencia; ?></td>
+		   <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre; ?></td>
+           <td width="100" align="right"><?php  echo $monto_pago; ?></td>
+           <td width="100" align="right"><?php  echo $monto_objeto; ?></td>
+           <td width="100" align="right"><?php  echo $tasa; ?></td>
+           <td width="100" align="right"><?php  echo $monto_retencion; ?></td>
          </tr>
-	<? } $totalp=formato_monto($totalp); $totalo=formato_monto($totalo); $totalr=formato_monto($totalr);
+	<?php } $totalp=formato_monto($totalp); $totalo=formato_monto($totalo); $totalr=formato_monto($totalr);
         ?>
 	   <tr> <td>&nbsp;</td>
 	   <tr>
@@ -193,13 +193,13 @@ if ($registro=pg_fetch_array($res,0)){$criterio2=$registro["descripcion"];} }
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="400" align="right"><strong>TOTAL :</strong></td>
-		<td width="100" align="right"><strong><? echo $totalp; ?></strong></td>
-		<td width="100" align="right"><strong><? echo $totalo; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalp; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $totalo; ?></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
-		<td width="100" align="right"><strong><? echo $totalr; ?></strong></font></td>
+		<td width="100" align="right"><strong><?php  echo $totalr; ?></strong></font></td>
       </tr>
       
-	  </table><?
+	  </table><?php 
 	}
 } 
 ?>

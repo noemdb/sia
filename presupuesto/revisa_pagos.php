@@ -1,6 +1,6 @@
-<? 
+<?php  
 $conn = pg_connect("host=localhost port=5432 password=super user=usia dbname=DATOS");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 
 ECHO "REVISANDO PAGOS PRESUPUESTARIO...","<br>";
 $sql="select distinct referencia_pago,tipo_pago,referencia_comp,tipo_compromiso,referencia_caus,tipo_causado,cod_banco from pre038 where text(referencia_pago)||text(tipo_pago)||text(referencia_comp)||text(tipo_compromiso)||text(referencia_caus)||text(tipo_causado) not in (select text(referencia_pago)||text(tipo_pago)||text(referencia_comp)||text(tipo_compromiso)||text(referencia_caus)||text(tipo_causado) from pre008)";
@@ -45,4 +45,4 @@ while($registro=pg_fetch_array($res)){
   
 }
 
-pg_close(); ?>
+pg_close($conn); ?>

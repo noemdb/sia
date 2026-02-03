@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc");?>
+<?php include ("../class/seguridad.inc");?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../class/imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Informaci&oacute;n del Trabajador)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Informaci&oacute;n del Trabajador)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <script language="JavaScript" type="text/JavaScript">
@@ -13,7 +13,7 @@ function Llamar_Ventana(url){
 var murl;
 var Gcod_estructura=document.form1.txtcod_estructura.value;
     murl=url+Gcod_estructura;
-    if (Gcod_estructura==""){alert("Código de la Cédula debe ser Seleccionada");} else {document.location = murl;}
+    if (Gcod_estructura==""){alert("Cï¿½digo de la Cï¿½dula debe ser Seleccionada");} else {document.location = murl;}
 }
 function Mover_Registro(MPos){
 var murl;
@@ -27,9 +27,9 @@ var murl;
 function Llama_Eliminar(){
 var url;
 var r;
-  r=confirm("Esta seguro en Eliminar la Infomación del Personal ?");
+  r=confirm("Esta seguro en Eliminar la Infomaciï¿½n del Personal ?");
   if (r==true) {
-    r=confirm("Esta Realmente seguro en Eliminar la Infomación del Personal ?");
+    r=confirm("Esta Realmente seguro en Eliminar la Infomaciï¿½n del Personal ?");
     if (r==true) {
        url="Delete_estructura.php?txtcod_estructura="+document.form1.txtcod_estructura.value;
        VentanaCentrada(url,'Eliminar Estructuras','','400','400','true');}
@@ -63,7 +63,7 @@ MM_reloadPage(true);
 <table width="978" height="38" border="0" bgcolor="#000066">
   <tr>
     <td width="73"><div align="center" class="Estilo2 Estilo4"><img src="../imagenes/Logo_sia.gif" width="72" height="42"></div></td>
-    <td width="836"><div align="center" class="Estilo2 Estilo6">INCLUIR - INFORMACIÓN DEL TRABAJADOR </div></td>
+    <td width="836"><div align="center" class="Estilo2 Estilo6">INCLUIR - INFORMACIï¿½N DEL TRABAJADOR </div></td>
     <td width="55" class="Estilo2"><strong class="Estilo2 Estilo9">VER 6.0 </strong></td>
   </tr>
 </table>
@@ -150,39 +150,39 @@ MM_reloadPage(true);
    rows[1][7] = "Inf. Familiar";        // Requiere: <div id="T17" class="tab-body">  ... </div>
    rows[1][8] = "Conceptos";        // Requiere: <div id="T18" class="tab-body">  ... </div>
         </script>
-          <?include ("../class/class_tab.php");?>
+          <?php include ("../class/class_tab.php");?>
           <script type="text/javascript" language="javascript"> DrawTabs(); </script>
-          <!-- PESTAÑA 1 -->
+          <!-- PESTAï¿½A 1 -->
           <div id="T11" class="tab-body">
-            <iframe src="Det_inf_laboral.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_inf_laboral.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-          <!--PESTAÑA 2 -->
+          <!--PESTAï¿½A 2 -->
           <div id="T12" class="tab-body" >
-            <iframe src="Det_inf_personal.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_inf_personal.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-          <!-- PESTAÑA 3 -->
+          <!-- PESTAï¿½A 3 -->
           <div id="T13" class="tab-body">
-            <iframe src="Det_hoja_vida.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_hoja_vida.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-		  <!-- PESTAÑA 4 -->
+		  <!-- PESTAï¿½A 4 -->
           <div id="T14" class="tab-body">
-            <iframe src="Det_asig_cargos.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_asig_cargos.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-		  <!-- PESTAÑA 5 -->
+		  <!-- PESTAï¿½A 5 -->
           <div id="T15" class="tab-body">
-            <iframe src="Det_inf_curricular.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_inf_curricular.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-		  <!-- PESTAÑA 6 -->
+		  <!-- PESTAï¿½A 6 -->
           <div id="T16" class="tab-body">
-            <iframe src="Det_exp_laboral.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_exp_laboral.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-		  <!-- PESTAÑA 7 -->
+		  <!-- PESTAï¿½A 7 -->
           <div id="T17" class="tab-body">
-            <iframe src="Det_inf_familiar.php?criterio=<?echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_inf_familiar.php?criterio=<?php echo $cod_estructura?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
-		  <!-- PESTAÑA 8 -->
+		  <!-- PESTAï¿½A 8 -->
           <div id="T18" class="tab-body">
-            <iframe src="Det_concepto.php?criterio=<?echo $cod_estructura?>"      width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+            <iframe src="Det_concepto.php?criterio=<?php echo $cod_estructura?>"      width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
           </div>
         </div>
         <p>&nbsp;</p>

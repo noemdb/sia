@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Municipios)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Municipios)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -19,11 +19,11 @@ function LlamarURL(url){  document.location = url; }
 function revisar(){
 var f=document.form1;
 var Valido;
-    if(f.txtCodigo_Municipio.value==""){alert("Código del Municipio no puede estar Vacio");return false;}
-    if(f.txtNombre_Municipio.value==""){alert("Denominación del Municipio no puede estar Vacia"); return false; }
+    if(f.txtCodigo_Municipio.value==""){alert("Cï¿½digo del Municipio no puede estar Vacio");return false;}
+    if(f.txtNombre_Municipio.value==""){alert("Denominaciï¿½n del Municipio no puede estar Vacia"); return false; }
        else{f.txtNombre_Municipio.value=f.txtNombre_Municipio.value.toUpperCase();}
     if(f.txtCodigo_Municipio.value.length==4){f.txtCodigo_Municipio.value=f.txtCodigo_Municipio.value.toUpperCase();}
-       else{alert("Longitud Código del Municipio Invalido");return false;}
+       else{alert("Longitud Cï¿½digo del Municipio Invalido");return false;}
 document.form1.submit;
 return true;}
 function chequea_codigo(mform){

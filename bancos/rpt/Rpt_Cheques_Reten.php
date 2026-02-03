@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$num_cheque_d=$_GET["num_cheque_d"];$num_cheque_h=$_GET["num_cheque_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];
 $ordenado=$_GET["ordenado"];$tipo_rep=$_GET["tipo_rep"]; $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a"); $equipo=getenv("COMPUTERNAME"); $cod_mov="BAN006".$usuario_sia;
 $criterio1="Fecha Desde: ".$fecha_d." Hasta: ".$fecha_h;if($fecha_d==""){$sfecha_d="2010-01-01";}if($fecha_h==""){$sfecha_h="9999-12-31";}
@@ -6,10 +6,10 @@ if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$d
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);} else{$fecha_h='';}$fecha_hasta=$ano1.$mes1.$dia1;
 $criterios=" (BAN006.Anulado='N') ";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
-   $StrSQL = "DELETE FROM BAN036 Where (codigo_mov='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-    $res=pg_exec($conn,"SELECT INCLUYE_BAN036('$cod_mov','$cod_banco_d','$cod_banco_h','$fecha_d','$fecha_h','$num_cheque_d','$num_cheque_h','$cedula_d','$cedula_h')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+   $StrSQL = "DELETE FROM BAN036 Where (codigo_mov='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+    $res=pg_exec($conn,"SELECT INCLUYE_BAN036('$cod_mov','$cod_banco_d','$cod_banco_h','$fecha_d','$fecha_h','$num_cheque_d','$num_cheque_h','$cedula_d','$cedula_h')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
        $sSQL = "SELECT BAN036.Cod_Banco, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN036.num_cheque, BAN006.Fecha, BAN006.Ced_Rif, PRE099.Nombre, BAN006.Nro_Orden_Pago, BAN006.Concepto,
                 BAN006.Anulado, BAN006.Fecha_Anulado, BAN006.Entregado, BAN006.Fecha_Entregado, BAN006.Ced_Rif_Recib, BAN006.Nombre_Recib, BAN006.Monto_Cheque, BAN036.Nro_Orden, BAN036.campo_str1, BAN036.campo_str2,
@@ -167,7 +167,7 @@ else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="W
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <strong><?	echo $criterio1?></strong></td>
+				<td width="400" align="center" > <strong><?php 	echo $criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Fecha</strong></td>
@@ -181,7 +181,7 @@ else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="W
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Ret. Otros</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Imp. Banco</strong></td>
 			 </tr>
-		  <?  $i=0; $total1=0; $total2=0; $total3=0; $total4=0; $total5=0; $total6=0; $prev_cod_banco="";  $res=pg_query($sSQL);
+		  <?php   $i=0; $total1=0; $total2=0; $total3=0; $total4=0; $total5=0; $total6=0; $prev_cod_banco="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $cod_banco_grupo=$cod_banco; $nombre_banco_grupo=$nombre_banco; $nro_cuenta_grupo=$nro_cuenta;
 			   if($prev_cod_banco<>$cod_banco_grupo){ 
@@ -203,25 +203,25 @@ else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="W
 			          <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
 			          <td width="100" align="left"></td>
-			          <td width="400" align="right"><? echo "Total: "; ?></td>
-					  <td width="100" align="right"><? echo $total1; ?></td>
-					  <td width="100" align="right"><? echo $total2; ?></td>
-					  <td width="100" align="right"><? echo $total3; ?></td>
-					  <td width="100" align="right"><? echo $total4; ?></td>
-					  <td width="100" align="right"><? echo $total5; ?></td>
-					  <td width="100" align="right"><? echo $total6; ?></td>
+			          <td width="400" align="right"><?php  echo "Total: "; ?></td>
+					  <td width="100" align="right"><?php  echo $total1; ?></td>
+					  <td width="100" align="right"><?php  echo $total2; ?></td>
+					  <td width="100" align="right"><?php  echo $total3; ?></td>
+					  <td width="100" align="right"><?php  echo $total4; ?></td>
+					  <td width="100" align="right"><?php  echo $total5; ?></td>
+					  <td width="100" align="right"><?php  echo $total6; ?></td>
 			      </tr>	
 			      <tr>
 				      <td width="90" align="left"></td>
 			      </tr>	
-                  <?}  ?>	   
+                  <?php }  ?>	   
 			      <tr>
-				  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
+				  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
 				  <td width="100" align="left" ><strong></strong></td>
 				  <td width="100" align="left" ><strong></strong></td>
-				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nombre_banco."    ".$nro_cuenta; ?></td>
+				  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nombre_banco."    ".$nro_cuenta; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_banco=$cod_banco_grupo; $total1=0; $total2=0; $total3=0; $total4=0; $total5=0; $total6=0; }
 		       $num_cheque=$registro["num_cheque"]; $nro_orden=$registro["nro_orden"]; $ced_rif=$registro["ced_rif"]; $fechae=$registro["fechae"]; $nombre=$registro["nombre"];
 			   $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
@@ -233,18 +233,18 @@ else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="W
 			   $nombre=conv_cadenas($nombre,0);
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $fechae; ?></td>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $num_cheque; ?></td>
-				   <td width="100" align="left">'<? echo $nro_orden; ?></td>
-				   <td width="400" align="justify"><? echo $nombre."   ".$campo_str1."   ".$campo_str2; ?></td>
-				   <td width="100" align="right"><? echo $monto_ord; ?></td>
-				   <td width="100" align="right"><? echo $monto_ret1; ?></td>
-				   <td width="100" align="right"><? echo $monto_ret2; ?></td>
-				   <td width="100" align="right"><? echo $monto_ret3; ?></td>
-				   <td width="100" align="right"><? echo $monto_otros; ?></td>
-				   <td width="100" align="right"><? echo $monto_ban; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $fechae; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $num_cheque; ?></td>
+				   <td width="100" align="left">'<?php  echo $nro_orden; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre."   ".$campo_str1."   ".$campo_str2; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_ord; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_ret1; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_ret2; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_ret3; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_otros; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_ban; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 		  if(($total1>0)or($total2>0)or($total3>0)or($total4>0)or($total5>0)or($total6>0)){ $total1=formato_monto($total1); $total2=formato_monto($total2); $total3=formato_monto($total3); $total4=formato_monto($total4); $total5=formato_monto($total5); $total6=formato_monto($total6);	    
 			?>	 				 
@@ -264,16 +264,16 @@ else{  $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="W
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="right"></td>
-			    <td width="400" align="right"><? echo "Total: "; ?></td>
-			    <td width="100" align="right"><? echo $total1; ?></td>
-			    <td width="100" align="right"><? echo $total2; ?></td>
-			    <td width="100" align="right"><? echo $total3; ?></td>
-			    <td width="100" align="right"><? echo $total4; ?></td>
-			    <td width="100" align="right"><? echo $total5; ?></td>
-			    <td width="100" align="right"><? echo $total6; ?></td>
+			    <td width="400" align="right"><?php  echo "Total: "; ?></td>
+			    <td width="100" align="right"><?php  echo $total1; ?></td>
+			    <td width="100" align="right"><?php  echo $total2; ?></td>
+			    <td width="100" align="right"><?php  echo $total3; ?></td>
+			    <td width="100" align="right"><?php  echo $total4; ?></td>
+			    <td width="100" align="right"><?php  echo $total5; ?></td>
+			    <td width="100" align="right"><?php  echo $total6; ?></td>
 			</tr>	
-		  <? }					  
-		  ?></table><?
+		  <?php }					  
+		  ?></table><?php 
     }
 	$StrSQL = "DELETE FROM BAN036 Where (codigo_mov='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn);
 }

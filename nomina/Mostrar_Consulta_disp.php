@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $cod_presup=$_POST["txtcod_presup"];$cod_fuente=$_POST["txtcod_fuente"]; $denominacion=$_POST["txtdenominacion"]; $asignado=$_POST["txtasignado"];$fecha=$_POST["txtFechad"]; $des_fuente=$_POST["txtdes_fuente"]; 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -28,9 +28,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
 $sql="Select asignado,denominacion from pre001 where cod_presup='$cod_presup' and cod_fuente='$cod_fuente'";$resultado=pg_exec($conn,$sql); $filas=pg_numrows($resultado);
 if ($filas>=1){  $registro=pg_fetch_array($resultado); $denominacion=$registro["denominacion"]; $asignado=$registro["asignado"];  }
 
@@ -86,7 +86,7 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
   <tr><td width="970" height="90" colspan="4"><table width="969" border="0" cellpadding="3" cellspacing="1" height="90">
     <tr>
       <td height="87" colspan="1"><div align="center" class="Estilo2 Estilo4"><img src="../imagenes/Logo_empresa.gif"  width="150" height="51"></div></td>    
-      <td height="87" colspan="3"><div align="center" class="Estilo4"> <? echo $Nom_Emp ?></div></div></td>
+      <td height="87" colspan="3"><div align="center" class="Estilo4"> <?php  echo $Nom_Emp ?></div></div></td>
 	</tr>
   </table></td>
   </tr>
@@ -103,14 +103,14 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
           <tr>
 		    <td width="10" align="center">&nbsp;</td>   
             <td width="80" align="left"><span class="Estilo17">CATEGORIA:</span></td>
-			<td width="77"align="left"><span class="Estilo17"><?echo $unidad_sol ?></span></td>
-            <td width="567"><span class="Estilo17"><?echo $des_unidad_sol?></span></td>
+			<td width="77"align="left"><span class="Estilo17"><?php echo $unidad_sol ?></span></td>
+            <td width="567"><span class="Estilo17"><?php echo $des_unidad_sol?></span></td>
           </tr>
       </table></td>
       <td width="220"><table width="195" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="100"><span class="Estilo17">A LA FECHA:</span></td>
-            <td width="120"><span class="Estilo17"><?echo $fecha?></span></td>
+            <td width="120"><span class="Estilo17"><?php echo $fecha?></span></td>
           </tr>
       </table></td>
         </tr>
@@ -122,8 +122,8 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
           <tr>
 		    <td width="8" align="center">&nbsp;</td>
             <td width="78" align="left"><span class="Estilo17">PARTIDA:</span></td>
-			<td width="77"align="left"><span class="Estilo17"><?echo $cod_part ?></span></td>
-            <td width="774"><span class="Estilo17"><?echo $denominacion ?></span></td>
+			<td width="77"align="left"><span class="Estilo17"><?php echo $cod_part ?></span></td>
+            <td width="774"><span class="Estilo17"><?php echo $denominacion ?></span></td>
           </tr>
       </table></td>
          
@@ -136,8 +136,8 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
           <tr>
 	    <td width="8" align="center">&nbsp;</td>
             <td width="78" align="left"><span class="Estilo17">FUENTE:</span></td>
-           <td width="57"align="left"><span class="Estilo17"><?echo $cod_fuente ?></span></td>
-	   <td width="794"><span class="Estilo17"><?echo $des_fuente ?></span></td>
+           <td width="57"align="left"><span class="Estilo17"><?php echo $cod_fuente ?></span></td>
+	   <td width="794"><span class="Estilo17"><?php echo $des_fuente ?></span></td>
           </tr>
       </table></td>
          
@@ -156,59 +156,59 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
 		  <tr>
 		     <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164" align="left" ><span class="Estilo17">ASIGNACION INICIAL :</span></td>
-            <td width="96" align="right"><span class="Estilo17"><?echo $asignado?></span></td>
+            <td width="96" align="right"><span class="Estilo17"><?php echo $asignado?></span></td>
 			 <td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
 		  <tr>
 		     <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo17">MODIFICACIONES :</span></td>
-            <td width="96" align="right"><span class="Estilo17"><?echo $modificaciones?></span></td>
+            <td width="96" align="right"><span class="Estilo17"><?php echo $modificaciones?></span></td>
 			<td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
 		  <tr>
 		     <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo17">ASIGNACION ACTUALIZADA :</span></td>
-            <td width="96" align="right"><span class="Estilo17"><?echo $asig_act?></span></td>
+            <td width="96" align="right"><span class="Estilo17"><?php echo $asig_act?></span></td>
 			<td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
 		  <tr>
 		     <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo17">COMPROMETIDO :</span></td>
-            <td width="96" align="right"><span class="Estilo17"><?echo $comprometido?></span></td>
+            <td width="96" align="right"><span class="Estilo17"><?php echo $comprometido?></span></td>
 			<td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
 		  <tr>
 		     <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo17">CAUSADO :</span></td>
-            <td width="96" align="right"><span class="Estilo17"><?echo $causado?></span></td>
+            <td width="96" align="right"><span class="Estilo17"><?php echo $causado?></span></td>
 			<td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
           <tr>
 	    <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo17">PAGADO :</span></td>
-            <td width="96"align="right"><span class="Estilo17"><?echo $pagado?></span></td>
+            <td width="96"align="right"><span class="Estilo17"><?php echo $pagado?></span></td>
 	    <td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
           <tr>
 	    <td width="339"><span class="Estilo17">&nbsp;</span></td>
             <td width="164"><span class="Estilo18">DISPONIBLE :</span></td>
-            <td width="96" align="right"><span class="Estilo18"><?echo $disponible?></span></td>
+            <td width="96" align="right"><span class="Estilo18"><?php echo $disponible?></span></td>
 	    <td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
-<? if ($diferido>0){?>    		
+<?php  if ($diferido>0){?>    		
        <tr>
 	    <td width="259"><span class="Estilo17">&nbsp;</span></td>
             <td width="244"><span class="Estilo17">DIFERIDO :</span></td>
-            <td width="96"align="right"><span class="Estilo17"><?echo $dif_presup?></span></td>
+            <td width="96"align="right"><span class="Estilo17"><?php echo $dif_presup?></span></td>
 	    <td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
        <tr>
 	    <td width="259"><span class="Estilo17">&nbsp;</span></td>
             <td width="244"><span class="Estilo18">DISPONIBILIDAD DIFERIDA :</span></td>
-            <td width="96" align="right"><span class="Estilo18"><?echo $disp_dif ?></span></td>
+            <td width="96" align="right"><span class="Estilo18"><?php echo $disp_dif ?></span></td>
 	    <td width="346"><span class="Estilo17">&nbsp;</span></td>
           </tr>
-<?} ?> 	
+<?php } ?> 	
       </table></td>
         </tr>
     </table></td>
@@ -216,7 +216,7 @@ $disp_dif=formato_monto($disp_dif); $dif_presup=formato_monto($diferido);
 </table></td></tr>
 </table>
 <table width="970">
-    <tr><td>USUARIO: <?echo $usuario_sia; ?></td></tr>
+    <tr><td>USUARIO: <?php echo $usuario_sia; ?></td></tr>
     <tr>
      <td width="800">&nbsp;</td>
      <td width="170" valign="middle"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Cerrar"></td>

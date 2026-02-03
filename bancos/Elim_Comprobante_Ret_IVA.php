@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");?>
+<?php include ("../class/seguridad.inc");?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Comprobante Retenci&oacute;n del IVA)</title>
+<title>SIPAP CONTROL BANCARIO (Comprobante Retenci&oacute;n del IVA)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -16,7 +16,7 @@ var murl;
 var Gcodigo_cuenta=document.form1.txtCodigo_Cuenta.value;
     murl=url+Gcodigo_cuenta;
     if (Gcodigo_cuenta=="")
-        {alert("Código de Cuenta debe ser Seleccionada");}
+        {alert("Cï¿½digo de Cuenta debe ser Seleccionada");}
         else {document.location = murl;}
 }
 function Mover_Registro(MPos)
@@ -138,7 +138,7 @@ MM_reloadPage(true);
               <tr>
                 <td width="66"><span class="Estilo5">C&Eacute;D/RIF :</span></td>
                 <td width="109"><span class="Estilo5"> <span class="Estilo12">
-                  <input name="txtcodigo_titulo525" type="text" class="Estilo5" id="txtcodigo_titulo525"  value="<?echo $codigo_titulo?>" size="15" maxlength="15" readonly>
+                  <input name="txtcodigo_titulo525" type="text" class="Estilo5" id="txtcodigo_titulo525"  value="<?php echo $codigo_titulo?>" size="15" maxlength="15" readonly>
                 </span></span></td>
                 <td width="149">&nbsp;</td>
                 <td width="400"><span class="Estilo5"> <span class="Estilo12"> </span> </span></td>
@@ -153,7 +153,7 @@ MM_reloadPage(true);
               <tr>
                 <td width="63"><span class="Estilo5">NOMBRE :</span></td>
                 <td width="784"><span class="Estilo5"> <span class="Estilo12">
-                  <input name="txtcodigo_titulo6" type="text" class="Estilo5" id="txtcodigo_titulo5"  value="<?echo $codigo_titulo?>" size="147" maxlength="10" readonly>
+                  <input name="txtcodigo_titulo6" type="text" class="Estilo5" id="txtcodigo_titulo5"  value="<?php echo $codigo_titulo?>" size="147" maxlength="10" readonly>
                 </span> </span></td>
               </tr>
             </table></td>

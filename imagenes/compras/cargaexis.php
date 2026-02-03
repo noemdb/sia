@@ -6,4 +6,4 @@ if($filas>0){$registro=pg_fetch_array($resultado); $existencia=$registro["existe
 $StrSQL="select existencia from COMP004 where cod_articulo='$cod_art' and cod_almacen='$cod_alm'";   $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $existencia=$registro["existencia"];} $existencia=formato_monto($registro["existencia"]); }
 ?><input name="txtexistencia" type="text" id="txtexistencia" size="12" maxlength="12" align="right" value=<?php echo $existencia ?>    value="0" readonly> 
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,7 +1,7 @@
-<?include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
  $periodo=$_GET["periodo"];  $cod_cuenta_d=$_GET["cod_cuenta_d"]; $cod_cuenta_h=$_GET["cod_cuenta_h"]; $agrupar_dia=$_GET["agrupar_dia"];  $agrupar_dia=substr($agrupar_dia,0,1);
  $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
- if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";} }
+ if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";} }
  $fecha_d=Armar_Fecha($periodo, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo, 2, $Fec_Ini_Ejer);
  $criterio1="Desde ".$fecha_d." Al ".$fecha_h; $Sql="";
  if($fecha_d==""){$sfecha_d="2011-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);} if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
@@ -20,7 +20,7 @@
   
 $nro_linea=0; $cod_cuenta=""; $nom_cuenta=""; $c=0;  $prev_cuenta=""; $prev_fecha=""; $prev_deb_cre=""; 
 $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','6')"; $resultado=pg_exec($conn,$Sql);$error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
-if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 else{ 
   $prev_monto=0;   $gcolumna1=0;  $gcolumna2=0;  $gcolumna3=0; $gcolumna4=0; $gcolumna5=0;  $gcolumna6=0; $gcolumna7=0; $gcolumna8=0; $gcolumna9=0; $gcolumna10=0;
   $mdes1=""; $mdes2=""; $mdes3=""; $mdes4=""; $mdes5=""; $mcuenta_g=""; $mnombre_g=""; $muestra="N";  
@@ -37,7 +37,7 @@ else{
 		 if($mdes3<>""){ if($p>0){$mnombre_g=$mnombre_g.", ";} $mnombre_g=$mnombre_g.$mdes3; $p=$p+1; }		 
 		 if($mdes4<>""){ if($p>0){$mnombre_g=$mnombre_g.", ";} $mnombre_g=$mnombre_g.$mdes4; $p=$p+1; }		 
 		 if($mdes5<>""){ if($p>0){$mnombre_g=$mnombre_g.", ";} $mnombre_g=$mnombre_g.$mdes5; $p=$p+1; }		 
-		 $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','6',$nro_linea,'$referencia','$sfecha','$debito_credito','$cod_cuenta','$tipo_comp','$tipo_asiento','$mcod_grupo','$doperacion','$status','$cod_cuenta','$nombre_cuenta','$tsaldo','$mcuenta_g','$mnombre_g','$muestra',$gcolumna1,$gcolumna2,$gcolumna3,$gcolumna4,$gcolumna5,$gcolumna6,$gcolumna7,$gcolumna8,$gcolumna9,$prev_monto,'$descripcion','$descripcion_a')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+		 $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','6',$nro_linea,'$referencia','$sfecha','$debito_credito','$cod_cuenta','$tipo_comp','$tipo_asiento','$mcod_grupo','$doperacion','$status','$cod_cuenta','$nombre_cuenta','$tsaldo','$mcuenta_g','$mnombre_g','$muestra',$gcolumna1,$gcolumna2,$gcolumna3,$gcolumna4,$gcolumna5,$gcolumna6,$gcolumna7,$gcolumna8,$gcolumna9,$prev_monto,'$descripcion','$descripcion_a')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
 		 $prev_monto=0;   $gcolumna1=0;  $gcolumna2=0;  $gcolumna3=0; $gcolumna4=0; $gcolumna5=0;  $gcolumna6=0; $gcolumna7=0; $gcolumna8=0; $gcolumna9=0; $gcolumna10=0;
          if($prev_fecha<>$registro["fecha"]){ $mdes1=""; $mdes2=""; $mdes3=""; $mdes4=""; $mdes5="";
            $res=pg_exec($conn,"UPDATE CON013 set nombre_cuenta2='$mnombre_g' Where (tipo_registro='6') And (nombre_usuario='$usuario_sia') And (fecha='$prev_fecha')" ); 
@@ -73,7 +73,7 @@ else{
   }
   	   
   if($nro_linea>0){ $fin_rpt=0; $i=0; 
-    $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','6',$nro_linea,'$referencia','$sfecha','$debito_credito','$cod_cuenta','$tipo_comp','$tipo_asiento','$mcod_grupo','$doperacion','$status','$cod_cuenta','$nombre_cuenta','$tsaldo','$mcuenta_g','$mnombre_g','$muestra',$gcolumna1,$gcolumna2,$gcolumna3,$gcolumna4,$gcolumna5,$gcolumna6,$gcolumna7,$gcolumna8,$gcolumna9,$prev_monto,'$descripcion','$descripcion_a')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+    $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','6',$nro_linea,'$referencia','$sfecha','$debito_credito','$cod_cuenta','$tipo_comp','$tipo_asiento','$mcod_grupo','$doperacion','$status','$cod_cuenta','$nombre_cuenta','$tsaldo','$mcuenta_g','$mnombre_g','$muestra',$gcolumna1,$gcolumna2,$gcolumna3,$gcolumna4,$gcolumna5,$gcolumna6,$gcolumna7,$gcolumna8,$gcolumna9,$prev_monto,'$descripcion','$descripcion_a')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
 	$res=pg_exec($conn,"UPDATE CON013 set nombre_cuenta2='$mnombre_g' Where (tipo_registro='6') And (nombre_usuario='$usuario_sia') And (fecha='$prev_fecha')" ); 
 	if($agrupar_dia=='N'){
 	  $res=pg_exec($conn,"UPDATE CON013 set nombre_cuenta2='INGRESOS POR RECAUDAR' Where (tipo_registro='6') And (nombre_usuario='$usuario_sia') And (aoperacion='1')" ); 
@@ -359,4 +359,4 @@ else{
 	  $pdf->Output(); 
   }
 } 
-pg_close();?>
+pg_close($conn);?>

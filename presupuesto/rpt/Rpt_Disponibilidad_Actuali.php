@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"]; $c_cat=$_GET["csubtotal"]; $tipo_rep=$_GET["tipo_rep"];}
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$fecha="";$c_cat=0;$tipo_rep="HTML";}   $equipo=getenv("COMPUTERNAME"); $cod_mov="pre020".$usuario_sia; 
 $asig_global="S";$mcontrol = array (0,0,0,0,0,0,0,0,0,0);$mdes_cat=array("NINGUNA","","","","","");
@@ -10,7 +10,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;}
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? }  else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php }  else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
   if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"]; $titulo=$registro["campo525"]; $formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];$mdes_cat[1]=$registro["campo505"]; $mdes_cat[2]=$registro["campo507"]; $mdes_cat[3]=$registro["campo509"]; $mdes_cat[4]=$registro["campo511"]; $mdes_cat[5]=$registro["campo512"];} 
   $l_c=strlen($formato_presup); $c=strlen($formato_categoria);  $p=strlen($formato_partida); $ini=$c+2;
@@ -53,20 +53,20 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
    }
    
    $StrSQL = "DELETE FROM pre020 Where (tipo_registro='3') And (Nombre_Usuario='".$cod_mov."')";
-   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
    if($asig_global=="S"){$sql_Asignacion="Asignado,";}
   
   $StrSQL= "INSERT INTO pre020 SELECT '".$cod_mov."' as Nombre_Usuario,'3' as tipo_registro, cod_presup, Cod_Fuente, Denominacion,substr(cod_presup,1,".$ls.") as cod_categoria,"."'' as Denomina_cat,substr(cod_presup,".$ini.",".$p.") as cod_partida,'' as Denomina_Par,Status_Dist,Func_Inv,Ord_Cord,Aplicacion,Cod_Unidad_Ejec, ";
   $StrSQL=$StrSQL.$sql_Asignacion." disponible,disp_diferida,".$sql_Compromiso.$sql_Causado.$sql_Pagado.$sql_Traslados.$sql_Trasladon.$sql_Adicion.$sql_Disminucion.$sql_Diferido.", "."0 as CompromisoM,0 as CausadoM, 0 as PagadoM, 0 as TrasladosM, 0 as TrasladonM, 0 as AdicionM, 0 as DisminucionM, 0 as DiferidoM ";
   $StrSQL=$StrSQL." FROM PRE001 WHERE length(cod_presup)=".$l_c." and ".$criterio;
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   
   $ordenar=" ORDER BY pre020.cod_presup,pre020.cod_fuente";
   if($c_cat>0){ $ordenar=" ORDER BY pre020.cod_categoria,pre020.cod_presup,pre020.cod_fuente";
    $sSQL = "Select cod_presup,denominacion from pre001 WHERE cod_presup in (select distinct cod_categoria from pre020 where (tipo_registro='3') and (nombre_usuario='$cod_mov'))";  $res=pg_query($sSQL);
   while($registro=pg_fetch_array($res)){ $cod_presup=$registro["cod_presup"]; $denominacion=$registro["denominacion"]; 
      $sql="update pre020 set denomina_cat='$denominacion' where tipo_registro='3' and nombre_usuario='$cod_mov' and cod_categoria='$cod_presup'";$resultado=pg_exec($conn,$sql); 
-	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+	 $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
   }}
   
   $sSQL = "SELECT pre020.cod_presup, pre020.cod_fuente, pre020.denominacion, pre020.disponible,pre020.cod_categoria,pre020.denomina_cat FROM pre020  WHERE tipo_registro='3' and Nombre_Usuario='$cod_mov' and ".$criterio.$ordenar;
@@ -176,7 +176,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
            <td width="400" align="left" bgcolor="#99CCFF"><strong>DENOMINACION</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF"><strong>DISPONIBILIDAD</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];  
@@ -184,12 +184,12 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 		   $denominacion=conv_cadenas($denominacion,0);  
 	?>	   
 		   <tr>
-           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="50" align="center">'<? echo $cod_fuente; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="120" align="right"><? echo $disponible; ?></td>
+           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="50" align="center">'<?php  echo $cod_fuente; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="120" align="right"><?php  echo $disponible; ?></td>
          </tr>
-	<? } $total=formato_monto($total);  ?>
+	<?php } $total=formato_monto($total);  ?>
        <tr>
 			  <td width="220" align="left"></td>
 			  <td width="50" align="left"></td>
@@ -199,14 +199,14 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
 			<tr>
 			  <td width="220" align="left"></td>
 			  <td width="50" align="left"></td>
-			  <td width="400" align="right"><? echo "Totales : "; ?></td>
-			  <td width="120" align="right"><? echo $total; ?></td>
+			  <td width="400" align="right"><?php  echo "Totales : "; ?></td>
+			  <td width="120" align="right"><?php  echo $total; ?></td>
 			</tr>	
 	
-	  </table><?	  
+	  </table><?php 	  
 	}
 	/*
     $StrSQL = "DELETE FROM pre020 Where (tipo_registro='3') And (Nombre_Usuario='".$cod_mov."')";
-   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? } 
+   $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } 
    */
 ?>

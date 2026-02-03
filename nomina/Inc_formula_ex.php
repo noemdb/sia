@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $tipo_nomina=$_POST["txttipo_nomina"]; $des_nomina=$_POST["txtdes_nomina"]; ?>
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $tipo_nomina=$_POST["txttipo_nomina"]; $des_nomina=$_POST["txtdes_nomina"]; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Formulas de Concepto de Nomina Extraordinaria)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Formulas de Concepto de Nomina Extraordinaria)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -83,9 +83,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="130"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?echo $tipo_nomina?>"> </span></td>
+                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="3" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?php echo $tipo_nomina?>"> </span></td>
                    <td width="50"><input class="Estilo10" name="bttiponom" type="button" id="bttiponom" title="Abrir Catalogo Tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="100" readonly value="<?echo $des_nomina?>"> </span></td>
+                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="100" readonly value="<?php echo $des_nomina?>"> </span></td>
                  </tr>
              </table></td>
             </tr>

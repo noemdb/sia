@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_arch_banco='00'; if(!$_GET){$cod_arch_banco='';}else{$criterio=$_GET["criterio"]; $tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6); }
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_arch_banco='00'; if(!$_GET){$cod_arch_banco='';}else{$criterio=$_GET["criterio"]; $tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6); }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -38,33 +38,33 @@ $sql="SELECT * FROM nom052 where (tipo_arch_banco='$tipo_arch_banco') and (cod_a
            <td width="60" align="center" bgcolor="#99CCFF"><strong>Condici&oacute;n</strong></td>
            <td width="80" align="center" bgcolor="#99CCFF"><strong>Cuerpo Arch.</strong></td>
              </tr>
-         <?
+         <?php 
 while($registro=pg_fetch_array($res)){
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="50" align="left"><? echo $registro["cod_campo"]; ?></td>
-           <? if(trim($registro["car_especial"])==""){?><td width="280" align="left">&nbsp;</td>
-           <?}else{?><td width="280" align="left"><? echo $registro["car_especial"]; ?></td><?}?>
-           <td width="30" align="left"><? echo $registro["tipo_campo"]; ?></td>
-           <td width="55" align="left"><? echo $registro["longitud_campo"]; ?></td>
-           <td width="70" align="left"><? echo $registro["decimales_campo"]; ?></td>
-           <td width="40" align="left"><? echo $registro["pos_comienza"]; ?></td>
-           <td width="30" align="left"><? echo $registro["pos_finaliza"]; ?></td>
-           <td width="110" align="left"><? echo $registro["rellena_ceros_izq"]; ?></td>
-           <td width="110" align="left"><? echo $registro["rellena_ceros_der"]; ?></td>
-           <td width="130" align="left"><? echo $registro["rellena_espacios_i"]; ?></td>
-           <td width="130" align="left"><? echo $registro["rellena_espacios_d"]; ?></td>
-           <td width="110" align="left"><? echo $registro["elimina_ceros_izq"]; ?></td>
-           <td width="110" align="left"><? echo $registro["elimina_ceros_der"]; ?></td>
-           <td width="130" align="left"><? echo $registro["elimina_espacios_i"]; ?></td>
-           <td width="130" align="left"><? echo $registro["elimina_espacios_d"]; ?></td>
-           <td width="80" align="left"><? echo $registro["elimina_comas"]; ?></td>
-           <td width="80" align="left"><? echo $registro["elimina_puntos"]; ?></td>
-           <td width="55" align="left"><? echo $registro["pos_campo"]; ?></td>
-           <td width="60" align="left"><? echo $registro["status1_campo"]; ?></td>
-           <td width="80" align="left"><? echo $registro["status2_campo"]; ?></td>
+           <td width="50" align="left"><?php  echo $registro["cod_campo"]; ?></td>
+           <?php  if(trim($registro["car_especial"])==""){?><td width="280" align="left">&nbsp;</td>
+           <?php }else{?><td width="280" align="left"><?php  echo $registro["car_especial"]; ?></td><?php }?>
+           <td width="30" align="left"><?php  echo $registro["tipo_campo"]; ?></td>
+           <td width="55" align="left"><?php  echo $registro["longitud_campo"]; ?></td>
+           <td width="70" align="left"><?php  echo $registro["decimales_campo"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["pos_comienza"]; ?></td>
+           <td width="30" align="left"><?php  echo $registro["pos_finaliza"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["rellena_ceros_izq"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["rellena_ceros_der"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["rellena_espacios_i"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["rellena_espacios_d"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["elimina_ceros_izq"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["elimina_ceros_der"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["elimina_espacios_i"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["elimina_espacios_d"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["elimina_comas"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["elimina_puntos"]; ?></td>
+           <td width="55" align="left"><?php  echo $registro["pos_campo"]; ?></td>
+           <td width="60" align="left"><?php  echo $registro["status1_campo"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["status2_campo"]; ?></td>
          </tr>
-         <?}
+         <?php }
 
 ?>
        </table></td>
@@ -73,4 +73,4 @@ while($registro=pg_fetch_array($res)){
 </table>
 </body>
 </html>
-<?   pg_close(); ?>
+<?php    pg_close($conn); ?>

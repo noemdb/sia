@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $frecuencia="1";
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $frecuencia="1";
 $tipo_nomina=$_POST["txttipo_nomina"]; $cod_concepto=$_POST["txtcod_concepto"]; $denominacion=$_POST["txtdenominacion"]; $cod_partida=$_POST["txtcod_partida"];
 $cod_cat_alter=$_POST["txtcod_cat_alter"]; $tipo_concepto=$_POST["txttipo_concepto"]; $tipo_asigna=$_POST["txttipo_asigna"]; $fuente=$_POST["txtfuente"];
 $afecta_presup=$_POST["txtafecta_presup"]; $cod_retencion=$_POST["txtcod_retencion"]; $activo=$_POST["txtactivo"]; $oculto=$_POST["txtoculto"];
@@ -13,15 +13,15 @@ IF($tipo_asigna=="CESTATICKET"){$tipo_asigna="T";}ELSE{$tipo_asigna=substr($tipo
 $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");echo "ESPERE POR FAVOR MODIFICANDO....","<br>";
 $url="Act_concep_ar.php?Gcodigo=C".$tipo_nomina.$cod_concepto;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  $error=0;
-if (pg_ErrorMessage($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ $sSQL="Select * from NOM002 WHERE tipo_nomina='$tipo_nomina' and cod_concepto='$cod_concepto'"; $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
-   if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CONCEPTO NO EXISTE');</script><? }
+   if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CONCEPTO NO EXISTE');</script><?php }
    else{ $registro=pg_fetch_array($resultado); $adescrip=$registro["denominacion"];  $mact=$registro["activo"]; $mini=$registro["inicializable"]; $minic=$registro["inicializable_c"]; $mocul=$registro["oculto"]; $mpres=$registro["prestamo"];  $mcod_par=$registro["cod_partida"]; $sfecha=formato_aaaammdd($fecha_hoy); }
-   if($error==0){ if ($gnomina=="00"){$error=0;} else {  if($tipo_nomina<>$gnomina) {$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO ACTIVA PARA EL USUARIO');</script><?}  } } 
+   if($error==0){ if ($gnomina=="00"){$error=0;} else {  if($tipo_nomina<>$gnomina) {$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO ACTIVA PARA EL USUARIO');</script><?php } } } 
    if($error==0){ $sSQL="SELECT ACTUALIZA_NOM002(2,'$tipo_nomina','$cod_concepto','$denominacion','$cod_partida','$cod_cat_alter','$fuente','$asignacion','$tipo_asigna','$asig_ded_apo','$activo','$inicializable','$inicializable_c','$oculto','$acumula','$tipo_grupo','$frecuencia','$afecta_presup','$cod_retencion','00','$prestamo','$status','$cod_orden','$cod_aporte','$minf_usuario')";
-    $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error,0,91); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?}else{$error=0;?><script language="JavaScript">muestra('MODIFICO EXITOSAMENTE');</script><?
+    $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error,0,91); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }else{$error=0;?><script language="JavaScript">muestra('MODIFICO EXITOSAMENTE');</script><?php 
     $desc_doc="CONCEPTO, TIPO NOMINA:".$tipo_nomina.", CODIGO CONCEPTO:".$cod_concepto.", DENOMINACION:".$adescrip.", ACTIVO:".$mact.", COD.PARTIDA:".$mcod_par.", MONTO INICIALIZABLE:".$mini.", CANTIDAD INICIALIZABLE:".$minic.", OCULTO:".$mocul.", PRESTAMO:".$mpres; $resultado=pg_exec($conn,"SELECT INCLUYE_SIA004('04','$usuario_sia','$usuario_sia','$equipo','Modifico','$sfecha','$desc_doc')");
-      $error=pg_errormessage($conn); $error=substr($error,0,91);  if(!$resultado){?><script language="JavaScript">muestra('<?echo $error;?>');</script><?}}
+      $error=pg_errormessage($conn); $error=substr($error,0,91);  if(!$resultado){?><script language="JavaScript">muestra('<?php echo $error;?>');</script><?php } }
   }
 }
-pg_close();if($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?}else{?><script language="JavaScript">history.back();</script><?}?>
+pg_close($conn);if($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php }else{?><script language="JavaScript">history.back();</script><?php }?>

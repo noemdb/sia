@@ -1,8 +1,8 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy(); $eofline="@";
+<?php include ("../class/conect.php"); include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy(); $eofline="@";
 $codigo_mov=$_GET["codigo_mov"]; $cod_empleado=$_GET["cod_empleado"];$fecha_desde=$_GET["fdesde"];$fecha_hasta=$_GET["fhasta"]; $fecha_d_desde=$_GET["fddesde"];$fecha_d_hasta=$_GET["fdhasta"]; $mbono=$_GET["mbono"]; $dbono=$_GET["dbono"]; $cant_cal=$_GET["cant_cal"]; $mbase=$_GET["mbase"]; $mdianh=$_GET["mdianh"];
 $fecha_nacimiento=""; $tipo_nomina=""; $mbono=formato_numero($mbono); $dbono=formato_numero($dbono); $mbase=formato_numero($mbase); $mdianh=formato_numero($mdianh); 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if(pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
+if(pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  else{ $Nom_Emp=busca_conf(); }
 $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); 
 if($filas>=1){ $registro=pg_fetch_array($res); $error=0; 
   $cod_empleado=$registro["cod_empleado"];  $cedula=$registro["cedula"]; $nacionalidad=$registro["nacionalidad"]; $nombre=$registro["nombre"]; $status=$registro["status"];  
@@ -318,10 +318,10 @@ $url="Det_inc_cal_vac.php?codigo_mov=".$codigo_mov;
 $cant_trab=0; $hora1=time();  $campo502="NNNNNNNNNNNNNNNNNNN"; $error=0;  $Monto_Sueldo_SSO=0; $cod_grupo=""; $cod_conc_vac="105"; $cod_conc_sueldo="001";
 $sql="Select campo502,campo535  from SIA005 where campo501='04'";$resultado=pg_query($sql);if($registro=pg_fetch_array($resultado,0)){$campo502=$registro["campo502"]; $Monto_Sueldo_SSO=$registro["campo535"];} $proc_vac_nom=substr($campo502,5,1);
 if($error==0){$sSQL="Select * from NOM001 WHERE tipo_nomina='$tipo_nomina'"; $resultado=pg_query($sSQL);$filas=pg_num_rows($resultado);
-if($filas==0){$error=1;?><script language="JavaScript">muestra('TIPO DE NOMINA NO EXISTE');</script><?}else{$registro=pg_fetch_array($resultado);  $g_orden_pago=$registro["g_orden_pago"]; $frec_nom=$registro["frecuencia"]; $num_semana=$registro["nro_semana"]; $des_nomina=$registro["descripcion"]; $desc_grupo=$registro["desc_grupo"]; $redondear=$registro["redondear"]; $bloqueada=$registro["bloqueada"];$con_cal_vac=$registro["con_cal_vac"];$con_bon_vac=$registro["con_bon_vac"];$con_cal_vac=$registro["con_cal_vac"]; $con_bon_vac_ant=$registro["con_bon_vac"]; $cod_grupo=$registro["cod_grupo"]; if(trim($cod_grupo)==""){$cod_grupo="00";} }}
+if($filas==0){$error=1;?><script language="JavaScript">muestra('TIPO DE NOMINA NO EXISTE');</script><?php }else{$registro=pg_fetch_array($resultado);  $g_orden_pago=$registro["g_orden_pago"]; $frec_nom=$registro["frecuencia"]; $num_semana=$registro["nro_semana"]; $des_nomina=$registro["descripcion"]; $desc_grupo=$registro["desc_grupo"]; $redondear=$registro["redondear"]; $bloqueada=$registro["bloqueada"];$con_cal_vac=$registro["con_cal_vac"];$con_bon_vac=$registro["con_bon_vac"];$con_cal_vac=$registro["con_cal_vac"]; $con_bon_vac_ant=$registro["con_bon_vac"]; $cod_grupo=$registro["cod_grupo"]; if(trim($cod_grupo)==""){$cod_grupo="00";} }}
 if($error==0){$cal_frecuencia=1; $dia=substr($fecha_hasta,0,2); if($frec_nom=="Q"){if($dia==15){$cal_frecuencia=1;}else{$cal_frecuencia=2;} } }
-if($error==0){if(checkData($fecha_desde)=='1'){$fechad=formato_aaaammdd($fecha_desde);}else{$error=1;?><script language="JavaScript">muestra('FECHA DESDE NO ES VALIDA');</script><?}}
-if($error==0){if(checkData($fecha_hasta)=='1'){$fechah=formato_aaaammdd($fecha_hasta);}else{$error=1;?><script language="JavaScript">muestra('FECHA HASTA NO ES VALIDA');</script><?}}
+if($error==0){if(checkData($fecha_desde)=='1'){$fechad=formato_aaaammdd($fecha_desde);}else{$error=1;?><script language="JavaScript">muestra('FECHA DESDE NO ES VALIDA');</script><?php } }
+if($error==0){if(checkData($fecha_hasta)=='1'){$fechah=formato_aaaammdd($fecha_hasta);}else{$error=1;?><script language="JavaScript">muestra('FECHA HASTA NO ES VALIDA');</script><?php } }
 if($error==0){ $fecha_proc_h=$fecha_hasta; $f_proc_h=$fechah; $cant_cal=0; $frec=$frec_nom; $fecha_proc_d=$fecha_desde;
 $mf=FDate($fecha_hasta);  $md=FDate($fecha_desde); $fin_ciclo=0; $mdia=$mbase/30; $resto_mdianh=0;
 while(($mf>=$md)and($fin_ciclo==0)){ $cambio_periodo="N";
@@ -331,8 +331,8 @@ while(($mf>=$md)and($fin_ciclo==0)){ $cambio_periodo="N";
  if($frec=="Q"){$dia=substr($fecha_desde,0,2); $fecha_hasta=colocar_udiames($fecha_desde); if($dia=='01'){$fecha_hasta=nextDate($fecha_desde,14);}   
    $edia=$dia*1;; if($edia<15){$fecha_hasta="15".substr($fecha_desde,2,8);}
  }
- if($error==0){if(checkData($fecha_desde)=='1'){$fechad=formato_aaaammdd($fecha_desde);}else{$error=1;?><script language="JavaScript">muestra('FECHA DESDE NO ES VALIDA');</script><?}}
- if($error==0){if(checkData($fecha_hasta)=='1'){$fechah=formato_aaaammdd($fecha_hasta);}else{$error=1;?><script language="JavaScript">muestra('FECHA HASTA NO ES VALIDA');</script><?}}
+ if($error==0){if(checkData($fecha_desde)=='1'){$fechad=formato_aaaammdd($fecha_desde);}else{$error=1;?><script language="JavaScript">muestra('FECHA DESDE NO ES VALIDA');</script><?php } }
+ if($error==0){if(checkData($fecha_hasta)=='1'){$fechah=formato_aaaammdd($fecha_hasta);}else{$error=1;?><script language="JavaScript">muestra('FECHA HASTA NO ES VALIDA');</script><?php } }
  $mh=FDate($fecha_hasta); $temp_f_hasta=$fecha_hasta;
  if($mh>$mf){$fecha_hasta=$fecha_proc_h; $fechah=$f_proc_h;  $cambio_periodo="S";  }
  $nro_semanas=Asigna_Nro_Semanas($fecha_desde,$fecha_hasta); if($Cod_Emp=="71"){$nro_semanas=Asigna_Nro_Semanas($fecha_desde,$temp_f_hasta);} $num_semanas=$nro_semanas; 
@@ -419,7 +419,7 @@ while(($mf>=$md)and($fin_ciclo==0)){ $cambio_periodo="N";
 		}
 		$cantidad=cambia_coma_numero($cantidad); $valor=cambia_coma_numero($valor); $monto_orig=cambia_coma_numero($monto_orig);
 		$sSQL="SELECT ACTUALIZA_NOM076(1,'$codigo_mov','$cod_concepto','$den_concepto','$calculable','$asignacion','$acumula','$oculto','$tipo_a','$asig_ded_apo','$frec_valida','$prestamo','$concepto_vac','$int_cal_vac',$acumulado,$saldo,$valore,$valorq,$valoru,$valorv,$valorw,$valorx,$valory,$valorz,$cantidad,$valor,$monto_orig,'$cod_presup','$cod_contable','$afecta_presup','$cod_retencion','$fecha_ini','$fecha_exp','$fechah',$frecuenciaa,'$cod_orden')"; $resultado=pg_exec($conn,$sSQL);$error=pg_errormessage($conn); 
-		$error=substr($error,0,40); if(!$resultado){ echo $cod_concepto." ".$sSQL,"<br>"; ?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? $error=11;}
+		$error=substr($error,0,40); if(!$resultado){ echo $cod_concepto." ".$sSQL,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php  $error=11;}
         if($calculable=="NO"){if(($asig_ded_apo=="A")and($oculto=="NO")){$MAsignacion=$MAsignacion+$valor;} 
 		if(($asig_ded_apo=="D")and($oculto=="NO")){$MDeduccion=$MDeduccion+$valor;}}
 	  }}}
@@ -466,23 +466,23 @@ while(($mf>=$md)and($fin_ciclo==0)){ $cambio_periodo="N";
 	   $sSQL="SELECT ACTUALIZA_NOM076(2,'$codigo_mov','$cod_concepto','','S','S','S','N','A','A','S','N','N','N',$acumulado,$saldo,$valore,$valorq,$valoru,$valorv,$valorw,$valorx,$valory,$valorz,$cantidad,$valor,$monto_orig,'','','','','$fechah','$fechah','$fechah',0,'$cod_orden')";  $resultado=pg_exec($conn,$sSQL); }
      }  
     } 
- }$MNeto=$MAsignacion-$MDeduccion;  if($MNeto<0){ ?><script language="JavaScript">muestra('ERROR EN TRABAJADOR:<? echo $cod_empleado; ?> MONTO ES NEGATIVO:<? echo $MNeto; ?> \n ASIGNACIONES:<? echo $MAsignacion; ?> DEDUCCIONES:<? echo $MDeduccion; ?> \n POR FAVOR VERIFIQUE');</script><? }
+ }$MNeto=$MAsignacion-$MDeduccion;  if($MNeto<0){ ?><script language="JavaScript">muestra('ERROR EN TRABAJADOR:<?php  echo $cod_empleado; ?> MONTO ES NEGATIVO:<?php  echo $MNeto; ?> \n ASIGNACIONES:<?php  echo $MAsignacion; ?> DEDUCCIONES:<?php  echo $MDeduccion; ?> \n POR FAVOR VERIFIQUE');</script><?php }
  } 
 }
  if($g_orden_pago=="S"){ $sSQL="SELECT cod_presup,valor,cod_concepto,cod_empleado,cod_contable  FROM nom076 where (afecta_presup='SI') and (asignacion='SI') and (codigo_mov='$codigo_mov') and (cod_presup not in (select cod_presup from pre001)) order by cod_presup"; $res=pg_query($sSQL);
  while($reg=pg_fetch_array($res)){ $cod_presup=$reg["cod_presup"]; $cod_fuente="00"; $cod_fuente=$reg["cod_contable"]; $cod_concepto=$reg["cod_concepto"]; $cod_empleado=$reg["cod_empleado"]; $error=1;
-    ?><script language="JavaScript">muestra('CODIGO PRESUPUESTARIO:<? echo $cod_presup; ?> FUENTE:<? echo $cod_fuente; ?> \n TRABAJADOR:<? echo $cod_empleado; ?> CONCEPTO:<? echo $cod_concepto; ?> \n NO EXISTE EN PRESUPUESTO');</script><? }
+    ?><script language="JavaScript">muestra('CODIGO PRESUPUESTARIO:<?php  echo $cod_presup; ?> FUENTE:<?php  echo $cod_fuente; ?> \n TRABAJADOR:<?php  echo $cod_empleado; ?> CONCEPTO:<?php  echo $cod_concepto; ?> \n NO EXISTE EN PRESUPUESTO');</script><?php }
  $sSQL="SELECT cod_presup,cod_contable,sum(valor) as valor FROM nom076 where (afecta_presup='SI') and (asignacion='SI') and (codigo_mov='$codigo_mov') group by cod_presup,cod_contable order by cod_presup,cod_contable"; $res=pg_query($sSQL);
  while(($reg=pg_fetch_array($res))and($error==0)){ $cod_presup=$reg["cod_presup"]; $valor=$reg["valor"]; $cod_fuente="00"; $cod_fuente=$reg["cod_contable"];
     $sqlp = "SELECT denominacion,disponible,diferido FROM PRE001 WHERE (Cod_Presup='$cod_presup') and (Cod_Fuente='$cod_fuente')"; $resp=pg_query($sqlp); $filas=pg_num_rows($resp);
-    if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO <? echo $cod_presup; ?> NO EXISTE EN DISPONIBILIDAD');</script><? }
+    if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO <?php  echo $cod_presup; ?> NO EXISTE EN DISPONIBILIDAD');</script><?php }
     else{ $regp=pg_fetch_array($resp); $disponible=$regp["disponible"]; if($disponible<$valor){
-        ?><script language="JavaScript">muestra('NO EXISTE DISPONIBILIDAD PARA EL CODIGO PRESUPUESTARIO:<? echo $cod_presup; ?> FUENTE:<? echo $cod_fuente; ?> \n DISPONIBILIDAD ACTUAL:<? echo $disponible; ?> MONTO REQUERIDO:<? echo $valor; ?> \n POR FAVOR VERIFIQUE');</script><?}}
+        ?><script language="JavaScript">muestra('NO EXISTE DISPONIBILIDAD PARA EL CODIGO PRESUPUESTARIO:<?php  echo $cod_presup; ?> FUENTE:<?php  echo $cod_fuente; ?> \n DISPONIBILIDAD ACTUAL:<?php  echo $disponible; ?> MONTO REQUERIDO:<?php  echo $valor; ?> \n POR FAVOR VERIFIQUE');</script><?php } }
  }}
  $sSQL="SELECT BORRAR_nom076('$codigo_mov')"; // $resultado=pg_exec($conn,$sSQL);
 }
 $hora2=time(); $dif=$hora2-$hora1; echo " Tiempo en segundos: ".$dif,"<br>";
-pg_close();?>
+pg_close($conn);?>
 <script language="JavaScript">alert('FINALIZO CALCULO'); 
-document.location ='<? echo $url; ?>';
+document.location ='<?php  echo $url; ?>';
 </script>

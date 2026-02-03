@@ -1,16 +1,16 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");  $mcod_m="BIEN054".$usuario_sia.$equipo; 
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");  $mcod_m="BIEN054".$usuario_sia.$equipo; 
 if (!$_GET){$codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Bienes Muebles)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Bienes Muebles)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <SCRIPT language="JavaScript" src="../class/sia.js" type="text/javascript"></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_trans_comp_bienes.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_trans_comp_bienes.php?codigo_mov=<?php echo $codigo_mov?>'; }
 
 function llamar_cat_componenetes(){ var f=document.form1; var mcod_bien=f.txtcod_bien_mue.value; var url;
   url='Cat_componentes_bienes_muebles?criterio=&cod_bien_mue='+mcod_bien;
@@ -25,7 +25,7 @@ function apaga_comp(mthis){var mref;
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_bien_mue.value==""){alert("Codigo del Bien no puede estar Vacio");return false;}
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;} else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -104,7 +104,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="12"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="12"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
 			<td width="5"><input name="txtmonto" type="hidden" id="txtmonto" value="0"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>

@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$periodod=$_GET["periodod"]; $tipo_rep=$_GET["tipo_rep"]; $Sql="";$criterio1="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $criterio2="CHEQUES NO CONCILIADO";     
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
        $fecha_d=Armar_Fecha($periodod, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodod,2,$Fec_Ini_Ejer); $criterio1="	FECHA HASTA : ".$fecha_h; 
 	   $sSQL = "SELECT BAN010.Cod_Banco, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN010.Tipo_Registro, BAN010.Tipo_Mov_Trans, BAN010.Referencia,
@@ -112,7 +112,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <strong><?	echo $criterio1?></strong></td>
+				<td width="400" align="center" > <strong><?php 	echo $criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Cheque Nro</strong></td>
@@ -120,7 +120,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="400" align="left" bgcolor="#99CCFF"><strong>Nombre Beneficiario</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto Cheque</strong></td>
 			 </tr>
-		  <?  $i=0;  $total_cheque=0; $total=0; $prev_cod_banco="";  $prev_nombre_banco=""; $prev_nro_cuenta=""; $res=pg_query($sSQL);
+		  <?php   $i=0;  $total_cheque=0; $total=0; $prev_cod_banco="";  $prev_nombre_banco=""; $prev_nro_cuenta=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $cod_banco_grupo=$cod_banco; $nombre_banco_grupo=$nombre_banco; $nro_cuenta_grupo=$nro_cuenta;
 			   if($prev_cod_banco<>$cod_banco_grupo){ 
@@ -135,16 +135,16 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			      <tr>
 			          <td width="100" align="left"></td>
 			          <td width="100" align="left"></td>
-			          <td width="400" align="left"><? echo "Total: ".$prev_cod_banco."   ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
-			          <td width="100" align="right"><? echo $total_cheque; ?></td>
+			          <td width="400" align="left"><?php  echo "Total: ".$prev_cod_banco."   ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
+			          <td width="100" align="right"><?php  echo $total_cheque; ?></td>
 			      </tr>
-                 <?}?>	   
+                 <?php }?>	   
 			      <tr>
-					  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
+					  <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
 					  <td width="100" align="left" ><strong></strong></td>
-					  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nombre_banco."    ".$nro_cuenta; ?></td>
+					  <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nombre_banco."    ".$nro_cuenta; ?></td>
 				  </tr>
-			     <? 					 
+			     <?php  					 
 			   $prev_cod_banco=$cod_banco_grupo; $prev_nombre_banco=$nombre_banco_grupo; $prev_nro_cuenta=$nro_cuenta_grupo; $total_cheque=0;  }
 			   
 			   $num_cheque=$registro["referencia"]; $fechae=$registro["fecham"];$monto_cheque=$registro["monto_mov_trans"]; $nombre=$registro["beneficiario"];
@@ -152,12 +152,12 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   $cant_chq=$cant_chq+1;
                ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $num_cheque; ?></td>
-				   <td width="100" align="left"><? echo $fechae; ?></td>
-				   <td width="400" align="justify"><? echo $nombre; ?></td>
-				   <td width="100" align="right"><? echo $monto_cheque; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $num_cheque; ?></td>
+				   <td width="100" align="left"><?php  echo $fechae; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre; ?></td>
+				   <td width="100" align="right"><?php  echo $monto_cheque; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }$total=formato_monto($total);
 
 		  if($total_cheque>0){ $total_cheque=formato_monto($total_cheque); 
@@ -171,10 +171,10 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
-			    <td width="400" align="left"><? echo "Total: ".$prev_cod_banco."   ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
-			    <td width="100" align="right"><? echo $total_cheque; ?></td>
+			    <td width="400" align="left"><?php  echo "Total: ".$prev_cod_banco."   ".$prev_nombre_banco."    ".$prev_nro_cuenta; ?></td>
+			    <td width="100" align="right"><?php  echo $total_cheque; ?></td>
 			</tr>	
-		       <? }?>	 				 
+		       <?php }?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
@@ -183,11 +183,11 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			</tr>	
 			<tr>
 			    <td width="100" align="left">CANTIDAD:</td>
-			    <td width="100" align="left"><? echo $cant_chq; ?></td>
+			    <td width="100" align="left"><?php  echo $cant_chq; ?></td>
 			    <td width="400" align="right"><strong>TOTAL: </strong></td>
-			    <td width="100" align="right"><strong><? echo $total; ?></strong></td>
+			    <td width="100" align="right"><strong><?php  echo $total; ?></strong></td>
 			</tr>	
-		   </table><?
+		   </table><?php 
     }
  }
 ?>

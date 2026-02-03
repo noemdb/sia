@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -20,7 +20,7 @@ function CargarUrl(mcodigo){var murl;  murl="Act_concep_ar.php?Gcodigo="+mcodigo
   </tr>
 </table>
 <div id="Layer1" style="position:absolute; width:968px; height:448px; z-index:1; top: 70px; left: 5px;">
-<?      $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $numPags=1;  if ($gnomina=="00"){ $criterion="";$criterioc=""; }else{ $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
+<?php       $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $numPags=1;  if ($gnomina=="00"){ $criterion="";$criterioc=""; }else{ $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
         $criterio=$criterion;
 		if ($_GET){if ($_GET["criterio"]!=""){$txt_criterio = $_GET["criterio"];  $txt_criterio=strtoupper($txt_criterio);
         $criterio = " where (tipo_nomina like '%" . $txt_criterio . "%' or cod_concepto like '%" . $txt_criterio . "%' or denominacion like '%" . $txt_criterio . "%') ".$criterioc;}}
@@ -40,19 +40,19 @@ function CargarUrl(mcodigo){var murl;  murl="Act_concep_ar.php?Gcodigo="+mcodigo
                 $linea=0; $Salir=false;
                 while($registro=pg_fetch_array($res)) {$linea=$linea+1;
                 if  ($linea>$limitInf+$tamPag){$Salir=true;}  if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:CargarUrl('<? echo $registro["tipo_nomina"].$registro["cod_concepto"]; ?>');" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["tipo_nomina"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_concepto"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["denominacion"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["asignacion"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["activo"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["oculto"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:CargarUrl('<?php  echo $registro["tipo_nomina"].$registro["cod_concepto"]; ?>');" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["tipo_nomina"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_concepto"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["denominacion"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["asignacion"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["activo"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["oculto"]; ?></b></font></td>
   </tr>
-<?} }echo "</table>";}?>
+<?php } }echo "</table>";}?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      if($pagina>1){
+<?php       if($pagina>1){
           echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."'>";
           echo "<font face='verdana' size='-2'>Principio</font>";
           echo "</a>&nbsp;";
@@ -92,4 +92,4 @@ function CargarUrl(mcodigo){var murl;  murl="Act_concep_ar.php?Gcodigo="+mcodigo
 </form>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

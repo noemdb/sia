@@ -21,9 +21,9 @@
   </tr>
     <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-      <td width="152"><span class="Estilo17"><?echo $cod_empleado ?></span></td>
-      <td width="657"><span class="Estilo17"><?echo $nombre ?></span></td>
-	   <td width="171"><span class="Estilo17"><?echo $rif_empleado ?></span></td>
+      <td width="152"><span class="Estilo17"><?php echo $cod_empleado ?></span></td>
+      <td width="657"><span class="Estilo17"><?php echo $nombre ?></span></td>
+	   <td width="171"><span class="Estilo17"><?php echo $rif_empleado ?></span></td>
       </tr>
     </table></td>
   </tr>
@@ -41,13 +41,13 @@
   </tr>
   <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-           <td width="151"><span class="Estilo17"><?echo $cedula ?></span></td>
-           <td width="140"><span class="Estilo17"><?echo $nacionalidad ?></span></td>
-	       <td width="131"><span class="Estilo17"><?echo $fecha_nacimiento ?></span></td>
-	       <td width="82"><span class="Estilo17"><?echo $edad?></span></td>
-	   	   <td width="142"><span class="Estilo17"><?echo $edo_civil ?></span></td>
-		  <td width="95"><span class="Estilo17"><?echo $sexo ?></span></td>
-		  <td width="207"><span class="Estilo17"><?echo $lugar_nacimiento ?></span></td>
+           <td width="151"><span class="Estilo17"><?php echo $cedula ?></span></td>
+           <td width="140"><span class="Estilo17"><?php echo $nacionalidad ?></span></td>
+	       <td width="131"><span class="Estilo17"><?php echo $fecha_nacimiento ?></span></td>
+	       <td width="82"><span class="Estilo17"><?php echo $edad?></span></td>
+	   	   <td width="142"><span class="Estilo17"><?php echo $edo_civil ?></span></td>
+		  <td width="95"><span class="Estilo17"><?php echo $sexo ?></span></td>
+		  <td width="207"><span class="Estilo17"><?php echo $lugar_nacimiento ?></span></td>
       </tr>
     </table></td>
   </tr>
@@ -59,7 +59,7 @@
   </tr>
     <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-      <td><span class="Estilo17"><?echo $direccion ?></span></td>
+      <td><span class="Estilo17"><?php echo $direccion ?></span></td>
       </tr>
     </table></td>
   </tr>
@@ -75,11 +75,11 @@
   </tr>
   <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-         <td width="248"><span class="Estilo17"><?echo $ciudad ?></span></td>
-         <td width="286"><span class="Estilo17"><?echo $estado ?></span></td>
-	     <td width="130"><span class="Estilo17"><?echo $telefono ?></span></td>
-	     <td width="171"><span class="Estilo17"><?echo $correo ?></span></td>
-	     <td width="129"><span class="Estilo17"><?echo $cod_postal?></span></td>
+         <td width="248"><span class="Estilo17"><?php echo $ciudad ?></span></td>
+         <td width="286"><span class="Estilo17"><?php echo $estado ?></span></td>
+	     <td width="130"><span class="Estilo17"><?php echo $telefono ?></span></td>
+	     <td width="171"><span class="Estilo17"><?php echo $correo ?></span></td>
+	     <td width="129"><span class="Estilo17"><?php echo $cod_postal?></span></td>
       </tr>
     </table></td>
   </tr>
@@ -101,11 +101,11 @@
   </tr>
   <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-         <td width="77"><span class="Estilo17"><?echo $tipo_nomina ?></span></td>
-         <td width="457"><span class="Estilo17"><?echo $descripcion ?></span></td>
-	     <td width="124"><span class="Estilo17"><?echo $fecha_ingreso ?></span></td>
-	     <td width="107"><span class="Estilo17"><?echo $status ?></span></td>
-	     <td width="199"><span class="Estilo17"><?echo $cod_categoria ?></span></td>
+         <td width="77"><span class="Estilo17"><?php echo $tipo_nomina ?></span></td>
+         <td width="457"><span class="Estilo17"><?php echo $descripcion ?></span></td>
+	     <td width="124"><span class="Estilo17"><?php echo $fecha_ingreso ?></span></td>
+	     <td width="107"><span class="Estilo17"><?php echo $status ?></span></td>
+	     <td width="199"><span class="Estilo17"><?php echo $cod_categoria ?></span></td>
       </tr>
     </table></td>
   </tr>
@@ -121,11 +121,11 @@
   </tr>
   <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-         <td width="107"><span class="Estilo17"><?echo $tipo_pago ?></span></td>
-         <td width="357"><span class="Estilo17"><?echo $cta_empleado ?></span></td>
-	     <td width="57"><span class="Estilo17"><?echo $cod_banco ?></span></td>
-	     <td width="194"><span class="Estilo17"><?echo $nombre_banco ?></span></td>
-	     <td width="249"><span class="Estilo17"><?echo $cta_empresa ?></span></td>
+         <td width="107"><span class="Estilo17"><?php echo $tipo_pago ?></span></td>
+         <td width="357"><span class="Estilo17"><?php echo $cta_empleado ?></span></td>
+	     <td width="57"><span class="Estilo17"><?php echo $cod_banco ?></span></td>
+	     <td width="194"><span class="Estilo17"><?php echo $nombre_banco ?></span></td>
+	     <td width="249"><span class="Estilo17"><?php echo $cta_empresa ?></span></td>
       </tr>
     </table></td>
   

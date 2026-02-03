@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php");
 if (!$_GET){$codigo_mov="";$ivag=0;$orden="";}
 else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];$ivag=$_GET["ivag"];$opn=$_GET["opn"];$orden=$_GET["orden"];}
 $tasa_iva=formato_monto($ivag);$fecha_hoy=asigna_fecha_hoy(); $retenc=75; $retenc=formato_monto($retenc); $nro_planilla="01-REG"; $opn=$opn+1;
@@ -8,13 +8,13 @@ $monto=0;$montob=0; $montoi=0; $montos=0; $montor=0; $tasa=0; $monto1=0; $monto2
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Factura Comprobante IVA)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Factura Comprobante IVA)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type=text/javascript></script>
 <script language="javascript" src="ajax_pag.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){document.location ='Det_inc_comp_iva.php?codigo_mov=<?echo $codigo_mov?>&agregar=S';}
+function llamar_anterior(){document.location ='Det_inc_comp_iva.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S';}
 
 function validarNum(e){tecla=(document.all) ? e.keyCode : e.which;  if(tecla==0) return true;  if(tecla==8) return true;
     if((tecla<48||tecla>57)&&(tecla!=46&&tecla!= 44&&tecla!= 45)){alert('Por Favor Ingrese Solo Numeros ') };
@@ -99,11 +99,11 @@ return true;}
           <td><table width="729" >
             <tr>
               <td width="143"><span class="Estilo5">OPERACI&Oacute;N N&Uacute;MERO :</span></td>
-              <td width="109"><span class="Estilo5"> <input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="3" maxlength="2" nFocus="encender(this)" onBlur="apagar(this)" value="<? echo $opn ?>"  >  </span></td>
+              <td width="109"><span class="Estilo5"> <input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="3" maxlength="2" nFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $opn ?>"  >  </span></td>
               <td width="92"><span class="Estilo5">DOCUMENTO :</span></td>
-              <td width="92"><span class="Estilo5"><input class="Estilo10" name="txtdocumento" type="text" id="txtdocumento" size="4" maxlength="2" nFocus="encender(this)" onBlur="apagar(this)" value="<? echo $tipo_documento ?>"> </span></td>
+              <td width="92"><span class="Estilo5"><input class="Estilo10" name="txtdocumento" type="text" id="txtdocumento" size="4" maxlength="2" nFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $tipo_documento ?>"> </span></td>
               <td width="145"><span class="Estilo5">FECHA DOCUMENTO:</span></td>
-              <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_doc" type="text" id="txtfecha_doc" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $fecha ?>"></span></span></td>
+              <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_doc" type="text" id="txtfecha_doc" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $fecha ?>"></span></span></td>
             </tr>
           </table></td>
         </tr>
@@ -111,9 +111,9 @@ return true;}
           <td><table width="737">
             <tr>
               <td width="142"><span class="Estilo5">N&Uacute;MERO FACTURA :</span></td>
-              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnro_factura" type="text" id="txtnro_factura"  onFocus="encender(this)" onBlur="apagar(this)"  size="20" value="<? echo $nro_fact ?>"> </span></td>
+              <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnro_factura" type="text" id="txtnro_factura"  onFocus="encender(this)" onBlur="apagar(this)"  size="20" value="<?php  echo $nro_fact ?>"> </span></td>
               <td width="185"><span class="Estilo5">N&Uacute;MERO DE CONTROL: </span></td>
-              <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtnro_con_factura" type="text" id="txtnro_con_factura" size="20" maxlength="20"  onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_con_factura ?>"></span></td>
+              <td width="215"><span class="Estilo5"><input class="Estilo10" name="txtnro_con_factura" type="text" id="txtnro_con_factura" size="20" maxlength="20"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_con_factura ?>"></span></td>
             </tr>
           </table></td>
         </tr>
@@ -121,11 +121,11 @@ return true;}
           <td><table width="733" border="0">
             <tr>
               <td width="142"><span class="Estilo5">NRO. NOTA CREDITO :</span></td>
-              <td width="121"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_c" type="text" id="txtnro_nota_c" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_ncr ?>">  </span></td>
+              <td width="121"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_c" type="text" id="txtnro_nota_c" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_ncr ?>">  </span></td>
               <td width="134"><span class="Estilo5">NRO. NOTA DEBITO :</span></td>
-              <td width="119"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_d" type="text" id="txtnro_nota_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_ndb ?>"> </span></td>
+              <td width="119"><span class="Estilo5"><input class="Estilo10" name="txtnro_nota_d" type="text" id="txtnro_nota_d" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_ndb ?>"> </span></td>
               <td width="128"><span class="Estilo5">TIPO TRANSACCI&Oacute;N :</span></td>
-              <td width="63"><span class="Estilo5"><input class="Estilo10" name="txttipo_trans" type="text" id="txttipo_trans" size="7" maxlength="7" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $nro_planilla ?>"> </span></td>
+              <td width="63"><span class="Estilo5"><input class="Estilo10" name="txttipo_trans" type="text" id="txttipo_trans" size="7" maxlength="7" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $nro_planilla ?>"> </span></td>
             </tr>
           </table></td>
         </tr>
@@ -133,9 +133,9 @@ return true;}
           <td><table width="733" border="0">
               <tr>
                 <td width="188"><span class="Estilo5">NRO. FACTURA AFECTADA  :</span></td>
-                <td width="192"><span class="Estilo5"><input class="Estilo10" name="txtnro_doc_afectado" type="text" id="txtnro_doc_afectado"  value="<? echo $nro_doc_afectado ?>"  size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" > </span></td>
+                <td width="192"><span class="Estilo5"><input class="Estilo10" name="txtnro_doc_afectado" type="text" id="txtnro_doc_afectado"  value="<?php  echo $nro_doc_afectado ?>"  size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" > </span></td>
                 <td width="140"><span class="Estilo5">TOTAL COMPRAS :</span></td>
-                <td width="195"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto"  size="15" maxlength="15" style="text-align:right"  onFocus="encender_monto(this)" onBlur="apagar_monto(this)" value="<? echo $monto ?>"> </span></td>
+                <td width="195"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto"  size="15" maxlength="15" style="text-align:right"  onFocus="encender_monto(this)" onBlur="apagar_monto(this)" value="<?php  echo $monto ?>"> </span></td>
               </tr>
           </table></td>
         </tr>
@@ -143,9 +143,9 @@ return true;}
           <td><table width="737" border="0">
             <tr>
               <td width="188"><span class="Estilo5">COMPRAS S/DERECHO  :</span></td>
-              <td width="193"> <span class="Estilo5"><input class="Estilo10" name="txtmontos" type="text" id="txtmontos" size="20" maxlength="20" style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar_monto(this)"  value="<? echo $montos ?>">  </span> </td>
+              <td width="193"> <span class="Estilo5"><input class="Estilo10" name="txtmontos" type="text" id="txtmontos" size="20" maxlength="20" style="text-align:right" onFocus="encender_monto(this)" onBlur="apagar_monto(this)"  value="<?php  echo $montos ?>">  </span> </td>
                <td width="137"><span class="Estilo5">BASE IMPONIBLE :  </span></td>
-              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontob" type="text" id="txtmontob" size="20" maxlength="20" style="text-align:right" onFocus="encender_monto(this)"  onBlur="apagar_monto(this)"  onchange="chequea_monto(this.form);"  value="<? echo $montob ?>">  </span></td>
+              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontob" type="text" id="txtmontob" size="20" maxlength="20" style="text-align:right" onFocus="encender_monto(this)"  onBlur="apagar_monto(this)"  onchange="chequea_monto(this.form);"  value="<?php  echo $montob ?>">  </span></td>
               </tr>
           </table></td>
         </tr>
@@ -153,9 +153,9 @@ return true;}
           <td><table width="739" >
             <tr>
               <td width="188"><span class="Estilo5">PORCENTAJE (%) ALICUOTA: </span></td>
-              <td width="192"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="8"  style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_tasa(this.form);" value="<? echo $tasa_iva ?>"> </span></td>
+              <td width="192"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="8"  style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_tasa(this.form);" value="<?php  echo $tasa_iva ?>"> </span></td>
               <td width="138"><span class="Estilo5">MONTO IVA: </span></td>
-              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontoi" type="text" id="txtmontoi" size="20" maxlength="20" style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" value="<? echo $montoi ?>"></span></td>
+              <td width="201"><span class="Estilo5"><input class="Estilo10" name="txtmontoi" type="text" id="txtmontoi" size="20" maxlength="20" style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" value="<?php  echo $montoi ?>"></span></td>
               </tr>
           </table> </td>
         </tr>
@@ -163,9 +163,9 @@ return true;}
           <td><table width="739" >
             <tr>
               <td width="187"><span class="Estilo5">PORCENTAJE (%) RETENCI&Oacute;N: </span></td>
-              <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtretenc" type="text" id="txtretenc" size="10" maxlength="10"  style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_retenc(this.form);" value="<? echo $retenc ?>"> </span></td>
+              <td width="190"><span class="Estilo5"><input class="Estilo10" name="txtretenc" type="text" id="txtretenc" size="10" maxlength="10"  style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)" onchange="chequea_retenc(this.form);" value="<?php  echo $retenc ?>"> </span></td>
               <td width="139"><span class="Estilo5"> IVA RETENIDO : </span></td>
-             <td width="203"><span class="Estilo5"><input class="Estilo10" name="txtmontor" type="text" id="txtmontor" size="15" maxlength="15" style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<? echo $montor ?>"> </span></td>
+             <td width="203"><span class="Estilo5"><input class="Estilo10" name="txtmontor" type="text" id="txtmontor" size="15" maxlength="15" style="text-align:right" onFocus="encender(this)" onBlur="apagar_monto(this)"  value="<?php  echo $montor ?>"> </span></td>
             </tr>
           </table></td>
         </tr>
@@ -174,9 +174,9 @@ return true;}
       </table>
         <table width="699" align="center">
           <tr>
-            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="100"><input name="txttipo_operacion" type="hidden" id="txttipo_operacion" value="<?echo $tipo_operacion?>"></td>
-            <td width="120"><input name="txtnro_orden" type="hidden" id="txtnro_orden" value="<?echo $orden?>"></td>
+            <td width="10"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="100"><input name="txttipo_operacion" type="hidden" id="txttipo_operacion" value="<?php echo $tipo_operacion?>"></td>
+            <td width="120"><input name="txtnro_orden" type="hidden" id="txtnro_orden" value="<?php echo $orden?>"></td>
             <td width="120" align="center"><input name="Incluir" type="submit" id="Incluir" value="Incluir"></td>
             <td width="120" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
             <td width="230">&nbsp;</td>

@@ -9,7 +9,7 @@ while($registro=pg_fetch_array($res)){ $cod_articulo=$registro["cod_articulo"]; 
  $ssql="SELECT ACTUALIZA_COMP042(1,'$codigo_mov','$cod_articulo','00000000','0000000000','$nro_linea','','$sfecha','$marca','$modelo','$unidad_medida','','00',$costo,$impuesto,0,0,0,$cantidad,0,0,0,0,0,0,'000','','$sfecha','','','$nro_req','',0,0,'','$sfecha','','','$des_articulo','')";
  $resultado=pg_exec($conn,$ssql);     $error=pg_errormessage($conn);
   
-}pg_close();?>
+}pg_close($conn);?>
 
-<iframe src="Det_inc_art_anal.php?codigo_mov=<?echo $codigo_mov?>" width="846" height="340" scrolling="auto" frameborder="0">
+<iframe src="Det_inc_art_anal.php?codigo_mov=<?php echo $codigo_mov?>" width="846" height="340" scrolling="auto" frameborder="0">
 </iframe>

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="VAC".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_empleado=$_POST["txtcod_empleado"];  $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -10,8 +10,8 @@ function Llamar_Inc_Calculo(mop){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
 $error=1; $fecha_caus_d=""; $fecha_caus_h=""; $dias_vac=0; $dias_bono_vac=0; $dias_nohabiles=0; $dias_bono_vac_a=0;
 $con_cal_vac=""; $con_bon_vac=""; $con_sue_int=""; $nom_conc=""; $frec="";  $ultima_fecha=""; $monto_bono_vac=0;
 $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; 
@@ -50,15 +50,15 @@ if($filas>=1){ $registro=pg_fetch_array($res); $error=0;
   $estado=$registro["estado"]; $ciudad=$registro["ciudad"]; $municipio=$registro["municipio"]; $parroquia=$registro["parroquia"]; $aptdo_postal=$registro["aptdo_postal"];
   $observacion=$registro["observacion"]; $talla_camisa=$registro["talla_camisa"]; $talla_pantalon=$registro["talla_pantalon"]; $talla_calzado=$registro["talla_calzado"];
   $poliza=$registro["poliza"]; $fecha_seguro=$registro["fecha_seguro"]; $fecha_seguro=formato_ddmmaaaa($fecha_seguro);}
-else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO EXISTE');</script><?} 
+else{$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO EXISTE');</script><?php } 
 if($error==0){ 
 $sql="Select * from NOM001 where tipo_nomina='$tipo_nomina'"; $res=pg_query($sql); $filas=pg_num_rows($res); 
-if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO EXISTE');</script><?} 
+if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO EXISTE');</script><?php } 
 else{ $registro=pg_fetch_array($res); $con_cal_vac=$registro["con_cal_vac"];  $con_sue_bas=$registro["con_sue_bas"]; $con_bon_vac=$registro["con_bon_vac"]; $con_sue_int=$registro["con_sue_int"]; $frec=$registro["frecuencia"];  $ultima_fecha=$registro["ultima_fecha"]; }
 $sql="Select * FROM CALCULO_VACACIONES where (cod_empleado='$cod_empleado')"; $res=pg_query($sql); $filas=pg_num_rows($res); 
-if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('CALCULO DE VACACIONES YA EXISTE');</script><?} }
+if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('CALCULO DE VACACIONES YA EXISTE');</script><?php } }
 if($error==0){ $sql="Select * FROM NOM024 where (cod_empleado='$cod_empleado')"; $res=pg_query($sql); $filas=pg_num_rows($res); 
-if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('TRABAJADOR TIENE SALIDA DE VACACIONES REGISTRADA');</script><?}
+if($filas>=1){$error=1; ?> <script language="JavaScript"> muestra('TRABAJADOR TIENE SALIDA DE VACACIONES REGISTRADA');</script><?php }
 }
 if($error==0){ $fecha_caus_d=$fecha_ing;  $fecha1=formato_ddmmaaaa($fecha_caus_d); $fecha_caus_h=nextano($fecha1,1);
 $sql= "SELECT fecha_causa_hasta From NOM025 where (cod_empleado='$cod_empleado') Order by fecha_causa_hasta desc"; $res=pg_query($sql); $filas=pg_num_rows($res); 
@@ -105,34 +105,34 @@ $sSQL="SELECT ELIMINA_NOM076('$codigo_mov')"; $resultado=pg_exec($conn,$sSQL);
 <form name="form2" method="post" action="Inc_cal_vacaciones.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $cod_empleado?>" ></td>
-     <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-     <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-     <td width="5"><input name="txtfecha_ing" type="hidden" id="txtfecha_ing" value="<?echo $fecha_ingreso?>" ></td>	 
-     <td width="5"><input name="txtcon_sue_int" type="hidden" id="txtcon_sue_int" value="<?echo $con_sue_int?>" ></td>
-     <td width="5"><input name="txtnom_conc" type="hidden" id="txtnom_conc" value="<?echo $nom_conc?>" ></td>	 
-     <td width="5"><input name="txtcon_cal_vac" type="hidden" id="txtcon_cal_vac" value="<?echo $con_cal_vac?>" ></td>     
-     <td width="5"><input name="txtcon_bon_vac" type="hidden" id="txtcon_bon_vac" value="<?echo $con_bon_vac?>" ></td>
-     <td width="5"><input name="txtfrec" type="hidden" id="txtfrec" value="<?echo $frec?>"></td>
-     <td width="5"><input name="txtultima_fecha" type="hidden" id="txtultima_fecha" value="<?echo $ultima_fecha?>"></td>
-     <td width="5"><input name="txtfecha_caus_d" type="hidden" id="txtfecha_caus_d" value="<?echo $fecha_caus_d?>"></td>
-     <td width="5"><input name="txtfecha_caus_h" type="hidden" id="txtfecha_caus_h" value="<?echo $fecha_caus_h?>"></td>	 
-     <td width="5"><input name="txtdias_vac" type="hidden" id="txtdias_vac" value="<?echo $dias_vac?>"></td>	 
-     <td width="5"><input name="txtdias_bono_vac" type="hidden" id="txtdias_bono_vac" value="<?echo $dias_bono_vac?>"></td>	 
-	 <td width="5"><input name="txtmonto_bono_vac" type="hidden" id="txtmonto_bono_vac" value="<?echo $monto_bono_vac?>"></td>	 
-     <td width="5"><input name="txtdias_nohabiles" type="hidden" id="txtdias_nohabiles" value="<?echo $dias_nohabiles?>"></td>     
-	 <td width="5"><input name="txtdias_bono_vac_a" type="hidden" id="txtdias_bono_vac_a" value="<?echo $dias_bono_vac_a?>"></td>     
-	 <td width="5"><input name="txtfecha_desde" type="hidden" id="txtfecha_desde" value="<?echo $fecha_desde?>"></td>
-     <td width="5"><input name="txtfecha_hasta" type="hidden" id="txtfecha_hasta" value="<?echo $fecha_hasta?>"></td>
-	 <td width="5"><input name="txtfecha_rein" type="hidden" id="txtfecha_rein" value="<?echo $fecha_rein?>"></td>	 
-	 <td width="5"><input name="txtfecha_hist" type="hidden" id="txtfecha_hist" value="<?echo $fecha_hist?>"></td>
-     <td width="5"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?echo $monto_base?>"></td>
-	 <td width="5"><input name="txtfecha_cal_d" type="hidden" id="txtfecha_cal_d" value="<?echo $fecha_c_desde?>"></td>
-     <td width="5"><input name="txtfecha_cal_h" type="hidden" id="txtfecha_cal_h" value="<?echo $fecha_c_hasta?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $cod_empleado?>" ></td>
+     <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+     <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+     <td width="5"><input name="txtfecha_ing" type="hidden" id="txtfecha_ing" value="<?php echo $fecha_ingreso?>" ></td>	 
+     <td width="5"><input name="txtcon_sue_int" type="hidden" id="txtcon_sue_int" value="<?php echo $con_sue_int?>" ></td>
+     <td width="5"><input name="txtnom_conc" type="hidden" id="txtnom_conc" value="<?php echo $nom_conc?>" ></td>	 
+     <td width="5"><input name="txtcon_cal_vac" type="hidden" id="txtcon_cal_vac" value="<?php echo $con_cal_vac?>" ></td>     
+     <td width="5"><input name="txtcon_bon_vac" type="hidden" id="txtcon_bon_vac" value="<?php echo $con_bon_vac?>" ></td>
+     <td width="5"><input name="txtfrec" type="hidden" id="txtfrec" value="<?php echo $frec?>"></td>
+     <td width="5"><input name="txtultima_fecha" type="hidden" id="txtultima_fecha" value="<?php echo $ultima_fecha?>"></td>
+     <td width="5"><input name="txtfecha_caus_d" type="hidden" id="txtfecha_caus_d" value="<?php echo $fecha_caus_d?>"></td>
+     <td width="5"><input name="txtfecha_caus_h" type="hidden" id="txtfecha_caus_h" value="<?php echo $fecha_caus_h?>"></td>	 
+     <td width="5"><input name="txtdias_vac" type="hidden" id="txtdias_vac" value="<?php echo $dias_vac?>"></td>	 
+     <td width="5"><input name="txtdias_bono_vac" type="hidden" id="txtdias_bono_vac" value="<?php echo $dias_bono_vac?>"></td>	 
+	 <td width="5"><input name="txtmonto_bono_vac" type="hidden" id="txtmonto_bono_vac" value="<?php echo $monto_bono_vac?>"></td>	 
+     <td width="5"><input name="txtdias_nohabiles" type="hidden" id="txtdias_nohabiles" value="<?php echo $dias_nohabiles?>"></td>     
+	 <td width="5"><input name="txtdias_bono_vac_a" type="hidden" id="txtdias_bono_vac_a" value="<?php echo $dias_bono_vac_a?>"></td>     
+	 <td width="5"><input name="txtfecha_desde" type="hidden" id="txtfecha_desde" value="<?php echo $fecha_desde?>"></td>
+     <td width="5"><input name="txtfecha_hasta" type="hidden" id="txtfecha_hasta" value="<?php echo $fecha_hasta?>"></td>
+	 <td width="5"><input name="txtfecha_rein" type="hidden" id="txtfecha_rein" value="<?php echo $fecha_rein?>"></td>	 
+	 <td width="5"><input name="txtfecha_hist" type="hidden" id="txtfecha_hist" value="<?php echo $fecha_hist?>"></td>
+     <td width="5"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?php echo $monto_base?>"></td>
+	 <td width="5"><input name="txtfecha_cal_d" type="hidden" id="txtfecha_cal_d" value="<?php echo $fecha_c_desde?>"></td>
+     <td width="5"><input name="txtfecha_cal_h" type="hidden" id="txtfecha_cal_h" value="<?php echo $fecha_c_hasta?>"></td>
   </tr>
 </table>
 </form>
@@ -140,39 +140,39 @@ $sSQL="SELECT ELIMINA_NOM076('$codigo_mov')"; $resultado=pg_exec($conn,$sSQL);
 <form name="form3" method="post" action="Inc_cal_vacaciones_ima.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $cod_empleado?>" ></td>
-     <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-     <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-     <td width="5"><input name="txtfecha_ing" type="hidden" id="txtfecha_ing" value="<?echo $fecha_ingreso?>" ></td>	 
-     <td width="5"><input name="txtcon_sue_int" type="hidden" id="txtcon_sue_int" value="<?echo $con_sue_int?>" ></td>
-     <td width="5"><input name="txtnom_conc" type="hidden" id="txtnom_conc" value="<?echo $nom_conc?>" ></td>	 
-     <td width="5"><input name="txtcon_cal_vac" type="hidden" id="txtcon_cal_vac" value="<?echo $con_cal_vac?>" ></td>     
-     <td width="5"><input name="txtcon_bon_vac" type="hidden" id="txtcon_bon_vac" value="<?echo $con_bon_vac?>" ></td>
-     <td width="5"><input name="txtfrec" type="hidden" id="txtfrec" value="<?echo $frec?>"></td>
-     <td width="5"><input name="txtultima_fecha" type="hidden" id="txtultima_fecha" value="<?echo $ultima_fecha?>"></td>
-     <td width="5"><input name="txtfecha_caus_d" type="hidden" id="txtfecha_caus_d" value="<?echo $fecha_caus_d?>"></td>
-     <td width="5"><input name="txtfecha_caus_h" type="hidden" id="txtfecha_caus_h" value="<?echo $fecha_caus_h?>"></td>	 
-     <td width="5"><input name="txtdias_vac" type="hidden" id="txtdias_vac" value="<?echo $dias_vac?>"></td>	 
-     <td width="5"><input name="txtdias_bono_vac" type="hidden" id="txtdias_bono_vac" value="<?echo $dias_bono_vac?>"></td>	 
-	 <td width="5"><input name="txtmonto_bono_vac" type="hidden" id="txtmonto_bono_vac" value="<?echo $monto_bono_vac?>"></td>	 
-     <td width="5"><input name="txtdias_nohabiles" type="hidden" id="txtdias_nohabiles" value="<?echo $dias_nohabiles?>"></td>     
-	 <td width="5"><input name="txtdias_bono_vac_a" type="hidden" id="txtdias_bono_vac_a" value="<?echo $dias_bono_vac_a?>"></td>     
-	 <td width="5"><input name="txtfecha_desde" type="hidden" id="txtfecha_desde" value="<?echo $fecha_desde?>"></td>
-     <td width="5"><input name="txtfecha_hasta" type="hidden" id="txtfecha_hasta" value="<?echo $fecha_hasta?>"></td>
-	 <td width="5"><input name="txtfecha_rein" type="hidden" id="txtfecha_rein" value="<?echo $fecha_rein?>"></td>	 
-	 <td width="5"><input name="txtfecha_hist" type="hidden" id="txtfecha_hist" value="<?echo $fecha_hist?>"></td>
-     <td width="5"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?echo $monto_base?>"></td>
-	 <td width="5"><input name="txtfecha_cal_d" type="hidden" id="txtfecha_cal_d" value="<?echo $fecha_c_desde?>"></td>
-     <td width="5"><input name="txtfecha_cal_h" type="hidden" id="txtfecha_cal_h" value="<?echo $fecha_c_hasta?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $cod_empleado?>" ></td>
+     <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+     <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+     <td width="5"><input name="txtfecha_ing" type="hidden" id="txtfecha_ing" value="<?php echo $fecha_ingreso?>" ></td>	 
+     <td width="5"><input name="txtcon_sue_int" type="hidden" id="txtcon_sue_int" value="<?php echo $con_sue_int?>" ></td>
+     <td width="5"><input name="txtnom_conc" type="hidden" id="txtnom_conc" value="<?php echo $nom_conc?>" ></td>	 
+     <td width="5"><input name="txtcon_cal_vac" type="hidden" id="txtcon_cal_vac" value="<?php echo $con_cal_vac?>" ></td>     
+     <td width="5"><input name="txtcon_bon_vac" type="hidden" id="txtcon_bon_vac" value="<?php echo $con_bon_vac?>" ></td>
+     <td width="5"><input name="txtfrec" type="hidden" id="txtfrec" value="<?php echo $frec?>"></td>
+     <td width="5"><input name="txtultima_fecha" type="hidden" id="txtultima_fecha" value="<?php echo $ultima_fecha?>"></td>
+     <td width="5"><input name="txtfecha_caus_d" type="hidden" id="txtfecha_caus_d" value="<?php echo $fecha_caus_d?>"></td>
+     <td width="5"><input name="txtfecha_caus_h" type="hidden" id="txtfecha_caus_h" value="<?php echo $fecha_caus_h?>"></td>	 
+     <td width="5"><input name="txtdias_vac" type="hidden" id="txtdias_vac" value="<?php echo $dias_vac?>"></td>	 
+     <td width="5"><input name="txtdias_bono_vac" type="hidden" id="txtdias_bono_vac" value="<?php echo $dias_bono_vac?>"></td>	 
+	 <td width="5"><input name="txtmonto_bono_vac" type="hidden" id="txtmonto_bono_vac" value="<?php echo $monto_bono_vac?>"></td>	 
+     <td width="5"><input name="txtdias_nohabiles" type="hidden" id="txtdias_nohabiles" value="<?php echo $dias_nohabiles?>"></td>     
+	 <td width="5"><input name="txtdias_bono_vac_a" type="hidden" id="txtdias_bono_vac_a" value="<?php echo $dias_bono_vac_a?>"></td>     
+	 <td width="5"><input name="txtfecha_desde" type="hidden" id="txtfecha_desde" value="<?php echo $fecha_desde?>"></td>
+     <td width="5"><input name="txtfecha_hasta" type="hidden" id="txtfecha_hasta" value="<?php echo $fecha_hasta?>"></td>
+	 <td width="5"><input name="txtfecha_rein" type="hidden" id="txtfecha_rein" value="<?php echo $fecha_rein?>"></td>	 
+	 <td width="5"><input name="txtfecha_hist" type="hidden" id="txtfecha_hist" value="<?php echo $fecha_hist?>"></td>
+     <td width="5"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?php echo $monto_base?>"></td>
+	 <td width="5"><input name="txtfecha_cal_d" type="hidden" id="txtfecha_cal_d" value="<?php echo $fecha_c_desde?>"></td>
+     <td width="5"><input name="txtfecha_cal_h" type="hidden" id="txtfecha_cal_h" value="<?php echo $fecha_c_hasta?>"></td>
   </tr>
 </table>
 </form>
 </body>
 </html>
-<?pg_close();
-if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+<?php pg_close($conn);
+if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>

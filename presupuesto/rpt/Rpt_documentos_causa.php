@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$tipo_causado_d=$_GET["tipo_causado_d"];$tipo_causado_h=$_GET["tipo_causado_h"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_causado_d="";$tipo_causado_h="zzzz";$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
    $sSQL = "select tipo_causado, nombre_tipo_caus, ref_compromiso, afecta_presup from pre003 where pre003.tipo_causado>='".$tipo_causado_d."' and pre003.tipo_causado<='".$tipo_causado_h."' order by tipo_causado";
 
@@ -69,7 +69,7 @@ if($tipo_rep=="PDF"){
          	   } 
 		$pdf->Cell(200,3,'',0,1,'L');	
 		$pdf->Cell(50,3,'',0,0,'L');			 
-		$pdf->Output();  pg_close(); 
+		$pdf->Output();  pg_close($conn); 
     }	  
 if($tipo_rep=="EXCEL"){	
 	  header("Content-type: application/vnd.ms-excel");
@@ -88,19 +88,19 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="left" bgcolor="#99CCFF"><strong>REFIERE COMPROMISO</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>AFECTA PRESUPUESTO</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_causado=$registro["tipo_causado"]; $nombre_tipo_caus=$registro["nombre_tipo_caus"]; $ref_compromiso=$registro["ref_compromiso"]; $afecta_presup=$registro["afecta_presup"];
 		$nombre_tipo_caus=conv_cadenas($nombre_tipo_caus,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_causado; ?></td>
-           <td width="400" align="left"><? echo $nombre_tipo_caus; ?></td>
-           <td width="100" align="left">'<? echo $ref_compromiso; ?></td>
-           <td width="100" align="left">'<? echo $afecta_presup; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_causado; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_tipo_caus; ?></td>
+           <td width="100" align="left">'<?php  echo $ref_compromiso; ?></td>
+           <td width="100" align="left">'<?php  echo $afecta_presup; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -109,7 +109,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
 } 

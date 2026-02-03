@@ -1,6 +1,6 @@
-<?include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $cod_presup_d="";  $cod_presup_h="zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"; $referencia_d=""; $referencia_h="";$doc_causa_d=""; $doc_causa_h="";
  $cod_fuente_d="";  $cod_fuente_h="zz"; $des_fuente_d=""; $des_fuente_h=""; $cedula_d=""; $cedula_h=""; $tipo_regis="";
  $doc_comp_d=""; $doc_comp_h=""; $tipo_comp_d=""; $tipo_comp_h=""; $referenciacomp_d=""; $referenciacomp_h=""; $ref_credd="00000000"; $ref_credh="99999999";
@@ -35,7 +35,7 @@ window.open(url);
 function Llama_Menu_Rpt(murl){var url;   url="../"+murl; LlamarURL(url);}
 </script>
 </head>
-<?
+<?php 
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
 $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$titulo=$registro["campo525"]; $formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];}
 $l=strlen($formato_presup); $c=strlen($formato_categoria)+2; $p=strlen($formato_partida);
@@ -99,13 +99,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
           <td height="30"><table width="827" border="0">
             <tr>
               <td width="206" height="26"><div align="left"><span class="Estilo5">DOCUM. CAUSADO : </span></div></td><td width="53"><span class="Estilo5">
-                <input name="txttipo_causado_d" type="text"  id="txttipo_causado_d" size="6" maxlength="4" value="<?echo $doc_causa_d?>" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);">
+                <input name="txttipo_causado_d" type="text"  id="txttipo_causado_d" size="6" maxlength="4" value="<?php echo $doc_causa_d?>" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);">
               </span></td>
               <td width="283"><span class="Estilo5">
                 <input name="btdoc_comp" type="button" id="btdoc_comp" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_doc_causad.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="61"><span class="Estilo5">
-                <input name="txttipo_causado_h" type="text"  id="txttipo_causado_h" size="6" maxlength="4" value="<?echo $doc_causa_h?>" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);">
+                <input name="txttipo_causado_h" type="text"  id="txttipo_causado_h" size="6" maxlength="4" value="<?php echo $doc_causa_h?>" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);">
               </span></td>
               <td width="202"><span class="Estilo5">
                 <input name="btdoc_comp2" type="button" id="btdoc_comp2" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_doc_causah.php?criterio=','SIA','','750','500','true')" value="...">
@@ -121,11 +121,11 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
             <tr>
               <td width="206" height="26"><div align="left"><span class="Estilo5">REFERENCIA CAUSADO : </span></div></td>
               <td width="169"><span class="Estilo5">
-                <input name="txtreferencia_d" type="text" id="txtreferencia_d" size="10" maxlength="8" value="<?echo $referencia_d?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
+                <input name="txtreferencia_d" type="text" id="txtreferencia_d" size="10" maxlength="8" value="<?php echo $referencia_d?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
               </span></td>
               <td width="168"><span class="Estilo5">              </span></td>
               <td width="229"><span class="Estilo5">
-                <input name="txtreferencia_h" type="text" id="txtreferencia_h" size="10" maxlength="8" value="<?echo $referencia_h?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
+                <input name="txtreferencia_h" type="text" id="txtreferencia_h" size="10" maxlength="8" value="<?php echo $referencia_h?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
               </span></td>
               <td width="38"><span class="Estilo5">              </span></td>
             </tr>
@@ -138,13 +138,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
           <td height="30"><table width="827" border="0">
             <tr>
               <td width="206" height="26"><div align="left"><span class="Estilo5">DOCUM. COMPROMISO : </span></div></td><td width="53"><span class="Estilo5">
-                <input name="txtdoc_compromiso_d" type="text"  id="txtdoc_compromiso_d" size="6" maxlength="4" value="<?echo $doc_comp_d?>" onFocus="encender(this);" onBlur="apagar(this)"  onchange="chequea_tipo(this.form);">
+                <input name="txtdoc_compromiso_d" type="text"  id="txtdoc_compromiso_d" size="6" maxlength="4" value="<?php echo $doc_comp_d?>" onFocus="encender(this);" onBlur="apagar(this)"  onchange="chequea_tipo(this.form);">
               </span></td>
               <td width="283"><span class="Estilo5">
                 <input name="btdoc_comp" type="button" id="btdoc_comp" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_doc_compd.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="61"><span class="Estilo5">
-                <input name="txtdoc_compromiso_h" type="text"  id="txtdoc_compromiso_h" size="6" maxlength="4" value="<?echo $doc_comp_h?>" onFocus="encender(this);" onBlur="apagar(this)"  onchange="chequea_tipo(this.form);">
+                <input name="txtdoc_compromiso_h" type="text"  id="txtdoc_compromiso_h" size="6" maxlength="4" value="<?php echo $doc_comp_h?>" onFocus="encender(this);" onBlur="apagar(this)"  onchange="chequea_tipo(this.form);">
               </span></td>
               <td width="202"><span class="Estilo5">
                 <input name="btdoc_comp2" type="button" id="btdoc_comp2" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_doc_comph.php?criterio=','SIA','','750','500','true')" value="...">
@@ -161,11 +161,11 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
               <td width="211" height="26">
                 <div align="left"><span class="Estilo5">REFERENCIA COMPROMISO: </span></div></td>
               <td width="169"><span class="Estilo5">
-                <input name="txtreferenciacomp_d" type="text" id="txtreferenciacomp_d" size="10" maxlength="8" value="<?echo $referenciacomp_d?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
+                <input name="txtreferenciacomp_d" type="text" id="txtreferenciacomp_d" size="10" maxlength="8" value="<?php echo $referenciacomp_d?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
               </span></td>
               <td width="164"><span class="Estilo5">              </span></td>
               <td width="229"><span class="Estilo5">
-                <input name="txtreferenciacomp_h" type="text" id="txtreferenciacomp_h" size="10" maxlength="8" value="<?echo $referenciacomp_h?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
+                <input name="txtreferenciacomp_h" type="text" id="txtreferenciacomp_h" size="10" maxlength="8" value="<?php echo $referenciacomp_h?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkrefe_comp(this.form);">
               </span></td>
               <td width="38"><span class="Estilo5"> </span></td>
             </tr>
@@ -180,11 +180,11 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
               <td width="212" height="24">
                 <div align="left"><span class="Estilo5">FECHA CAUSADO : </span></div></td>
               <td width="172"><span class="Estilo5">
-                <input name="txtFechad" type="text" id="txtFechad" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $fecha_d?>" onchange="checkrefecha(this.form)">
+                <input name="txtFechad" type="text" id="txtFechad" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $fecha_d?>" onchange="checkrefecha(this.form)">
                                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha" onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /> </span></td>
               <td width="165"><span class="Estilo5"> </span></td>
               <td width="243"><span class="Estilo5">
-                <input name="txtFechah" type="text" id="txtFechah" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $fecha_h?>" onchange="checkrefecha(this.form)">
+                <input name="txtFechah" type="text" id="txtFechah" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $fecha_h?>" onchange="checkrefecha(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  /></span></td>
               <td width="23"><span class="Estilo5"> </span></td>
@@ -198,8 +198,8 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
           <td height="19"><table width="824" border="0">
             <tr>
               <td width="208" height="26"><div align="right"> </div></td>
-              <td width="354"><span class="Estilo15"><strong><? echo $titulo; ?></span></td>
-              <td width="243"><span class="Estilo15"><strong><? echo $titulo; ?></span></td>
+              <td width="354"><span class="Estilo15"><strong><?php  echo $titulo; ?></span></td>
+              <td width="243"><span class="Estilo15"><strong><?php  echo $titulo; ?></span></td>
             </tr>
           </table></td>
         </tr>
@@ -209,13 +209,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
               <td width="196" height="26">
                 <div align="left"><span class="Estilo5">C&Oacute;DIGO PARTIDAS  : </span></div></td>
             <td width="188"><span class="Estilo5">
-                <input name="txtcod_presupd" type="text" id="txtcod_presupd" size="30" maxlength="30" value="<?echo $cod_presup_d?>" onFocus="encender(this); " onBlur="apagar(this);">
+                <input name="txtcod_presupd" type="text" id="txtcod_presupd" size="30" maxlength="30" value="<?php echo $cod_presup_d?>" onFocus="encender(this); " onBlur="apagar(this);">
               </span></td>
               <td width="169"><span class="Estilo5">
                 <input name="btCodPre2" type="button" id="btCodPre2" title="Abrir Catalogo C&oacute;digos Presupuestarios"  onclick="VentanaCentrada('../Cat_codigos_presupd.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="194"><span class="Estilo5">
-                <input name="txtcod_presuph" type="text" id="txtcod_presuph" size="30" maxlength="30" value="<?echo $cod_presup_h?>" onFocus="encender(this); " onBlur="apagar(this);">
+                <input name="txtcod_presuph" type="text" id="txtcod_presuph" size="30" maxlength="30" value="<?php echo $cod_presup_h?>" onFocus="encender(this); " onBlur="apagar(this);">
               </span></td>
               <td width="63"><span class="Estilo5">
                 <input name="btCodPre" type="button" id="btCodPre" title="Abrir Catalogo C&oacute;digos Presupuestarios"  onclick="VentanaCentrada('../Cat_codigos_presuph.php?criterio=','SIA','','750','500','true')" value="...">
@@ -231,13 +231,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
             <tr>
 			  <td width="225"><span class="Estilo5">FUENTE DE FINANCIAMIENTO DESDE  : </span></td>
                <td width="47"><span class="Estilo5">
-                <input name="txtcod_fuented" type="text" id="txtcod_fuented" onFocus="encender(this)" onBlur="apagar(this)" size="5" maxlength="2" value="<?echo $cod_fuente_d?>">
+                <input name="txtcod_fuented" type="text" id="txtcod_fuented" onFocus="encender(this)" onBlur="apagar(this)" size="5" maxlength="2" value="<?php echo $cod_fuente_d?>">
               </span></td>
               <td width="51"><span class="Estilo5">
                 <input name="btfuente" type="button" id="btfuente6" title="Abrir Catalogo Fuentes de Financiamiento" onClick="VentanaCentrada('../Cat_fuentesd.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="486"><span class="Estilo5">
-                <input name="txtdes_fuented" type="text" id="txtdes_fuented" size="75" maxlength="75"  value="<?echo $des_fuente_d?>" readonly>
+                <input name="txtdes_fuented" type="text" id="txtdes_fuented" size="75" maxlength="75"  value="<?php echo $des_fuente_d?>" readonly>
               </span></td>
             </tr>
           </table></td>
@@ -251,13 +251,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
               <td width="228"> <span class="Estilo5"><div align="left">HASTA :</div> 
               </span></td>
               <td width="42"><span class="Estilo5">
-                <input name="txtcod_fuenteh" type="text" id="txtcod_fuenteh" onFocus="encender(this)" onBlur="apagar(this)" size="5" maxlength="2" value="<?echo $cod_fuente_h?>">
+                <input name="txtcod_fuenteh" type="text" id="txtcod_fuenteh" onFocus="encender(this)" onBlur="apagar(this)" size="5" maxlength="2" value="<?php echo $cod_fuente_h?>">
               </span></td>
               <td width="54"><span class="Estilo5">
                 <input name="btfuente2" type="button" id="btfuente7" title="Abrir Catalogo Fuentes de Financiamiento" onClick="VentanaCentrada('../Cat_fuentesh.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="486"><span class="Estilo5">
-                <input name="txtdes_fuenteh" type="text" id="txtdes_fuenteh" size="75" maxlength="75" value="<?echo $des_fuente_h?>" readonly>
+                <input name="txtdes_fuenteh" type="text" id="txtdes_fuenteh" size="75" maxlength="75" value="<?php echo $des_fuente_h?>" readonly>
               </span></td>
             </tr>
           </table></td>
@@ -271,13 +271,13 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
               <td width="149" height="26">
                 <div align="left"><span class="Estilo5">C&Eacute;DULA/RIF : </span></div></td>
               <td width="106"><span class="Estilo5">
-                <input name="txtced_rif_d" type="text" id="txtced_rif_d" size="15" maxlength="15" value="<?echo $cedula_d?>" onFocus="encender(this); " onBlur="apagar(this);">
+                <input name="txtced_rif_d" type="text" id="txtced_rif_d" size="15" maxlength="15" value="<?php echo $cedula_d?>" onFocus="encender(this); " onBlur="apagar(this);">
               </span></td>
               <td width="335"><span class="Estilo5">
                 <input name="btfuente8"" type="button" id="btfuente9"" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_beneficiarios_d.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="102"><span class="Estilo5">
-                <input name="txtced_rif_h" type="text" id="txtced_rif_h" size="15" maxlength="15" value="<?echo $cedula_h?>" onFocus="encender(this); " onBlur="apagar(this);">
+                <input name="txtced_rif_h" type="text" id="txtced_rif_h" size="15" maxlength="15" value="<?php echo $cedula_h?>" onFocus="encender(this); " onBlur="apagar(this);">
               </span></td>
               <td width="67"><span class="Estilo5">
                 <input name="btced_rif" type="button" id="btced_rif" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('/sia/presupuesto/rpt/Cat_beneficiarios_h.php?criterio=','SIA','','750','500','true')" value="...">
@@ -293,10 +293,10 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
             <tr>
               <td width="202" height="26"><span class="Estilo5"><div align="left">CR&Eacute;DITO ADICIONAL  : </div></span></td>
               <td width="182"><span class="Estilo5">
-              <input name="txtref_creditod" type="text" id="txtref_creditod" title="Registre el codigo del documento compromiso" onChange="chequea_tipo(this.form);" size="12" maxlength="8" value="<?echo $ref_credd?>" onFocus="encender(this); " onBlur="apagar(this);"></span></td>
+              <input name="txtref_creditod" type="text" id="txtref_creditod" title="Registre el codigo del documento compromiso" onChange="chequea_tipo(this.form);" size="12" maxlength="8" value="<?php echo $ref_credd?>" onFocus="encender(this); " onBlur="apagar(this);"></span></td>
               <td width="264"><span class="Estilo5"> </span></td>
               <td width="130"><span class="Estilo5">
-                <input name="txtref_creditoh" type="text" id="txtref_creditoh" title="Registre el codigo del documento compromiso" onChange="chequea_tipo(this.form);" size="12" maxlength="8" value="<?echo $ref_credh?>" onFocus="encender(this); " onBlur="apagar(this);">
+                <input name="txtref_creditoh" type="text" id="txtref_creditoh" title="Registre el codigo del documento compromiso" onChange="chequea_tipo(this.form);" size="12" maxlength="8" value="<?php echo $ref_credh?>" onFocus="encender(this); " onBlur="apagar(this);">
               </span></span></td>
               <td width="37"><span class="Estilo5"> </span></td>
             </tr>
@@ -347,4 +347,4 @@ if($referencia_h==""){$referencia_h="zzzzzzzz";} if($doc_causa_d=="0000"){$doc_c
 </body>
 </html>
 
-<? pg_close();?>
+<?php  pg_close($conn);?>

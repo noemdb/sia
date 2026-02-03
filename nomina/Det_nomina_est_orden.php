@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -20,15 +20,15 @@ if($tp_calculo=="N"){$sql="SELECT tipo_nomina,descripcion,bloqueada,bloqueada_ex
            <td width="120" align="center" bgcolor="#99CCFF"><strong>C&oacute;digo n&oacute;mina</strong></td>
            <td width="620" align="center" bgcolor="#99CCFF"><strong>Denominaci&oacute;n</strong></td>
          </tr>
-         <?
+         <?php 
 if($cod_estructura<>''){		 
 while($registro=pg_fetch_array($res)){ $v=0; if($tp_calculo=="N"){if($registro["bloqueada"]=="N"){$v=1;}}else{if($registro["bloqueada_ext"]=="N"){$v=1;}}   if($v==1){
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="120" align="left"><? echo $registro["tipo_nomina"]; ?></td>
-           <td width="620" align="left"><? echo $registro["descripcion"]; ?></td>
+           <td width="120" align="left"><?php  echo $registro["tipo_nomina"]; ?></td>
+           <td width="620" align="left"><?php  echo $registro["descripcion"]; ?></td>
          </tr>
-<?}} }?>
+<?php } } }?>
        </table>   
 	   </td>
    </tr>
@@ -36,4 +36,4 @@ while($registro=pg_fetch_array($res)){ $v=0; if($tp_calculo=="N"){if($registro["
  <p>&nbsp;</p>
 </body>
 </html>
-<?   pg_close(); ?>
+<?php    pg_close($conn); ?>

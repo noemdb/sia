@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_retencion_d=$_GET["tipo_retencion_d"];$tipo_retencion_h=$_GET["tipo_retencion_h"];$nro_orden_d=$_GET["nro_orden_d"];$nro_orden_h=$_GET["nro_orden_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$status_orden=$_GET["status_orden"];$tipo_rpt=$_GET["tipo_rpt"];
 $criterio1="Fecha Desde: ".$fecha_d." Al: ".$fecha_h;$Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
@@ -48,7 +48,7 @@ $sformula="";
    return $ret_st;
  }   
    $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
        $sSQL = "SELECT pag004.Nro_Orden_Ret, pag004.Aux_Orden, pag001.fecha, pag004.Des_Orden_Ret,pag004.Monto_Retencion, pag004.Ced_Rif_R, PRE099.Nombre, pag004.Status_R, pag001.anulado, pag001.fecha_anulado, 
 				  pag004.Tipo_Retencion, pag004.fecha_Cheque_R, pag004.Tasa_Retencion, pag001.fecha_cheque, pag004.Monto_Objeto_Ret, pag003.Descripcion_Ret, pag001.Tipo_Causado, to_char(pag001.Fecha,'DD/MM/YYYY') as fechae
@@ -183,7 +183,7 @@ $sformula="";
 			<td width="80" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="80" align="left" ><strong></strong></td>
-			<td width="300" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	$criterio1?></strong></font></td>
+			<td width="300" align="center" > <font size="3" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	$criterio1?></strong></font></td>
 		</tr>
          <tr height="20">
            <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -195,7 +195,7 @@ $sformula="";
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>ESTATUS</strong></font></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; $sub_total=0;  $cantidad=0; $prev_ced_rif_r="";
 	  $res=pg_query($sSQL);
@@ -221,20 +221,20 @@ $sformula="";
 			       <td width="300" align="left"></td>
 			       <td width="100" align="left"></td>
 				   <td width="50" align="left"></td>
-				   <td width="100" align="right"><? echo $sub_total; ?></td>
+				   <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			       <td width="100" align="left"></td>
 			    </tr>	
 			    <tr>
 				  <td width="80" align="left"></td>
 			    </tr>	
-             <? }?>	   
+             <?php }?>	   
 			      <tr>
 				  <td width="80" align="left">Ced/Rif :</td>
-				  <td width="100" align="left"><? echo $ced_rif_r; ?></td>
+				  <td width="100" align="left"><?php  echo $ced_rif_r; ?></td>
 				  <td width="80" align="left">Nombre :</td>
-				  <td width="300" align="left"><? echo $nombre; ?></td>
+				  <td width="300" align="left"><?php  echo $nombre; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif_r=$ced_rif_r_grupo; $sub_total=0;
 		   }
 		   $aux_orden=$registro["aux_orden"]; $fecha=$registro["fecha"]; $descripcion_ret=$registro["descripcion_ret"]; 
@@ -247,16 +247,16 @@ $sformula="";
 		   $monto_objeto_ret=formato_monto($monto_objeto_ret);	 $nombre=conv_cadenas($nombre,0);  $descripcion_ret=conv_cadenas($descripcion_ret,0);
 	      ?>	   
 		   <tr>
-                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $aux_orden; ?></td>
-           		<td width="100" align="left"><? echo $fecha; ?></td>
-           		<td width="80" align="left"><? echo $tipo_retencion; ?></td>
-           		<td width="300" align="justify"><? echo $descripcion_ret; ?></td>
-           		<td width="100" align="right"><? echo $monto_objeto_ret; ?></td>
-           		<td width="50" align="right"><? echo $tasa_retencion; ?></td>
-           		<td width="100" align="right"><? echo $monto_retencion; ?></td>
-           		<td width="100" align="center"><? echo $st_orden; ?></td>
+                <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $aux_orden; ?></td>
+           		<td width="100" align="left"><?php  echo $fecha; ?></td>
+           		<td width="80" align="left"><?php  echo $tipo_retencion; ?></td>
+           		<td width="300" align="justify"><?php  echo $descripcion_ret; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_objeto_ret; ?></td>
+           		<td width="50" align="right"><?php  echo $tasa_retencion; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_retencion; ?></td>
+           		<td width="100" align="center"><?php  echo $st_orden; ?></td>
             </tr>
-	    <? 
+	    <?php  
 	    }  
         if($sub_total<>0){ $sub_total=formato_monto($sub_total); 
 			?>	 				 
@@ -277,10 +277,10 @@ $sformula="";
 			   <td width="300" align="left"></td>
 			   <td width="100" align="left"></td>
 			   <td width="50" align="left"></td>
-		       <td width="100" align="right"><? echo $sub_total; ?></td>
+		       <td width="100" align="right"><?php  echo $sub_total; ?></td>
 			   <td width="100" align="left"></td>
 			</tr>	
-			<?
+			<?php 
 		  }$total=formato_monto($total); $cantidad==formato_monto ($cantidad);	
 		    ?>	 				 
    		   <tr>
@@ -293,10 +293,10 @@ $sformula="";
 				<td width="300" align="right"><strong>TOTAL ORDENES:</strong></td>
 				<td width="100" align="right"><strong></strong></td>
 				<td width="50" align="right"><strong></strong></td>
-				<td width="100" align="right"><strong><? echo $total; ?></strong></td>
+				<td width="100" align="right"><strong><?php  echo $total; ?></strong></td>
 				<td width="100" align="right"><strong></strong></td>
 			 </tr>
-		</table><?
+		</table><?php 
         }		  
     }
 ?>

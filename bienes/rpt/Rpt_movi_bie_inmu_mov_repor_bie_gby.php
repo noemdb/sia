@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_inmd=$_GET["cod_bien_inmd"];$cod_bien_inmh=$_GET["cod_bien_inmh"];$cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"];
 $cod_departamentod=$_GET["cod_departamentod"]; $cod_departamentoh=$_GET["cod_departamentoh"]; $referenciad=$_GET["referenciad"]; $referenciah=$_GET["referenciah"]; $mes_proceso=$_GET["mes_proceso"];$tipo_rep=$_GET["tipo_rep"]; $ordenado=$_GET["ordenado"]; $agrup_dep=$_GET["agrup_dep"];
 $date = date("d-m-Y");$hora = date("H:i:s a");$Sql=""; $php_os=PHP_OS;  $tipo_rep="PDF"; $fecha_d="01/".substr($mes_proceso,0,2)."/".substr($mes_proceso,3,4);
@@ -11,7 +11,7 @@ $mordenado=" bien014.cod_dependencia,bien014.cod_bien_inm"; if($agrup_dep=="SI")
 if($ordenado=="N"){$mordenado=" bien014.cod_dependencia,bien014.num_bien"; if($agrup_dep=="SI"){ $mordenado=" bien014.cod_dependencia,bien014.cod_direccion,bien014.cod_departamento,bien014.cod_bien_inm";} }
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}   
    
          // LLAMAR A PHP_REPORT

@@ -1,11 +1,11 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc");  error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_mued=$_GET["cod_bien_mued"];$cod_bien_mueh=$_GET["cod_bien_mueh"]; $referencia_depd=$_GET["referencia_depd"];$referencia_deph=$_GET["referencia_deph"];
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $tipo_rep=$_GET["tipo_rep"]; $date = date("d-m-Y");$hora = date("H:i:s a"); $Sql="";
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}   $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);} else{$fecha_h='';}   $fecha_hasta=$ano1.$mes1.$dia1;
 $criterio ="(bien028.referencia_dep>='$referencia_depd' AND bien028.referencia_dep<='$referencia_deph') AND  (bien028.fecha_dep>='$fecha_desde' AND bien028.fecha_dep<='$fecha_hasta') AND 
             (bien047.cod_bien_mue>='$cod_bien_mued' AND bien047.cod_bien_mue<='$cod_bien_mueh') ";			
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
     $sSQL = "SELECT bien015.cod_bien_mue, bien015.denominacion, bien028.referencia_dep, bien028.fecha_dep, bien028.descripcion, bien028.met_calculo, bien028.status, 
 	bien028.anulado, bien015.valor_incorporacion, bien047.monto_dep, bien015.valor_residual, bien047.saldo_dep, bien015.cod_dependencia, bien001.denominacion_dep, to_char(bien028.fecha_dep,'DD/MM/YYYY') as fechad 

@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();
 $tipo_nomina=$_POST["txttipo_nomina"]; $des_nomina=$_POST["txtdes_nomina"];  $fuente="00";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@ $tipo_nomina=$_POST["txttipo_nomina"]; $des_nomina=$_POST["txtdes_nomina"];  $fu
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Conceptos de Nomina)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Conceptos de Nomina)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -81,9 +81,9 @@ return false;}
              <td><table width="866">
                  <tr>
                    <td width="130"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2"onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?echo $tipo_nomina?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2"onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?php echo $tipo_nomina?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="50"><input class="Estilo10" name="bttiponom" type="button" id="bttiponom" title="Abrir Catalogo Tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina.php?criterio=','SIA','','750','500','true')" value="..."  onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="100" readonly value="<?echo $des_nomina?>"  onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="100" readonly value="<?php echo $des_nomina?>"  onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -103,7 +103,7 @@ return false;}
                    <td width="150"><span class="Estilo5">C&Oacute;DIGO DE PARTIDA : </span></td>
                    <td width="145"><span class="Estilo5"> <input class="Estilo10" name="txtcod_partida" type="text" id="txtcod_partida" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"> </span></td>
                    <td width="40"><input class="Estilo10" name="btcodpart" type="button" id="btcodpart" title="Abrir Catalogo Partidas"  onClick="VentanaCentrada('Cat_codigos_par.php?criterio=','SIA','','750','500','true')" value="..."  onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="121"><span class="Estilo5">FUENTE : <span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fuente?>" onkeypress="return tabular(event,this)">  </span></td>
+                   <td width="121"><span class="Estilo5">FUENTE : <span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fuente?>" onkeypress="return tabular(event,this)">  </span></td>
 				   <td width="210"><span class="Estilo5">CODIGO DE CATEGORIA ALTERNA : </span></td>
                    <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcod_cat_alter" type="text" id="txtcod_cat_alter" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"> </span></td>
                    <td width="50"><input class="Estilo10" name="btcodcat" type="button" id="btcodcat" title="Abrir Catalogo Categorias"  onClick="VentanaCentrada('Cat_codigos_cat.php?criterio=','SIA','','750','500','true')" value="..."  onkeypress="return tabular(event,this)"> </span></td>

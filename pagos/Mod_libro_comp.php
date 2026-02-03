@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); ?>
-<? $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG032".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); ?>
+<?php  $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG032".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 if (!$_GET){$mes_libro=""; $ano_eje="2012";} else{$mes_libro=$_GET["mes_libro"];$ano_eje=$_GET["ano_eje"];} $fecha_hoy=asigna_fecha_hoy();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -35,9 +35,9 @@ function revisar(){var f=document.form1;
     document.form1.submit;
 return true;}
 </script>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT CARGA_LIBRO_COMP('$codigo_mov','$mes_libro')"; $resultado=pg_exec($conn,$sql); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
 if($mes_libro=="01"){$nombre_mes="ENERO";} if($mes_libro=="02"){$nombre_mes="FEBRERO";} if($mes_libro=="03"){$nombre_mes="MARZO";} if($mes_libro=="04"){$nombre_mes="ABRIL";}  if($mes_libro=="05"){$nombre_mes="MAYO";} if($mes_libro=="06"){$nombre_mes="JUNIO";}
 if($mes_libro=="07"){$nombre_mes="JULIO";} if($mes_libro=="08"){$nombre_mes="AGOSTO";} if($mes_libro=="09"){$nombre_mes="SEPTIEMBRE";} if($mes_libro=="10"){$nombre_mes="OCTUBRE";}  if($mes_libro=="11"){$nombre_mes="NOVIEMBRE";} if($mes_libro=="12"){$nombre_mes="DICIEMBRE";}
@@ -56,8 +56,8 @@ if($mes_libro=="07"){$nombre_mes="JULIO";} if($mes_libro=="08"){$nombre_mes="AGO
     <td width="92"><table width="92" height="502" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_libro_compras.php?Gmes_libro=C<?echo $mes_libro;?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_libro_compras.php?Gmes_libro=C<?echo $mes_libro;?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_libro_compras.php?Gmes_libro=C<?php echo $mes_libro;?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_libro_compras.php?Gmes_libro=C<?php echo $mes_libro;?>">Atras</A></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -76,8 +76,8 @@ if($mes_libro=="07"){$nombre_mes="JULIO";} if($mes_libro=="08"){$nombre_mes="AGO
                   <td height="14"><table width="861" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="100"><span class="Estilo5">MES PROCESO: </span></td>
-                      <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtnomb_mes" type="text" id="txtnomb_mes" size="15" maxlength="15" readonly value="<?echo $nombre_mes ?>"> </span></td>
-                      <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" readonly value="<?echo $mes_libro ?>"> </span></td>
+                      <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtnomb_mes" type="text" id="txtnomb_mes" size="15" maxlength="15" readonly value="<?php echo $nombre_mes ?>"> </span></td>
+                      <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtmes_fiscal" type="text" id="txtmes_fiscal" size="2" maxlength="2" readonly value="<?php echo $mes_libro ?>"> </span></td>
                       <td width="250"><span class="Estilo5">SOLO FACTURAS DEL MES EN PROCESO :</span></td>
                       <td width="100"><span class="Estilo5">
                           <select name="txtstatus_1" size="1" id="txtstatus_1" onFocus="encender(this)" onBlur="apagar(this)">
@@ -92,13 +92,13 @@ if($mes_libro=="07"){$nombre_mes="JULIO";} if($mes_libro=="08"){$nombre_mes="AGO
                 </tr>
           </table>
               <div id="T11" class="tab-body">
-              <iframe src="Det_inc_libro_comp.php?codigo_mov=<?echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_inc_libro_comp.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
               </div>
          <table width="863" border="0"> <tr> <td height="5">&nbsp;</td> </tr> </table>
          <table width="812">
           <tr>
             <td width="654">&nbsp;</td>
-            <td width="10"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="10"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
           </tr>
         </table>

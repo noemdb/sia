@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $codigo_departamento_d=$_GET["codigo_departamento_d"];   $codigo_departamento_h=$_GET["codigo_departamento_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $php_os=PHP_OS; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
   $sSQL = "SELECT codigo_departamento,descripcion_dep  FROM nom005 where nom005.codigo_departamento>='$codigo_departamento_d' and nom005.codigo_departamento<='$codigo_departamento_h'  ORDER BY codigo_departamento";
   if($tipo_rpt=="HTML"){ include ("../../class/phpreports/PHPReportMaker.php");
@@ -68,26 +68,26 @@ else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="
            <td width="100" align="left" bgcolor="#99CCFF"><strong>CODIGO</strong></td>
            <td width="400" align="left" bgcolor="#99CCFF"><strong>DESCRIPCION DEPARTAMENTO</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 	     $codigo_departamento=$registro["codigo_departamento"]; $descripcion_dep=$registro["descripcion_dep"]; $cantidad=$cantidad+1; 
 		 $descripcion_dep=conv_cadenas($descripcion_dep,0);  
 	   ?>	   
 	    <tr>
-           <td width="100" align="left">'<? echo $codigo_departamento; ?></td>
-           <td width="400" align="left"><? echo $descripcion_dep; ?></td>
+           <td width="100" align="left">'<?php  echo $codigo_departamento; ?></td>
+           <td width="400" align="left"><?php  echo $descripcion_dep; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
         </tr>
 	    <tr>
              <td width="100" align="center"></td>
-		    <td width="400" align="left"><strong>CANTIDAD DEPARTAMENTOS: <? echo $cantidad; ?></strong></td>	
+		    <td width="400" align="left"><strong>CANTIDAD DEPARTAMENTOS: <?php  echo $cantidad; ?></strong></td>	
         </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

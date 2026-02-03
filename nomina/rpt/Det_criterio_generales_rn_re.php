@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
    $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
    $fecha_h=formato_ddmmaaaa($Fec_Fin_Ejer);
    $tipo_nominad="";
@@ -68,7 +68,7 @@ var url;
 -->
 </style>
 </head>
-<?  $descripcion_d="";
+<?php   $descripcion_d="";
     $descripcion_h="";
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ";
 $res=pg_query($sql);
@@ -80,7 +80,7 @@ if($encontro=true){
   $tipo_nomina_d=$registro["min_tipo_nomina"];
   $tipo_nomina_h=$registro["max_tipo_nomina"];   }
 ?>
-<?  $nombre_d="";
+<?php   $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cod_empleado) As Max_cod_empleado, MIN(cod_empleado) As Min_cod_empleado FROM nom006 ";
 $res=pg_query($sql);
@@ -92,7 +92,7 @@ if($encontro=true){
   $cod_empleado_d=$registro["min_cod_empleado"];
   $cod_empleado_h=$registro["max_cod_empleado"];   }
 ?>
-<?
+<?php 
     $nombre_d="";
     $nombre_h="";
 $sql="SELECT MAX(cedula) As Max_cedula, MIN(cedula) As Min_cedula FROM nom006 ";
@@ -106,7 +106,7 @@ if($encontro=true){
   $cedula_h=$registro["max_cedula"];
   }
 ?>
-<?  $denominacion_d="";
+<?php   $denominacion_d="";
  $denominacion_d="";
 $sql="SELECT MAX(codigo_cargo) As Max_codigo_cargo, MIN(codigo_cargo) As Min_codigo_cargo FROM nom004 ";
 $res=pg_query($sql);
@@ -118,7 +118,7 @@ if($encontro=true){
   $codigo_cargo_d=$registro["min_codigo_cargo"];
   $codigo_cargo_h=$registro["max_codigo_cargo"];   }
 ?>
-<?  $descripcion_dep_d="";
+<?php   $descripcion_dep_d="";
  $descripcion_dep_d="";
 $sql="SELECT MAX(codigo_departamento) As Max_codigo_departamento, MIN(codigo_departamento) As Min_codigo_departamento FROM nom005 ";
 $res=pg_query($sql);
@@ -130,7 +130,7 @@ if($encontro=true){
   $codigo_departamento_d=$registro["min_codigo_departamento"];
   $codigo_departamento_h=$registro["max_codigo_departamento"];   }
 ?>
-<?  $denominacion_d="";
+<?php   $denominacion_d="";
  $denominacion_d="";
 $sql="SELECT MAX(TIPOPERSNAL_cargo) As Max_codigo_cargo, MIN(codigo_cargo) As Min_codigo_cargo FROM nom004 ";
 $res=pg_query($sql);
@@ -303,11 +303,11 @@ if($encontro=true){
             <td width="157" scope="col"><div align="left"><span class="Estilo5">FECHA NACIMIENTO DESDE </span></div></td>
             <td width="12" scope="col"><span class="Estilo5">:</span></td>
             <td width="387" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong><strong><strong> <strong><strong><strong><strong>
-                <input name="txtFechad" type="text" id="txtFechad2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+                <input name="txtFechad" type="text" id="txtFechad2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                 <strong><strong><strong><strong><img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></strong></strong></strong></strong> </strong></strong></strong></strong> </strong></strong> </strong></strong></span></span> </span></div></td>
             <td width="312" scope="col"><span class="Estilo5"><span class="Estilo10"> <span class="menu"><strong><strong><strong><strong> <strong><strong><strong><strong> <strong><strong><strong><strong><strong><strong><strong><strong>
-              <input name="txtFechah" type="text" id="txtFechah2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+              <input name="txtFechah" type="text" id="txtFechah2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
               <strong><strong><strong><strong><strong><strong><strong><strong><img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  /></strong></strong></strong></strong></strong></strong></strong></strong> </strong></strong></strong></strong></strong></strong></strong></strong> </strong></strong></strong></strong> </strong></strong> </strong></strong></span></span></span></td>
           </tr>
@@ -430,4 +430,4 @@ if($encontro=true){
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,4 +1,4 @@
-<? include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php  include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$nro_orden='';$tipo_causado='';}  else {$nro_orden=$_GET["txtnro_orden"];$tipo_causado=$_GET["txttipo_causado"];  }
 $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -33,8 +33,8 @@ return true;}
 -->
 </style>
 </head>
-<? $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php  $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $fecha=""; $mstatus_ord=""; $concepto="";   $inf_usuario="";    $ced_rif="";   $nombre="";  $cod_banco="";  $nombre_cuenta="";  $nombre_banco="";  $fecha_c=""; $nro_cheque="";
 $sql="Select * from ORD_PAGO_ANT where tipo_causado='$tipo_causado' and nro_orden='$nro_orden'"; $res=pg_query($sql); $filas=pg_num_rows($res);
 if($filas>0){$registro=pg_fetch_array($res);
@@ -44,7 +44,7 @@ if($filas>0){$registro=pg_fetch_array($res);
   $fecha_c=$registro["fecha_cheque"]; $nro_cheque=$registro["nro_cheque"]; $fecha_c=formato_ddmmaaaa($fecha_c); $fecha=formato_ddmmaaaa($fecha);
 } 
 if($mstatus_ord=="I"){$st_orden="CANCELADA";}  else {$st_orden="PENDIENTE"; $cod_banco="";  $nombre_cuenta="";  $nombre_banco="";   $fecha_c=$fecha_hoy; $nro_cheque=""; }
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <form name="form1" method="post" action="Update_canc_orden_ant.php" onSubmit="return revisar()">
@@ -62,12 +62,12 @@ pg_close();
 			  <td><table width="680" border="0" align="center">
 				  <tr>
 					<td width="102"><p><span class="Estilo5">N&Uacute;MERO ORDEN:</span></p></td>
-					<td width="118"><input name="txtnro_orden" type="text"  id="txtnro_orden" value="<?echo $nro_orden?>" size="12" readonly></td>
-					<td width="50"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?echo $tipo_causado?>"></td>
+					<td width="118"><input name="txtnro_orden" type="text"  id="txtnro_orden" value="<?php echo $nro_orden?>" size="12" readonly></td>
+					<td width="50"><input name="txttipo_causado" type="hidden" id="txttipo_causado" value="<?php echo $tipo_causado?>"></td>
 					<td width="80"><span class="Estilo5">ESTATUS : </span></td>
-					<td width="120"><span class="Estilo5"><input name="txtst_orden" type="text"  id="txtst_orden" value="<?echo $st_orden?>" size="12" readonly></span> </td>
+					<td width="120"><span class="Estilo5"><input name="txtst_orden" type="text"  id="txtst_orden" value="<?php echo $st_orden?>" size="12" readonly></span> </td>
 					 <td width="60"><span class="Estilo5">FECHA :</span> </td>
-					 <td width="120"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" value="<?echo $fecha?>" size="12" readonly> </span></td>
+					 <td width="120"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" value="<?php echo $fecha?>" size="12" readonly> </span></td>
 				   </tr>
 			  </table></td>
 			</tr>
@@ -75,9 +75,9 @@ pg_close();
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE CANCELACI&Oacute;N: </span></td>
-                <td width="120"><span class="Estilo5"><input name="txtfecha_canc" type="text" id="txtfecha_canc" size="12" value="<?echo $fecha_c?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)">       </span> </td>
+                <td width="120"><span class="Estilo5"><input name="txtfecha_canc" type="text" id="txtfecha_canc" size="12" value="<?php echo $fecha_c?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)">       </span> </td>
 				<td width="150"><p><span class="Estilo5">N&Uacute;MERO DE CHEQUE:</span></p></td>
-				<td width="150"><span class="Estilo5"><input name="txtnro_cheque" type="text"  id="txtnro_cheque"  value="<?echo $nro_cheque?>"  size="10" maxlength="8" onFocus="encender(this)" onBlur="apaga_referencia(this)"> </span></td>
+				<td width="150"><span class="Estilo5"><input name="txtnro_cheque" type="text"  id="txtnro_cheque"  value="<?php echo $nro_cheque?>"  size="10" maxlength="8" onFocus="encender(this)" onBlur="apaga_referencia(this)"> </span></td>
                </tr>
             </table></td>
           </tr>
@@ -86,8 +86,8 @@ pg_close();
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="130"><p><span class="Estilo5">CODIGO DE BANCO:</span></p></td>
-				<td width="100"><span class="Estilo5"> <input name="txtcod_banco" type="text" id="txtcod_banco"   value="<?echo $cod_banco?>" size="5" maxlength="4"  onFocus="encender(this)" onBlur="apaga_banco(this)" onchange="chequea_banco(this.form);">  </span> </td>
-                <td width="450"><span class="Estilo5">  <input name="txtnombre_banco" type="text"  id="txtnombre_banco"  value="<?echo $nombre_banco?>"  size="50" maxlength="50" readonly></span></td>
+				<td width="100"><span class="Estilo5"> <input name="txtcod_banco" type="text" id="txtcod_banco"   value="<?php echo $cod_banco?>" size="5" maxlength="4"  onFocus="encender(this)" onBlur="apaga_banco(this)" onchange="chequea_banco(this.form);">  </span> </td>
+                <td width="450"><span class="Estilo5">  <input name="txtnombre_banco" type="text"  id="txtnombre_banco"  value="<?php echo $nombre_banco?>"  size="50" maxlength="50" readonly></span></td>
                </tr>
             </table></td>
           </tr>

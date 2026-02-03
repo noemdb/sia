@@ -35,7 +35,7 @@
  include ("../class/funciones.php");
  $nograbada="";  
  $conn = pg_connect("host=localhost port=5432 password=super user=usia dbname=YACAMBU");
- if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+ if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
  $ult_ref="00005000"; $fecha="2014-01-27"; $tipo="0003"; $cod_fuente="07"; $cod_tipo_comp="000000"; $aprobado="S"; $clave=""; $num_proyecto="0000000000"; 
  $usuario_sia="CARGA POR LOTES";  $equipo=getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
  

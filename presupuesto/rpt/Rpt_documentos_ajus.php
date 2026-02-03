@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$tipo_ajusted=$_GET["tipo_ajusted"];$tipo_ajusteh=$_GET["tipo_ajusteh"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_ajusted="";$tipo_ajusteh="zzzz";$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
      $sSQL = "select tipo_ajuste, nombre_tipo_ajuste,nombre_abrev_ajuste, refierea from pre005 where pre005.tipo_ajuste>='".$tipo_ajusted."' and pre005.tipo_ajuste<='".$tipo_ajusteh."' order by tipo_ajuste";
 
@@ -88,19 +88,19 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="left" bgcolor="#99CCFF"><strong>NOMBRE ABREVIADO</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>REFIERE A</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_ajuste=$registro["tipo_ajuste"]; $nombre_tipo_ajuste=$registro["nombre_tipo_ajuste"];  $nombre_abrev_ajuste=$registro["nombre_abrev_ajuste"]; $refierea=$registro["refierea"]; 
 		$nombre_tipo_ajuste=conv_cadenas($nombre_tipo_ajuste,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_ajuste; ?></td>
-           <td width="400" align="left"><? echo $nombre_tipo_ajuste; ?></td>
-           <td width="100" align="left">'<? echo $nombre_abrev_ajuste; ?></td>
-           <td width="100" align="left">'<? echo $refierea; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_ajuste; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_tipo_ajuste; ?></td>
+           <td width="100" align="left">'<?php  echo $nombre_abrev_ajuste; ?></td>
+           <td width="100" align="left">'<?php  echo $refierea; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -109,7 +109,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

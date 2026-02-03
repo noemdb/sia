@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
   $equipo=getenv("COMPUTERNAME");  $mcod_m="PRE006".$equipo; $cod_tipo_comp="000000"; $des_tipo_comp="COMPROMISOS";
   $codigo_mov=substr($mcod_m,0,49);  $fecha_hoy=asigna_fecha_hoy();  $tipo_imput_presu="P";  $codigo_mov=$_POST["txtcodigo_mov"]; $fecha=$_POST["txtfechac"];
   $user=$_POST["txtuser"];  $password=$_POST["txtpassword"];  $dbname=$_POST["txtdbname"]; $port=$_POST["txtport"]; $host=$_POST["txthost"]; $nro_aut=$_POST["txtnro_aut"];  $fecha_aut=$_POST["txtfecha_aut"];
@@ -12,7 +12,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Compromisos Presupuestario)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Compromisos Presupuestario)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -81,15 +81,15 @@ return true;}
 function apaga_cate(mthis){var mref; var mcedrif; var mreferencia;
  apagar(mthis); mref=mthis.value;
  mreferencia=document.form1.txtreferencia_comp.value;
- ajaxSenddoc('GET', 'vtipocomp.php?cod_cat='+mref+'&referencia='+mreferencia+'&codigo_mov=<?echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'destipocomp', 'innerHTML');
+ ajaxSenddoc('GET', 'vtipocomp.php?cod_cat='+mref+'&referencia='+mreferencia+'&codigo_mov=<?php echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'destipocomp', 'innerHTML');
 }
 function Llamar_cargaest(){
-  document.location ='Cargar_est_ord.php?codigo_mov=<?echo $codigo_mov?>&ref_comp=N';
+  document.location ='Cargar_est_ord.php?codigo_mov=<?php echo $codigo_mov?>&ref_comp=N';
 return true;}
 function Llamar_Cargar_Compromiso(){
-  document.location ='Cargar_compromiso.php?codigo_mov=<?echo $codigo_mov?>&ref_comp=N';
+  document.location ='Cargar_compromiso.php?codigo_mov=<?php echo $codigo_mov?>&ref_comp=N';
 return true;}
-function Llamar_Pegar_Compromiso(){ var murl; murl="pegar_compromiso.php?codigo_mov=<?echo $codigo_mov?>"; document.location = murl;}
+function Llamar_Pegar_Compromiso(){ var murl; murl="pegar_compromiso.php?codigo_mov=<?php echo $codigo_mov?>"; document.location = murl;}
 function revisar(){var f=document.form1;var Valido=true;
     if(f.txtfecha.value==""){alert("Fecha no puede estar Vacia"); f.txtfecha.focus();  return false;}
     if(f.txtreferencia_comp.value==""){alert("Referencia no puede estar Vacio"); f.txtreferencia_comp.focus(); return false;}
@@ -124,12 +124,12 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_compromisos.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_compromisos.php">Atras</A></td>
       </tr>
-      <?if ($nro_aut=="S"){?>
+      <?php if ($nro_aut=="S"){?>
           <tr>
             <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
               onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Inc_comp();">Quitar Numero Automatico</A></td>
           </tr>
-     <?} ?>
+     <?php } ?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
               onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Pegar_Compromiso();">Pegar Compromiso</A></td>
@@ -159,22 +159,22 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                         <tr>
                           <td width="168">
                           <p><span class="Estilo5">DOCUMENTO COMPROMISO:</span></p>                          </td>
-                          <td width="43"><input name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);" value="<?echo $doc_comp?>" onKeypress="return stabular(event,this)"></td>
+                          <td width="43"><input name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apaga_doc(this)"  onchange="chequea_tipo(this.form);" value="<?php echo $doc_comp?>" onKeypress="return stabular(event,this)"></td>
                           <td width="41"><span class="Estilo5"><input name="btdoc_comp" type="button" id="btdoc_comp" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('Cat_doc_comp.php?criterio=','SIA','','750','500','true')" value="..." onKeypress="return stabular(event,this)"> </span></td>
-                          <td width="93"><span class="Estilo5"><input name="txtnombre_abrev_comp" type="text" id="txtnombre_abrev_comp" size="6" value="<?echo $abrev_comp?>" readonly onKeypress="return stabular(event,this)">   </span></td>  
+                          <td width="93"><span class="Estilo5"><input name="txtnombre_abrev_comp" type="text" id="txtnombre_abrev_comp" size="6" value="<?php echo $abrev_comp?>" readonly onKeypress="return stabular(event,this)">   </span></td>  
                           <td width="87"><span class="Estilo5">REFERENCIA :</span> </td>
-                          <? if($nro_aut=='S'){?>
-                          <td width="170"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" value="<?echo $ref_comp?>"  readonly onKeypress="return stabular(event,this)"></div></td> 
-                          <? }else{?>
-                          <td width="170"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" value="<?echo $ref_comp?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkreferencia(this.form);" onKeypress="return stabular(event,this)"></div></td>
-                          <? }?>
+                          <?php  if($nro_aut=='S'){?>
+                          <td width="170"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" value="<?php echo $ref_comp?>"  readonly onKeypress="return stabular(event,this)"></div></td> 
+                          <?php }else{?>
+                          <td width="170"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" value="<?php echo $ref_comp?>" onFocus="encender(this);" onBlur="apagar(this);"  onchange="checkreferencia(this.form);" onKeypress="return stabular(event,this)"></div></td>
+                          <?php }?>
                           <td width="63"><span class="Estilo5">FECHA :</span> </td>
                           <td width="114"><span class="Estilo5">
-                            <? if($fecha_aut=='S'){?>
-                            <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?echo $fecha?>" readonly onKeypress="return stabular(event,this)">
-                            <? }else{?>
-                            <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this);" onBlur="apagar(this);"  value="<?echo $fecha?>" onchange="checkrefecha(this.form)" onkeyup="mascara(this,'/',patronfecha,true)" onKeypress="return validarNum(event,this)">
-                            <? }?>
+                            <?php  if($fecha_aut=='S'){?>
+                            <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?php echo $fecha?>" readonly onKeypress="return stabular(event,this)">
+                            <?php }else{?>
+                            <input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this);" onBlur="apagar(this);"  value="<?php echo $fecha?>" onchange="checkrefecha(this.form)" onkeyup="mascara(this,'/',patronfecha,true)" onKeypress="return validarNum(event,this)">
+                            <?php }?>
                           </span></td>
                         </tr>
                       </table></td>
@@ -183,9 +183,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="830">
                         <tr>
                           <td width="177"><p><span class="Estilo5">CATEGORIA PRESUPUESTARIA:</span></p></td>
-                          <td width="125"><input name="txtunidad_sol" type="text"  id="txtunidad_sol" size="20" onFocus="encender(this); " onBlur="apaga_cate(this);" value="<?echo $cod_cat?>" onKeypress="return stabular(event,this)"></td>
+                          <td width="125"><input name="txtunidad_sol" type="text"  id="txtunidad_sol" size="20" onFocus="encender(this); " onBlur="apaga_cate(this);" value="<?php echo $cod_cat?>" onKeypress="return stabular(event,this)"></td>
                           <td width="38"><span class="Estilo5"><input name="btcat_prog" type="button" id="btcat_prog" title="Abrir Catalogo de Categorias Programaticas" onClick="VentanaCentrada('Cat_codigos_cat.php?criterio=','SIA','','750','500','true')" value="..." onKeypress="return stabular(event,this)">   </span></td>
-                          <td width="453"><input name="txtdes_unidad_sol" type="text"  id="txtdes_unidad_sol" size="70" readonly   value="<?echo $nomb_cat?>" onKeypress="return stabular(event,this)"></td>
+                          <td width="453"><input name="txtdes_unidad_sol" type="text"  id="txtdes_unidad_sol" size="70" readonly   value="<?php echo $nomb_cat?>" onKeypress="return stabular(event,this)"></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -193,9 +193,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="829">
                         <tr>
                           <td width="162"><span class="Estilo5">TIPO DE COMPROMISO:</span></td>
-                          <td width="48"><input name="txtcod_tipo_comp" type="text"  id="txtcod_tipo_comp" size="8" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $cod_tipo_comp?>" onKeypress="return stabular(event,this)"></td>
+                          <td width="48"><input name="txtcod_tipo_comp" type="text"  id="txtcod_tipo_comp" size="8" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $cod_tipo_comp?>" onKeypress="return stabular(event,this)"></td>
                           <td width="42"><span class="Estilo5"><input name="bttipo_comp" type="button" id="bttipo_comp" title="Abrir Catalogo Tipos de Compromiso" onClick="VentanaCentrada('Cat_tipos_comp.php?criterio=','SIA','','750','500','true')" value="..." onKeypress="return stabular(event,this)">  </span></td>
-                          <td width="542"><span class="Estilo5"><input name="txtdes_tipo_comp" type="text" id="txtdes_tipo_comp" size="83" readonly value="<?echo $des_tipo_comp?>" onKeypress="return stabular(event,this)"> </span></td>
+                          <td width="542"><span class="Estilo5"><input name="txtdes_tipo_comp" type="text" id="txtdes_tipo_comp" size="83" readonly value="<?php echo $des_tipo_comp?>" onKeypress="return stabular(event,this)"> </span></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -203,9 +203,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="845">
                         <tr>
                           <td width="160"><span class="Estilo5">CED./RIF BENEFICIARIO:</span></td>
-                          <td width="96"><span class="Estilo5"><input name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="15" onFocus="encender(this); " onBlur="apagar(this);"   value="<?echo $ced_r?>"  onKeypress="return stabular(event,this)">   </span></td>
+                          <td width="96"><span class="Estilo5"><input name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="15" onFocus="encender(this); " onBlur="apagar(this);"   value="<?php echo $ced_r?>"  onKeypress="return stabular(event,this)">   </span></td>
                           <td width="44"><span class="Estilo5"> <input name="btced_rif" type="button" id="btced_rif" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('Cat_beneficiarios.php?criterio=','SIA','','750','500','true')" value="..." onKeypress="return stabular(event,this)">   </span></td>
-                          <td width="525"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="80" readonly  value="<?echo $nomb_r?>" onKeypress="return stabular(event,this)">   </span></td>
+                          <td width="525"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="80" readonly  value="<?php echo $nomb_r?>" onKeypress="return stabular(event,this)">   </span></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -213,7 +213,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="810" border="0">
                         <tr>
                           <td width="106"><span class="Estilo5">DESCRIPCI&Oacute;N:</span></td>
-                          <td width="694"><textarea name="txtDescripcion" cols="85" onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="texDescripcion" onKeypress="return stabular(event,this)"><?echo $concepto_r?></textarea></td>
+                          <td width="694"><textarea name="txtDescripcion" cols="85" onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="texDescripcion" onKeypress="return stabular(event,this)"><?php echo $concepto_r?></textarea></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -221,9 +221,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="812">
                         <tr>
                           <td width="164"><span class="Estilo5">N&Uacute;MERO DE DOCUMENTO:</span></td>
-                          <td width="400"><input name="txtnro_documento" type="text"  id="txtnro_documento" size="50" maxlength="50" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $nro_doc?>" onKeypress="return stabular(event,this)"></td>
+                          <td width="400"><input name="txtnro_documento" type="text"  id="txtnro_documento" size="50" maxlength="50" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $nro_doc?>" onKeypress="return stabular(event,this)"></td>
                           <td width="130"><span class="Estilo5">FECHA VENCIMIENTO:</span></td>
-                          <td width="98"><span class="Estilo5"> <input name="txtfecha_vencim" type="text" id="txtfecha_vencim" size="12" value="<?echo $fechav?>" onFocus="encender(this); " onBlur="apagar(this);" onchange="checkrefechaven(this.form)" onkeyup="mascara(this,'/',patronfecha,true)" onKeypress="return validarNum(event,this)">
+                          <td width="98"><span class="Estilo5"> <input name="txtfecha_vencim" type="text" id="txtfecha_vencim" size="12" value="<?php echo $fechav?>" onFocus="encender(this); " onBlur="apagar(this);" onchange="checkrefechaven(this.form)" onkeyup="mascara(this,'/',patronfecha,true)" onKeypress="return validarNum(event,this)">
                           </span></td>
                         </tr>
                       </table></td>
@@ -239,7 +239,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                           <td width="154" align="center"><div align="right"><span class="Estilo5">TIENE ANTICIPO :</span></div></td>
                           <td width="89"><span class="Estilo5"><select name="txttiene_anticipo" size="1" id="txttiene_anticipo" onFocus="encender(this)" onBlur="apagar(this)" onKeypress="return stabular(event,this)">
                               <option>SI</option> <option>NO</option> </select> </span></td>							  
-<script language="JavaScript" type="text/JavaScript"> var mvalor='<?echo $tiene_ant;?>'; var mfuncinv='<?echo $func_inv;?>';
+<script language="JavaScript" type="text/JavaScript"> var mvalor='<?php echo $tiene_ant;?>'; var mfuncinv='<?php echo $func_inv;?>';
    if(mvalor=="SI"){document.form1.txttiene_anticipo.options[0].selected=true;}else{document.form1.txttiene_anticipo.options[1].selected=true;}   
    if(mfuncinv=="C"){document.form1.txtfunc_inv.options[0].selected=true;}else{if(mfuncinv=="I"){document.form1.txtfunc_inv.options[1].selected=true;}else{ document.form1.txtfunc_inv.options[2].selected=true; }}
 </script>                          
@@ -251,9 +251,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                       <td><table width="854">
                         <tr>
                           <td width="191"><span class="Estilo5">PORCENTAJE DE ANTICIPO(%):</span></td>
-                          <td width="176"><span class="Estilo5"><input name="txttasa_anticipo" type="text" id="txttasa_anticipo" size="8" onFocus="encender_monto(this); " onBlur="apagar(this);" value="<?echo $tasa_ant?>" style="text-align:right" onKeypress="return validarNum(event,this)">  </span></td>
+                          <td width="176"><span class="Estilo5"><input name="txttasa_anticipo" type="text" id="txttasa_anticipo" size="8" onFocus="encender_monto(this); " onBlur="apagar(this);" value="<?php echo $tasa_ant?>" style="text-align:right" onKeypress="return validarNum(event,this)">  </span></td>
                           <td width="164"><span class="Estilo5">CUENTA DE ANTICIPO:</span></td>
-                          <td width="223"><span class="Estilo5"><input name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="30" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $cod_cuenta?>" onKeypress="return stabular(event,this)">   </span></td>
+                          <td width="223"><span class="Estilo5"><input name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="30" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $cod_cuenta?>" onKeypress="return stabular(event,this)">   </span></td>
                           <td width="48"><span class="Estilo5"><input name="btcuentas" type="button" id="btcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onclick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=','SIA','','750','500','true')" value="..." onKeypress="return stabular(event,this)">    </span></td>
                           <td width="24"><input name="txtNombre_Cuenta" type="hidden" id="txtcodigo_mov"></td>
                         </tr>
@@ -262,7 +262,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
                   </table>  </td>
               </tr>
           </table>
-        <iframe src="Det_inc_compromisos.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="305" scrolling="auto" frameborder="1">
+        <iframe src="Det_inc_compromisos.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="305" scrolling="auto" frameborder="1">
         </iframe>
         <table width="863" border="0">
           <tr>
@@ -271,10 +271,10 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
         </table>
         <table width="768">
           <tr>
-            <td width="460"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-			<td width="5"><input name="txtcod_est" type="hidden" id="txtcod_est" value="<?echo $cod_est?>" ></td>
-            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-            <td width="50"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>
+            <td width="460"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+			<td width="5"><input name="txtcod_est" type="hidden" id="txtcod_est" value="<?php echo $cod_est?>" ></td>
+            <td width="50"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+            <td width="50"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Grabar"></td>
             <td width="88"><input name="Submit" type="reset" value="Blanquear"></td>
 			<td width="100"><input name="btcargaest" type="button" id="btcargaest"  value="Cargar Estructura"  title="Cargar estructuras de Orden " onClick="Llamar_cargaest()"></td>        
@@ -287,14 +287,14 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
 <form name="form2" method="post" action="Inc_compromisos.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	 
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	 
      <td width="5"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="N" ></td>
-     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>
-     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	
+     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>
+     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	
 	 <td width="5"><input name="txtdoc_comp" type="hidden" id="txtdoc_comp" value=""></td>
 	 <td width="5"><input name="txtabrev_comp" type="hidden" id="txtabrev_comp" value=""></td>
      <td width="5"><input name="txtref_comp" type="hidden" id="txtref_comp" value=""></td>
@@ -306,9 +306,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
 	 <td width="5"><input name="txtced_r" type="hidden" id="txtced_r" value=""></td>
      <td width="5"><input name="txtnomb_r" type="hidden" id="txtnomb_r" value=""></td>
 	 <td width="5"><input name="txtconcepto_r" type="hidden" id="txtconcepto_r" value=""></td>	 
-	 <td width="5"><input name="txtfechac" type="hidden" id="txtfechac" value="<?echo $fecha?>"></td>
+	 <td width="5"><input name="txtfechac" type="hidden" id="txtfechac" value="<?php echo $fecha?>"></td>
 	 <td width="5"><input name="txtnro_doc" type="hidden" id="txtnro_doc" value=""></td>
-	 <td width="5"><input name="txtfechav" type="hidden" id="txtfechav" value="<?echo $fechav?>"></td>
+	 <td width="5"><input name="txtfechav" type="hidden" id="txtfechav" value="<?php echo $fechav?>"></td>
 	 <td width="5"><input name="txttiene_ant" type="hidden" id="txttiene_ant" value="NO"></td>
 	 <td width="5"><input name="txtfunc_inv" type="hidden" id="txtfunc_inv" value="C"></td>
 	 <td width="5"><input name="txttasa_ant" type="hidden" id="txttasa_ant" value=""></td>

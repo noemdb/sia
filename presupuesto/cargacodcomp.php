@@ -20,6 +20,6 @@ while($registro=pg_fetch_array($res)){ $monto=$registro["monto"]-$registro["caus
   }
 }
 ?>
-<iframe src="Det_inc_causados_comp.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
+<iframe src="Det_inc_causados_comp.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1">
 </iframe>
-<?pg_close();?>
+<?php pg_close($conn);?>

@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Entidades)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Entidades)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -19,11 +19,11 @@ function LlamarURL(url){  document.location = url; }
 function revisar(){
 var f=document.form1;
 var Valido;
-    if(f.txtCodigo_Entidad.value==""){alert("Código de la Entidad no puede estar Vacio");return false;}
+    if(f.txtCodigo_Entidad.value==""){alert("Cï¿½digo de la Entidad no puede estar Vacio");return false;}
     if(f.V.value==""){alert("Nombre de la Entidad no puede estar Vacia"); return false; }
        else{f.txtNombre_Entidad.value=f.txtNombre_Entidad.value.toUpperCase();}
     if(f.txtCodigo_Entidad.value.length==2){f.txtCodigo_Entidad.value=f.txtCodigo_Entidad.value.toUpperCase();}
-       else{alert("Longitud Código de la Entidad Invalido");return false;}
+       else{alert("Longitud Cï¿½digo de la Entidad Invalido");return false;}
 document.form1.submit;
 return true;}
 function chequea_codigo(mform){

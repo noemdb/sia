@@ -1,8 +1,8 @@
-<?include ("../class/seguridad.inc");  include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/seguridad.inc");  include ("../class/conect.php");  include ("../class/funciones.php"); 
 $equipo = getenv("COMPUTERNAME");$minf_usuario = $equipo." ".date("d/m/y H:i a");$fecha=asigna_fecha_hoy();
 echo "ESPERE POR FAVOR CANCELANDO ORDENES....","<br>";$error=0;error_reporting(E_ALL);
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{ $sql="select nro_orden,ced_rif,(total_causado-total_retencion) as neto from pag022 where status='N' and (ced_rif in (select ced_rif from ban006 where chq_o_f_c='F' and anulado='N'))"; $res=pg_query($sql);
    while($reg=pg_fetch_array($res)){ 
     $nro_orden=$reg["nro_orden"];  $neto=$reg["neto"];   $ced_rif=$reg["ced_rif"];   
@@ -16,5 +16,5 @@ if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURR
 	}
   }
 }
-pg_close();  error_reporting(E_ALL ^ E_WARNING);?> <script language="JavaScript">  muestra('PROCESO FINALIZADO'); </script> <?
+pg_close($conn);  error_reporting(E_ALL ^ E_WARNING);?> <script language="JavaScript">  muestra('PROCESO FINALIZADO'); </script> <?php 
 

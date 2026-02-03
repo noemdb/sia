@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  include ("../presupuesto/Ver_dispon.php"); $codigo_mov=$_GET["codigo_mov"]; 
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  include ("../presupuesto/Ver_dispon.php"); $codigo_mov=$_GET["codigo_mov"]; 
 ?>
 <html>
 <head>  <title>PEGAR TRASPASO</title>
@@ -7,10 +7,10 @@ function Llamar_Inc_Orden(){ document.form3.submit(); }
 </script>
 </head>
 <body>
-<?$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 echo "ESPERE POR FAVOR PEGANDO MODIFICACIONES.... ","<br>";
-$res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
 $mconf="";$Ssql="Select * from SIA005 where campo501='05'";$resultado=pg_query($Ssql);
 if ($registro=pg_fetch_array($resultado,0)){$mconf=$registro["campo502"];}$nro_aut=substr($mconf,10,1);$fecha_aut=substr($mconf,11,1);
@@ -47,30 +47,30 @@ echo $referencia_modif." ".$fecha_registro,"<br>";
 <form name="form3" method="post" action="Inc_adicion.php">
 <table width="10">
   <tr>     
-     <td width="5"><input name="txtuser2" type="hidden" id="txtuser2" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword2" type="hidden" id="txtpassword2" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname2" type="hidden" id="txtdbname2" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport2" type="hidden" id="txtport2" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost2" type="hidden" id="txthost2" value="<?echo $host?>" ></td>
-     <td width="5"><input name="txtnro_aut2" type="hidden" id="txtnro_aut2" value="<?echo $nro_aut?>" ></td>
-	 <td width="5"><input name="txtcorr_m2" type="hidden" id="txtcorr_m2" value="<?echo $corr_m?>" ></td>
-     <td width="5"><input name="txtfecha_aut2" type="hidden" id="txtfecha_aut2" value="<?echo $fecha_aut?>" ></td>
-     <td width="5"><input name="txtcodigo_mov2" type="hidden" id="txtcodigo_mov2" value="<?echo $codigo_mov?>" ></td>
-	 <td width="5"><input name="txtfechac2" type="hidden" id="txtfechac2" value="<?echo $fecha_registro?>"></td>	 
-	 <td width="5"><input name="txtfechar2" type="hidden" id="txtfechar2" value="<?echo $fecha_registro?>"></td>
-	 <td width="5"><input name="txtfecham2" type="hidden" id="txtfecham2" value="<?echo $fecha_modif?>"></td>
-	 <td width="5"><input name="txtfechad2" type="hidden" id="txtfechad2" value="<?echo $fecha_documento?>"></td>
-	 <td width="5"><input name="txtnro_docr2" type="hidden" id="txtnro_doc2" alue="<?echo $nro_documento?>"></td>	 
-	 <td width="5"><input name="txtconcepto_r2" type="hidden" id="txtconcepto_r2" value="<?echo $descripcion?>"></td>
+     <td width="5"><input name="txtuser2" type="hidden" id="txtuser2" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword2" type="hidden" id="txtpassword2" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname2" type="hidden" id="txtdbname2" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport2" type="hidden" id="txtport2" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost2" type="hidden" id="txthost2" value="<?php echo $host?>" ></td>
+     <td width="5"><input name="txtnro_aut2" type="hidden" id="txtnro_aut2" value="<?php echo $nro_aut?>" ></td>
+	 <td width="5"><input name="txtcorr_m2" type="hidden" id="txtcorr_m2" value="<?php echo $corr_m?>" ></td>
+     <td width="5"><input name="txtfecha_aut2" type="hidden" id="txtfecha_aut2" value="<?php echo $fecha_aut?>" ></td>
+     <td width="5"><input name="txtcodigo_mov2" type="hidden" id="txtcodigo_mov2" value="<?php echo $codigo_mov?>" ></td>
+	 <td width="5"><input name="txtfechac2" type="hidden" id="txtfechac2" value="<?php echo $fecha_registro?>"></td>	 
+	 <td width="5"><input name="txtfechar2" type="hidden" id="txtfechar2" value="<?php echo $fecha_registro?>"></td>
+	 <td width="5"><input name="txtfecham2" type="hidden" id="txtfecham2" value="<?php echo $fecha_modif?>"></td>
+	 <td width="5"><input name="txtfechad2" type="hidden" id="txtfechad2" value="<?php echo $fecha_documento?>"></td>
+	 <td width="5"><input name="txtnro_docr2" type="hidden" id="txtnro_doc2" alue="<?php echo $nro_documento?>"></td>	 
+	 <td width="5"><input name="txtconcepto_r2" type="hidden" id="txtconcepto_r2" value="<?php echo $descripcion?>"></td>
 	 <td width="5"><input name="txtmodie2" type="hidden" id="txtmodie2" value="I"></td>
-	 <td width="5"><input name="txtref_modif2" type="hidden" id="txtref_modif2" value="<?echo $referencia_modif?>"></td>
-	 <td width="5"><input name="txttipo_modif2" type="hidden" id="txttipo_modif2"  value="<?echo $tipo_modif?>"></td>
+	 <td width="5"><input name="txtref_modif2" type="hidden" id="txtref_modif2" value="<?php echo $referencia_modif?>"></td>
+	 <td width="5"><input name="txttipo_modif2" type="hidden" id="txttipo_modif2"  value="<?php echo $tipo_modif?>"></td>
   </tr>
 </table>
 </form>
 
-<?
+<?php 
 
-pg_close();
-if ($error==0){?><script language="JavaScript">alert('Modificacion Pegada'); Llamar_Inc_Orden();</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">alert('Modificacion Pegada'); Llamar_Inc_Orden();</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>

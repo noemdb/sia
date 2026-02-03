@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Pagos)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Pagos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -17,7 +17,7 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtdoc_pago.value==""){alert("Código de Documento Pago no puede estar Vacio");return false;}
+    if(f.txtdoc_pago.value==""){alert("Cï¿½digo de Documento Pago no puede estar Vacio");return false;}
         if(f.txtdoc_pago.value.charAt(0)=='A'){alert("Documento de Pago no valido");return false;}
     if(f.txtnombre_doc_pago.value==""){alert("Nombre del Documento Pago no puede estar Vacio");return false; }
        else{f.txtnombre_doc_pago.value=f.txtnombre_doc_pago.value.toUpperCase();}
@@ -28,7 +28,7 @@ var f=document.form1;
         if(f.TxtAfecta.value=="SI" || f.TxtAfecta.value=="NO") {Valido=true;}
         else{alert("Valor de Afecta Presupuesto no valido");return false; }
     if(f.txtdoc_pago.value.length==4){f.txtdoc_pago.value=f.txtdoc_pago.value.toUpperCase();}
-       else{alert("Longitud Código de Documento Pago Invalida");return false;}
+       else{alert("Longitud Cï¿½digo de Documento Pago Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -71,7 +71,7 @@ return true;}
         <table width="859" height="111" border="0" id="tabcampos">
           <tr>
             <td height="45" colspan="3" valign="middle"><blockquote class="Estilo5">C&Oacute;DIGO :
-                            <input name="txtdoc_pago" type="text" id="txtdoc_pago" title="Registre el código del documento pago" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
+                            <input name="txtdoc_pago" type="text" id="txtdoc_pago" title="Registre el cï¿½digo del documento pago" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
 </blockquote></td>
           </tr>
           <tr>

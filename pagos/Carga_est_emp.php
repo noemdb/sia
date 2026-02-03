@@ -1,4 +1,4 @@
-<? include ("../class/conect.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php  include ("../class/conect.php"); include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PAG001".$usuario_sia.$equipo;$codigo_mov=substr($mcod_m,0,49); $ced_emp="";}
 else{$codigo_mov=$_GET["codigo_mov"]; $ced_emp=$_GET["ced_emp"]; $user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];}
 ?>
@@ -6,7 +6,7 @@ else{$codigo_mov=$_GET["codigo_mov"]; $ced_emp=$_GET["ced_emp"]; $user=$_GET["us
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Cargar Estructura Empleado)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Cargar Estructura Empleado)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
@@ -16,7 +16,7 @@ var mdbname='<?php echo $dbname ?>';
 var mhost='<?php echo $host ?>';
 var mport='<?php echo $port ?>';
 var mcodigo_mov='<?php echo $codigo_mov ?>';
-function llamar_anterior(){ document.location ='Det_inc_comp_ord.php?codigo_mov=<?echo $codigo_mov?>&bloqueada=N'; }
+function llamar_anterior(){ document.location ='Det_inc_comp_ord.php?codigo_mov=<?php echo $codigo_mov?>&bloqueada=N'; }
 function revisar(){var f=document.form1; 
    if(f.txtcod_est.value==""){alert("Codigo Estructura no puede estar Vacio");return false;}
    if(f.txtcedula.value==""){alert("Cedula Trabajador no puede estar Vacia"); return false; } else{f.txtcedula.value=f.txtcedula.value.toUpperCase();}
@@ -31,7 +31,7 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $cod_est="00000004"; $des_est="";
 $sql="select descripcion_est from pag006 where cod_estructura='$cod_est'";$res=pg_query($sql);
@@ -53,9 +53,9 @@ if($p=="V"){$ced_emp=substr($ced_emp,1,10);}
 		    <tr>
                 <td width="99"><span class="Estilo5">C&Oacute;DIGO  : </span></td>
                 <td width="69"><span class="Estilo5">
-                  <input name="txtcod_est" type="text" id="txtcod_est" title="Registre el C&oacute;digo de la Estructura"  size="10" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $cod_est?>">
+                  <input name="txtcod_est" type="text" id="txtcod_est" title="Registre el C&oacute;digo de la Estructura"  size="10" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $cod_est?>">
                 </span></td>
-                <td width="432"><input name="btCatest" type="button" id="btCatest" title="Abrir Catalogo C&oacute;digo de Estructuras"  onclick="VentanaCentrada('Cat_estructura.php?codigo_mov=<?echo $codigo_mov?>&ref_comp=','SIA','','750','500','true')" value="..."></td>
+                <td width="432"><input name="btCatest" type="button" id="btCatest" title="Abrir Catalogo C&oacute;digo de Estructuras"  onclick="VentanaCentrada('Cat_estructura.php?codigo_mov=<?php echo $codigo_mov?>&ref_comp=','SIA','','750','500','true')" value="..."></td>
             </tr>
           </table></td>
         </tr>
@@ -64,7 +64,7 @@ if($p=="V"){$ced_emp=substr($ced_emp,1,10);}
               <tr>
                 <td width="92"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
                 <td width="589"><span class="Estilo5">
-                  <input name="txtdescripcion_est" type="text" id="txtdescripcion_est" size="95" maxlength="250" readonly value="<?echo $des_est?>">
+                  <input name="txtdescripcion_est" type="text" id="txtdescripcion_est" size="95" maxlength="250" readonly value="<?php echo $des_est?>">
                 </span></td>
               </tr>
             </table> </td>
@@ -74,7 +74,7 @@ if($p=="V"){$ced_emp=substr($ced_emp,1,10);}
             <tr>
               <td width="117"><span class="Estilo5">CEDULA :</span></td>
               <td width="153"><span class="Estilo5">
-                <input name="txtcedula" type="text" id="txtcedula" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $ced_emp?>" >
+                <input name="txtcedula" type="text" id="txtcedula" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $ced_emp?>" >
               </span> </td>
               <td width="143">&nbsp;</td>
               <td width="308"></td>
@@ -91,7 +91,7 @@ if($p=="V"){$ced_emp=substr($ced_emp,1,10);}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100">&nbsp;</td>

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
+<?php include ("../class/conect.php");  include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; $equipo = getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $fecha_hasta=$_POST["txtfecha_hasta"]; $fecha_desde=$_POST["txtfecha_desde"]; $fechad=formato_aaaammdd($fecha_desde); $fechah=formato_aaaammdd($fecha_hasta);
 $conc_prest=$_POST["txtcod_concepto"]; $tipo_nomina_d=$_POST["txttipo_nomina_d"]; $tipo_nomina_h=$_POST["txttipo_nomina_h"];
 
@@ -27,7 +27,7 @@ while($reg=pg_fetch_array($res)){
 	  echo $prev_cod." ".$prev_nombre." ".$prev_fecha." ".$cod_pre." ".$monto_p." ".$monto_presta,"<br>";
 	  $sSQL="Update nom011 set cantidad=0,monto=$monto_p,cod_presup='$cod_pre' where tipo_nomina='$prev_tipo' and cod_empleado='$prev_cod' and cod_concepto='$conc_prest'"; 
 	  $sSQL="Update nom011 set cantidad=0,monto=$monto_p where cod_empleado='$prev_cod' and cod_concepto='$conc_prest'"; 
-	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?  $error=1;}      
+	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php   $error=1;}      
     }  
     $prev_cod=$cod_empleado; $prev_nombre=$nombre; $prev_tipo=$tipo_nomina; $prev_fecha=$fecha_ingreso; $prev_presup=$cod_presup; $monto_presta=0;}
   if(($cod_concepto==$cod_ch)or($cod_concepto==$cod_fh)or($cod_concepto==$cod_rem)or($cod_concepto==$cod_post)){
@@ -50,7 +50,7 @@ if($monto_presta>0){ $f=diferencia_meses($prev_fecha,$fecha_hasta);
 	  echo $prev_cod." ".$prev_nombre." ".$prev_fecha." ".$cod_pre." ".$monto_p." ".$monto_presta,"<br>";
 	  $sSQL="Update nom011 set cantidad=0,monto=$monto_p,cod_presup='$cod_pre' where tipo_nomina='$prev_tipo' and cod_empleado='$prev_cod' and cod_concepto='$conc_prest'"; 
 	  $sSQL="Update nom011 set cantidad=0,monto=$monto_p where cod_empleado='$prev_cod' and cod_concepto='$conc_prest'"; 
-	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?  $error=1;}      
+	  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error=substr($error,0,70);if(!$resultado){ echo "Actualiza Concepto ".$cod_empleado,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php   $error=1;}      
     }
 }
 echo "CANTIDAD TRABAJADORES : ".$cant_trab." MONTO TOTAL : ".$tot_trab;

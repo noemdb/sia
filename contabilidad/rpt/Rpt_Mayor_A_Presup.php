@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php include ("../../class/phpreports/PHPReportMaker.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
 $periodod=$_GET["periodod"]; $periodoh=$_GET["periodoh"]; $cod_cuenta_d=$_GET["cod_cuenta_d"];$cod_cat_d=$_GET["cod_cat_d"];$cod_cat_h=$_GET["cod_cat_h"]; $cod_par_d=$_GET["cod_par_d"];$cod_par_h=$_GET["cod_par_h"];
 $tipo_asiento_d=$_GET["tipo_asiento_d"];$tipo_asiento_h=$_GET["tipo_asiento_h"]; $salto_pag=$_GET["salto_pag"];$ordenar=$_GET["ordenar"]; $tipo_rep=$_GET["tipo_rep"]; $inc_benef=$_GET["inc_benef"];
@@ -7,14 +7,14 @@ if($fecha_d==""){$sfecha_d="2010-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_
 if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $date = date("d-m-Y"); $hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{ $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
     if($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];}
     $l=strlen($formato_presup); $c=strlen($formato_categoria); $p=strlen($formato_partida); $i=c+2;   $fecha_i=formato_ddmmaaaa($Fec_Ini_Ejer);
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','9')"; $resultado=pg_exec($conn,$Sql); $error=pg_errormessage($conn);  $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
     $Sql="SELECT RPT_MAYOR_A_PRESUP_CON013('".$usuario_sia."','9','".$sfecha_d."','".$sfecha_h."','".$cod_cat_d."','".$cod_cat_h."','".$cod_par_d."','".$cod_par_h."','".$tipo_asiento_d."','".$tipo_asiento_h."','".$cod_cuenta_d."','".$ordenar."',".$i.",".$p.",".$c.")";
     $resultado=pg_exec($conn,$Sql); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
      else{ $Sql= "select * from RPT_MAYOR_A WHERE nombre_usuario='".$usuario_sia."' AND tipo_registro='9' AND fecha>='".$fecha_d."' AND fecha<='".$fecha_h."' AND fecha>='".$sfecha_d."' ORDER BY nro_linea";
         $sSQL = $Sql;             
 	    if($tipo_rep=="HTML"){	
@@ -142,7 +142,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				<td width="90" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="90" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Fecha</strong></td>
@@ -153,7 +153,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Haber</strong></td>
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Saldo</strong></td>
 			 </tr>
-		  <?  $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cta="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cta="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $codigo_cuenta=$registro["codigo_cuenta2"];  $nombre_cuenta=$registro["nombre_cuenta2"]; 
 		       $nombre_cuenta=conv_cadenas($nombre_cuenta,0);
 		       $cta_enc=$codigo_cuenta;  $nomb_cta_enc=$nombre_cuenta;  		       
@@ -173,27 +173,27 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				      <td width="90" align="left"></td>
 				      <td width="80" align="left"></td>
 					  <td width="80" align="left"></td>
-					  <td width="400" align="right"><? echo "Total Cuenta  : "; ?></td>
-					  <td width="120" align="right"><? echo $sub_totald; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalh; ?></td>
+					  <td width="400" align="right"><?php  echo "Total Cuenta  : "; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totald; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalh; ?></td>
 					  <td width="120" align="left"></td>
 				    </tr>	
 					<tr>
 				      <td width="90" align="left"></td>
 				    </tr>	
-                  <? 					
+                  <?php  					
 				 }
 				 ?>	   
 				   <tr>
-				     <td width="90" align="left"><? echo $cta_enc; ?></td>
+				     <td width="90" align="left"><?php  echo $cta_enc; ?></td>
 					 <td width="80" align="left"></td>
 					 <td width="80" align="left"></td>
-				     <td width="400" align="left"><? echo $nomb_cta_enc; ?></td>
+				     <td width="400" align="left"><?php  echo $nomb_cta_enc; ?></td>
 					 <td width="120" align="left"></td>
 					 <td width="120" align="right">Saldo Anterior :</td>
-					 <td width="120" align="right"><? echo $anterior; ?></td>
+					 <td width="120" align="right"><?php  echo $anterior; ?></td>
 				   </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_cta=$cta_enc; $sub_totald=0; $sub_totalh=0;
 			   }
 		       $referencia=$registro["referencia"]; $fecha=$registro["fecha"];  $tipo_asiento=$registro["tipo_asiento"];  $descripcion=$registro["descripcion"]; $nombre=$registro["nombre"];
@@ -203,15 +203,15 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   $descripcion=conv_cadenas($descripcion,0);
 			   ?>	   
 				<tr>
-				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $fechaf; ?></td>
-				   <td width="80" align="left">'<? echo $referencia; ?></td>
-				   <td width="80" align="left"><? echo $tipo_asiento; ?></td>
-				   <td width="400" align="justify"><? echo $descripcion; ?></td>
-				   <td width="120" align="right"><? echo $debe; ?></td>
-				   <td width="120" align="right"><? echo $haber; ?></td>
-				   <td width="120" align="right"><? echo $saldo; ?></td>
+				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $fechaf; ?></td>
+				   <td width="80" align="left">'<?php  echo $referencia; ?></td>
+				   <td width="80" align="left"><?php  echo $tipo_asiento; ?></td>
+				   <td width="400" align="justify"><?php  echo $descripcion; ?></td>
+				   <td width="120" align="right"><?php  echo $debe; ?></td>
+				   <td width="120" align="right"><?php  echo $haber; ?></td>
+				   <td width="120" align="right"><?php  echo $saldo; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 		  if(($sub_totald>0)or($sub_totalh>0)){ $sub_totald=formato_monto($sub_totald); $sub_totalh=formato_monto($sub_totalh); 
 			?>	 				 
@@ -228,15 +228,15 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			  <td width="90" align="left"></td>
 			  <td width="80" align="left"></td>
 			  <td width="80" align="left"></td>
-			  <td width="400" align="right"><? echo "Total Cuenta  : "; ?></td>
-			  <td width="120" align="right"><? echo $sub_totald; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalh; ?></td>
+			  <td width="400" align="right"><?php  echo "Total Cuenta  : "; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totald; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalh; ?></td>
 			  <td width="120" align="left"></td>
 			</tr>	
 			
-		  <? 					
+		  <?php  					
 		  }		  
-		  ?></table><?
+		  ?></table><?php 
         }		  
 	}	
 }

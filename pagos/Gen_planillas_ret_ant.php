@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $planilla="";
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $planilla="";
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "BAN012".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); 
 $conn=pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname.""); 
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="01"; $opcion="02-0000018"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,9 +45,9 @@ function llamar_impimir(){var murl;var f=document.form1; var tipo_p; var orden;
 }
 </script>
 </head>
-<?
+<?php 
 $resultado=pg_exec($conn,"SELECT BORRAR_BAN029('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
-pg_close();?>
+pg_close($conn);?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
   <tr>
@@ -89,7 +89,7 @@ pg_close();?>
                 <tr> <td>&nbsp;</td> </tr>
               </table>
               <div id="T11" class="tab-body">
-              <iframe src="Det_ret_planillas.php?codigo_mov=<?echo $codigo_mov?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
+              <iframe src="Det_ret_planillas.php?codigo_mov=<?php echo $codigo_mov?>" width="940" height="350" scrolling="auto" frameborder="1"></iframe>
               </div>
          <table width="863" border="0"> <tr> <td height="10">&nbsp;</td> </tr> </table>
         <table width="923">
@@ -99,16 +99,16 @@ pg_close();?>
                 <td><table width="350" border="0" cellpadding="4" cellspacing="2">
                   <tr>
                      <td width="200"><span class="Estilo5">TIPO DE PLANILLA IMPRIMIR:</span></td>
-                     <td width="50"><span class="Estilo5"><input name="txtplanilla" type="text" id="txtplanilla" title="Registre el tipo de Planilla a imprimir" value="<? echo $planilla ?>"  size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_planilla(this.form);">  </span></td>
-                     <?if ($Mcamino{4}=="S"){?>
+                     <td width="50"><span class="Estilo5"><input name="txtplanilla" type="text" id="txtplanilla" title="Registre el tipo de Planilla a imprimir" value="<?php  echo $planilla ?>"  size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_planilla(this.form);">  </span></td>
+                     <?php if ($Mcamino{4}=="S"){?>
 					 <td width="100"><input name="Imprimir" type="button" id="Imprimir" value="Imprimir" onClick="JavaScript:llamar_impimir()"></td>
-                     <?} ?>
+                     <?php } ?>
                    </tr>
                 </table></td>
                </tr>
             </table></td>
 			
-            <td width="110"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="110"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="139"><input name="Submit" type="reset" value="Blanquear"></td>
             <td width="142" valign="middle"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>
 			

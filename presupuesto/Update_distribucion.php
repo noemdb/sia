@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $cod_presup=$_POST["txtcod_presup"]; $cod_fuente=$_POST["txtcod_fuente"]; $distribucion=$_POST["txtdistribucion"]; $status_dist="1";
 $asignado01=$_POST["txtasignado01"]; $asignado02=$_POST["txtasignado02"]; $asignado03=$_POST["txtasignado03"]; $asignado04=$_POST["txtasignado04"];
 $asignado05=$_POST["txtasignado05"]; $asignado06=$_POST["txtasignado06"]; $asignado07=$_POST["txtasignado07"]; $asignado08=$_POST["txtasignado08"];
@@ -27,24 +27,24 @@ $monto=$asignado01+$asignado02+$asignado03+$asignado04+$asignado05+$asignado06+$
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
 $equipo=getenv("COMPUTERNAME");$url="Act_codigos.php?Gcodigo=C".$cod_fuente.$cod_presup;$error=0;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{ $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql);  if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];}
   $sSQL="Select * from pre001 WHERE cod_presup='$cod_presup' and cod_fuente='$cod_fuente'";  $resultado=pg_exec($conn,$sSQL);  $filas=pg_numrows($resultado);
-  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO NO EXISTE');  </script> <? }
+  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO NO EXISTE');  </script> <?php }
    else{ $registro=pg_fetch_array($resultado); $disponible=$registro["disponible"]; $diferido=$registro["diferido"]; $disp_diferida=$registro["disp_diferida"]; 
      $func_inv=$registro["func_inv"]; $aplicacion=$registro["aplicacion"]; $des_ant=$registro["denominacion"]; $asignado=$registro["asignado"];  $cod_cont_ant=$registro["cod_contable"]; $sfecha=$registro["fecha_creado"];}  
   if(strlen($cod_presup)==strlen($formato_presup)){ 
     if ($monto>$asignado){$balance=$monto-$asignado;}else{$balance=$monto-$asignado;}
-    if ($balance>0.001){$error=1;  echo $monto.' '.$asignado.' '.formato_monto($balance),"<br>"; ?> <script language="JavaScript"> muestra('MONTO DISTRIBUCION DIFERENTE A ASIGNACION');</script><? }  }
-  else {$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO NO VALIDO');</script><?}
+    if ($balance>0.001){$error=1;  echo $monto.' '.$asignado.' '.formato_monto($balance),"<br>"; ?> <script language="JavaScript"> muestra('MONTO DISTRIBUCION DIFERENTE A ASIGNACION');</script><?php } }
+  else {$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO NO VALIDO');</script><?php }
   if($error==0){  $fecha=asigna_fecha_hoy();
      if($fecha==""){$sfecha="2007-01-01";}else{$sfecha=formato_aaaammdd($fecha);}
      $resultado=pg_exec($conn,"SELECT ACTUALIZA_PRE001(2,'$cod_presup','$cod_fuente','$des_ant','$cod_cont_ant','$status_dist',$asignado,$disponible,$diferido,$disp_diferida,'$func_inv','O','$aplicacion','','$sfecha',$asignado01,$asignado02,$asignado03,$asignado04,$asignado05,$asignado06,$asignado07,$asignado08,$asignado09,$asignado10,$asignado11,$asignado12)");
      $error=pg_errormessage($conn);$error=substr($error, 0, 61);
-     if (!$resultado){?> <script language="JavaScript"> muestra('<? echo $error; ?>'); </script> <? }
-      else{ ?> <script language="JavaScript"> muestra('MODIFICO DISTRIBUCION EXITOSAMENTE'); </script><? $error=0;
+     if (!$resultado){?> <script language="JavaScript"> muestra('<?php  echo $error; ?>'); </script> <?php }
+      else{ ?> <script language="JavaScript"> muestra('MODIFICO DISTRIBUCION EXITOSAMENTE'); </script><?php  $error=0;
         $desc_doc="DISTRIBUCION CODIGO PRESUPUETARIO:".$cod_presup.", FUENTE:".$cod_fuente.",  ASIGNACION:".$asignado;
         $resultado=pg_exec($conn,"SELECT INCLUYE_SIA004('05','$usuario_sia','$usuario_sia','$equipo','Modifico','$sfecha','$desc_doc')");
-        $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <?}}
+        $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php } }
   }
-}pg_close();if ($error==0){?><script language="JavaScript">LlamarURL('<?echo $url;?>'); </script> <? } else { ?> <script language="JavaScript">history.back();</script>  <? } ?>
+}pg_close($conn);if ($error==0){?><script language="JavaScript">LlamarURL('<?php echo $url;?>'); </script> <?php } else { ?> <script language="JavaScript">history.back();</script>  <?php } ?>

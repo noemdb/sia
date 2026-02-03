@@ -1,4 +1,4 @@
-<? include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");
+<?php  include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG001".$usuario_sia.$equipo;
 if (!$_GET){ $p_letra='';$criterio=''; $tipo_causado=''; $nro_orden='';
   $sql="SELECT * FROM ORD_PAGO_ANT Order BY nro_orden desc,tipo_causado desc";
@@ -57,9 +57,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $mconf="";$tipo_causd="0002";$tipo_causc="0001";$tipo_causf="0003";
 $Ssql="Select * from SIA005 where campo501='01'";
 $resultado=pg_query($Ssql);
@@ -185,24 +185,24 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                       <tr>
                         <td width="102">
                           <p><span class="Estilo5">N&Uacute;MERO ORDEN:</span></p></td>
-                        <td width="118"><input name="txtnro_orden" type="text"  id="txtnro_orden" value="<?echo $nro_orden?>" size="12" readonly></td>
+                        <td width="118"><input name="txtnro_orden" type="text"  id="txtnro_orden" value="<?php echo $nro_orden?>" size="12" readonly></td>
                         <td width="143"><span class="Estilo5">DOCUMENTO CAUSADO : </span></td>
                         <td width="48"><span class="Estilo5">
-                          <input name="txttipo_causado" type="text"  id="txttipo_causado" value="<?echo $tipo_causado?>" size="6" readonly>
+                          <input name="txttipo_causado" type="text"  id="txttipo_causado" value="<?php echo $tipo_causado?>" size="6" readonly>
 </span> </td>
                         <td width="66"><span class="Estilo5">
-                          <input name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus6" value="<?ECHO $nombre_abrev_caus?>" size="6" readonly>
+                          <input name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus6" value="<?php ECHO $nombre_abrev_caus?>" size="6" readonly>
 </span></td>
-                        <? if($anulado=='S'){?> <td width="109"><span class="Estilo15">ANULADO</span></td>
-                        <? }else{if($mstatus_ord=='I'){?> <td width="109"><a class="Estilo19" href="javascript:alert('<?echo $inf_canc?>');">CANCELADA</a>
-                        <? }else{if($mstatus_ord=='R'){?> <td width="109"><span class="Estilo19">P/RETENCION</span>
-                        <? }else{?> <td width="30"><span class="Estilo5"></span></td><? }}}?>
+                        <?php  if($anulado=='S'){?> <td width="109"><span class="Estilo15">ANULADO</span></td>
+                        <?php }else{if($mstatus_ord=='I'){?> <td width="109"><a class="Estilo19" href="javascript:alert('<?php echo $inf_canc?>');">CANCELADA</a>
+                        <?php }else{if($mstatus_ord=='R'){?> <td width="109"><span class="Estilo19">P/RETENCION</span>
+                        <?php }else{?> <td width="30"><span class="Estilo5"></span></td><?php } }}?>
                         <td width="49"><span class="Estilo5">FECHA :</span> </td>
                         <td width="78"><span class="Estilo5">
-                          <input name="txtFecha" type="text" id="txtFecha" value="<?echo $fecha?>" size="12" readonly>
+                          <input name="txtFecha" type="text" id="txtFecha" value="<?php echo $fecha?>" size="12" readonly>
                         </span></td>
-                        <td width="22"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
-                        <td width="23"><img src="../imagenes/s_tbl.png" width="16" height="16" title="Mostrar Cheques de la Orden" onclick="javascript:Ventana_002('Cons_pago_ord.php?clave=<?echo $clave?>','SIA','','650','300','true');"></td>
+                        <td width="22"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
+                        <td width="23"><img src="../imagenes/s_tbl.png" width="16" height="16" title="Mostrar Cheques de la Orden" onclick="javascript:Ventana_002('Cons_pago_ord.php?clave=<?php echo $clave?>','SIA','','650','300','true');"></td>
                       </tr>
                   </table></td>
                 </tr>
@@ -211,10 +211,10 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                     <tr>
                       <td width="166"><span class="Estilo5">CED./RIF BENEFICIARIO:</span></td>
                       <td width="134"><span class="Estilo5">
-                        <input name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="12"  value="<?echo $ced_rif?>" readonly>
+                        <input name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="12"  value="<?php echo $ced_rif?>" readonly>
                       </span></td>
                       <td width="542"><span class="Estilo5">
-                        <input name="txtnombre" type="text" id="txtnombre" value="<?echo $nombre?>" size="89" readonly>
+                        <input name="txtnombre" type="text" id="txtnombre" value="<?php echo $nombre?>" size="89" readonly>
                       </span></td>
                     </tr>
                   </table></td>
@@ -223,16 +223,16 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                   <td><table width="859" >
                     <tr>
                       <td width="180" height="30"><span class="Estilo5">CESIONARIO A COBRAR :
-                        <? if($pago_ces=="S"){$nchk='checked';}else{$nchk='';} ?>
-                       <input name="txtpago_ces" type="checkbox" readonly value="checkbox" <? echo $nchk; ?> >
+                        <?php  if($pago_ces=="S"){$nchk='checked';}else{$nchk='';} ?>
+                       <input name="txtpago_ces" type="checkbox" readonly value="checkbox" <?php  echo $nchk; ?> >
                       </span></td>
                       <td width="87"><span class="Estilo5">C&Eacute;DULA/RIF : </span></td>
                       <td width="109"><span class="Estilo5">
-                        <input name="txtced_rif_ces" type="text" id="txtced_rif_ces" size="14" maxlength="12"  value="<?echo $ced_rif_ces?>" readonly>
+                        <input name="txtced_rif_ces" type="text" id="txtced_rif_ces" size="14" maxlength="12"  value="<?php echo $ced_rif_ces?>" readonly>
                       </span> </span></td>
                       <td width="70"><span class="Estilo5">NOMBRE :</span></td>
                       <td width="383"><span class="Estilo5">
-                        <input name="txtnombre_ces" type="text" id="txtnombre_ces" size="59" readonly value="<?echo $nombre_ces?>">
+                        <input name="txtnombre_ces" type="text" id="txtnombre_ces" size="59" readonly value="<?php echo $nombre_ces?>">
                       </span> </td>
                     </tr>
                   </table></td>
@@ -241,7 +241,7 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                   <td><table width="856">
                       <tr>
                         <td width="106"><span class="Estilo5">CONCEPTO:</span></td>
-                        <td width="694"><textarea name="txtconcepto" cols="89" readonly="readonly" class="headers" id="txtconcepto"><?echo $concepto?></textarea></td>
+                        <td width="694"><textarea name="txtconcepto" cols="89" readonly="readonly" class="headers" id="txtconcepto"><?php echo $concepto?></textarea></td>
                       </tr>
                   </table></td>
                 </tr>
@@ -250,12 +250,12 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                     <tr>
                       <td width="122" height="24"><span class="Estilo5">TIPO DOCUMENTO : </span></td>
                       <td width="137"><span class="Estilo5">
-                        <input name="txttipo_documento" type="text" id="txttipo_documento"  readonly value="<?echo $tipo_documento?>" size="20">
+                        <input name="txttipo_documento" type="text" id="txttipo_documento"  readonly value="<?php echo $tipo_documento?>" size="20">
                       </span></td>
                       <td width="38"><span class="Estilo5">
                           <td width="125"><span class="Estilo5">NRO. DOCUMENTO : </span></td>
                       <td width="402"><span class="Estilo5">
-                        <input name="txtnro_documento" type="text" id="txtnro_documento"  readonly value="<?echo $nro_documento?>" size="61">
+                        <input name="txtnro_documento" type="text" id="txtnro_documento"  readonly value="<?php echo $nro_documento?>" size="61">
 </span> </td>
                     </tr>
                   </table></td>
@@ -265,15 +265,15 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                     <tr>
                       <td width="122"><span class="Estilo5">FECHA DESDE :</span></td>
                       <td width="160"><span class="Estilo5">
-                        <input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" value="<?echo $fecha_desde?>" readonly>
+                        <input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" value="<?php echo $fecha_desde?>" readonly>
                       </span></td>
                       <td width="101"><span class="Estilo5">FECHA HASTA :</span></td>
                       <td width="183"><span class="Estilo5">
-                        <input name="txtfecha_hasta" type="text" id="txtfecha_hasta" value="<?echo $fecha_hasta?>" size="15" readonly>
+                        <input name="txtfecha_hasta" type="text" id="txtfecha_hasta" value="<?php echo $fecha_hasta?>" size="15" readonly>
                       </span></td>
                       <td width="137"><span class="Estilo5">FECHA VENCIMIENTO : </span></td>
                       <td width="115"><span class="Estilo5">
-                        <input name="txtfecha_vencim" type="text" id="txtfecha_vencim" value="<?echo $fecha_vencim?>" size="15" readonly>
+                        <input name="txtfecha_vencim" type="text" id="txtfecha_vencim" value="<?php echo $fecha_vencim?>" size="15" readonly>
                       </span></td>
                     </tr>
                   </table></td>
@@ -283,10 +283,10 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                     <tr>
                       <td width="124"><span class="Estilo5">TIPO DE ORDEN :</span></td>
                       <td width="92"><span class="Estilo5">
-                        <input name="txtcod_tipo_ord" type="text" id="txtcod_tipo_ord" size="8" maxlength="15"  readonly  value="<?echo $tipo_orden?>">
+                        <input name="txtcod_tipo_ord" type="text" id="txtcod_tipo_ord" size="8" maxlength="15"  readonly  value="<?php echo $tipo_orden?>">
                       </span> </td>
                       <td width="618"><span class="Estilo5">
-                        <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="98" readonly  value="<?echo $des_tipo_orden?>">
+                        <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="98" readonly  value="<?php echo $des_tipo_orden?>">
                       </span></td>
                     </tr>
                   </table></td>
@@ -296,14 +296,14 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                     <tr>
                       <td width="116" height="20"><span class="Estilo5">TIPO DE GASTO :</span></td>
                       <td width="126"><span class="Estilo5">
-                        <input name="txtfunc_inv" type="text" id="txtfunc_inv"  readonly value="<?echo $func_inv?>" size="12" maxlength="12">
+                        <input name="txtfunc_inv" type="text" id="txtfunc_inv"  readonly value="<?php echo $func_inv?>" size="12" maxlength="12">
                       </span></td>
                       <td width="141"><span class="Estilo5">BANCO QUE  CANCELA :</span></td>
                       <td width="78"><span class="Estilo5">
-                        <input name="txtcod_banco" type="text" id="txtcod_banco"  readonly value="<?echo $cod_banco?>" size="6" maxlength="6">
+                        <input name="txtcod_banco" type="text" id="txtcod_banco"  readonly value="<?php echo $cod_banco?>" size="6" maxlength="6">
                       </span></td>
                       <td width="405"><span class="Estilo5">
-                        <input name="txtnombre_banco" type="text" id="txtnombre_banco"  readonly value="<?echo $nombre_banco?>" size="60">
+                        <input name="txtnombre_banco" type="text" id="txtnombre_banco"  readonly value="<?php echo $nombre_banco?>" size="60">
                       </span></td>
                     </tr>
                   </table></td>
@@ -314,7 +314,7 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
           <tr>
             <td width="864" height="5"><div id="Layer2" style="position:absolute; width:868px; height:312px; z-index:2; left: 2px; top: 300px;">
               <script language="javascript" type="text/javascript">
-   var gordr = '<?echo $gen_ord_ret?>';
+   var gordr = '<?php echo $gen_ord_ret?>';
    var rows = new Array;
    var num_rows = 1;             //numero de filas
    var width = 870;              //anchura
@@ -323,19 +323,19 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
    rows[1][2] = "Retenciones";        // Requiere: <div id="T12" class="tab-body">  ... </div>
    rows[1][3] = "Comprobantes";
              </script>
-              <?include ("../class/class_tab.php");?>
+              <?php include ("../class/class_tab.php");?>
               <script type="text/javascript" language="javascript"> DrawTabs(); </script>
               <!-- PESTA&Ntilde;A 1 -->
               <div id="T11" class="tab-body">
-                <iframe src="Det_cons_cod_orden.php?clave=<?echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_cons_cod_orden.php?clave=<?php echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
               </div>
               <!--PESTA&Ntilde;A 2 -->
               <div id="T12" class="tab-body" >
-                <iframe src="Det_cons_ret_ord_ant.php?clave=<?echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_cons_ret_ord_ant.php?clave=<?php echo $clave?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
               </div>
                           <!--PESTA&Ntilde;A 3 -->
               <div id="T13" class="tab-body" >
-                <iframe src="Det_cons_comp_ord_ant.php?criterio=<?echo $criterio?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                <iframe src="Det_cons_comp_ord_ant.php?criterio=<?php echo $criterio?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
               </div>
 
             </div></td>
@@ -346,29 +346,29 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
                 <tr>
                 <td width="130"> <span class="Estilo5">TOTAL CAUSADO : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_causado; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_causado; ?></td> </tr>
          </table></td>
                 <td width="130" align="right"> <span class="Estilo5">AMORT. ANTICIPO : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $monto_am_ant; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $monto_am_ant; ?></td> </tr>
          </table></td>
                  <td width="130" align="right"> <span class="Estilo5">TOTAL PASIVO : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_pasivos; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_pasivos; ?></td> </tr>
          </table></td>
                 </tr>
                 <tr>
                 <td width="130"> <span class="Estilo5">RETENCIONES : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_retencion; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_retencion; ?></td> </tr>
          </table></td>
                 <td width="130" align="right"> <span class="Estilo5">AJUSTE : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_ajuste; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_ajuste; ?></td> </tr>
          </table></td>
                  <td width="130" align="right"> <span class="Estilo5"><strong>NETO</strong> : </span> </td>
                 <td width="155"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total_neto; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total_neto; ?></td> </tr>
          </table></td>
                 </tr>
          </table></div>
@@ -379,4 +379,4 @@ if(substr($tipo_causado,0,1)=='A'){$criterio=$sfecha.'A'.substr($nro_orden,1,7).
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

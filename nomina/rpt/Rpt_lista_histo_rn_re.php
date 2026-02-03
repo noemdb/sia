@@ -1,11 +1,11 @@
-<?include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");include ("../../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="03-0000100"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?php }
  $fecha_hoy=asigna_fecha_hoy(); $fecha_d=colocar_udiames($fecha_hoy);   $tipo_nominad="";$cod_conceptod="";
  if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 ?>
@@ -30,7 +30,7 @@ function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 </script>
 
 </head>
-<?  $descripcion_d=""; $denominacion_concepd=""; 
+<?php   $descripcion_d=""; $denominacion_concepd=""; 
 $sql="SELECT MAX(tipo_nomina) As Max_tipo_nomina, MIN(tipo_nomina) As Min_tipo_nomina FROM nom001 ".$criterion." "; $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$tipo_nomina_d=$registro["min_tipo_nomina"];$tipo_nomina_h=$registro["max_tipo_nomina"];   }
 $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina_d'"; $res=pg_query($sql); if($registro=pg_fetch_array($res,0)){$descripcion_d=$registro["descripcion"];}
@@ -68,9 +68,9 @@ $sql="SELECT cod_concepto,denominacion FROM nom002 where cod_concepto='$cod_conc
              <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="96" align="center" class="Estilo5"><div align="left">TIPO NOMINA :</div></td>
-                 <td width="46" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_d?>">   </span></div></td>
+                 <td width="46" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_d?>">   </span></div></td>
                  <td width="54" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Tipos de nominas" onClick="VentanaCentrada('../Cat_tipo_nominad.php?criterio=','SIA','','650','500','true')" value="...">  </span></div></td>
-                 <td width="707" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="90" maxlength="108" readonly value="<?echo $descripcion_d?>">   </span></div></td>
+                 <td width="707" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="90" maxlength="108" readonly value="<?php echo $descripcion_d?>">   </span></div></td>
                </tr>
              </table></td>
            </tr>
@@ -78,9 +78,9 @@ $sql="SELECT cod_concepto,denominacion FROM nom002 where cod_concepto='$cod_conc
              <td><table width="903" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="99" align="center" class="Estilo5"><div align="left">CONCEPTO :</div></td>
-                 <td width="44" align="center"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcod_concepto_d" type="text" id="txtcod_concepto_d" onFocus="encender(this)" onBlur="apagar(this)" size="4" maxlength="3" value="<?echo $cod_conceptod?>"></span></div></td>
+                 <td width="44" align="center"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcod_concepto_d" type="text" id="txtcod_concepto_d" onFocus="encender(this)" onBlur="apagar(this)" size="4" maxlength="3" value="<?php echo $cod_conceptod?>"></span></div></td>
                  <td width="52" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="Catalogo3" type="button" id="Catalogo3" title="Abrir Catalogo de Conceptos" onClick="VentanaCentrada('../Cat_conceptosd.php?criterio=','SIA','','650','500','true')" value="...">   </span></div></td>
-                 <td width="708" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="90" maxlength="109" readonly value="<?echo $denominacion_concepd?>">  </span></div></td>
+                 <td width="708" align="center"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion_d" type="text" id="txtdenominacion_d" size="90" maxlength="109" readonly value="<?php echo $denominacion_concepd?>">  </span></div></td>
                </tr>
              </table></td>
            </tr>
@@ -88,7 +88,7 @@ $sql="SELECT cod_concepto,denominacion FROM nom002 where cod_concepto='$cod_conc
              <td><table width="907" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="95" align="center"><div align="left" class="Estilo5">PERIODO : </div></td>
-                 <td width="626" align="center"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="10" onChange="checkrefechad(this.form)" value="<?echo $fecha_d?>">
+                 <td width="626" align="center"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="10" onChange="checkrefechad(this.form)" value="<?php echo $fecha_d?>">
                      <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></div></td>
                  <td width="48" align="center"><div align="left" class="Estilo5"></div></td>
@@ -124,4 +124,4 @@ $sql="SELECT cod_concepto,denominacion FROM nom002 where cod_concepto='$cod_conc
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

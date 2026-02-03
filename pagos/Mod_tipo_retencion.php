@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 if (!$_GET){  $tipo_retencion='';  $sql="SELECT * FROM RETENCIONES ORDER BY tipo_retencion";}
 else {$tipo_retencion = $_GET["Gtipo_retencion"];  $sql="Select * from RETENCIONES where tipo_retencion='$tipo_retencion'";}
 ?>
@@ -37,9 +37,9 @@ return true;}
 </script>
 
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $res=pg_query($sql);$filas=pg_num_rows($res);
 if($filas>=1){  $registro=pg_fetch_array($res,0);  $tipo_retencion=$registro["tipo_retencion"];  $descripcion_ret=$registro["descripcion_ret"];
   $ret_anticipo=$registro["ret_anticipo"];  $ret_grupo=$registro["ret_grupo"];  $cod_contable=$registro["cod_contable"];  $cod_fondo=$registro["cod_fondo"];
@@ -69,8 +69,8 @@ if($status_2=="S"){$status_2="SI";}else{$status_2="NO";}
   <tr>
     <td width="92"><table width="92" height="438" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_tipo_retencion.php?Gtipo_retencion=<? echo $tipo_retencion; ?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_tipo_retencion.php?Gtipo_retencion=<? echo $tipo_retencion; ?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onclick="javascript:LlamarURL('Act_tipo_retencion.php?Gtipo_retencion=<?php  echo $tipo_retencion; ?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_tipo_retencion.php?Gtipo_retencion=<?php  echo $tipo_retencion; ?>">Atras</A></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -90,9 +90,9 @@ if($status_2=="S"){$status_2="SI";}else{$status_2="NO";}
             <td height="14"><table width="844" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="59"><span class="Estilo5">TIPO :</span></td>
-                  <td width="93"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="6" maxlength="3" value="<?echo $tipo_retencion?>" readonly> </span></div></td>
+                  <td width="93"><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="6" maxlength="3" value="<?php echo $tipo_retencion?>" readonly> </span></div></td>
                   <td width="113"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
-                  <td width="562"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ret" type="text" id="txtdescripcion_ret" size="80" value="<?echo $descripcion_ret?>"  onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
+                  <td width="562"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ret" type="text" id="txtdescripcion_ret" size="80" value="<?php echo $descripcion_ret?>"  onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
                   <td width="17">&nbsp;</td>
                 </tr>
             </table></td>
@@ -104,11 +104,11 @@ if($status_2=="S"){$status_2="SI";}else{$status_2="NO";}
             <td height="14"><table width="835" height="18" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td width="60"><span class="Estilo5">TASA :</span></td>
-                  <td width="167"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="6"  value="<?echo $tasa?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)" >    </span></td>
+                  <td width="167"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="8" maxlength="6"  value="<?php echo $tasa?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)" >    </span></td>
                   <td width="130"><span class="Estilo5">BASE IMPONIBLE :</span></td>
-                  <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtbase_imponible" type="text" id="txtbase_imponible" size="8" maxlength="6"  value="<?echo $base_imponible?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></td>
+                  <td width="168"><span class="Estilo5"><input class="Estilo10" name="txtbase_imponible" type="text" id="txtbase_imponible" size="8" maxlength="6"  value="<?php echo $base_imponible?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></td>
                   <td width="136"><span class="Estilo5">PAGOS MAYOR A :</span></td>
-                  <td width="174"><span class="Estilo5"> <input class="Estilo10" name="txtpago_mayor" type="text" id="txtpago_mayor" size="18" maxlength="16"  value="<?echo $pago_mayor?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></td>
+                  <td width="174"><span class="Estilo5"> <input class="Estilo10" name="txtpago_mayor" type="text" id="txtpago_mayor" size="18" maxlength="16"  value="<?php echo $pago_mayor?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -119,7 +119,7 @@ if($status_2=="S"){$status_2="SI";}else{$status_2="NO";}
             <td height="14"><table width="835" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="100"><span class="Estilo5">SUSTRAENDO:</span></td>
-                  <td width="164"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtsustraendo" type="text" id="txtsustraendo" size="18" maxlength="15"  value="<?echo $sustraendo?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></div></td>
+                  <td width="164"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtsustraendo" type="text" id="txtsustraendo" size="18" maxlength="15"  value="<?php echo $sustraendo?>" onFocus="encender(this)" onBlur="apagar(this)" style="text-align:right" onKeypress="return validarNum(event)">  </span></div></td>
                   <td width="159"><span class="Estilo5">REDONDEA OPERACI&Oacute;N: </span></td>
                   <td width="95"><span class="Estilo5"><select name="txtred_operacion" size="1" id="txtred_operacion" onFocus="encender(this)" onBlur="apagar(this)">
                       <option>NO</option> <option>SI</option>       </select> </span></td>
@@ -145,7 +145,7 @@ var f=document.form1;
                       <option>LABORAL</option>          <option>FIEL CUMPLIMIENTO</option>
 					  <option>TIMBRE FISCAL</option>    <option>RESPONSABILIDAD</option>  <option>MINERALES</option> <option>ACT ECONOMICA</option>
                     </select></span></div></td>
-<script language="JavaScript" type="text/JavaScript"> asig_grupo('<?echo $ret_grupo;?>');</script>                  
+<script language="JavaScript" type="text/JavaScript"> asig_grupo('<?php echo $ret_grupo;?>');</script>                  
                 </tr>
             </table></td>
           </tr>
@@ -156,9 +156,9 @@ var f=document.form1;
             <td height="14"><table width="824" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="136"><span class="Estilo5">C&Oacute;DIGO CONTABLE :</span></td>
-                  <td width="185"><span class="Estilo5"> <input class="Estilo10" name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="25" maxlength="25" value="<?echo $cod_contable?>" onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
+                  <td width="185"><span class="Estilo5"> <input class="Estilo10" name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="25" maxlength="25" value="<?php echo $cod_contable?>" onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
                   <td width="49"><div align="left"><span class="Estilo5"><input class="Estilo10" name="btcuentas" type="button" id="btcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onClick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=','SIA','','750','500','true')" value="..."> </span></div></td>
-                  <td width="454"><span class="Estilo5"><input class="Estilo10" name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" value="<?echo $nombre_cuenta?>" size="67" readonly>  </span></td>
+                  <td width="454"><span class="Estilo5"><input class="Estilo10" name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" value="<?php echo $nombre_cuenta?>" size="67" readonly>  </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -169,9 +169,9 @@ var f=document.form1;
             <td><table width="834">
                 <tr>
                   <td width="154"><span class="Estilo5">CED./RIF BENEFICIARIO:</span></td>
-                  <td width="138"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="20" maxlength="15" value="<?echo $ced_rif?>" onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
+                  <td width="138"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="20" maxlength="15" value="<?php echo $ced_rif?>" onFocus="encender(this)" onBlur="apagar(this)">  </span></td>
                   <td width="52"><span class="Estilo5"> <input class="Estilo10" name="btced_rif" type="button" id="btced_rif" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('../presupuesto/Cat_beneficiarios.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                  <td width="470"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" value="<?echo $nombre?>" readonly> </span></td>
+                  <td width="470"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="70" value="<?php echo $nombre?>" readonly> </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -188,7 +188,7 @@ function asig_genera(mvalor){var f=document.form1;
                   <td width="276" height="22"><span class="Estilo5">GENERAR ASIENTO EN EL COMPROBANTE :</span></td>
                   <td width="230"><div align="left"><span class="Estilo5"><select name="txtstatus_1" size="1" id="txtstatus_1" onFocus="encender(this)" onBlur="apagar(this)">
                       <option>SI</option>   <option>NO</option> </select></span></div></td>
-<script language="JavaScript" type="text/JavaScript"> asig_genera('<?echo $status_1;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_genera('<?php echo $status_1;?>');</script>
                   
                   <td width="148"><span class="Estilo5">RETENCI&Oacute;N PARCIAL :</span></td>
                   <td width="189"><span class="Estilo5"><select name="txtstatus_2" size="1" id="txtstatus_2" onFocus="encender(this)" onBlur="apagar(this)">
@@ -201,7 +201,7 @@ function asig_genera(mvalor){var f=document.form1;
                   <td height="24"><table width="843" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="300" height="22"><span class="Estilo5">CODIGO DEL CONCEPTO DE RETENCION  :</span></td>
-                      <td width="543"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtcod_fondo" type="text" id="txtcod_fondo" size="6" maxlength="3" value="<?echo $cod_fondo?>"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_fondo(this.form);">
+                      <td width="543"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtcod_fondo" type="text" id="txtcod_fondo" size="6" maxlength="3" value="<?php echo $cod_fondo?>"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_fondo(this.form);">
                       </span></div></td>
                     </tr>
                   </table></td>

@@ -1,10 +1,10 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME"); if (!$_GET){$mcod_m="PAG001".$usuario_sia.$equipo;$codigo_mov=substr($mcod_m,0,49);} else{$codigo_mov=$_GET["codigo_mov"];}?>
+<?php include ("../class/conect.php"); include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME"); if (!$_GET){$mcod_m="PAG001".$usuario_sia.$equipo;$codigo_mov=substr($mcod_m,0,49);} else{$codigo_mov=$_GET["codigo_mov"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Registrar Amortización de Anticipo)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Registrar Amortizaciï¿½n de Anticipo)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <script language="javascript" src="ajax_pag.js" type="text/javascript"></script>
@@ -26,7 +26,7 @@ return str2;}
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value; mmonto=eliminapunto(mmonto);  mthis.value=mmonto; 
 }
-function llamar_anterior(){ document.location ='Det_inc_comp_ord_fin.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_comp_ord_fin.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){
 var f=document.form1;
    if(f.txttiene_anticipo.value==""){alert("Tiene Anticipo no puede estar Vacio");return false;}
@@ -41,7 +41,7 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $monto_anticipo=0;$tiene_anticipo="NO";$codigo_cuenta="";$nombre_cuenta="";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $sSQL="Select * from PAG036 WHERE codigo_mov='$codigo_mov'";
@@ -79,10 +79,10 @@ var f=document.form1;
               <td width="158"><span class="Estilo5">AMORTIZA ANTICIPO:</span></td>
               <td width="68"><span class="Estilo5"> <select name="txttiene_anticipo" size="1" id="txttiene_anticipo" onFocus="encender(this)" onBlur="apagar(this)">
                   <option>SI</option> <option>NO</option> </select> </span></td>
-              <script language="JavaScript" type="text/JavaScript"> asig_tiene_anticipo('<?echo $tiene_anticipo;?>');</script>
+              <script language="JavaScript" type="text/JavaScript"> asig_tiene_anticipo('<?php echo $tiene_anticipo;?>');</script>
               <td width="105"></td>
               <td width="214"><span class="Estilo5">MONTO DE LA AMORTIZACI&Oacute;N:</span></td>
-              <td width="168"><span class="Estilo5"><input name="txtmonto_anticipo" type="text" id="txtmonto_anticipo" size="12" style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto_anticipo?>" onKeypress="return validarNum(event)">  </span></td>
+              <td width="168"><span class="Estilo5"><input name="txtmonto_anticipo" type="text" id="txtmonto_anticipo" size="12" style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto_anticipo?>" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table></td>
         </tr>
@@ -93,9 +93,9 @@ var f=document.form1;
           <td><table width="759" border="0">
             <tr>
               <td width="145"><span class="Estilo5">CUENTA DE ANTICIPO:</span></td>
-              <td width="153"><span class="Estilo5"><input name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="25" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $codigo_cuenta?>"></span> </td>
+              <td width="153"><span class="Estilo5"><input name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" size="25" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $codigo_cuenta?>"></span> </td>
               <td width="40"><span class="Estilo5"><input name="btcuentas" type="button" id="btcuentas" title="Abrir Catalogo C&oacute;digo de Cuentas"  onclick="VentanaCentrada('../contabilidad/Cat_cuentas_cargables.php?criterio=','SIA','','750','500','true')" value="..."></span></td>
-              <td width="375"><span class="Estilo5"><input name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" size="60" value="<?echo $nombre_cuenta?>" readonly>  </span> </td>
+              <td width="375"><span class="Estilo5"><input name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta" size="60" value="<?php echo $nombre_cuenta?>" readonly>  </span> </td>
             </tr>
           </table></td>
         </tr>
@@ -108,7 +108,7 @@ var f=document.form1;
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="19"><input name="txtdes_orden_ret" type="hidden" id="txtdes_orden_ret" ></td>
             <td width="75">&nbsp;</td>
             <td width="88" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>

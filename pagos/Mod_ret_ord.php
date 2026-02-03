@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  $equipo=getenv("COMPUTERNAME");
 if (!$_GET){ $referencia="";$tipo=""; $cod_presup="";$cod_fuente="00"; $mcod_m="PAG006".$equipo;$codigo_mov=substr($mcod_m,0,49); $bloqueada="N";}
  else{$tipo_ret=$_GET["tipo_ret"];$referencia=$_GET["referencia"]; $tipo=$_GET["tipo"]; $cod_presup=$_GET["codigo"];$cod_fuente=$_GET["fuente"]; $codigo_mov=$_GET["codigo_mov"]; $bloqueada=$_GET["bloqueada"];}
 ?>
@@ -6,7 +6,7 @@ if (!$_GET){ $referencia="";$tipo=""; $cod_presup="";$cod_fuente="00"; $mcod_m="
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Modificar Retención de la Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Modificar Retenciï¿½n de la Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -30,11 +30,11 @@ function llamar_eliminar(){var murl;var r;
   r=confirm(murl);
   if(r==true){
     r=confirm("Esta Realmente seguro en Eliminar la Retencion de la Orden ?");
-    if(r==true){murl="Delete_ret_ord.php?codigo_mov=<?echo $codigo_mov?>&tipo_ret=<?echo $tipo_ret?>&tipo=<?echo $tipo?>&referencia=<?echo $referencia?>&codigo=<?echo $cod_presup?>&fuente=<?echo $cod_fuente?>";document.location=murl;}
+    if(r==true){murl="Delete_ret_ord.php?codigo_mov=<?php echo $codigo_mov?>&tipo_ret=<?php echo $tipo_ret?>&tipo=<?php echo $tipo?>&referencia=<?php echo $referencia?>&codigo=<?php echo $cod_presup?>&fuente=<?php echo $cod_fuente?>";document.location=murl;}
     }
    else { url="Cancelado, no elimino"; }
 }
-function llamar_anterior(){document.location ='Det_inc_ret_orden.php?codigo_mov=<?echo $codigo_mov?>&bloqueada=<?echo $bloqueada?>';}
+function llamar_anterior(){document.location ='Det_inc_ret_orden.php?codigo_mov=<?php echo $codigo_mov?>&bloqueada=<?php echo $bloqueada?>';}
 function chequea_tasa(mform){var mmonto;var mtasa;
    mmonto=quitaformatomonto(mform.txtmonto_objeto.value);
    mtasa=quitaformatomonto(mform.txttasa.value);
@@ -106,7 +106,7 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $concepto_ret="";$descripcion_ret="";$monto=0;$cod_ret=""; $sustraendo=0;
 $sql="SELECT * FROM COD_RET  where codigo_mov='$codigo_mov' and tipo_retencion='$tipo_ret' and ref_comp_ret='$referencia' and tipo_comp_ret='$tipo' and cod_presup_ret='$cod_presup' and fuente_fin_ret='$cod_fuente'";$res=pg_query($sql);
@@ -132,8 +132,8 @@ $tasa=formato_monto($tasa);$monto_objeto=formato_monto($monto_objeto);$monto=for
           <td><table width="732">
             <tr>
               <td width="112"><span class="Estilo5">TIPO RETENCI&Oacute;N:</span></td>
-              <td width="46"><span class="Estilo5"><input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="4" maxlength="3" value="<? echo $tipo_ret ?>"  readonly>    </span></td>
-              <td width="497"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ret" type="text" id="txtdescripcion_ret"  readonly  size="80" value="<? echo $descripcion_ret ?>">   </span></td>
+              <td width="46"><span class="Estilo5"><input class="Estilo10" name="txttipo_retencion" type="text" id="txttipo_retencion" size="4" maxlength="3" value="<?php  echo $tipo_ret ?>"  readonly>    </span></td>
+              <td width="497"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ret" type="text" id="txtdescripcion_ret"  readonly  size="80" value="<?php  echo $descripcion_ret ?>">   </span></td>
             </tr>
           </table></td>
         </tr>
@@ -142,13 +142,13 @@ $tasa=formato_monto($tasa);$monto_objeto=formato_monto($monto_objeto);$monto=for
           <td><table width="733" border="0">
             <tr>
               <td width="42"><span class="Estilo5">TASA:</span></td>
-              <td width="57"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="5" maxlength="5"  onFocus="encender(this)" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<? echo $tasa ?>" onKeypress="return validarNum(event)"> </span></td>
+              <td width="57"><span class="Estilo5"><input class="Estilo10" name="txttasa" type="text" id="txttasa" size="5" maxlength="5"  onFocus="encender(this)" onBlur="apaga_tasa(this)" onchange="chequea_tasa(this.form);" value="<?php  echo $tasa ?>" onKeypress="return validarNum(event)"> </span></td>
               <td width="90"><span class="Estilo5">SUSTRAENDO:</span></td>
-              <td width="75"><span class="Estilo5"><input class="Estilo10" name="txtsustraendo" type="text" id="txtsustraendo" size="6" maxlength="5"  readonly onchange="chequea_tasa(this.form);"  value="<?echo $sustraendo?>"  onKeypress="return validarNum(event)"> </span></td>
+              <td width="75"><span class="Estilo5"><input class="Estilo10" name="txtsustraendo" type="text" id="txtsustraendo" size="6" maxlength="5"  readonly onchange="chequea_tasa(this.form);"  value="<?php echo $sustraendo?>"  onKeypress="return validarNum(event)"> </span></td>
               <td width="111"><span class="Estilo5">MONTO OBJETO: </span></td>
-              <td width="135"><span class="Estilo5"><div id="montOb"> <input class="Estilo10" name="txtmonto_objeto" type="text" id="txtmonto_objeto" size="15" align="right" maxlength="22"  onFocus="encende_objeto(this)" onBlur="apaga_objeto(this)" value="<?echo $monto_objeto?>" onchange="chequea_objeto(this.form);" onKeypress="return validarNum(event)"> </div></span></td>
+              <td width="135"><span class="Estilo5"><div id="montOb"> <input class="Estilo10" name="txtmonto_objeto" type="text" id="txtmonto_objeto" size="15" align="right" maxlength="22"  onFocus="encende_objeto(this)" onBlur="apaga_objeto(this)" value="<?php echo $monto_objeto?>" onchange="chequea_objeto(this.form);" onKeypress="return validarNum(event)"> </div></span></td>
               <td width="83"><span class="Estilo5">RETENCI&Oacute;N:</span></td>
-              <td width="114"><span class="Estilo5"><input class="Estilo10" name="txtmonto_retencion" type="text" id="txtmonto_retencion" size="14" align="right" maxlength="22" onFocus="encende_ret(this)" onBlur="apaga_monto_ret(this)" value="<? echo $monto ?>" onKeypress="return validarNum(event)">  </span></td>
+              <td width="114"><span class="Estilo5"><input class="Estilo10" name="txtmonto_retencion" type="text" id="txtmonto_retencion" size="14" align="right" maxlength="22" onFocus="encende_ret(this)" onBlur="apaga_monto_ret(this)" value="<?php  echo $monto ?>" onKeypress="return validarNum(event)">  </span></td>
             </tr>
           </table></td>
         </tr>
@@ -156,7 +156,7 @@ $tasa=formato_monto($tasa);$monto_objeto=formato_monto($monto_objeto);$monto=for
           <td><table width="703" border="0">
               <tr>
                 <td width="175"><span class="Estilo5">C&Oacute;DIGO PRESUPUESTARIO : </span></td>
-                <td width="444"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el C0digo de la Cuenta" value="<? echo $cod_ret ?>"  size="60" maxlength="60" readonly></span></td>
+                <td width="444"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el C0digo de la Cuenta" value="<?php  echo $cod_ret ?>"  size="60" maxlength="60" readonly></span></td>
                 <td width="70">&nbsp;</td>
                 </tr>
           </table></td>
@@ -165,9 +165,9 @@ $tasa=formato_monto($tasa);$monto_objeto=formato_monto($monto_objeto);$monto=for
           <td><table width="737" border="0">
             <tr>
               <td width="145"><span class="Estilo5">CED/RIF BENEFICIARIO:</span></td>
-              <td width="153"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="20" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $ced_rif ?>"></span> </td>
+              <td width="153"><span class="Estilo5"><input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="20" maxlength="15"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $ced_rif ?>"></span> </td>
               <td width="40"><span class="Estilo5"><input class="Estilo10" name="btced_rif" type="button" id="btced_rif" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('../presupuesto/Cat_beneficiarios.php?criterio=','SIA','','750','500','true')" value="..."></span></td>
-              <td width="375"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="60" value="<? echo $nombre ?>" readonly> </span> </td>
+              <td width="375"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="60" value="<?php  echo $nombre ?>" readonly> </span> </td>
             </tr>
           </table></td>
         </tr>
@@ -180,7 +180,7 @@ $tasa=formato_monto($tasa);$monto_objeto=formato_monto($monto_objeto);$monto=for
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="20"><input name="txtdes_orden_ret" type="hidden" id="txtdes_orden_ret" ></td>
             <td width="127">&nbsp;</td>
             <td width="83" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>

@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $periodo_d=$_GET["periodo_d"];$cod_partida_d=$_GET["cod_partida_d"]; $cod_partida_h=$_GET["cod_partida_h"]; $tipo_rpt="EXCEL";$Sql="";$date = date("d-m-Y"); $hora = date("H:i:s a");  
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS","<br>"; }
+if (pg_last_error($conn)){ echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS","<br>"; }
 else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
     $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
     $sql="Select * from SIA005 where campo501='05'";  $resultado=pg_query($sql); if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];$formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"]; $mdes_cat[1]=$registro["campo505"]; $mdes_cat[2]=$registro["campo507"]; $mdes_cat[3]=$registro["campo509"]; $mdes_cat[4]=$registro["campo511"]; $mdes_cat[5]=$registro["campo513"];}
@@ -168,7 +168,7 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 		   <td width="200" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>COMPARACION  PRESUPUESTARIA Y FLUJO DE CAJA</strong></font></td>
 		 </tr>
 		  <tr height="20">
-		     <td width="200" align="left" ><strong><? echo $criterio1; ?></strong></td>
+		     <td width="200" align="left" ><strong><?php  echo $criterio1; ?></strong></td>
 		 </tr>
 		 <tr height="20" >
 		   <td width="200" height="40"  align="left" bgcolor="#A4A4A4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>PARTIDA</strong></td>
@@ -181,7 +181,7 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>RET. OTROS</strong></td>
 		   <td width="100" align="center" bgcolor="#A4A4A4"><strong>TOTAL DIFERENCIA</strong></td>
 		 </tr>      
-	  <? 
+	  <?php  
 	  $i=0;  $totalp=0; $total_presup=0; $totalr1=0;  $totalr2=0;  $totalr3=0; 
 	  $prev_monto=""; $subtotal=0; $prev_grupo=""; $prev_cod_banco=""; $prev_referencia=""; $prev_partida="";
 	  $res=pg_query($sSQL);
@@ -211,16 +211,16 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 			    $monto_ret1=formato_monto($monto_ret1); $monto_ret2=formato_monto($monto_ret2); $monto_ret3=formato_monto($monto_ret3);
                 ?>
 				  <tr>
-					  <td width="200" align="left" style="mso-number-format:'@';" ><? echo $prev_partida; ?></td>
-					  <td width="100" align="left" style="mso-number-format:'@';" ><? echo $prev_referencia; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_presup; ?></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $subtotal; ?></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_dif; ?></td>	 				  
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret1; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret2; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret3; ?></td>
+					  <td width="200" align="left" style="mso-number-format:'@';" ><?php  echo $prev_partida; ?></td>
+					  <td width="100" align="left" style="mso-number-format:'@';" ><?php  echo $prev_referencia; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_presup; ?></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $subtotal; ?></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_dif; ?></td>	 				  
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret1; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret2; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret3; ?></td>
 				  </tr>
-				<? 
+				<?php  
 		    }	 
 			if(($prev_partida<>$cod_partida)and($totalp<>0)){ $monto_dif=$total_presup-$totalp; $monto_r=$totalr1+$totalr2+$totalr3;
 			   $totalp=formato_monto($totalp); $total_presup=formato_monto($total_presup); $monto_dif=formato_monto($monto_dif);
@@ -229,17 +229,17 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 				  <tr>
 					  <td width="200" align="left"><strong>SUB-TOTAL:</strong></td>
 					  <td width="100" align="left"></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $total_presup; ?></strong></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalp; ?></strong></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $monto_dif; ?></strong></td>	 				  
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr1; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr2; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr3; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $monto_r; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $total_presup; ?></strong></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalp; ?></strong></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $monto_dif; ?></strong></td>	 				  
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr1; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr2; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr3; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $monto_r; ?></strong></td>
 				  </tr>
 				  <tr height="20">
 		          </tr>
-				<? 
+				<?php  
 			   $totalp=0; $total_presup=0; $totalr1=0;  $totalr2=0;  $totalr3=0; 
 			}				
 			$prev_monto=$monto_mov_libro; $subtotal=0; $prev_grupo=$grupo_mov;  $prev_cod_banco=$cod_banco; $prev_referencia=$referencia; $prev_partida=$cod_partida;
@@ -266,16 +266,16 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 				
                 ?>
 				  <tr>
-					  <td width="200" align="left" style="mso-number-format:'@';" ><? echo $prev_partida; ?></td>
-					  <td width="100" align="left" style="mso-number-format:'@';" ><? echo $prev_referencia; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_presup; ?></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $subtotal; ?></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_dif; ?></td>	 				  
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret1; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret2; ?></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><? echo $monto_ret3; ?></td>
+					  <td width="200" align="left" style="mso-number-format:'@';" ><?php  echo $prev_partida; ?></td>
+					  <td width="100" align="left" style="mso-number-format:'@';" ><?php  echo $prev_referencia; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_presup; ?></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $subtotal; ?></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_dif; ?></td>	 				  
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret1; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret2; ?></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><?php  echo $monto_ret3; ?></td>
 				  </tr>
-				<?   
+				<?php    
 				  $monto_dif=$total_presup-$totalp; $monto_r=$totalr1+$totalr2+$totalr3;
 			      $totalp=formato_monto($totalp); $total_presup=formato_monto($total_presup); $monto_dif=formato_monto($monto_dif);
 			      $totalr1=formato_monto($totalr1); $totalr2=formato_monto($totalr2); $totalr3=formato_monto($totalr3); $monto_r=formato_monto($monto_r);
@@ -284,19 +284,19 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="
 					 
 			          <td width="200" align="left"><strong>SUB-TOTAL:</strong></td>
 					  <td width="100" align="left"></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $total_presup; ?></strong></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalp; ?></strong></td>	
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $monto_dif; ?></strong></td>	 				  
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr1; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr2; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $totalr3; ?></strong></td>
-					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><? echo $monto_r; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $total_presup; ?></strong></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalp; ?></strong></td>	
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $monto_dif; ?></strong></td>	 				  
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr1; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr2; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $totalr3; ?></strong></td>
+					  <td width="100" align="right" style="mso-number-format:'#,###,##0.00';"><strong><?php  echo $monto_r; ?></strong></td>
 				  </tr>
-				<? 
+				<?php  
 		}	 
 	  
 	 
 	
     }	
 }
- pg_close();
+ pg_close($conn);

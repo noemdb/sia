@@ -1,14 +1,14 @@
-<?include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
  $periodo=$_GET["periodo"];  $cod_cuenta_d=$_GET["cod_cuenta_d"]; $cod_cuenta_h=$_GET["cod_cuenta_h"]; $tipo_res=$_GET["tipo_res"];
  $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
- if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";} }
+ if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";} }
  $fecha_d=Armar_Fecha($periodo, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo, 2, $Fec_Ini_Ejer);
  $criterio1="Desde ".$fecha_d." Al ".$fecha_h; $Sql="";
  if($fecha_d==""){$sfecha_d="2011-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);} if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 
 $nro_linea=0; $cod_cuenta=""; $nom_cuenta=""; $c=0;  $prev_cuenta=""; $prev_fecha=""; $prev_deb_cre=""; 
 $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','6')"; $resultado=pg_exec($conn,$Sql);$error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
-if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 else{ 
 
  $criterio=" (con003.cod_cuenta>='".$cod_cuenta_d."'and con003.cod_cuenta<='".$cod_cuenta_h."') and (con002.fecha>='".$sfecha_d."'and con002.fecha<='".$sfecha_h."') ";
@@ -454,4 +454,4 @@ if($tipo_res=="R"){
 
 }
  
- pg_close();?>
+ pg_close($conn);?>

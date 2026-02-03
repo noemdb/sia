@@ -1,4 +1,4 @@
-<? 
+<?php  
 // C:\AppServ\www\sia\nomina
 $target_path = "c:/uploads/";
 $target_path = "c:/AppServ/www/sia/nomina/";

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");   $nro_orden=$_GET["orden"];  $codigo_mov=$_GET["codigo_mov"];
+<?php include ("../class/conect.php");  include ("../class/funciones.php");   $nro_orden=$_GET["orden"];  $codigo_mov=$_GET["codigo_mov"];
 $monto_a=$_GET["monto"];  $monto_a=formato_numero($monto_a); if(is_numeric($monto_a)){$monto_a=$monto_a;} else{$monto_a=0;}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $codc_banco="";
 $resta_abono=$monto_a; $monto_abono=0;
@@ -15,4 +15,4 @@ while($registro=pg_fetch_array($res)){ $monto=$registro["monto"]; $monto_presup=
 	$resultado=pg_exec($conn,"SELECT  MOD_MONTO_PRE026('$codigo_mov','$cod_presup','$cod_fuente','$referencia_comp','$tipo_compromiso','$ref_imput_presu',$m_cod,$monto_c)"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); 	
   } else{$resultado=pg_exec($conn,"SELECT  MOD_MONTO_PRE026('$codigo_mov','$cod_presup','$cod_fuente','$referencia_comp','$tipo_compromiso','$ref_imput_presu',0,0)"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); }
 }	
-?><iframe src="Det_inc_cod_chqp.php?codigo_mov=<?echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0"></iframe>
+?><iframe src="Det_inc_cod_chqp.php?codigo_mov=<?php echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0"></iframe>

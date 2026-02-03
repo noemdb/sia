@@ -3,7 +3,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Fuentes de Financiamiento)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Fuentes de Financiamiento)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type="text/javascript"></SCRIPT>
@@ -19,7 +19,7 @@ MM_reloadPage(true);
 function LlamarURL(url){  document.location = url; }
 function revisar(){var f=document.form1;var Valido;
     if(f.txtCodigo_Fuente.value==""){alert("COdigo de Fuente no puede estar Vacio");return false;}
-    if(f.txtNombre_Fuente.value==""){alert("Denominación de Fuente no puede estar Vacia"); return false; }
+    if(f.txtNombre_Fuente.value==""){alert("Denominaciï¿½n de Fuente no puede estar Vacia"); return false; }
        else{f.txtNombre_Fuente.value=f.txtNombre_Fuente.value.toUpperCase();} 
     if(f.txtCodigo_Fuente.value.length==2){f.txtCodigo_Fuente.value=f.txtCodigo_Fuente.value.toUpperCase();}
        else{alert("Longitud COdigo de Fuente Invalida");return false;}      

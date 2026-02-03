@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");
+<?php include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");
 if (!$_GET){ $cod_empleado_d=''; $cod_empleado_h='';} else {  $cod_empleado_d= $_GET["cod_empleado_d"];$cod_empleado_h= $_GET["cod_empleado_h"];
    $tipo_nominad=$_GET["tipo_nominad"];   $tipo_nominah=$_GET["tipo_nominah"];   $cedula_d=$_GET["cedula_d"];   $cedula_h=$_GET["cedula_h"];
    $sexo=$_GET["sexo"];   $estado_civil=$_GET["estado_civil"];   $fecha_d=$_GET["fecha_d"];   $fecha_h=$_GET["fecha_h"];
@@ -39,7 +39,7 @@ H1.SaltoDePagina{PAGE-BREAK-AFTER: always}
 </style>
 </head>
 <body>
-<? $crit_st="and sexo ='".$sexo."' and edo_civil='".$estado_civil."' and  status ='".$estatus."'"; $crit_st="";
+<?php  $crit_st="and sexo ='".$sexo."' and edo_civil='".$estado_civil."' and  status ='".$estatus."'"; $crit_st="";
    if($sexo<>"TODOS"){$crit_st=$crit_st."and sexo ='".$sexo."' ";}
    if($estado_civil<>"TODOS"){$crit_st=$crit_st."and edo_civil='".$estado_civil."' ";}
    if($estatus<>"TODOS"){if($estatus=="ACTIVO/VACACIONES/PERMISO"){ $crit_st=$crit_st."and (Status='ACTIVO' or Status='VACACIONES' or Status='PERMISO')";}	 else{$crit_st=$crit_st."and status='".$estatus."'";}   }
@@ -49,7 +49,7 @@ H1.SaltoDePagina{PAGE-BREAK-AFTER: always}
    if (!(empty($fecha_ingreso_h))){$ano1=substr($fecha_ingreso_h,6,9);$mes1=substr($fecha_ingreso_h,3,2);$dia1=substr($fecha_ingreso_h,0,2);} else{$fecha_ingreso_h='';} $fecha_hasta_ing=$ano1.$mes1.$dia1;
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT * From TRABAJADORES where tipo_nomina>='".$tipo_nominad."' and tipo_nomina<='".$tipo_nominah."' and  cod_empleado>='".$cod_empleado_d."' and cod_empleado<='".$cod_empleado_h."' and
      cedula>='".$cedula_d."' and cedula<='".$cedula_h."' and cod_cargo>='".$codigo_cargo_d."' and cod_cargo<='".$codigo_cargo_h."' and
 	 cod_departam>='".$codigo_departamentod."' and cod_departam<='".$codigo_departamentoh."' and fecha_nacimiento>='".$fecha_desde."' and fecha_nacimiento<='".$fecha_hasta."'and
@@ -84,7 +84,7 @@ while($registro=pg_fetch_array($res)){  $cod_empleado=$registro["cod_empleado"];
  ?> 
 <table width="981" height="292" border="1" cellpadding="0" cellspacing="0">
 <tr><td height="291"><table width="980" border="0"  height="291" cellpadding="0" cellspacing="0">
-<?include ("encabezado_hoja_vida.php"); ?>  
+<?php include ("encabezado_hoja_vida.php"); ?>  
 </tr>
     <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr> <td><div align="center" class="Estilo88">INFORMACION ASIGNACION DE LOS CARGOS</div></td> </tr>
@@ -101,22 +101,22 @@ while($registro=pg_fetch_array($res)){  $cod_empleado=$registro["cod_empleado"];
       </tr>
     </table></td>
 </tr>
-<?$sqlc="SELECT * FROM ASIG_CARGO  where cod_empleado='$cod_empleado' order by fecha_asigna"; $resc=pg_query($sqlc);
+<?php $sqlc="SELECT * FROM ASIG_CARGO  where cod_empleado='$cod_empleado' order by fecha_asigna"; $resc=pg_query($sqlc);
 while($reg=pg_fetch_array($resc)){$sfecha=$reg["fecha_asigna"]; $fechaa=formato_ddmmaaaa($sfecha);  $sueldo=formato_monto($reg["sueldo"]); $monto_c=formato_monto($reg["compensacion"]);  
 $cod_cargo=$reg["cod_cargo"]; $des_cargo=$reg["des_cargo"]; $cod_departamento=$reg["cod_departamento"]; $des_departamento=$reg["des_departamento"];;
 ?>
   <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-         <td width="106"><span class="Estilo17"><?echo $cod_cargo ?></span></td>
-         <td width="242"><span class="Estilo17"><?echo $des_cargo ?></span></td>
-	     <td width="86"><span class="Estilo17"><?echo $cod_departamento ?></span></td>
-	     <td width="285"><span class="Estilo17"><?echo $des_departamento ?></span></td>
-	     <td width="108"><span class="Estilo17"><?echo $fechaa ?></span></td>
-		 <td width="129" align="right"><span class="Estilo17"><?echo $sueldo ?></span></td>
+         <td width="106"><span class="Estilo17"><?php echo $cod_cargo ?></span></td>
+         <td width="242"><span class="Estilo17"><?php echo $des_cargo ?></span></td>
+	     <td width="86"><span class="Estilo17"><?php echo $cod_departamento ?></span></td>
+	     <td width="285"><span class="Estilo17"><?php echo $des_departamento ?></span></td>
+	     <td width="108"><span class="Estilo17"><?php echo $fechaa ?></span></td>
+		 <td width="129" align="right"><span class="Estilo17"><?php echo $sueldo ?></span></td>
       </tr>
     </table></td>
   </tr>
-<?}
+<?php }
 $sqlc="SELECT * FROM NOM009 where cod_empleado='$cod_empleado' order by ci_partida"; $resc=pg_query($sqlc); $filas=pg_num_rows($resc);
 if($filas>=1){
 ?>
@@ -136,20 +136,20 @@ if($filas>=1){
       </tr>
     </table></td>
 </tr>
-<?
+<?php 
 while($reg=pg_fetch_array($resc)){  $sfecha=$reg["fecha_nac"];  $fecha=formato_ddmmaaaa($sfecha); ?>
    <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-        <td width="110" align="left"><span class="Estilo17"><? echo $reg["ci_partida"]; ?></span></td>
-        <td width="445" align="left"><span class="Estilo17"><? echo $reg["nombre"]; ?></span></td>
-        <td width="110" align="left"><span class="Estilo17"><? echo $reg["parentesco"]; ?></span></td>
-        <td width="85" align="left"><span class="Estilo17"><? echo $reg["sexo"]; ?></span></td>
-        <td width="120" align="left"><span class="Estilo17"><? echo $fecha; ?></span></td>
-        <td width="90" align="right"><span class="Estilo17"><? echo $reg["edad"]; ?></span></td>
+        <td width="110" align="left"><span class="Estilo17"><?php  echo $reg["ci_partida"]; ?></span></td>
+        <td width="445" align="left"><span class="Estilo17"><?php  echo $reg["nombre"]; ?></span></td>
+        <td width="110" align="left"><span class="Estilo17"><?php  echo $reg["parentesco"]; ?></span></td>
+        <td width="85" align="left"><span class="Estilo17"><?php  echo $reg["sexo"]; ?></span></td>
+        <td width="120" align="left"><span class="Estilo17"><?php  echo $fecha; ?></span></td>
+        <td width="90" align="right"><span class="Estilo17"><?php  echo $reg["edad"]; ?></span></td>
      </tr>
     </table></td>
   </tr>
-<?} }
+<?php } }
 $sqlc="SELECT * FROM NOM010  where cod_empleado='$cod_empleado' order by fecha_desde"; $resc=pg_query($sqlc); $filas=pg_num_rows($resc);
 if($filas>=1){
 ?>
@@ -169,20 +169,20 @@ if($filas>=1){
       </tr>
     </table></td>
 </tr>
-<?
+<?php 
 while($reg=pg_fetch_array($resc)){  $sfecha=$reg["fecha_desde"]; $fechad=formato_ddmmaaaa($sfecha); $sfecha=$reg["fecha_hasta"]; $fechah=formato_ddmmaaaa($sfecha); $monto_s=formato_monto($reg["sueldo"]); ?>
    <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-        <td width="100" align="left"><span class="Estilo17"><? echo $fechad; ?></span></td>
-        <td width="100" align="left"><span class="Estilo17"><? echo $fechah; ?></span></td>
-        <td width="300" align="left"><span class="Estilo17"><? echo $reg["empresa"]; ?></span></td>
-        <td width="195" align="left"><span class="Estilo17"><? echo $reg["departamento"]; ?></span></td>
-        <td width="175" align="left"><span class="Estilo17"><? echo $reg["cargo"]; ?></span></td>
-        <td width="90" align="right"><span class="Estilo17"><? echo $monto_s; ?></span></td>
+        <td width="100" align="left"><span class="Estilo17"><?php  echo $fechad; ?></span></td>
+        <td width="100" align="left"><span class="Estilo17"><?php  echo $fechah; ?></span></td>
+        <td width="300" align="left"><span class="Estilo17"><?php  echo $reg["empresa"]; ?></span></td>
+        <td width="195" align="left"><span class="Estilo17"><?php  echo $reg["departamento"]; ?></span></td>
+        <td width="175" align="left"><span class="Estilo17"><?php  echo $reg["cargo"]; ?></span></td>
+        <td width="90" align="right"><span class="Estilo17"><?php  echo $monto_s; ?></span></td>
      </tr>
     </table></td>
   </tr>
-<?} }
+<?php } }
 $sqlc="SELECT * FROM NOM014  where cod_empleado='$cod_empleado' order by fecha"; $resc=pg_query($sqlc); $filas=pg_num_rows($resc);
 if($filas>=1){
 ?>
@@ -200,22 +200,22 @@ if($filas>=1){
       </tr>
     </table></td>
 </tr>
-<?
+<?php 
 while($reg=pg_fetch_array($resc)){  $sfecha=$reg["fecha"]; $fecha=formato_ddmmaaaa($sfecha); ?>
    <tr><td height="25"><table width="1006" border="1"  height="30" cellpadding="3" cellspacing="0">
     <tr>
-        <td width="100" align="left"><span class="Estilo17"><? echo $fecha; ?></span></td>
-        <td width="400" align="left"><span class="Estilo17"><? echo $reg["titulo"]; ?></span></td>
-        <td width="200" align="left"><span class="Estilo17"><? echo $reg["instituto"]; ?></span></td>
-        <td width="260" align="left"><span class="Estilo17"><? echo $reg["descripcion"]; ?></span></td>
+        <td width="100" align="left"><span class="Estilo17"><?php  echo $fecha; ?></span></td>
+        <td width="400" align="left"><span class="Estilo17"><?php  echo $reg["titulo"]; ?></span></td>
+        <td width="200" align="left"><span class="Estilo17"><?php  echo $reg["instituto"]; ?></span></td>
+        <td width="260" align="left"><span class="Estilo17"><?php  echo $reg["descripcion"]; ?></span></td>
      </tr>
     </table></td>
   </tr>
-<?} }?>
+<?php } }?>
 </table></td></tr>
 </table>
 <H1 class=SaltoDePagina> </H1>  
-<? }?>
+<?php }?>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

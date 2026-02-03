@@ -68,21 +68,21 @@ function verifica_disponibilidad($mconn,$mcodigo,$mfuente,$mfecha,$amonto){
 		 //echo "Codigo:".$mcodigo." ".$i." Fuente:".$mfuente." Disponible:".$disponible." Diferido:".$disponibleD.' Mes:'.$nmes.' Compromiso:'.$temp_compromiso.'  '.$amonto.'  '.$diferido.' '.$temp_diferido,"<br>";
        }
     }
- }else{$mvalor=1; echo "Codigo:".$mcodigo." Fuente:".$mfuente,"<br>"; ?> <script language="JavaScript">muestra('CODIGO PRESUPUESTARIO NO EXISTE');</script> <? }
+ }else{$mvalor=1; echo "Codigo:".$mcodigo." Fuente:".$mfuente,"<br>"; ?> <script language="JavaScript">muestra('CODIGO PRESUPUESTARIO NO EXISTE');</script> <?php }
  if ($mvalor==0){ $mdiferencia=abs($disponibleG-$amonto);
     if (($amonto>$disponibleG) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleG; $dispon=formato_monto($dispon);  $disponD=$disponibleDG; $disponD=formato_monto($disponD); echo "Codigo:".$mcodigo." Fuente:".$mfuente;
-       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global, \ncon Disponibilidad Actual: <? echo $dispon; ?> , Disponibilidad Actual Diferida: <? echo $disponD; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global, \ncon Disponibilidad Actual: <?php  echo $dispon; ?> , Disponibilidad Actual Diferida: <?php  echo $disponD; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      else{$mdiferencia=abs($disponible-$amonto);
        if (($amonto>$disponible) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponible; $dispon=formato_monto($dispon); $disponD=$disponibleD; $disponD=formato_monto($disponD); echo "Codigo:".$mcodigo." Fuente:".$mfuente;
-         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion, \ncon Disponibilidad Actual: <? echo $dispon; ?> , Disponibilidad Actual Diferida: <? echo $disponD; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion, \ncon Disponibilidad Actual: <?php  echo $dispon; ?> , Disponibilidad Actual Diferida: <?php  echo $disponD; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      }
  }
  if ($mvalor==0){ $mdiferencia=abs($disponibleDG-$amonto);
     if (($amonto>$disponibleDG) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleDG; $dispon=formato_monto($dispon);
-       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global Diferida, \ncon Disponibilidad Actual Diferida: <? echo $dispon; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global Diferida, \ncon Disponibilidad Actual Diferida: <?php  echo $dispon; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      else{$mdiferencia=abs($disponibleD-$amonto);
        if (($amonto>$disponibleD) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleD; $dispon=formato_monto($dispon);
-         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion Diferida, \ncon Disponibilidad Actual Diferida: <? echo $dispon; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion Diferida, \ncon Disponibilidad Actual Diferida: <?php  echo $dispon; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      }
  }
  return $mvalor;
@@ -123,21 +123,21 @@ function verifica_disponibilidad_dif($mconn,$mcodigo,$mfuente,$mfecha,$amonto,$d
        }
 	   $diferido=$diferido-$dmonto; $disponibleD=$disponible-$diferido;
     }
- }else{$mvalor=1; echo "Codigo:".$mcodigo." Fuente:".$mfuente,"<br>"; ?> <script language="JavaScript">muestra('CODIGO PRESUPUESTARIO NO EXISTE');</script> <? }
+ }else{$mvalor=1; echo "Codigo:".$mcodigo." Fuente:".$mfuente,"<br>"; ?> <script language="JavaScript">muestra('CODIGO PRESUPUESTARIO NO EXISTE');</script> <?php }
  if ($mvalor==0){ $mdiferencia=abs($disponibleG-$amonto);
     if (($amonto>$disponibleG) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleG; $dispon=formato_monto($dispon);  $disponD=$disponibleDG; $disponD=formato_monto($disponD); echo "Codigo:".$mcodigo." Fuente:".$mfuente;
-       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global, \ncon Disponibilidad Actual: <? echo $dispon; ?> , Disponibilidad Actual Diferida: <? echo $disponD; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global, \ncon Disponibilidad Actual: <?php  echo $dispon; ?> , Disponibilidad Actual Diferida: <?php  echo $disponD; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      else{$mdiferencia=abs($disponible-$amonto);
        if (($amonto>$disponible) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponible; $dispon=formato_monto($dispon); $disponD=$disponibleD; $disponD=formato_monto($disponD); echo "Codigo:".$mcodigo." Fuente:".$mfuente;
-         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion, \ncon Disponibilidad Actual: <? echo $dispon; ?> , Disponibilidad Actual Diferida: <? echo $disponD; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion, \ncon Disponibilidad Actual: <?php  echo $dispon; ?> , Disponibilidad Actual Diferida: <?php  echo $disponD; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      }
  }
  if ($mvalor==0){ $mdiferencia=abs($disponibleDG-$amonto);
     if (($amonto>$disponibleDG) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleDG; $dispon=formato_monto($dispon);
-       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global Diferida, \ncon Disponibilidad Actual Diferida: <? echo $dispon; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+       ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad Global Diferida, \ncon Disponibilidad Actual Diferida: <?php  echo $dispon; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      else{$mdiferencia=abs($disponibleD-$amonto);
        if (($amonto>$disponibleD) And ($mdiferencia>0.009)){ $mvalor=1; $dispon=$disponibleD; $dispon=formato_monto($dispon);
-         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion Diferida, \ncon Disponibilidad Actual Diferida: <? echo $dispon; ?> \n Requiere: <? echo $fmonto; ?>');</script><?}
+         ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad de Distribucion Diferida, \ncon Disponibilidad Actual Diferida: <?php  echo $dispon; ?> \n Requiere: <?php  echo $fmonto; ?>');</script><?php }
      }
  }
  return $mvalor;

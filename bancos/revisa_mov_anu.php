@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
 $cod_banco="0005";
 echo "ESPERE POR FAVOR REVISANDO ANULADOS....","<br>";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
@@ -52,5 +52,5 @@ while($reg=pg_fetch_array($res)){ $cod_banco=$reg["cod_banco"]; $tipo_mov=$reg["
 }$tabla.="</table>";
 echo $tabla;
 
-pg_close(); error_reporting(E_ALL ^ E_WARNING); 
+pg_close($conn); error_reporting(E_ALL ^ E_WARNING); 
 ?>

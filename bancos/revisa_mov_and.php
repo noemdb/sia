@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
 echo "ESPERE POR FAVOR REVISANDO MOVIMIENTOS....","<br>";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 
@@ -47,5 +47,5 @@ while($reg=pg_fetch_array($res)){
 $tabla.="</table>";
 echo $tabla;
 
-pg_close(); error_reporting(E_ALL ^ E_WARNING); 
+pg_close($conn); error_reporting(E_ALL ^ E_WARNING); 
 ?>

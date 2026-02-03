@@ -1,4 +1,4 @@
-<?error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  
+<?php error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  
 $tipo_retencion_d=$_GET["tipo_retencion_d"];$tipo_retencion_h=$_GET["tipo_retencion_h"];$nro_orden_d=$_GET["numero_orden_d"];$nro_orden_h=$_GET["numero_orden_h"];
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $status_orden=$_GET["status_orden"]; $tipo_rpt=$_GET["tipo_rpt"];
 $criterio1="FECHA DESDE: ".$fecha_d." AL: ".$fecha_h;  $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
@@ -49,7 +49,7 @@ $sformula="";
    return $ret_st;
  }
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $sSQL = "SELECT pag004.aux_orden, pag001.Fecha, pag001.Concepto,pag004.Monto_Retencion, pag001.Ced_Rif, PRE099.Nombre, pag001.Status,
               pag001.anulado, pag001.fecha_anulado, pag004.tipo_Retencion,pag004.nro_Orden_Ret, pag001.Fecha_Cheque, pag004.Monto_Objeto_Ret,
@@ -149,7 +149,7 @@ else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os==
 		 <tr height="20">
 		   <td width="100" align="left" ><strong></strong></td>
 		   <td width="50" align="left" ><strong></strong></td>
-		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -158,7 +158,7 @@ else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os==
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>ESTATUS</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $aux_orden=$registro["aux_orden"];  $tipo_retencion=$registro["tipo_retencion"]; $fecha=$registro["fecha"]; $concepto=$registro["concepto"]; 
@@ -170,13 +170,13 @@ else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os==
 		   $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	?>	   
          <tr>
-           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $aux_orden; ?></td>
-           <td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $tipo_retencion; ?></td>
-           <td width="400" align="justify"><? echo $concepto; ?></td>
-           <td width="100" align="right"><? echo $monto_retencion; ?></td>
-           <td width="100" align="center"><? echo $st_orden; ?></td>
+           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $aux_orden; ?></td>
+           <td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $tipo_retencion; ?></td>
+           <td width="400" align="justify"><?php  echo $concepto; ?></td>
+           <td width="100" align="right"><?php  echo $monto_retencion; ?></td>
+           <td width="100" align="center"><?php  echo $st_orden; ?></td>
          </tr>
-	<? }  $total=formato_monto($total);  ?>
+	<?php }  $total=formato_monto($total);  ?>
 	   <tr>
         <td>&nbsp;</td>
       </tr>
@@ -184,11 +184,11 @@ else{  $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os==
         <td width="100"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong></strong></td>
 		<td width="50"></td>	
 		<td width="400" align="right"><strong>TOTAL GENERAL: </strong></td>
-		<td width="100" align="right"><strong><? echo $total; ?></strong></td>
+		<td width="100" align="right"><strong><?php  echo $total; ?></strong></td>
 		<td width="100" align="right"></font></td>
       </tr>
       
-	  </table><?
+	  </table><?php 
 	}
 
    }

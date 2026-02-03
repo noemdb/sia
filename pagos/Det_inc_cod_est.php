@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$codigo_mov='';}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -41,10 +41,10 @@ function Llamar_inicializar(codigo_mov){var url; var r;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="220" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Codigo a la Estructura" onclick="javascript:LlamarURL('Inc_codigo_est.php?codigo_mov=<?echo $codigo_mov?>')"></td>
-            <td width="220" align="center" valign="middle"><input name="btInicializar" type="button" id="btInicializar" value="Cambiar Orden" title="Colocar Montos en Cero" onclick="javascript:Llamar_cambiar_orden('<?echo $codigo_mov?>')"></td>
+            <td width="220" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Codigo a la Estructura" onclick="javascript:LlamarURL('Inc_codigo_est.php?codigo_mov=<?php echo $codigo_mov?>')"></td>
+            <td width="220" align="center" valign="middle"><input name="btInicializar" type="button" id="btInicializar" value="Cambiar Orden" title="Colocar Montos en Cero" onclick="javascript:Llamar_cambiar_orden('<?php echo $codigo_mov?>')"></td>
             
-            <td width="220" align="center" valign="middle"><input name="btInicializar" type="button" id="btInicializar" value="Colocar Montos en Cero" title="Colocar Montos en Cero" onclick="javascript:Llamar_inicializar('<?echo $codigo_mov?>')"></td>
+            <td width="220" align="center" valign="middle"><input name="btInicializar" type="button" id="btInicializar" value="Colocar Montos en Cero" title="Colocar Montos en Cero" onclick="javascript:Llamar_inicializar('<?php echo $codigo_mov?>')"></td>
             <td width="220" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar los Conceptos del Cálculo"></td>
           </tr>
       </table></td>
@@ -67,22 +67,22 @@ $sql="SELECT * FROM CODIGOS_PRE026 where codigo_mov='$codigo_mov' order by cod_p
 		   <td width="120" align="left" bgcolor="#99CCFF" ><strong>Tipo Imputacion</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF" ><strong>Referencia Cred.</strong></td>
          </tr>
-         <? $total=0;
+         <?php  $total=0;
 while($registro=pg_fetch_array($res)){ $monto=$registro["monto"]; $monto=formato_monto($monto);$total=$total+$registro["monto"];
 $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["ref_imput_presu"];
   if($tipo_imput_presu=="P"){$tipo_imput_presu="PRESUPUESTO";}else{$tipo_imput_presu="CRED. ADICIONAL";}
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["tipo_compromiso"]; ?>','<? echo $registro["referencia_comp"]; ?>','<? echo $registro["cod_presup"]; ?>','<? echo $registro["fuente_financ"]; ?>','<? echo $registro["ref_imput_presu"]; ?>');">
-           <td width="50" align="left"><? echo $registro["tipo_compromiso"]; ?></td>
-           <td width="80" align="left"><? echo $registro["referencia_comp"]; ?></td>
-           <td width="200" align="left"><? echo $registro["cod_presup"]; ?></td>
-           <td width="40" align="left"><? echo $registro["fuente_financ"]; ?></td>
-           <td width="370" align="left"><? echo $registro["denominacion"]; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-		   <td width="120" align="left"><? echo $tipo_imput_presu; ?></td>
-           <td width="100" align="left"><? echo $ref_imput_presu; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["tipo_compromiso"]; ?>','<?php  echo $registro["referencia_comp"]; ?>','<?php  echo $registro["cod_presup"]; ?>','<?php  echo $registro["fuente_financ"]; ?>','<?php  echo $registro["ref_imput_presu"]; ?>');">
+           <td width="50" align="left"><?php  echo $registro["tipo_compromiso"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["referencia_comp"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["cod_presup"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["fuente_financ"]; ?></td>
+           <td width="370" align="left"><?php  echo $registro["denominacion"]; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+		   <td width="120" align="left"><?php  echo $tipo_imput_presu; ?></td>
+           <td width="100" align="left"><?php  echo $ref_imput_presu; ?></td>
          </tr>
-         <?}
+         <?php }
  $total=formato_monto($total);
 ?>
        </table></td>
@@ -97,7 +97,7 @@ $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["re
          <td width="388">&nbsp;</td>
          <td width="132"><span class="Estilo5">TOTAL CoDIGOS:</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
-         <tr><td align="right" class="Estilo5"><? echo $total; ?></td> </tr>
+         <tr><td align="right" class="Estilo5"><?php  echo $total; ?></td> </tr>
          </table></td>
        </tr>
      </table></td>
@@ -106,6 +106,6 @@ $tipo_imput_presu=$registro["tipo_imput_presu"];  $ref_imput_presu=$registro["re
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

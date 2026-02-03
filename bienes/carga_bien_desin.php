@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc"); $cod_modulo="13"; $error=0;
+<?php include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc"); $cod_modulo="13"; $error=0;
 $equipo=getenv("COMPUTERNAME"); $cod_bien_mue=$_POST["txtcod_bien_mue"];  $fecha_hoy=asigna_fecha_hoy();
 ?>
 <html>
@@ -8,8 +8,8 @@ function Llamar_Inc_Calculo(mop){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
 $cod_clasificacion=""; $num_bien="";$denominacion=""; $cod_dependencia=""; $cod_empresa=""; $cod_direccion=""; $cod_departamento=""; $ced_responsable=""; $fecha_actualizacion=""; $denomina_tipo="";
 $ced_responsable_uso="";$cod_metodo_rot="";$ced_rotulador=""; $fecha_rotulacion="";$direccion=""; $cod_region=""; $cod_entidad=""; $cod_municipio=""; $cod_ciudad=""; $cod_parroquia=""; $cod_postal="";$caracteristicas="";$marca="";  $modelo="";$color="";$matricula="";$serial1="";$serial2="";$tipo_clase="";$uso="";$dimension_tam="";$material="";$codigo_alterno="";$ano=""; $antiguedad="";$cod_contablea="";$cod_contabled="";$tipo_depreciacion="";$tasa_deprec=""; $vida_util=""; $valor_residual=""; $sit_contable="";$sit_legal=""; $edo_conservacion="";$ced_verificador=""; $fecha_verificacion=""; $tipo_incorporacion=""; $cod_imp_presup=""; $nom_imp_presup="";$des_imp_nopresup=""; $fecha_incorporacion=""; $valor_incorporacion="";$garantia="";$nro_oc=""; $fecha_oc=""; $nro_op=""; $fecha_op=""; $tipo_doc_cancela=""; $nro_doc_cancela=""; $fecha_doc_cancela="";$ced_rif_proveedor=""; $codigo_tipo_incorp=""; $nom_proveedor=""; $cod_presup_dep=""; $monto_depreciado=""; $nro_factura=""; $fecha_factura=""; $desincorporado=""; $fecha_desincorporado="";$des_desincorporado="";$bien_en_salida="";$status_bien_inm=""; $usuario_sia=""; $inf_usuario="";$accesorios="";  $descripcion_b="";  $denominacion_empresa=""; $denominacion_dependencia=""; $denominacion_dir="";$denominacion_dep="";  $nombre_res="";  $nombre_res_uso="";  $metodo_rotula="";  $nombre_res_rotu="";$nombre_region="";  $estado="";  $nombre_municipio=""; $nombre_ciudad="";  $nombre_parroquia=""; $tipo_situacion_cont="";  $tipo_situacion_legal=""; $edo_bien="";  $nombre_res_ver="";
 $sql="Select * from BIEN015 where cod_bien_mue='$cod_bien_mue'"; $res=pg_query($sql);$filas=pg_num_rows($res);
@@ -96,7 +96,7 @@ $sql="Select * from SIA005 where campo501='$cod_modulo'";$resultado=pg_query($sq
 if($registro=pg_fetch_array($resultado,0)){$cod_modulo=$registro["campo501"]; $campo502=$registro["campo502"]; $periodo=$registro["campo503"]; 
 $formato_bien=$registro["campo504"];$long_num_bien=$registro["campo549"];$doc_caus_inm=$registro["campo509"]; $doc_caus_mue=$registro["campo510"]; $doc_caus_sem=$registro["campo511"];}
 $num_bien_unico=substr($campo502,3,1);  $mod_solo_transf=substr($campo502,6,1);
-if($desincorporado=="S"){$desincorporado="SI"; $error=1; ?> <script language="JavaScript"> muestra('BIEN ESTA DESINCORPORADO');</script><?}else{$desincorporado="NO";}
+if($desincorporado=="S"){$desincorporado="SI"; $error=1; ?> <script language="JavaScript"> muestra('BIEN ESTA DESINCORPORADO');</script><?php }else{$desincorporado="NO";}
 
 ECHO $desincorporado;
 
@@ -104,37 +104,37 @@ ECHO $desincorporado;
 <form name="form2" method="post" action="Inc_des_bien_correcion.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>	 
-     <td width="5"><input name="txtcod_clasificacion" type="hidden" id="txtcod_clasificacion" value="<?echo $cod_clasificacion?>" ></td>	 
-	 <td width="5"><input name="txtnom_clasificacion" type="hidden" id="txtnom_clasificacion" value="<?echo $descripcion_b?>"></td>	 
-	 <td width="5"><input name="txtnum_bien" type="hidden" id="txtnum_bien" value="<?echo $num_bien?>"></td>	 
-	 <td width="5"><input name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue" value="<?echo $cod_bien_mue?>"></td>
-	 <td width="5"><input name="txtdenominacion" type="hidden" id="txtdenominacion" value="<?echo $denominacion?>"></td>
-    <td width="5"><input name="txtcod_dependencia" type="hidden" id="txtcod_dependencia"  value="<?echo $cod_dependencia?>"></td>
-    <td width="5"><input name="txtdenominacion_dep" type="hidden" id="txtdenominacion_dep"  value="<?echo $denominacion_dependencia?>"></td>
-    <td width="5"><input name="txtcod_direccion" type="hidden" id="txtcod_direccion"  value="<?echo $cod_direccion?>"></td>
-    <td width="5"><input name="txtdenominacion_dir" type="hidden" id="txtdenominacion_dir"  value="<?echo $denominacion_dir?>"></td>
-    <td width="5"><input name="txtcod_departamento" type="hidden" id="txtcod_departamento"  value="<?echo $cod_departamento?>"></td>
-    <td width="5"><input name="txtdenominacion_depart" type="hidden" id="txtdenominacion_depart"   value="<?echo $denominacion_dep?>"></td>
-    <td width="5"><input name="txtcodigo_tipo_incorp" type="hidden" id="txtcodigo_tipo_incorp"  value="<?echo $codigo_tipo_incorp?>"></td>
-    <td width="5"><input name="txtdenomina_tipo" type="hidden" id="txtdenomina_tipo"  value="<?echo $denomina_tipo?>"></td>
-    <td width="5"><input name="txttipo_incorporacion" type="hidden" id="txttipo_incorporacion"  value="<?echo $tipo_incorporacion?>"></td>
-    <td width="5"><input name="txtcod_imp_presup" type="hidden" id="txtcod_imp_presup" value="<?echo $cod_imp_presup?>"></td>      
-    <td width="5"><input name="txtnom_imp_presup" type="hidden" id="txtnom_imp_presup" value="<?echo $nom_imp_presup?>"></td>
-    <td width="5"><input name="txtvalor_incorporacion" type="hidden" id="txtvalor_incorporacion" value="<?echo $valor_incorporacion?>"></td>
-    <td width="5"><input name="txtfecha_incorporacion" type="hidden" id="txtfecha_incorporacion"  value="<?echo $fecha_incorporacion?>"></td>
-    <td width="5"><input name="txtgarantia" type="hidden" id="txtgarantia" value="<?echo $garantia?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>	 
+     <td width="5"><input name="txtcod_clasificacion" type="hidden" id="txtcod_clasificacion" value="<?php echo $cod_clasificacion?>" ></td>	 
+	 <td width="5"><input name="txtnom_clasificacion" type="hidden" id="txtnom_clasificacion" value="<?php echo $descripcion_b?>"></td>	 
+	 <td width="5"><input name="txtnum_bien" type="hidden" id="txtnum_bien" value="<?php echo $num_bien?>"></td>	 
+	 <td width="5"><input name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue" value="<?php echo $cod_bien_mue?>"></td>
+	 <td width="5"><input name="txtdenominacion" type="hidden" id="txtdenominacion" value="<?php echo $denominacion?>"></td>
+    <td width="5"><input name="txtcod_dependencia" type="hidden" id="txtcod_dependencia"  value="<?php echo $cod_dependencia?>"></td>
+    <td width="5"><input name="txtdenominacion_dep" type="hidden" id="txtdenominacion_dep"  value="<?php echo $denominacion_dependencia?>"></td>
+    <td width="5"><input name="txtcod_direccion" type="hidden" id="txtcod_direccion"  value="<?php echo $cod_direccion?>"></td>
+    <td width="5"><input name="txtdenominacion_dir" type="hidden" id="txtdenominacion_dir"  value="<?php echo $denominacion_dir?>"></td>
+    <td width="5"><input name="txtcod_departamento" type="hidden" id="txtcod_departamento"  value="<?php echo $cod_departamento?>"></td>
+    <td width="5"><input name="txtdenominacion_depart" type="hidden" id="txtdenominacion_depart"   value="<?php echo $denominacion_dep?>"></td>
+    <td width="5"><input name="txtcodigo_tipo_incorp" type="hidden" id="txtcodigo_tipo_incorp"  value="<?php echo $codigo_tipo_incorp?>"></td>
+    <td width="5"><input name="txtdenomina_tipo" type="hidden" id="txtdenomina_tipo"  value="<?php echo $denomina_tipo?>"></td>
+    <td width="5"><input name="txttipo_incorporacion" type="hidden" id="txttipo_incorporacion"  value="<?php echo $tipo_incorporacion?>"></td>
+    <td width="5"><input name="txtcod_imp_presup" type="hidden" id="txtcod_imp_presup" value="<?php echo $cod_imp_presup?>"></td>      
+    <td width="5"><input name="txtnom_imp_presup" type="hidden" id="txtnom_imp_presup" value="<?php echo $nom_imp_presup?>"></td>
+    <td width="5"><input name="txtvalor_incorporacion" type="hidden" id="txtvalor_incorporacion" value="<?php echo $valor_incorporacion?>"></td>
+    <td width="5"><input name="txtfecha_incorporacion" type="hidden" id="txtfecha_incorporacion"  value="<?php echo $fecha_incorporacion?>"></td>
+    <td width="5"><input name="txtgarantia" type="hidden" id="txtgarantia" value="<?php echo $garantia?>"></td>
 	
-	<td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>
-	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $Cod_Emp?>" ></td> 
+	<td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>
+	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $Cod_Emp?>" ></td> 
   </tr>
 </table>
 </form>
 </body>
 </html>
-<?pg_close();
-if ($error==0){?><script language="JavaScript"> Llamar_Inc_Calculo('S');</script> <? }
-else {?>  <script language="JavaScript">history.back();</script> <? }
+<?php pg_close($conn);
+if ($error==0){?><script language="JavaScript"> Llamar_Inc_Calculo('S');</script> <?php }
+else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>

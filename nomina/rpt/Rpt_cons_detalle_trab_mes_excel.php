@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nomina_d=$_GET["tipo_nomina_d"]; $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist="S";
    $cod_conceptod=$_GET["cod_conceptod"]; $cod_conceptoh=$_GET["cod_conceptoh"]; $tipo_concepto=$_GET["tipo_concepto"]; $tipo_rpt="PDF";
    $cod_departd=$_GET["cod_departd"];  $cod_departh=$_GET["cod_departh"]; $estatus_trab_d=$_GET["estatus_trab_d"]; $tipo_calculo=$_GET["tipo_calculo"]; $forma_pago=$_GET["forma_pago"];
@@ -14,7 +14,7 @@
    if($tipo_calculo=='T'){$criterio=$criterio;}else{$criterio=$criterio." and (tp_calculo='".$tipo_calculo."') ";}
    
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
   $sSQL = "SELECT *  FROM ".$criterio."  and (tipo_nomina>='".$tipo_nomina_d."' and tipo_nomina<='".$tipo_nomina_h."') and
 	  (cod_departam>='".$cod_departd."' and cod_departam<='".$cod_departh."') and (cod_concepto>='".$cod_conceptod."' AND cod_concepto<='".$cod_conceptoh."')  and
@@ -41,8 +41,8 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		 
 		 <tr height="20">
 		    <td width="100" align="left" ><strong>Trabajador: </strong></td>
-		    <td width="100" align="left" ><strong><? echo $cod_empleado; ?></strong></td>
-			<td width="100" align="left" ><strong><? echo $nombre; ?></strong></td>
+		    <td width="100" align="left" ><strong><?php  echo $cod_empleado; ?></strong></td>
+			<td width="100" align="left" ><strong><?php  echo $nombre; ?></strong></td>
 		 </tr>
 		 <tr height="20">
 		   <td width="100" align="left"><strong>Fecha</strong></td>
@@ -60,7 +60,7 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		   <td width="100" align="right"><strong>Dia Desc. Laborado</strong></td>
 		   <td width="100" align="right"><strong>Total</strong></td>
 		 </tr>		
-	  <?
+	  <?php 
 	  $i=0; $can_conc=0; $totala_nom=0; $totald_nom=0; $cant_nom=0;	$totala_emp=0; $totald_emp=0; $cant_emp=0;  $totala_conc=0; $totald_conc=0; 
       $concepto1=0;	 $concepto2=0;	 $concepto3=0;	$concepto4=0;	$concepto5=0;	$concepto6=0; $concepto7=0; $concepto8=0; $concepto9=0; $concepto10=0; $concepto11=0; $concepto12=0;
 	  while($registro=pg_fetch_array($res)){ $i=$i+1; $tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"];
@@ -78,22 +78,22 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 			 $concepto9=formato_monto($concepto9);  $concepto10=formato_monto($concepto10); $concepto11=formato_monto($concepto11); $concepto12=formato_monto($concepto12); $concepto20=formato_monto($concepto20);
             ?>		 		    			 
 				<tr>
-				  <td width="100" align="left"><? echo $prev_perido; ?></td>			 
-				  <td width="100" align="right"><? echo $concepto1; ?></td>
-				  <td width="100" align="right"><? echo $concepto2; ?></td>
-				  <td width="100" align="right"><? echo $concepto3; ?></td>
-				  <td width="100" align="right"><? echo $concepto4; ?></td>
-				  <td width="100" align="right"><? echo $concepto5; ?></td>
-				  <td width="100" align="right"><? echo $concepto6; ?></td>
-				  <td width="100" align="right"><? echo $concepto7; ?></td>
-				  <td width="100" align="right"><? echo $concepto8; ?></td>
-				  <td width="100" align="right"><? echo $concepto9; ?></td>
-				  <td width="100" align="right"><? echo $concepto10; ?></td>
-				  <td width="100" align="right"><? echo $concepto11; ?></td>
-				  <td width="100" align="right"><? echo $concepto12; ?></td>
-				  <td width="100" align="right"><? echo $concepto20; ?></td>
+				  <td width="100" align="left"><?php  echo $prev_perido; ?></td>			 
+				  <td width="100" align="right"><?php  echo $concepto1; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto2; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto3; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto4; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto5; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto6; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto7; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto8; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto9; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto10; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto11; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto12; ?></td>
+				  <td width="100" align="right"><?php  echo $concepto20; ?></td>
 				</tr>
-            <?	
+            <?php 	
 		    $can_conc=0;     $prev_perido=$periodo;
 			$concepto1=0;	 $concepto2=0;	 $concepto3=0;	$concepto4=0;	$concepto5=0;	$concepto6=0; $concepto7=0; $concepto8=0; $concepto9=0; $concepto10=0; $concepto11=0; $concepto12=0;
 	    	
@@ -104,10 +104,10 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 				 </tr>		
 				 <tr height="20">
 					<td width="100" align="left" ><strong>Trabajador: </strong></td>
-					<td width="100" align="left" ><strong><? echo $cod_empleado; ?></strong></td>
-					<td width="100" align="left" ><strong><? echo $nombre; ?></strong></td>
+					<td width="100" align="left" ><strong><?php  echo $cod_empleado; ?></strong></td>
+					<td width="100" align="left" ><strong><?php  echo $nombre; ?></strong></td>
 				 </tr>
-		     <?
+		     <?php 
 			}			
 		} 
 		If ($cod_concepto=='001'){ $concepto1=$concepto1+$monto;  }
@@ -132,22 +132,22 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 	  $concepto20=formato_monto($concepto20);
        ?>		 		    			 
 			<tr>
-			  <td width="100" align="left"><? echo $prev_perido; ?></td>			 
-			  <td width="100" align="right"><? echo $concepto1; ?></td>
-			  <td width="100" align="right"><? echo $concepto2; ?></td>
-			  <td width="100" align="right"><? echo $concepto3; ?></td>
-			  <td width="100" align="right"><? echo $concepto4; ?></td>
-			  <td width="100" align="right"><? echo $concepto5; ?></td>
-			  <td width="100" align="right"><? echo $concepto6; ?></td>
-			  <td width="100" align="right"><? echo $concepto7; ?></td>
-			  <td width="100" align="right"><? echo $concepto8; ?></td>
-			  <td width="100" align="right"><? echo $concepto9; ?></td>
-			  <td width="100" align="right"><? echo $concepto10; ?></td>
-			  <td width="100" align="right"><? echo $concepto11; ?></td>
-			  <td width="100" align="right"><? echo $concepto12; ?></td>
-			  <td width="100" align="right"><? echo $concepto20; ?></td>
+			  <td width="100" align="left"><?php  echo $prev_perido; ?></td>			 
+			  <td width="100" align="right"><?php  echo $concepto1; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto2; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto3; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto4; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto5; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto6; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto7; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto8; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto9; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto10; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto11; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto12; ?></td>
+			  <td width="100" align="right"><?php  echo $concepto20; ?></td>
 			</tr>
-		<?		  
+		<?php 		  
     
 }
 ?>

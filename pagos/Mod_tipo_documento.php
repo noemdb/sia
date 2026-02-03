@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 if (!$_GET){$cod_documento=''; $sql="SELECT * FROM PAG017 ORDER BY cod_documento";}
 else {$cod_documento = $_GET["Gdocumento"];  $sql="Select * from PAG017 where cod_documento='$cod_documento'";}
 ?>
@@ -38,9 +38,9 @@ return true;}
 </script>
 
 </head>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $res=pg_query($sql);$filas=pg_num_rows($res);$des_tipo_orden="";
 if($filas>=1){  $registro=pg_fetch_array($res,0);  $cod_documento=$registro["cod_documento"];  $tipo_documento=$registro["tipo_documento"];}
 ?>
@@ -81,7 +81,7 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $cod_documento=$registro["cod
                 <tr>
                   <td width="190"><span class="Estilo5">C&Oacute;DIGO TIPO DOCUMENTO:</span></td>
                   <td width="140"><div align="left"><span class="Estilo5">
-                      <input class="Estilo10" name="txtcod_documento" type="text" id="txtcod_documento" size="5" maxlength="2"  readonly value="<?echo $cod_documento?>" >
+                      <input class="Estilo10" name="txtcod_documento" type="text" id="txtcod_documento" size="5" maxlength="2"  readonly value="<?php echo $cod_documento?>" >
                   </span></div></td>
                   <td width="204">&nbsp;</td>
                   <td width="310"><span class="Estilo5"> </span></td>
@@ -96,7 +96,7 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $cod_documento=$registro["cod
                 <tr>
                   <td width="190"><span class="Estilo5">TIPO DE DOCUMENTO:</span></td>
                   <td width="658"><span class="Estilo5">
-                    <input class="Estilo10" name="txttipo_documento" type="text" id="txttipo_documento"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_documento?>" size="100">
+                    <input class="Estilo10" name="txttipo_documento" type="text" id="txttipo_documento"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_documento?>" size="100">
                   </span></td>
                 </tr>
             </table></td>
@@ -138,4 +138,4 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $cod_documento=$registro["cod
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="FORMA".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $cod_empleado=$_GET["txtcod_empleado"];  $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -10,7 +10,7 @@ function Llamar_Inc_Calculo(mop){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }else{ $Nom_Emp=busca_conf(); }
 $error=1; $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $fecha_ing=""; $fecha_ing_a=""; $ultima_fecha="2015-01-01"; $frec="Q";
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $campo_str1=""; $des_cargo="";
 $nombre1=""; $nombre2=""; $apellido1=""; $apellido2=""; $sexo=""; $edo_civil=""; $cod_cargo=""; $fecha_nacimiento=""; $edad=""; $lugar_nacimiento=""; $direccion=""; $cod_postal=""; $telefono=""; $tlf_movil=""; $correo="";
@@ -50,67 +50,67 @@ while($registro=pg_fetch_array($res)){ $i=$i+1;
 <form name="form2" method="post" action="/sia/nomina/rpt/Datos_forma_1402.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
-	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>	 
-     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
-	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?echo $fecha_ingreso?>" ></td>
-	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?echo $nacionalidad?>"></td>
-	 <td width="5"><input name="txtnro_asegurado" type="hidden" id="txtnro_asegurado" value="<?echo $nro_asegurado?>" ></td>
-	 <td width="5"><input name="txtcod_suc" type="hidden" id="txtcod_suc" value="<?echo $cod_suc?>"></td>
-	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?echo $fecha_nacimiento?>" ></td>
-	 <td width="5"><input name="txtcond_trab" type="hidden" id="txtcond_trab" value="<?echo $cond_trab?>"></td>
-	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?echo $sexo?>"></td>
-	 <td width="5"><input name="txtsalario_semanal" type="hidden" id="txtsalario_semanal" value="<?echo $salario_semanal?>"></td>
-	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?echo $direccion?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
+	 <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>	 
+     <td width="5"><input name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
+	 <td width="5"><input name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+	 <td width="5"><input name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?php echo $fecha_ingreso?>" ></td>
+	 <td width="5"><input name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+	 <td width="5"><input name="txtnacionalidad" type="hidden" id="txtnacionalidad" value="<?php echo $nacionalidad?>"></td>
+	 <td width="5"><input name="txtnro_asegurado" type="hidden" id="txtnro_asegurado" value="<?php echo $nro_asegurado?>" ></td>
+	 <td width="5"><input name="txtcod_suc" type="hidden" id="txtcod_suc" value="<?php echo $cod_suc?>"></td>
+	 <td width="5"><input name="txtfecha_nacimiento" type="hidden" id="txtfecha_nacimiento" value="<?php echo $fecha_nacimiento?>" ></td>
+	 <td width="5"><input name="txtcond_trab" type="hidden" id="txtcond_trab" value="<?php echo $cond_trab?>"></td>
+	 <td width="5"><input name="txtsexo" type="hidden" id="txtsexo" value="<?php echo $sexo?>"></td>
+	 <td width="5"><input name="txtsalario_semanal" type="hidden" id="txtsalario_semanal" value="<?php echo $salario_semanal?>"></td>
+	 <td width="5"><input name="txtdireccion" type="hidden" id="txtdireccion" value="<?php echo $direccion?>"></td>
 	 
-	 <td width="5"><input name="txtocupacion" type="hidden" id="txtocupacion" value="<?echo $des_cargo?>"></td>
-	 <td width="5"><input name="txtcod_ocupacion" type="hidden" id="txtcod_ocupacion" value="<?echo $cod_ocupacion?>"></td>		 
-	 <td width="5"><input name="txtnombref1" type="hidden" id="txtnombref1" value="<?echo $nombref1?>" ></td>
-     <td width="5"><input name="txtparentescof1" type="hidden" id="txtparentescof1" value="<?echo $parentescof1?>" ></td>
-     <td width="5"><input name="txtsexof1" type="hidden" id="txtsexof1" value="<?echo $sexof1?>" ></td>
-	 <td width="5"><input name="txtedadf1" type="hidden" id="txtedadf1" value="<?echo $edadf1?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf1" type="hidden" id="txtfecha_nacf1" value="<?echo $fecha_nacf1?>" ></td>	
-	 <td width="5"><input name="txtcedulaf1" type="hidden" id="txtcedulaf1" value="<?echo $cedulaf1?>" ></td>
+	 <td width="5"><input name="txtocupacion" type="hidden" id="txtocupacion" value="<?php echo $des_cargo?>"></td>
+	 <td width="5"><input name="txtcod_ocupacion" type="hidden" id="txtcod_ocupacion" value="<?php echo $cod_ocupacion?>"></td>		 
+	 <td width="5"><input name="txtnombref1" type="hidden" id="txtnombref1" value="<?php echo $nombref1?>" ></td>
+     <td width="5"><input name="txtparentescof1" type="hidden" id="txtparentescof1" value="<?php echo $parentescof1?>" ></td>
+     <td width="5"><input name="txtsexof1" type="hidden" id="txtsexof1" value="<?php echo $sexof1?>" ></td>
+	 <td width="5"><input name="txtedadf1" type="hidden" id="txtedadf1" value="<?php echo $edadf1?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf1" type="hidden" id="txtfecha_nacf1" value="<?php echo $fecha_nacf1?>" ></td>	
+	 <td width="5"><input name="txtcedulaf1" type="hidden" id="txtcedulaf1" value="<?php echo $cedulaf1?>" ></td>
 	 
-	 <td width="5"><input name="txtnombref2" type="hidden" id="txtnombref2" value="<?echo $nombref2?>" ></td>
-     <td width="5"><input name="txtparentescof2" type="hidden" id="txtparentescof2" value="<?echo $parentescof2?>" ></td>
-     <td width="5"><input name="txtsexof2" type="hidden" id="txtsexof2" value="<?echo $sexof2?>" ></td>
-	 <td width="5"><input name="txtedadf2" type="hidden" id="txtedadf2" value="<?echo $edadf2?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf2" type="hidden" id="txtfecha_nacf2" value="<?echo $fecha_nacf2?>" ></td>	
-	 <td width="5"><input name="txtcedulaf2" type="hidden" id="txtcedulaf2" value="<?echo $cedulaf2?>" ></td>	
-     <td width="5"><input name="txtnombref3" type="hidden" id="txtnombref3" value="<?echo $nombref3?>" ></td>
-     <td width="5"><input name="txtparentescof3" type="hidden" id="txtparentescof3" value="<?echo $parentescof3?>" ></td>
-     <td width="5"><input name="txtsexof3" type="hidden" id="txtsexof3" value="<?echo $sexof3?>" ></td>
-	 <td width="5"><input name="txtedadf3" type="hidden" id="txtedadf3" value="<?echo $edadf3?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf3" type="hidden" id="txtfecha_nacf3" value="<?echo $fecha_nacf3?>" ></td>	
-	 <td width="5"><input name="txtcedulaf3" type="hidden" id="txtcedulaf3" value="<?echo $cedulaf3?>" ></td>	
-     <td width="5"><input name="txtnombref4" type="hidden" id="txtnombref4" value="<?echo $nombref4?>" ></td>
-     <td width="5"><input name="txtparentescof4" type="hidden" id="txtparentescof4" value="<?echo $parentescof4?>" ></td>
-     <td width="5"><input name="txtsexof4" type="hidden" id="txtsexof4" value="<?echo $sexof4?>" ></td>
-	 <td width="5"><input name="txtedadf4" type="hidden" id="txtedadf4" value="<?echo $edadf4?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf4" type="hidden" id="txtfecha_nacf4" value="<?echo $fecha_nacf4?>" ></td>	
-	 <td width="5"><input name="txtcedulaf4" type="hidden" id="txtcedulaf4" value="<?echo $cedulaf4?>" ></td>	
-     <td width="5"><input name="txtnombref5" type="hidden" id="txtnombref5" value="<?echo $nombref5?>" ></td>
-     <td width="5"><input name="txtparentescof5" type="hidden" id="txtparentescof5" value="<?echo $parentescof5?>" ></td>
-     <td width="5"><input name="txtsexof5" type="hidden" id="txtsexof5" value="<?echo $sexof5?>" ></td>
-	 <td width="5"><input name="txtedadf5" type="hidden" id="txtedadf5" value="<?echo $edadf5?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf5" type="hidden" id="txtfecha_nacf5" value="<?echo $fecha_nacf5?>" ></td>	
-	 <td width="5"><input name="txtcedulaf5" type="hidden" id="txtcedulaf5" value="<?echo $cedulaf5?>" ></td>	
-     <td width="5"><input name="txtnombref6" type="hidden" id="txtnombref6" value="<?echo $nombref6?>" ></td>
-     <td width="5"><input name="txtparentescof6" type="hidden" id="txtparentescof6" value="<?echo $parentescof6?>" ></td>
-     <td width="5"><input name="txtsexof6" type="hidden" id="txtsexof6" value="<?echo $sexof6?>" ></td>
-	 <td width="5"><input name="txtedadf6" type="hidden" id="txtedadf6" value="<?echo $edadf6?>" ></td>	 
-	 <td width="5"><input name="txtfecha_nacf6" type="hidden" id="txtfecha_nacf6" value="<?echo $fecha_nacf6?>" ></td>	
-	 <td width="5"><input name="txtcedulaf6" type="hidden" id="txtcedulaf6" value="<?echo $cedulaf6?>" ></td>
-     <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>
-	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $Cod_Emp?>" ></td> 
-	 <td width="5"><input name="txtnom_emp" type="hidden" id="txtnom_emp" value="<?echo $Nom_Emp?>" ></td> 
+	 <td width="5"><input name="txtnombref2" type="hidden" id="txtnombref2" value="<?php echo $nombref2?>" ></td>
+     <td width="5"><input name="txtparentescof2" type="hidden" id="txtparentescof2" value="<?php echo $parentescof2?>" ></td>
+     <td width="5"><input name="txtsexof2" type="hidden" id="txtsexof2" value="<?php echo $sexof2?>" ></td>
+	 <td width="5"><input name="txtedadf2" type="hidden" id="txtedadf2" value="<?php echo $edadf2?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf2" type="hidden" id="txtfecha_nacf2" value="<?php echo $fecha_nacf2?>" ></td>	
+	 <td width="5"><input name="txtcedulaf2" type="hidden" id="txtcedulaf2" value="<?php echo $cedulaf2?>" ></td>	
+     <td width="5"><input name="txtnombref3" type="hidden" id="txtnombref3" value="<?php echo $nombref3?>" ></td>
+     <td width="5"><input name="txtparentescof3" type="hidden" id="txtparentescof3" value="<?php echo $parentescof3?>" ></td>
+     <td width="5"><input name="txtsexof3" type="hidden" id="txtsexof3" value="<?php echo $sexof3?>" ></td>
+	 <td width="5"><input name="txtedadf3" type="hidden" id="txtedadf3" value="<?php echo $edadf3?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf3" type="hidden" id="txtfecha_nacf3" value="<?php echo $fecha_nacf3?>" ></td>	
+	 <td width="5"><input name="txtcedulaf3" type="hidden" id="txtcedulaf3" value="<?php echo $cedulaf3?>" ></td>	
+     <td width="5"><input name="txtnombref4" type="hidden" id="txtnombref4" value="<?php echo $nombref4?>" ></td>
+     <td width="5"><input name="txtparentescof4" type="hidden" id="txtparentescof4" value="<?php echo $parentescof4?>" ></td>
+     <td width="5"><input name="txtsexof4" type="hidden" id="txtsexof4" value="<?php echo $sexof4?>" ></td>
+	 <td width="5"><input name="txtedadf4" type="hidden" id="txtedadf4" value="<?php echo $edadf4?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf4" type="hidden" id="txtfecha_nacf4" value="<?php echo $fecha_nacf4?>" ></td>	
+	 <td width="5"><input name="txtcedulaf4" type="hidden" id="txtcedulaf4" value="<?php echo $cedulaf4?>" ></td>	
+     <td width="5"><input name="txtnombref5" type="hidden" id="txtnombref5" value="<?php echo $nombref5?>" ></td>
+     <td width="5"><input name="txtparentescof5" type="hidden" id="txtparentescof5" value="<?php echo $parentescof5?>" ></td>
+     <td width="5"><input name="txtsexof5" type="hidden" id="txtsexof5" value="<?php echo $sexof5?>" ></td>
+	 <td width="5"><input name="txtedadf5" type="hidden" id="txtedadf5" value="<?php echo $edadf5?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf5" type="hidden" id="txtfecha_nacf5" value="<?php echo $fecha_nacf5?>" ></td>	
+	 <td width="5"><input name="txtcedulaf5" type="hidden" id="txtcedulaf5" value="<?php echo $cedulaf5?>" ></td>	
+     <td width="5"><input name="txtnombref6" type="hidden" id="txtnombref6" value="<?php echo $nombref6?>" ></td>
+     <td width="5"><input name="txtparentescof6" type="hidden" id="txtparentescof6" value="<?php echo $parentescof6?>" ></td>
+     <td width="5"><input name="txtsexof6" type="hidden" id="txtsexof6" value="<?php echo $sexof6?>" ></td>
+	 <td width="5"><input name="txtedadf6" type="hidden" id="txtedadf6" value="<?php echo $edadf6?>" ></td>	 
+	 <td width="5"><input name="txtfecha_nacf6" type="hidden" id="txtfecha_nacf6" value="<?php echo $fecha_nacf6?>" ></td>	
+	 <td width="5"><input name="txtcedulaf6" type="hidden" id="txtcedulaf6" value="<?php echo $cedulaf6?>" ></td>
+     <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>
+	 <td width="5"><input name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $Cod_Emp?>" ></td> 
+	 <td width="5"><input name="txtnom_emp" type="hidden" id="txtnom_emp" value="<?php echo $Nom_Emp?>" ></td> 
 	 
 	 
 	 
@@ -119,8 +119,8 @@ while($registro=pg_fetch_array($res)){ $i=$i+1;
 </form>
 </body>
 </html>
-<?pg_close();
+<?php pg_close($conn);
 /* */
-if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+if ($error==0){?><script language="JavaScript">Llamar_Inc_Calculo('S');</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 
 ?>

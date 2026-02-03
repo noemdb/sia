@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_diferido_d=$_GET["tipo_diferido_d"];$tipo_diferido_h=$_GET["tipo_diferido_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"]; $tipo_rep=$_GET["tipo_rep"];
 $cod_presupd=$_GET["cod_presupd"]; $cod_presuph=$_GET["cod_presuph"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$cod_fuente_d=$_GET["cod_fuente_d"]; $cod_fuente_h=$_GET["cod_fuente_h"];
 $date = date("d-m-Y");$hora = date("H:i:s a");$Sql="";
@@ -7,7 +7,7 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
   $criterio1="Fecha Desde : ".$fecha_d."  "."Hasta : ".$fecha_h;   $criterio2="";
   $criterio3="Fuente de Financiamiento : ".$cod_fuente_d."    ".$cod_fuente_h;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}  $error=0;
 	$sSQL = "SELECT pre023.Referencia_Dife, pre023.Tipo_Diferido, pre024.Nombre_Abrev_Dife, pre023.Fecha_Diferido, pre023.Descripcion_Dife, pre023.anulado, pre023.Fecha_Anu, 
 	    pre033.Cod_Presup, pre033.Fuente_Financ, pre001.Denominacion, pre033.Monto_Diferido,  to_char(pre023.Fecha_Diferido,'DD/MM/YYYY') as fechad   FROM pre001, pre023, pre033, pre024 
@@ -130,7 +130,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="400" align="left" ><strong></strong></td>
@@ -151,7 +151,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong></strong></td>
 			   <td width="400" align="right" bgcolor="#99CCFF"><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0; $total_monto=0; $sub_total_monto=0; $cantidad_ordenes=0; 
+		  <?php   $i=0; $total_monto=0; $sub_total_monto=0; $cantidad_ordenes=0; 
 			 $prev_fecha_diferido=""; $prev_referencia_dife="";  $prev_tipo_diferido="";    $res=pg_query($sSQL);
 		    while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha_diferido=$registro["fecha_diferido"]; $referencia_dife=$registro["referencia_dife"]; 
 			    $tipo_diferido=$registro["tipo_diferido"]; $nombre_abrev_dife=$registro["nombre_abrev_dife"]; $descripcion_dife=$registro["descripcion_dife"]; 
@@ -173,24 +173,24 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			    	   <td width="400" align="left"></td>
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
-			           <td width="400" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="400" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $referencia_dife_grupo; ?></td>
-				   <td width="400" align="left"><? echo $fecha_diferido_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $tipo_diferido_grupo; ?></td>
-				   <td width="100" align="left"><? echo $nombre_abrev_dife_grupo; ?></td>
-				   <td width="400" align="left"><? echo $descripcion_dife_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_dife_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $fecha_diferido_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $tipo_diferido_grupo; ?></td>
+				   <td width="100" align="left"><?php  echo $nombre_abrev_dife_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $descripcion_dife_grupo; ?></td>
 			      </tr>
 			      <tr>
 				  <td width="90" align="left"></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_fecha_diferido=$fecha_diferido_grupo; $prev_referencia_dife=$referencia_dife_grupo; $prev_tipo_diferido=$tipo_diferido_grupo; $sub_total_monto=0;  }
 
 		       $fecha_diferido=$registro["fecha_diferido"]; $referencia_dife=$registro["referencia_dife"]; $tipo_diferido=$registro["tipo_diferido"]; 
@@ -200,13 +200,13 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			   $descripcion_dife=conv_cadenas($descripcion_dife,0);$denominacion=conv_cadenas($denominacion,0); 
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_presup."   ".$fuente_financ; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_presup."   ".$fuente_financ; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
 				   <td width="100" align="right"></td>
 				   <td width="100" align="right"></td>
-				   <td width="400" align="right"><? echo $monto_diferido; ?></td>
+				   <td width="400" align="right"><?php  echo $monto_diferido; ?></td>
 				 </tr>
-			   <? 	
+			   <?php  	
 
 		  }$total_monto=formato_monto($total_monto);  
 		     if($sub_total_monto>0){ $sub_total_monto=formato_monto($sub_total_monto);  		
@@ -223,12 +223,12 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			    	   <td width="400" align="left"></td>
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
-			           <td width="400" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="400" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>			
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
@@ -238,14 +238,14 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			    <td width="400" align="right">---------------</td>
 			</tr>	
 			<tr>
-			    <td width="100" align="left">Cantidad Diferidos : <strong><? echo $cantidad_ordenes; ?></strong></td>
+			    <td width="100" align="left">Cantidad Diferidos : <strong><?php  echo $cantidad_ordenes; ?></strong></td>
 			    <td width="400" align="right"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="400" align="right"><strong><? echo $total_monto; ?></strong></td>
+			    <td width="400" align="right"><strong><?php  echo $total_monto; ?></strong></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?
+		       <?php  				  
+		  ?></table><?php 
     }
 }
 ?>

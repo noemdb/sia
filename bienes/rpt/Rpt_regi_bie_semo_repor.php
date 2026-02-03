@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $cod_bien_semd=$_GET["cod_bien_semd"];$cod_bien_semh=$_GET["cod_bien_semh"];
 $cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"];
@@ -24,7 +24,7 @@ $date = date("d-m-Y");$hora = date("H:i:s a");$Sql="";
 (BIEN016.cod_departamento>='$cod_departamentod' AND BIEN016.cod_departamento<='$cod_departamentoh')";
 
 
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else
    {
          // LLAMAR A PHP_REPORT

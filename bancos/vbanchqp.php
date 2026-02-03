@@ -3,4 +3,4 @@ $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$u
 $fecha=formato_aaaammdd($fecha); $fechad=formato_aaaammdd($fechad);  $fechah=formato_aaaammdd($fechah);
 $StrSQL="select * from ban030 where codigo_mov='$codigo_mov'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 $sql="SELECT INCLUYE_BAN030 (1,'$codigo_mov','$cod_banco','$nro_cheque','$tipo_pago','$fecha','$fechad','$fechah','N','N','','$orden',0,0,'')";$resultado=pg_exec($conn,$sql);
-pg_close();?>NUMERO DE CHEQUE:
+pg_close($conn);?>NUMERO DE CHEQUE:

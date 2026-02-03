@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 if (!$_GET){$cod_tipo_en=''; $sql="SELECT * FROM ban020 ORDER BY cod_tipo_en";} else{$cod_tipo_en=$_GET["Gcod_tipo_en"]; $sql="Select * from ban020 where cod_tipo_en='$cod_tipo_en'";}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -31,7 +31,7 @@ return true;}
 </script>
 
 </head>
-<?
+<?php 
 $tipo_en="";$res=pg_query($sql);$filas=pg_num_rows($res);
 if($filas>=1){$registro=pg_fetch_array($res,0); $cod_tipo_en=$registro["cod_tipo_en"]; $tipo_en=$registro["tipo_en"];}
 ?>
@@ -64,7 +64,7 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_tipo_en=$registro["cod_tipo
                   <td><table width="850" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="200"><span class="Estilo5">C&Oacute;DIGO ENRIQUECIMIENTO :</span></td>
-                      <td width="650"><span class="Estilo5"><input class="Estilo10" name="txtcod_tipo_en" type="text"  id="txtcod_tipo_en"  value="<?echo $cod_tipo_en?>" size="4" maxlength="2" readonly>
+                      <td width="650"><span class="Estilo5"><input class="Estilo10" name="txtcod_tipo_en" type="text"  id="txtcod_tipo_en"  value="<?php echo $cod_tipo_en?>" size="4" maxlength="2" readonly>
                       </span></td>
                     </tr>
                   </table></td>
@@ -74,7 +74,7 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_tipo_en=$registro["cod_tipo
                   <td><table width="850" border="0" cellpadding="0" cellspacing="0" dwcopytype="CopyTableColumn">
                     <tr>
                       <td width="200"><span class="Estilo5">DESCRIPCI&Oacute;N : </span></td>
-                      <td width="650"><span class="Estilo5"> <input class="Estilo10" name="txttipo_en" type="text"  id="txttipo_en"  value="<?echo $tipo_en?>"  onFocus="encender(this)" onBlur="apagar(this)" size="100" maxlength="150">
+                      <td width="650"><span class="Estilo5"> <input class="Estilo10" name="txttipo_en" type="text"  id="txttipo_en"  value="<?php echo $tipo_en?>"  onFocus="encender(this)" onBlur="apagar(this)" size="100" maxlength="150">
                       </span></td>
                     </tr>
                   </table></td>

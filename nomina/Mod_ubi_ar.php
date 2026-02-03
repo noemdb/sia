@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); if (!$_GET){$codigo_ubicacion="";} else{$codigo_ubicacion=$_GET["codigo"];} ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); if (!$_GET){$codigo_ubicacion="";} else{$codigo_ubicacion=$_GET["codigo"];} ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -26,13 +26,13 @@ var f=document.form1;
 document.form1.submit;
 return true;}
 </script>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM058 where codigo_ubicacion='$codigo_ubicacion'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $descripcion_ubi="";
 If($registro=pg_fetch_array($res,0)){$codigo_ubicacion=$registro["codigo_ubicacion"]; $descripcion_ubi=$registro["descripcion_ubi"]; }
-pg_close();
+pg_close($conn);
 ?>
 </head>
 <body>
@@ -66,7 +66,7 @@ pg_close();
             <td><table width="866">
                 <tr>
                   <td width="204" ><span class="Estilo5">C&Oacute;DIGO UBICACION : </span></td>
-                  <td width="660" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="15" maxlength="10"  readonly value="<?echo $codigo_ubicacion?>"  > </span></td>
+                  <td width="660" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="15" maxlength="10"  readonly value="<?php echo $codigo_ubicacion?>"  > </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -75,7 +75,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="205" ><span class="Estilo5">DESCRIPCI&Oacute;N DE LA UBICACI&Oacute;N : </span></td>
-                 <td width="660" ><span class="Estilo5"><textarea name="txtdescripcion_ubi" cols="70" maxlength="100" class="Estilo10" id="txtdescripcion_ubi" onFocus="encender(this)" onBlur="apagar(this)" ><?echo $descripcion_ubi?></textarea></span></td>
+                 <td width="660" ><span class="Estilo5"><textarea name="txtdescripcion_ubi" cols="70" maxlength="100" class="Estilo10" id="txtdescripcion_ubi" onFocus="encender(this)" onBlur="apagar(this)" ><?php echo $descripcion_ubi?></textarea></span></td>
                </tr>
              </table></td>
           </tr>

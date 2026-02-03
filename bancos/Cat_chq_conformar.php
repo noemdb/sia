@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -21,7 +21,7 @@ function CargarUrl(mclave) {var murl;   murl="Act_Edo_Cheques.php?Gcod_banco=C"+
   </tr>
 </table>
 <div id="Layer1" style="position:absolute; width:978px; height:448px; z-index:1; top: 70px; left: 1px;">
-<?      $criterio = ""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $criterio = " where anulado='N'";
+<?php       $criterio = ""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $criterio = " where anulado='N'";
         if ($_GET["criterio"]!=""){ $txt_criterio = $_GET["criterio"];  $txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where anulado='N' and ced_rif like '%" . $txt_criterio . "%' or num_cheque like '%" . $txt_criterio . "%' or cod_banco like '%" . $txt_criterio . "%' or concepto like '%" . $txt_criterio . "%' or nombre like '%" . $txt_criterio . "%'";}
         $sql="SELECT * FROM EDO_CHEQUES  ".$criterio; $res=pg_query($sql); $numeroRegistros=pg_num_rows($res);
@@ -46,19 +46,19 @@ function CargarUrl(mclave) {var murl;   murl="Act_Edo_Cheques.php?Gcod_banco=C"+
                 $descripcion=$registro["nombre"]; $sfecha=$registro["fecha"]; $descripcion=substr($descripcion,0,150); $fecha=substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
                 if ($linea>$limitInf+$tamPag){$Salir=true;}  if (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:CargarUrl('<? echo $registro["cod_banco"].$registro["num_cheque"]; ?>');" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cod_banco"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["num_cheque"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["ced_rif"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $fecha; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $descripcion; ?></b></font></td>
-	<td align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $monto; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:CargarUrl('<?php  echo $registro["cod_banco"].$registro["num_cheque"]; ?>');" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cod_banco"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["num_cheque"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["ced_rif"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $fecha; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $descripcion; ?></b></font></td>
+	<td align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $monto; ?></b></font></td>
   </tr>
-<?}} echo "</table>"; }  ?>
+<?php } } echo "</table>"; }  ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-  <?    if($pagina>1){
+  <?php     if($pagina>1){
           echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&criterio=".$txt_criterio."'>";
           echo "<font face='verdana' size='-2'>Principio</font>";
           echo "</a>&nbsp;";
@@ -81,4 +81,4 @@ function CargarUrl(mclave) {var murl;   murl="Act_Edo_Cheques.php?Gcod_banco=C"+
 <hr noshade style="color:CC6666;height:1px">
 <form action="Cat_chq_conformar.php" method="get">
 Criterio de b&uacute;squeda: <input type="text" name="criterio" size="22" maxlength="150"> <input type="submit" class="button" value="Buscar">
-</div> </form>  </body>  </html>  <? pg_close(); ?>
+</div> </form>  </body>  </html>  <?php  pg_close($conn); ?>

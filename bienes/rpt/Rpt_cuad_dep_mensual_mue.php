@@ -1,11 +1,11 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $fecha_d=$_GET["fecha_d"]; $acum=$_GET["acum"]; $subt_mes=$_GET["subt_mes"]; $dep_mes=$_GET["dep_mes"]; $date=date("d-m-Y");$hora = date("H:i:s a"); $Sql="";
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}   $fecha_desde=$ano1.$mes1.$dia1;
 $criterio ="(bien047.fecha_dep='$fecha_desde') ";	$mborde=0;	$tfecha_d=$fecha_d; $mperiodo=substr($tfecha_d,0,5);
 
 if($mperiodo=="01/01"){  $tfecha_d=nextmes($tfecha_d,-1) ;  $tfecha_d=colocar_udiames($tfecha_d); }
 	
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }   $fecha_i=formato_ddmmaaaa($Fec_Ini_Ejer);  $fecha_i=nextmes($fecha_i,-1);  $fecha_i=colocar_udiames($fecha_i);
    $num_rpt=1;   if($acum=="SI"){ $num_rpt=2; if($subt_mes=="SI"){ $num_rpt=3; } }  if($dep_mes=="NO"){ $num_rpt=4; }
 	if($num_rpt==1){  	

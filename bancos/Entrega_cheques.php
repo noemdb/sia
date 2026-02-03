@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 if (!$_GET){$cod_banco='';$num_cheque='';$nombre_recib=""; }  else{$cod_banco=$_GET["txtcod_banco"];$num_cheque=$_GET["num_cheque"];$ced_rif_recib=$_GET["ced_rif"]; $nombre_recib=$_GET["nombre"];  }
 $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -6,7 +6,7 @@ $fecha_hoy=asigna_fecha_hoy();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Entrega de Cheques)</title>
+<title>SIPAP CONTROL BANCARIO (Entrega de Cheques)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -63,7 +63,7 @@ return true;}
             <td><table width="760" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ENTREGA: </span></td>
-                <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtfecha_recep" type="text" id="txtfecha_recep" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  ></span></td>
+                <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtfecha_recep" type="text" id="txtfecha_recep" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  ></span></td>
               </tr>
             </table></td>
           </tr>
@@ -71,7 +71,7 @@ return true;}
             <td><table width="760" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">RECIBIDO POR CED/RIF :</span></td>
-                <td width="600"><span class="Estilo5"> <input class="Estilo10" name="txtced_rif_recib" type="text"  id="txtced_rif_recib"  value="<?echo $ced_rif_recib?>" onchange="checkcedrif(this.form)" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" ></span></td></span></td>
+                <td width="600"><span class="Estilo5"> <input class="Estilo10" name="txtced_rif_recib" type="text"  id="txtced_rif_recib"  value="<?php echo $ced_rif_recib?>" onchange="checkcedrif(this.form)" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" ></span></td></span></td>
               </tr>
             </table></td>
           </tr>
@@ -79,16 +79,16 @@ return true;}
             <td><table width="760">
               <tr>
                 <td width="160"><span class="Estilo5">NOMBRE DE RECIBIDO  :</span></td>
-                <td width="600"><span class="Estilo5"><div id="nombrec"><input class="Estilo10" name="txtnombre_recib" type="text"  id="txtnombre_recib"  value="<?echo $nombre_recib?>" size="85" maxlength="85" onFocus="encender(this)" onBlur="apagar(this)"> </div></span></td>
+                <td width="600"><span class="Estilo5"><div id="nombrec"><input class="Estilo10" name="txtnombre_recib" type="text"  id="txtnombre_recib"  value="<?php echo $nombre_recib?>" size="85" maxlength="85" onFocus="encender(this)" onBlur="apagar(this)"> </div></span></td>
                </tr>
             </table></td>
           </tr>
           <tr><td>&nbsp;</td>   </tr>
           <td><table width="360" border="0" align="center"> <tr>
-            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?echo $cod_banco?>"></td>
+            <td width="40"><input name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?php echo $cod_banco?>"></td>
             <td width="40"><input name="txtentregado" type="hidden" id="txtentregado" value="N"></td>
             <td width="40"><input name="txtopcion" type="hidden" id="txtopcion" value="E"></td>
-            <td width="40"><input name="txtnum_cheque" type="hidden" id="txtnum_cheque" value="<?echo $num_cheque?>"></td>
+            <td width="40"><input name="txtnum_cheque" type="hidden" id="txtnum_cheque" value="<?php echo $num_cheque?>"></td>
           </tr></table></td>
           </tr>
           <tr>

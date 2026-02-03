@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
+<?php  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc");  
 
    $tipo_nominad=$_GET["tipo_nominad"];   $tipo_nominah=$_GET["tipo_nominah"];   $cod_empleado_d=$_GET["cod_empleado_d"]; $tipo_rpt=$_GET["tipo_rpt"];
    $cod_empleado_h=$_GET["cod_empleado_h"];   $cedula_d=$_GET["cedula_d"];   $cedula_h=$_GET["cedula_h"];
@@ -19,7 +19,7 @@
    
 $nomb_rpt="Rpt_info_asig_carg_mp_mit_re.xml";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 
         $sSQL = "SELECT nom006.cod_empleado, nom006.Nombre, nom006.Cedula, nom006.Nacionalidad, nom006.Fecha_Ingreso, to_char(nom006.fecha_ingreso,'DD/MM/YYYY') as fechai, nom006.Status, nom006.Tipo_Nomina, nom001.Descripcion, nom006.Cod_Categoria, nom006.Tipo_Pago, nom006.Cta_Empleado, nom006.Cod_Banco, nom006.Nombre_Banco, nom006.Cta_Empresa, nom006.codigo_ubicacion, nom007.Sexo, nom007.Edo_Civil, nom007.rif_empleado, to_char(nom007.Fecha_Nacimiento,'DD/MM/YYYY') as fechanaci, nom007.Edad, nom007.Lugar_Nacimiento, nom007.Direccion, nom007.Cod_Postal, nom007.Telefono, nom007.Correo, nom007.Estado, nom007.Ciudad, nom007.profesion, nom008.Cod_Cargo, nom008.Des_Cargo, nom008.Cod_Departamento, nom008.Des_Departamento, nom008.Sueldo, to_char(nom008.Fecha_Asigna,'DD/MM/YYYY') as fechaa

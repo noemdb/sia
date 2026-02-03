@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){  $codigo_cuenta='';} else {$codigo_cuenta = $_GET["Gcodigo_cuenta"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Eliminar Plan de Cuentas)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Eliminar Plan de Cuentas)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css rel=stylesheet>
@@ -44,7 +44,7 @@ return true;}
 .Estilo10 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
 $nombre_cuenta="";
 $clasificacion="";
@@ -90,25 +90,25 @@ if ($registro=pg_fetch_array($res,0)){
               <blockquote>
                 <p></p>
                 C&Oacute;DIGO DE CUENTA :
-                <input readonly  name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" title="Registre el C&oacute;digo de la Cuenta"  value="<?ECHO $codigo_cuenta?>" size="30" maxlength="30">
+                <input readonly  name="txtCodigo_Cuenta" type="text" id="txtCodigo_Cuenta" title="Registre el C&oacute;digo de la Cuenta"  value="<?php ECHO $codigo_cuenta?>" size="30" maxlength="30">
             </blockquote></td>
           </tr>
           <tr>
             <td><blockquote>
                 <p align="left"><span class="Estilo5">DENOMINACI&Oacute;N :</span>
-                    <input readonly name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta"  value="<?ECHO $nombre_cuenta?>" size="105" maxlength="200">
+                    <input readonly name="txtNombre_Cuenta" type="text" id="txtNombre_Cuenta"  value="<?php ECHO $nombre_cuenta?>" size="105" maxlength="200">
                 </p>
             </blockquote></td>
           </tr>
           <tr>
             <td><blockquote><span class="Estilo5">CLASIFICACI&Oacute;N :</span>
-                    <input readonly name="txtClasificacion" type="text" id="txtClasificacion" value="<?ECHO $clasificacion?>" size="15">
+                    <input readonly name="txtClasificacion" type="text" id="txtClasificacion" value="<?php ECHO $clasificacion?>" size="15">
             </blockquote></td>
           </tr>
           <tr>
             <td><blockquote>
                 <p><span class="Estilo5">TIPO DE SALDO :</span>
-                    <input readonly name="txtTSaldo" type="text" id="txtTSaldo" value="<?ECHO $tSaldo?>" size="15">
+                    <input readonly name="txtTSaldo" type="text" id="txtTSaldo" value="<?php ECHO $tSaldo?>" size="15">
                 </p>
             </blockquote></td>
           </tr>

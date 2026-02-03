@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$cod_tipo_personal='';} else{$cod_tipo_personal=$_GET["Gcodigo"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$cod_tipo_personal='';} else{$cod_tipo_personal=$_GET["Gcodigo"];}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -18,7 +18,7 @@ function Llama_Modificar(cod_tipo_personal,paso,grado){var murl;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Pasos y Grados al Tipo" onclick="javascript:LlamarURL('Inc_paso_grado.php?cod_tipo_personal=<?echo $cod_tipo_personal?>')"></td>
+            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Pasos y Grados al Tipo" onclick="javascript:LlamarURL('Inc_paso_grado.php?cod_tipo_personal=<?php echo $cod_tipo_personal?>')"></td>
             <td width="255" align="center">&nbsp;</td>
             <td width="215" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar Tabla de pasos y Grados"></td>
@@ -36,19 +36,19 @@ function Llama_Modificar(cod_tipo_personal,paso,grado){var murl;
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Fecha</strong></td>
            <td width="100" align="right" bgcolor="#99CCFF" ><strong>Monto</strong></td>
          </tr>
-<? while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_aprobacion"]; $fechaa=formato_ddmmaaaa($sfecha);  $monto_s=formato_monto($registro["monto"]);
+<?php  while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_aprobacion"]; $fechaa=formato_ddmmaaaa($sfecha);  $monto_s=formato_monto($registro["monto"]);
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $cod_tipo_personal; ?>','<? echo $registro["paso"]; ?>','<? echo $registro["grado"]; ?>');">
-           <td width="50" align="left"><? echo $registro["grado"]; ?></td>   
-           <td width="50" align="left"><? echo $registro["paso"]; ?></td>
-		   <td width="100" align="left"><? echo $fechaa; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $cod_tipo_personal; ?>','<?php  echo $registro["paso"]; ?>','<?php  echo $registro["grado"]; ?>');">
+           <td width="50" align="left"><?php  echo $registro["grado"]; ?></td>   
+           <td width="50" align="left"><?php  echo $registro["paso"]; ?></td>
+		   <td width="100" align="left"><?php  echo $fechaa; ?></td>
                    
-           <td width="100" align="right"><? echo $monto_s; ?></td>
+           <td width="100" align="right"><?php  echo $monto_s; ?></td>
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

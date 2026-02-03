@@ -1,11 +1,11 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nominad=$_GET["tipo_nominad"]; $tipo_nominah=$_GET["tipo_nominah"];  $codigo_departamento_d=$_GET["codigo_departamento_d"];   $codigo_departamento_h=$_GET["codigo_departamento_h"]; 
    $cod_empleado_d=$_GET["cod_empleado_d"];  $cod_empleado_h=$_GET["cod_empleado_h"];   $fecha_d=$_GET["fechad"]; $fecha_h=$_GET["fechah"];   $tipo_rpt=$_GET["tipo_rpt"];
    if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';}  $fecha_desde=$ano1.$mes1.$dia1;
    if (!(empty($fecha_h))){$ano2=substr($fecha_h,6,9);$mes2=substr($fecha_h,3,2);$dia2=substr($fecha_h,0,2);}else{$fecha_h='';} $fecha_hasta=$ano2.$mes2.$dia2;
    $criterio1="Fecha Proceso  Desde: ".$fecha_d." Hasta: ".$fecha_h; 
    $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else{ $nom_emp=busca_conf(); $php_os=PHP_OS; if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    
         $criterio2="";
@@ -100,7 +100,7 @@
 		 </tr>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong></strong></td>
-			<td width="400" align="left" ><strong><? echo $criterio1; ?></strong></font></td>
+			<td width="400" align="left" ><strong><?php  echo $criterio1; ?></strong></font></td>
 		 </tr>
 		<tr height="20">
 			 <td width="100" align="left" bgcolor="#99CCFF"><strong>Codigo Trabajador</strong></td>
@@ -110,19 +110,19 @@
 		</tr>
 		 <tr height="20">
 		 </tr>
-		<?  $i=0; $prev_cod_empleado="";  $res=pg_query($sSQL);
+		<?php   $i=0; $prev_cod_empleado="";  $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $fechai=$registro["fechai"]; $status=$registro["status"]; 
 		  ?> 
              <tr>
-			    <td width="100" align="left">'<? echo $cod_empleado; ?></td>
-			    <td width="400" align="left"><? echo $nombre; ?></td>
-			    <td width="100" align="center"><? echo $fechai; ?></td>
-			    <td width="100" align="center"><? echo $status; ?></td>
+			    <td width="100" align="left">'<?php  echo $cod_empleado; ?></td>
+			    <td width="400" align="left"><?php  echo $nombre; ?></td>
+			    <td width="100" align="center"><?php  echo $fechai; ?></td>
+			    <td width="100" align="center"><?php  echo $status; ?></td>
 			</tr>
-             <?			
+             <?php 			
 		} 
-		?></table><?
+		?></table><?php 
 	}
   }
 ?>

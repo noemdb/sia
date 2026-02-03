@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <script language="JavaScript">
 function cerrar_catalogo(cedula,nomb){
@@ -22,7 +22,7 @@ function cerrar_catalogo(cedula,nomb){
 href="../class/sia.css" type=text/css
 rel=stylesheet>
 </head><body>
-<?
+<?php 
         $criterio = ""; $txt_criterio = "";
         if ($_GET["criterio"]!=""){ $txt_criterio = $_GET["criterio"]; $txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where cedula like '%" . $txt_criterio . "%' or nombre like '%" . $txt_criterio . "%'";
@@ -56,12 +56,12 @@ rel=stylesheet>
                 if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
 <!-- tabla de resultados -->
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $registro["cedula"]; ?>','<? echo $registro["nombre"]; ?>')" >
-   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["cedula"]; ?></b></font></td>
-   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["nombre"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["cedula"]; ?>','<?php  echo $registro["nombre"]; ?>')" >
+   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["cedula"]; ?></b></font></td>
+   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["nombre"]; ?></b></font></td>
    </tr>
 <!-- fin tabla resultados -->
-<?}
+<?php }
                 }//fin while
                 echo "</table>";
         }//fin if
@@ -70,7 +70,7 @@ rel=stylesheet>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      if($pagina>1){
+<?php       if($pagina>1){
                 echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina-1)."&orden=".$orden."&criterio=".$txt_criterio."'>";
                 echo "<font face='verdana' size='-2'>anterior</font>";
                 echo "</a>&nbsp;"; }
@@ -95,6 +95,6 @@ Criterio de búsqueda:
 
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

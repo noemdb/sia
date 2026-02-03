@@ -6,5 +6,5 @@ if($filas==0){ $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(1,'$codigo_mov'
 $StrSQL="select * from pag008 where tipo_orden='$tipo_ord'";$resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $des_tipo_orden=$registro["des_tipo_orden"]; $cod_cont=$registro["cod_contable_t"]; }
 $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(2,'$codigo_mov','$nro_orden','$ret_d','$cedrif','$tipo_ord','$ret_h','NO')"); 
-?> <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="80" readonly value="<? echo $des_tipo_orden?>" onkeypress="return stabular(event,this)"><?
-pg_close();?>
+?> <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="80" readonly value="<?php  echo $des_tipo_orden?>" onkeypress="return stabular(event,this)"><?php 
+pg_close($conn);?>

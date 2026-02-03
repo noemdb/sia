@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 $equipo=getenv("COMPUTERNAME"); $cta_pasivo='2-1-1'; $deb_cre="D";
 if (!$_GET){$mcod_m="BAN0062".$equipo;$codigo_mov=substr($mcod_m,0,49);$monto=0;}else{$codigo_mov=$_GET["codigo_mov"];$monto=$_GET["monto"];}
 $monto=cambia_punto_comas($monto);
@@ -7,12 +7,12 @@ $monto=cambia_punto_comas($monto);
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Incluir Cuentas al cheque)</title>
+<title>SIPAP CONTROL BANCARIO (Incluir Cuentas al cheque)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_comp_chq_fin.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_comp_chq_fin.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function validarNum(e){tecla=(document.all) ? e.keyCode : e.which;  if(tecla==0) return true;  if(tecla==8) return true;
     if((tecla<48||tecla>57)&&(tecla!=46&&tecla!= 44&&tecla!= 45)){alert('Por Favor Ingrese Solo Numeros ') };
     patron=/[0-9\,\-\.]/;  te=String.fromCharCode(tecla); return patron.test(te);
@@ -27,10 +27,10 @@ function apaga_monto(mthis){var mref; var mmonto;
    apagar(mthis);    mmonto=document.form1.txtmonto.value;  mmonto=camb_punto_coma(mmonto);document.form1.txtmonto.value=mmonto;
  return true;}
 function revisar(){var f=document.form1; var Valido=true;
-   if(f.txtCodigo_Cuenta.value==""){alert("Código de Cuenta no puede estar Vacio");return false;}
+   if(f.txtCodigo_Cuenta.value==""){alert("Cï¿½digo de Cuenta no puede estar Vacio");return false;}
    if(f.txtDeb_Cre.value=="D" || f.txtDeb_Cre.value=="C") {Valido=true;} else{alert("Valor Dedito/Credito no valida");return false; }
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -73,9 +73,9 @@ return true;}
           <td><table width="614" border="0">
                 <tr>
                   <td width="336"><span class="Estilo5">DEBITO/CREDITO :
-                      <input class="Estilo10" name="txtDeb_Cre" type="text"  id="txtDeb_Cre" size="2" maxlength="2" value="<?echo $deb_cre?>" onFocus="encender(this); " onBlur="apagar(this);" >  </span></td>
+                      <input class="Estilo10" name="txtDeb_Cre" type="text"  id="txtDeb_Cre" size="2" maxlength="2" value="<?php echo $deb_cre?>" onFocus="encender(this); " onBlur="apagar(this);" >  </span></td>
                   <td width="242"><span class="Estilo5">MONTO :
-                        <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right"  maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto?>" onKeypress="return validarNum(event)">
+                        <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right"  maxlength="22" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto?>" onKeypress="return validarNum(event)">
                   </span></td>
                 </tr>
             </table></td>
@@ -89,7 +89,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

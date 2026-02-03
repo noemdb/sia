@@ -1,4 +1,4 @@
-<?include "../../class/seguridad.inc";include "../../class/conects.php";include "../../class/fun_fechas.php";include "../../class/fun_numeros.php";include "../../class/configura.inc";
+<?php include "../../class/seguridad.inc";include "../../class/conects.php";include "../../class/fun_fechas.php";include "../../class/fun_numeros.php";include "../../class/configura.inc";
 error_reporting(E_ALL ^ E_NOTICE);
 $tipo_nomina_d = $_GET["tipo_nomina_d"];
 $tipo_nomina_h = $_GET["tipo_nomina_h"];
@@ -58,7 +58,7 @@ if ($tipo_calculo == "E") {$cri_tp = " and ((tp_calculo='E')and(num_periodos=$nu
 $criterio = $criterio . $cri_tp . " and (tipo_nomina>='" . $tipo_nomina_d . "' and tipo_nomina<='" . $tipo_nomina_h . "') and (monto>0) ";
 
 $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
-if (pg_ErrorMessage($conn)) {?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?} else {
+if (pg_last_error($conn)) {?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php } else {
 	$Nom_Emp = busca_conf();if ($utf_rpt == "SI") {if ($php_os == "WINNT") {$php_os = "LINUX";} else { $php_os = "WINNT";}}
 	$criterio3 = "NOMINA";
 

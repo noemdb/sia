@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");    include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");    include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"];
 $mes_desde=$_GET["mes_desde"];$mes_hasta=$_GET["mes_hasta"];$asig_global=$_GET["asig_global"]; $c_apli=$_GET["c_apli"]; $s_ultimo=$_GET["s_ultimo"]; $tipo_rep=$_GET["tipo_rep"]; } 
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$fecha="";  $c_apli="T";  $tipo_rep="PDF";}   $equipo=getenv("COMPUTERNAME"); $cod_mov="Epre020".$usuario_sia; $php_os=PHP_OS;
@@ -14,7 +14,7 @@ function Rellenarcerosizq($str,$n){$numeroarellenar=$n-strlen($str); $texto=""; 
 if ($mes_desde=='01'){$mesd="Enero";}elseif ($mes_desde=='02'){$mesd="Febrero";}elseif ($mes_desde=='03'){$mesd="Marzo";}elseif ($mes_desde=='04'){$mesd="Abril";}elseif ($mes_desde=='05'){$mesd="Mayo";}elseif ($mes_desde=='06'){$mesd="Junio";}elseif ($mes_desde=='07'){$mesd="Julio";}elseif ($mes_desde=='08'){$mesd="Agosto";}elseif ($mes_desde=='09'){$mesd="Septiembre";}elseif ($mes_desde=='10'){$mesd="Octubre";}elseif ($mes_desde=='11'){$mesd="Noviembre";}elseif ($mes_desde=='12'){$mesd="Diciembre";}
 if ($mes_hasta=='01'){$mesh="Enero";}elseif ($mes_hasta=='02'){$mesh="Febrero";}elseif ($mes_hasta=='03'){$mesh="Marzo";}elseif ($mes_hasta=='04'){$mesh="Abril";}elseif ($mes_hasta=='05'){$mesh="Mayo";}elseif ($mes_hasta=='06'){$mesh="Junio";}elseif ($mes_hasta=='07'){$mesh="Julio";}elseif ($mes_hasta=='08'){$mesh="Agosto";}elseif ($mes_hasta=='09'){$mesh="Septiembre";}elseif ($mes_hasta=='10'){$mesh="Octubre";}elseif ($mes_hasta=='11'){$mesh="Noviembre";}elseif ($mes_hasta=='12'){$mesh="Diciembre";}
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
    $mano=substr($Fec_Fin_Ejer,0,4);    $criterio1="Desde: ".$mesd." Hasta: ".$mesh." Ejercicio Fiscal: ".$mano;    $criterio2="";  
 
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX"; $cant_cat=3; $cant_par=4;
@@ -100,7 +100,7 @@ if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rp
 		 $StrSQL=$StrSQL.$sql_Asignacion."sum(disponible),sum(disp_diferida),".$sql_Compromiso.$sql_Causado.$sql_Pagado.$sql_Traslados.$sql_Trasladon.$sql_Adicion.$sql_Disminucion.$sql_Diferido.", "."0 as compromisoM,0 as causadoM, 0 as pagadoM, 0 as trasladosM, 0 as trasladonM, 0 as adicionM, 0 as disminucionM, 0 as diferidoM ";
 		 $StrSQL=$StrSQL." FROM PRE001 WHERE length(cod_presup)=".$l_c." and ".$criterio.$criterioc." group by ".$sql_grupo;
 		 //echo $StrSQL,"<br>";
-		 $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+		 $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0,91);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 		 $sl=$mcontrol[$pa];
 		 $sql_codigo="substr(cod_presup,".$ini.",".$m.") as cod_partida,cod_fuente,denominacion"; $sql_grupo="cod_partida,cod_fuente,denominacion";
 		 if($i<$cant_par) { $sql_codigo="substr(cod_presup,".$ini.",".$m.") as cod_partida,'00' as cod_fuente,denominacion"; $sql_grupo="cod_partida,cod_fuente,denominacion";}
@@ -269,16 +269,16 @@ if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rp
 		 </tr>
 		 <tr height="20">
 			<td width="150" align="left" ><strong></strong></td>
-			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1; ?></strong></font></td>
+			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1; ?></strong></font></td>
 		 </tr>
-		 <?
+		 <?php 
 		 if ($criterio_s<>''){
 		?>
 		 <tr height="20">
 			<td width="150" align="left" ><strong></strong></td>
-			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio_s; ?></strong></font></td>
+			<td width="500" align="center" colspan="5"  > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio_s; ?></strong></font></td>
 		 </tr>
-		 <? } ?>
+		 <?php } ?>
 		 <tr>
 			<td width="150" align="left"></td>
 		 </tr>	
@@ -302,7 +302,7 @@ if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rp
 		   <td width="50" align="center" bgcolor="#99CCFF" ><strong>%</strong></td> 				   
 		 </tr>
 		
-		<?
+		<?php 
 		
 	  $i=0;  $totalg=0; $totalf=0; $totalm=0; $totalc=0; $totala=0; $totalp=0; $totald=0; $totale=0; $prev_part="";
       $sub_totalg=0; $sub_totalf=0; $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $sub_totald=0; $sub_totale=0; $prev_clave="";  	  
@@ -346,21 +346,21 @@ if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rp
 			
 			?>	   
 			<tr>
-			   <td width="150" align="center" style="<? echo $stilo1; ?>"><? echo $mpartida; ?></td>
-			   <td width="500" align="justify"><? echo $denominacion; ?></td>				   
-			   <td width="150" align="right"><? echo $asignado; ?></td>
-			   <td width="150" align="right"><? echo $modificaciones; ?></td>
-			   <td width="150" align="right"><? echo $asig_actualizada; ?></td>
-			   <td width="150" align="right"><? echo $comprometido; ?></td>
-			   <td width="50" align="right"><? echo $porc1; ?></td>			   
-			   <td width="150" align="right"><? echo $causado; ?></td>
-			   <td width="50" align="right"><? echo $porc2; ?></td>
-			   <td width="150" align="right"><? echo $pagado; ?></td>
-			   <td width="50" align="right"><? echo $porc3; ?></td>			   
-			   <td width="150" align="right"><? echo $disponible; ?></td>
-			   <td width="50" align="right"><? echo $porc4; ?></td>
+			   <td width="150" align="center" style="<?php  echo $stilo1; ?>"><?php  echo $mpartida; ?></td>
+			   <td width="500" align="justify"><?php  echo $denominacion; ?></td>				   
+			   <td width="150" align="right"><?php  echo $asignado; ?></td>
+			   <td width="150" align="right"><?php  echo $modificaciones; ?></td>
+			   <td width="150" align="right"><?php  echo $asig_actualizada; ?></td>
+			   <td width="150" align="right"><?php  echo $comprometido; ?></td>
+			   <td width="50" align="right"><?php  echo $porc1; ?></td>			   
+			   <td width="150" align="right"><?php  echo $causado; ?></td>
+			   <td width="50" align="right"><?php  echo $porc2; ?></td>
+			   <td width="150" align="right"><?php  echo $pagado; ?></td>
+			   <td width="50" align="right"><?php  echo $porc3; ?></td>			   
+			   <td width="150" align="right"><?php  echo $disponible; ?></td>
+			   <td width="50" align="right"><?php  echo $porc4; ?></td>
 			 </tr>
-			<? 	
+			<?php  	
 			}
 			$par_totalg=0; $par_totalf=0; $par_totalm=0; $par_totalc=0; $par_totala=0; $par_totalp=0; $par_totald=0; $par_totale=0; $prev_par=$cod_partida; $prev_den=$denominacion;
 							
@@ -380,22 +380,22 @@ if (pg_ErrorMessage($conn)){$error=1; } else { $Nom_Emp=busca_conf(); if($utf_rp
 		<tr>
 			   <td width="150" align="center"><strong></strong></td>  
 			   <td width="500" align="justify"><strong>TOTAL GENERAL</strong></td>				   
-			   <td width="150" align="right"><strong><? echo $stotalg; ?></strong></td>
-			   <td width="150" align="right"><strong><? echo $totalm;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $totalf;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $totalc;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $porc1;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $totala;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $porc2;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $totalp;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $porc3;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $stotald;?></strong></td>
-			   <td width="150" align="right"><strong><? echo $porc4;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotalg; ?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $totalm;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $totalf;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $totalc;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $porc1;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $totala;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $porc2;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $totalp;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $porc3;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $stotald;?></strong></td>
+			   <td width="150" align="right"><strong><?php  echo $porc4;?></strong></td>
 			 </tr>
 		</table></td>
          </tr>				
 		 </table>
-		<?  
+		<?php   
 		
   }	 
 

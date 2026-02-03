@@ -1,7 +1,7 @@
-<?include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS; error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); $php_os=PHP_OS; error_reporting(E_ALL ^ E_NOTICE); 
 if (!$_GET){$cedula_d=""; $cedula_h="";} else{$cedula_d=$_GET["codigo_d"];  $cedula_h=$_GET["codigo_h"];} $fecha_hoy=asigna_fecha_hoy(); 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }  $error=0;
 $direccion_ag=""; $nombre=""; $nom_comp=""; $rif=""; $nit=""; $telefono_ag=""; $fax=""; $str1="NO"; $fecha_ini="2011-01-01"; $fecha_fin="2011-12-31"; $periodo="01"; $correo=""; $tasa_iva=0; $monto_ut=0; $definicion="N";
 $sql="Select * from SIA000 order by campo001"; $resultado=pg_query($sql);
@@ -276,4 +276,4 @@ require('../../class/fpdf/fpdf.php');
 		$pdf->SetFont('Arial','B',5);		
 		$pdf->Cell(140,5,'AGENTE DE RETENCION (SELLO, FECHA Y FRIMA): ',0,0,'R');
 		$pdf->Output();  
-pg_close();?>
+pg_close($conn);?>

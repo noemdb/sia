@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_asientod=$_GET["tipo_asiento_d"];$tipo_asientoh=$_GET["tipo_asiento_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $sSQL="";
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
    $sSQL = "select tipo_asiento,descrip_tipo_asiento from con009 WHERE tipo_asiento >='".$tipo_asientod."' and tipo_asiento <='".$tipo_asientoh."' order by tipo_asiento ";
 
@@ -74,17 +74,17 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
            <td width="100" align="left" bgcolor="#99CCFF"><strong>TIPO</strong></td>
            <td width="400" align="left" bgcolor="#99CCFF"><strong>DESCRIPCION</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_asiento=$registro["tipo_asiento"]; $descrip_tipo_asiento=$registro["descrip_tipo_asiento"]; 
 		$descrip_tipo_asiento=conv_cadenas($descrip_tipo_asiento,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_asiento; ?></td>
-           <td width="400" align="left"><? echo $descrip_tipo_asiento; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_asiento; ?></td>
+           <td width="400" align="left"><?php  echo $descrip_tipo_asiento; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -93,7 +93,7 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

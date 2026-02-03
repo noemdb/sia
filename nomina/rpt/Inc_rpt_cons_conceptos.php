@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,13 +37,13 @@ return true;}
 </style>
 </head>
 
-<? $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php  $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $cod_reporte="00000001";
 $StrSQL="select max(cod_reporte) as referencia from nom047 where cod_reporte<='99999999'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); 
 $ult_ref=$registro["referencia"]+1; $len=strlen($ult_ref); $cod_reporte=substr("00000000",0,8-$len).$ult_ref; }
-pg_close(); 
+pg_close($conn); 
 ?>
 <body>
 <form name="form1" method="post" action="Insert_rpt_cons_concepto.php" onSubmit="return revisar()">
@@ -58,7 +58,7 @@ pg_close();
           <td><table width="730">
             <tr>
               <td width="130" ><span class="Estilo5">C&Oacute;DIGO : </span></td>
-              <td width="600" ><span class="Estilo5"> <input name="txtcod_reporte" type="text" id="txtcod_reporte" size="10" maxlength="8"  readonly value="<?echo $cod_reporte?>"   > </span></td>
+              <td width="600" ><span class="Estilo5"> <input name="txtcod_reporte" type="text" id="txtcod_reporte" size="10" maxlength="8"  readonly value="<?php echo $cod_reporte?>"   > </span></td>
              </tr>
           </table></td>
         </tr>

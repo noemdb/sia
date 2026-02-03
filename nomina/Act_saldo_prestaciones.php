@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000040"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if (!$_GET){$cod_empleado=''; $p_letra='';$sql="SELECT * FROM CAL_PRESTA Where (Tipo_Calculo='S') ORDER BY cod_empleado";
 } else {$codigo=$_GET["Gcodigo"];$p_letra=substr($codigo, 0, 1);
   if(($p_letra=="P")||($p_letra=="U")||($p_letra=="S")||($p_letra=="A")||($p_letra=="C")){$cod_empleado=substr($codigo,1,15);} else{$cod_empleado=substr($codigo,0,15);}
@@ -55,8 +55,8 @@ MM_reloadPage(true);
 </script>
 
 </head>
-<?
-$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php 
+$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $res=pg_query($sql);$filas=pg_num_rows($res);
 if ($filas==0){if ($p_letra=="S"){$sql="SELECT * FROM CAL_PRESTA Where (Tipo_Calculo='S') Order by cod_empleado";}if ($p_letra=="A"){$sql="SELECT * FROM CAL_PRESTA Where (Tipo_Calculo='S') Order by cod_empleado desc";}  $res=pg_query($sql);$filas=pg_num_rows($res);}
 $nombre="";$cod_empleado=""; $cedula=""; $fecha_ingreso=""; $fecha_calculo=""; $sueldo_calculo=0;  $dias_prestaciones=0;  $sueldo_calculo_adic=0;  $dias_adicionales=0; $total_prestaciones=0;  $total_adelanto=0; $interes_pagado=0; $acumulado_total=0; $total_interes=0; $saldo_prestaciones668=0; $total_interes668=0; $interes_noacum=0; $interes_acum=0;
@@ -122,11 +122,11 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                  <td width="100"><span class="Estilo5">C&Eacute;DULA :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -134,7 +134,7 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -142,11 +142,11 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="146" ><span class="Estilo5">FECHA CALCULO : </span></td>
-                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10" readonly value="<?echo $fecha_calculo?>"></span></td>
+                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_calculo" type="text" id="txtfecha_calculo" size="10" maxlength="10" readonly value="<?php echo $fecha_calculo?>"></span></td>
                  <td width="130" ><span class="Estilo5">MONTO SUELDO : </span></td>
-                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txtsueldo_calculo" type="text" id="txtsueldo_calculo" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $sueldo_calculo?>"></span></td>
+                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txtsueldo_calculo" type="text" id="txtsueldo_calculo" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $sueldo_calculo?>"></span></td>
                  <td width="120"><span class="Estilo5">CANTIDAD DIAS  :</span></td>
-                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtdias_prestaciones" type="text" id="txtdias_prestaciones" size="10" maxlength="10"  style="text-align:right" value="<?echo $dias_prestaciones?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtdias_prestaciones" type="text" id="txtdias_prestaciones" size="10" maxlength="10"  style="text-align:right" value="<?php echo $dias_prestaciones?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -154,9 +154,9 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">MONTO SUELDO DIAS ADICIONALES: </span></td>
-                 <td width="310" ><span class="Estilo5"><input class="Estilo10" name="txtsueldo_calculo_adic" type="text" id="txtsueldo_calculo_adic" size="17" maxlength="17" style="text-align:right" readonly value="<?echo $sueldo_calculo_adic?>"></span></td>
+                 <td width="310" ><span class="Estilo5"><input class="Estilo10" name="txtsueldo_calculo_adic" type="text" id="txtsueldo_calculo_adic" size="17" maxlength="17" style="text-align:right" readonly value="<?php echo $sueldo_calculo_adic?>"></span></td>
                  <td width="200" ><span class="Estilo5">CANTIDAD DIAS ADICIONALES : </span></td>
-                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtdias_adicionales" type="text" id="txtdias_adicionales" size="10" maxlength="10"  style="text-align:right" readonly value="<?echo $dias_adicionales?>"></span></td>
+                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtdias_adicionales" type="text" id="txtdias_adicionales" size="10" maxlength="10"  style="text-align:right" readonly value="<?php echo $dias_adicionales?>"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -164,9 +164,9 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">TOTAL PRESTACIONES : </span></td>
-                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txttotal_prestaciones" type="text" id="txttotal_prestaciones" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $total_prestaciones?>"></span></td>
+                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txttotal_prestaciones" type="text" id="txttotal_prestaciones" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $total_prestaciones?>"></span></td>
                  <td width="140" ><span class="Estilo5">TOTAL ADELANTO : </span></td>
-                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_adelanto" type="text" id="txttotal_adelanto" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $total_adelanto?>"></span></td>
+                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_adelanto" type="text" id="txttotal_adelanto" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $total_adelanto?>"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -174,9 +174,9 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">INTERES CAPITALIZADO : </span></td>
-                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txtinteres_devengado" type="text" id="txtinteres_devengado" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $interes_acum?>"></span></td>
+                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txtinteres_devengado" type="text" id="txtinteres_devengado" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $interes_acum?>"></span></td>
                  <td width="140" ><span class="Estilo5">INTERES NO CAPITALIZADO : </span></td>
-                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txtinteres_noacum" type="text" id="txtinteres_noacum" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $interes_noacum?>"></span></td>
+                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txtinteres_noacum" type="text" id="txtinteres_noacum" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $interes_noacum?>"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -184,9 +184,9 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
 			     <td width="216" ><span class="Estilo5">INTERES PAGADO : </span></td>
-                 <td width="330" ><span class="Estilo5"><input class="Estilo10" name="txtinteres_pagado" type="text" id="txtinteres_pagado" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $interes_pagado?>"  ></span></td>
+                 <td width="330" ><span class="Estilo5"><input class="Estilo10" name="txtinteres_pagado" type="text" id="txtinteres_pagado" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $interes_pagado?>"  ></span></td>
                  <td width="140" ><span class="Estilo5">TOTAL INTERESES : </span></td>
-                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_interes" type="text" id="txttotal_interes" size="17" maxlength="17"  style="text-align:right" readonly readonly value="<?echo $total_interes?>"  ></span></td>
+                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_interes" type="text" id="txttotal_interes" size="17" maxlength="17"  style="text-align:right" readonly readonly value="<?php echo $total_interes?>"  ></span></td>
                </tr>
              </table></td>
            </tr>
@@ -194,7 +194,7 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>                 
 				 <td width="216" ><span class="Estilo5">SALDO PRESTACIONES : </span></td>
-                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txtacumulado_total" type="text" id="txtacumulado_total" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $acumulado_total?>"></span></td>
+                 <td width="330" ><span class="Estilo5"> <input class="Estilo10" name="txtacumulado_total" type="text" id="txtacumulado_total" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $acumulado_total?>"></span></td>
                  <td width="140" ><span class="Estilo5"> </span></td>
                  <td width="180" ><span class="Estilo5"></span></td>
 				</tr>
@@ -205,9 +205,9 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">SALDO PRESTACIONES ART.668: </span></td>
-                 <td width="250" ><span class="Estilo5"> <input class="Estilo10" name="txtsaldo_prestaciones668" type="text" id="txtsaldo_prestaciones668" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $saldo_prestaciones668?>"></span></td>
+                 <td width="250" ><span class="Estilo5"> <input class="Estilo10" name="txtsaldo_prestaciones668" type="text" id="txtsaldo_prestaciones668" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $saldo_prestaciones668?>"></span></td>
                  <td width="220" ><span class="Estilo5">INTERESES PRESTACIONES ART.668: </span></td>
-                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_interes668" type="text" id="txttotal_interes668" size="17" maxlength="17"  style="text-align:right" readonly value="<?echo $total_interes668?>"></span></td>
+                 <td width="180" ><span class="Estilo5"><input class="Estilo10" name="txttotal_interes668" type="text" id="txttotal_interes668" size="17" maxlength="17"  style="text-align:right" readonly value="<?php echo $total_interes668?>"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -220,4 +220,4 @@ $strSQL = "SELECT * FROM NOM075 Where (Cod_Empleado='$cod_empleado')"; $resultad
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

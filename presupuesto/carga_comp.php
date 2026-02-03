@@ -9,17 +9,17 @@ function Llamar_Inc_Orden(){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<? $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?} 
+<?php  $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php } 
 else{ $Nom_Emp=busca_conf();   
-$res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
-$res=pg_exec($conn,"SELECT ACTUALIZA_PAG036(3,'$codigo_mov','00000000','0000','','','','NO')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+$res=pg_exec($conn,"SELECT ACTUALIZA_PAG036(3,'$codigo_mov','00000000','0000','','','','NO')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 $mconf="";$Ssql="Select * from SIA005 where campo501='05'";$resultado=pg_query($Ssql);
 if ($registro=pg_fetch_array($resultado,0)){$mconf=$registro["campo502"];}$nro_aut=substr($mconf,1,1); $fecha_aut=substr($mconf,2,1); $aprueba_comp=substr($mconf,15,1);
 $nro_aut="N"; $fecha_aut="N";  $fecha_hoy=asigna_fecha_hoy(); 
 $connd=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbnamed."");
 $descripcion="";$fecha="";$unidad_sol="";$des_unidad_sol="";$nombre_abrev_comp="";$cod_tipo_comp="";$des_tipo_comp="";   $ced_rif="";$nombre="";$fecha_vencim="";$nro_documento="";$num_proyecto="";$des_proyecto="";$func_inv="";$tiene_anticipo="";$tasa_anticipo="";$cod_con_anticipo="";$inf_usuario="";$anulado="";$modulo="";$aprobado="";
 $sSQL="Select * from pre006 WHERE referencia_comp='$referencia_comp' and tipo_compromiso='$tipo_compromiso'";  $resultado=pg_exec($connd,$sSQL);$filas=pg_numrows($resultado);
-if ($filas==0){echo $sSQL; $error=1;?><script language="JavaScript">muestra('REFERENCIA DE COMPROMISO NO EXISTE');</script><?}
+if ($filas==0){echo $sSQL; $error=1;?><script language="JavaScript">muestra('REFERENCIA DE COMPROMISO NO EXISTE');</script><?php }
 else{ $registro=pg_fetch_array($resultado); $referencia_comp=$registro["referencia_comp"]; $cod_comp=$registro["cod_comp"];
 	  $fecha=$registro["fecha_compromiso"];  $tipo_compromiso=$registro["tipo_compromiso"]; $descripcion=$registro["descripcion_comp"]; $inf_usuario=$registro["inf_usuario"];
 	   $unidad_sol=$registro["unidad_sol"];  $cod_tipo_comp=$registro["cod_tipo_comp"];  $ced_rif=$registro["ced_rif"];  $fecha_vencim=$registro["fecha_vencim"];
@@ -50,40 +50,40 @@ $resultado=pg_exec($conn,"SELECT ACTUALIZA_PAG036(1,'$codigo_mov','$referencia_c
 <form name="form2" method="post" action="Inc_compromisos.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>
-     <td width="5"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>
-     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
-	 <td width="5"><input name="txtdoc_comp" type="hidden" id="txtdoc_comp" value="<?echo $tipo_compromiso?>"></td>
-	 <td width="5"><input name="txtabrev_comp" type="hidden" id="txtabrev_comp" value="<?echo $nombre_abrev_comp?>"></td>
-     <td width="5"><input name="txtref_comp" type="hidden" id="txtref_comp" value="<?echo $referencia_comp?>"></td>
-	 <td width="5"><input name="txtcod_cat" type="hidden" id="txtcod_cat" value="<?echo $unidad_sol?>"></td>
-     <td width="5"><input name="txtnomb_cat" type="hidden" id="txtnomb_cat" value="<?echo $des_unidad_sol?>"></td>	 
-	 <td width="5"><input name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?echo $cod_tipo_comp ?>"></td>
-     <td width="5"><input name="txtdes_tipo_comp" type="hidden" id="txtdes_tipo_comp" value="<?echo $des_tipo_comp?>"></td>
-	 <td width="5"><input name="txtfecha_ini" type="hidden" id="txtfecha_ini" value="<?echo $fecha_hoy?>" ></td>
-	 <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>
+     <td width="5"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>
+     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
+	 <td width="5"><input name="txtdoc_comp" type="hidden" id="txtdoc_comp" value="<?php echo $tipo_compromiso?>"></td>
+	 <td width="5"><input name="txtabrev_comp" type="hidden" id="txtabrev_comp" value="<?php echo $nombre_abrev_comp?>"></td>
+     <td width="5"><input name="txtref_comp" type="hidden" id="txtref_comp" value="<?php echo $referencia_comp?>"></td>
+	 <td width="5"><input name="txtcod_cat" type="hidden" id="txtcod_cat" value="<?php echo $unidad_sol?>"></td>
+     <td width="5"><input name="txtnomb_cat" type="hidden" id="txtnomb_cat" value="<?php echo $des_unidad_sol?>"></td>	 
+	 <td width="5"><input name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?php echo $cod_tipo_comp ?>"></td>
+     <td width="5"><input name="txtdes_tipo_comp" type="hidden" id="txtdes_tipo_comp" value="<?php echo $des_tipo_comp?>"></td>
+	 <td width="5"><input name="txtfecha_ini" type="hidden" id="txtfecha_ini" value="<?php echo $fecha_hoy?>" ></td>
+	 <td width="5"><input name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>
      <td width="5"><input name="txtcod_est" type="hidden" id="txtcod_est" value="00000000" ></td>	 
-	 <td width="5"><input name="txtced_r" type="hidden" id="txtced_r" value="<?echo $ced_rif ?>"></td>
-     <td width="5"><input name="txtnomb_r" type="hidden" id="txtnomb_r" value="<?echo $nombre ?>"></td>
-	 <td width="5"><input name="txtconcepto_r" type="hidden" id="txtconcepto_r" value="<?echo $descripcion ?>"></td>
-	 <td width="5"><input name="txtfechac" type="hidden" id="txtfechac" value="<?echo $fecha?>"></td>
-	 <td width="5"><input name="txtnro_doc" type="hidden" id="txtnro_doc" value="<?echo $nro_documento ?>"></td>
-	 <td width="5"><input name="txtfechav" type="hidden" id="txtfechav" value="<?echo $fecha_vencim?>"></td>
-	 <td width="5"><input name="txttiene_ant" type="hidden" id="txttiene_ant" value="<?echo $tiene_anticipo?>"></td>
-	 <td width="5"><input name="txtfunc_inv" type="hidden" id="txtfunc_inv" value="<?echo $func_inv?>"></td>
-	 <td width="5"><input name="txttasa_ant" type="hidden" id="txttasa_ant" value="<?echo $tasa_anticipo?>"></td>
-	 <td width="5"><input name="txtcod_cuenta" type="hidden" id="txtcod_cuenta" value="<?echo $cod_con_anticipo?>"></td>
+	 <td width="5"><input name="txtced_r" type="hidden" id="txtced_r" value="<?php echo $ced_rif ?>"></td>
+     <td width="5"><input name="txtnomb_r" type="hidden" id="txtnomb_r" value="<?php echo $nombre ?>"></td>
+	 <td width="5"><input name="txtconcepto_r" type="hidden" id="txtconcepto_r" value="<?php echo $descripcion ?>"></td>
+	 <td width="5"><input name="txtfechac" type="hidden" id="txtfechac" value="<?php echo $fecha?>"></td>
+	 <td width="5"><input name="txtnro_doc" type="hidden" id="txtnro_doc" value="<?php echo $nro_documento ?>"></td>
+	 <td width="5"><input name="txtfechav" type="hidden" id="txtfechav" value="<?php echo $fecha_vencim?>"></td>
+	 <td width="5"><input name="txttiene_ant" type="hidden" id="txttiene_ant" value="<?php echo $tiene_anticipo?>"></td>
+	 <td width="5"><input name="txtfunc_inv" type="hidden" id="txtfunc_inv" value="<?php echo $func_inv?>"></td>
+	 <td width="5"><input name="txttasa_ant" type="hidden" id="txttasa_ant" value="<?php echo $tasa_anticipo?>"></td>
+	 <td width="5"><input name="txtcod_cuenta" type="hidden" id="txtcod_cuenta" value="<?php echo $cod_con_anticipo?>"></td>
 	  <td width="5"><input name="txtcon_est" type="hidden" id="txtcon_est" value="NO"></td>
   </tr>
 </table>
 </form>
-<?
-pg_close();
-if ($error==0){?><script language="JavaScript">alert('Compromiso Cargado'); Llamar_Inc_Orden();</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? }
+<?php 
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">alert('Compromiso Cargado'); Llamar_Inc_Orden();</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>
 

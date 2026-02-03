@@ -1,14 +1,14 @@
-<?include ("../class/ventana.php"); if (!$_GET){$cod_estructura='';}else{$cod_estructura=$_GET["cod_estructura"];} ?>
+<?php include ("../class/ventana.php"); if (!$_GET){$cod_estructura='';}else{$cod_estructura=$_GET["cod_estructura"];} ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Codigos en la Estructura)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Codigos en la Estructura)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_asig_comp_est.php?cod_estructura=<?echo $cod_estructura?>'; }
+function llamar_anterior(){ document.location ='Det_asig_comp_est.php?cod_estructura=<?php echo $cod_estructura?>'; }
 function chequea_tipo(mform){var mref;
    mref=mform.txttipo_compromiso.value;  mref=Rellenarizq(mref,"0",4);  mform.txttipo_compromiso.value=mref;
 return true;}
@@ -70,7 +70,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcod_estructura" type="hidden" id="txtcod_estructura" value="<?echo $cod_estructura?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcod_estructura" type="hidden" id="txtcod_estructura" value="<?php echo $cod_estructura?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

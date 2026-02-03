@@ -1,6 +1,6 @@
-<?include ("/AppServ/www/sia/class/conect.php");?>
+<?php include ("/AppServ/www/sia/class/conect.php");?>
 
-<?
+<?php 
    // include the PHPReports classes on the PHP path! configure your path here
    include "/AppServ/www/sia/class/phpreports/PHPReportMaker.php";
 

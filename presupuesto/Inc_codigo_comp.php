@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PRE006".$equipo;$codigo_mov=substr($mcod_m,0,49); $cod_cat="";$formato="XX-XX-XX-XXX-XX-XX-XX";}else{$codigo_mov=$_GET["codigo_mov"]; $cod_cat=$_GET["cod_cat"]; $formato=$_GET["formato"]; }  $mpatron="Array(2,2,2,2,2,3,2,2,2,2)";  $mpatron=arma_patron($formato);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Codigos en el Compromiso)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Codigos en el Compromiso)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -23,7 +23,7 @@ return str2;}
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value; mmonto=eliminapunto(mmonto);  mthis.value=mmonto; 
 }
-function llamar_anterior(){ document.location ='Det_inc_compromisos.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_compromisos.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_monto(mform){
    if(mform.txttipo_imput_presu.value=="CRED. ADICIONAL"){mform.txtmonto_credito.value=mform.txtmonto.value;}
     else{mform.txtmonto_credito.value="0";}
@@ -63,7 +63,7 @@ return true;}
           <td><table width="679" border="0">
               <tr>
                 <td width="168"><span class="Estilo5">C&Oacute;DIGO PRESUPUESTARIO : </span></td>
-                <td width="217"><span class="Estilo5"> <input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el Codigo Presupuestario"  size="34" maxlength="34" onFocus="encender(this); " onBlur="apagar(this)" value="<? echo $cod_cat ?>" onkeypress="return stabular(event,this)" onkeyup="mascara(this,'-',patroncodigo,true)">    </span></td>
+                <td width="217"><span class="Estilo5"> <input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup" title="Registre el Codigo Presupuestario"  size="34" maxlength="34" onFocus="encender(this); " onBlur="apagar(this)" value="<?php  echo $cod_cat ?>" onkeypress="return stabular(event,this)" onkeyup="mascara(this,'-',patroncodigo,true)">    </span></td>
                 <td width="103"><input class="Estilo10" name="btCodPre" type="button" id="btCodPre" title="Abrir Catalogo Codigos Presupuestarios"  onclick="llama_codpresup()" value="..." onkeypress="return stabular(event,this)"></td>
                 <td width="51"><input class="Estilo10" name="txtcod_contable" type="hidden" id="txtcod_contable"></td>
                 <td width="59"><input class="Estilo10" name="txtdes_contable" type="hidden" id="txtdes_contable"></td>
@@ -133,7 +133,7 @@ return true;}
             <td width="130" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="130" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>
             <td width="130" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>
-			<td width="20"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+			<td width="20"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             
             <td width="110">&nbsp;</td>
           </tr>

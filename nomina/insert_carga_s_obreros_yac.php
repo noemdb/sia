@@ -1,9 +1,9 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy(); $fechab=$_GET["fechah"];  $fechah=formato_aaaammdd($fechab);  $fechad=$_GET["fechad"];  $fechad=formato_aaaammdd($fechad);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy(); $fechab=$_GET["fechah"];  $fechah=formato_aaaammdd($fechab);  $fechad=$_GET["fechad"];  $fechad=formato_aaaammdd($fechad);
 $cod_empleado_d=$_GET["codigo_d"];  $cod_empleado_h=$_GET["codigo_h"]; $tipo_nomina_d=$_GET["tipod"]; $tipo_nomina_h=$_GET["tipoh"];  $busca_hist=$_GET["busca_hist"]; $cant_dias=$_GET["cant_dias"]; $fechacb=$_GET["fechac"]; $fechac=$_GET["fechac"];  $fechac=formato_aaaammdd($fechac);
 $cod_conc="150";  $cod_adic="150";  $url="Act_sueldo_prestaciones.php?Gcriterio=C".$fechab.$cod_empleado_d; $cod_empleado=$cod_empleado_d;  $cant_dias=$cant_dias*1;  $dias_vac=63; $dias_prest=100;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  $error=0;
 $equipo=getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");echo "ESPERE POR FAVOR INCLUYENDO....","<br>";
-if (pg_ErrorMessage($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ 
  /*
  001 Sueldo
@@ -28,17 +28,17 @@ if (pg_ErrorMessage($conn)){$error=1; ?><script language="JavaScript">muestra('O
    while($reg=pg_fetch_array($res)){ $cod_empleado=$reg["cod_empleado"];  $monto=$reg["monto"];  $des_concepto="SUELDO DE PRESTACIONES";
      $montob=$monto; $s_dia=$monto/$cant_dias; $f_vac=($s_dia*$dias_vac)/360;  $f_prest=($s_dia*$dias_prest)/360; $monto=($s_dia+$f_vac+$f_prest)*30; $monto=round($monto,2);
 	 $sSQL="SELECT ACTUALIZA_NOM028(3,'$cod_empleado','$fechac',$monto,$monto,$montob,0,0,$f_vac,$f_prest,$cant_dias,$s_dia,0,0,'$minf_usuario','$cod_conc','$fechah','$des_concepto','000','$fechah','')";
-     $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?} 
+     $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } 
 	 echo $sSQL,"<br>";
 	 if($cod_conc==$cod_adic){ 
 	   $sSQL="SELECT ACTUALIZA_NOM028(4,'$cod_empleado','$fechac',$monto,$monto,$montob,0,0,$f_vac,$f_prest,$cant_dias,$s_dia,0,0,'$minf_usuario','$cod_conc','$fechah','','$cod_adic','$fechah','$des_concepto')";
-       $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?} 
+       $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } 
 	   //echo $sSQL,"<br>";
 	 }
    }
    
-}pg_close();  $url="Act_sueldo_prestaciones_yac.php?Gcriterio=C".$fechacb.$cod_empleado;
-if($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?}else{?><script language="JavaScript">history.back();</script><?}
+}pg_close($conn);  $url="Act_sueldo_prestaciones_yac.php?Gcriterio=C".$fechacb.$cod_empleado;
+if($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php }else{?><script language="JavaScript">history.back();</script><?php }
 ?>
 
 

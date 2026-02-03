@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -29,25 +29,25 @@ $sql="SELECT * FROM ASIG_CARGO  where cod_empleado='$cod_empleado' order by fech
            <td width="100" align="right" bgcolor="#99CCFF" ><strong>Compensacion</strong></td>
 		   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Prima</strong></td>
          </tr>
-<? while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_asigna"]; $fechaa=formato_ddmmaaaa($sfecha);  $monto_s=formato_monto($registro["sueldo"]); $monto_c=formato_monto($registro["compensacion"]); $monto_p=formato_monto($registro["prima"]);
+<?php  while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha_asigna"]; $fechaa=formato_ddmmaaaa($sfecha);  $monto_s=formato_monto($registro["sueldo"]); $monto_c=formato_monto($registro["compensacion"]); $monto_p=formato_monto($registro["prima"]);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="100" align="left"><? echo $registro["cod_cargo"]; ?></td>
-           <td width="200" align="left"><? echo $registro["des_cargo"]; ?></td>
-           <td width="100" align="left"><? echo $fechaa; ?></td>
-           <td width="100" align="left"><? echo $registro["cod_departamento"]; ?></td>
-           <td width="200" align="left"><? echo $registro["des_departamento"]; ?></td>
-           <td width="100" align="left"><? echo $registro["cod_tipo_personal"]; ?></td>
-           <td width="50" align="left"><? echo $registro["grado"]; ?></td>
-           <td width="50" align="left"><? echo $registro["paso"]; ?></td>
-           <td width="100" align="right"><? echo $monto_s; ?></td>
-           <td width="100" align="right"><? echo $monto_c; ?></td>
-		   <td width="100" align="right"><? echo $monto_p; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_cargo"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["des_cargo"]; ?></td>
+           <td width="100" align="left"><?php  echo $fechaa; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_departamento"]; ?></td>
+           <td width="200" align="left"><?php  echo $registro["des_departamento"]; ?></td>
+           <td width="100" align="left"><?php  echo $registro["cod_tipo_personal"]; ?></td>
+           <td width="50" align="left"><?php  echo $registro["grado"]; ?></td>
+           <td width="50" align="left"><?php  echo $registro["paso"]; ?></td>
+           <td width="100" align="right"><?php  echo $monto_s; ?></td>
+           <td width="100" align="right"><?php  echo $monto_c; ?></td>
+		   <td width="100" align="right"><?php  echo $monto_p; ?></td>
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

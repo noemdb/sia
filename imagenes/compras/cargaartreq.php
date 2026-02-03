@@ -9,7 +9,7 @@ while($registro=pg_fetch_array($res)){ $cod_articulo=$registro["cod_articulo"]; 
  $des_articulo=$registro["descripcion_articulo"];$marca=$registro["marca"]; $modelo=$registro["modelo"]; $unidad_medida=$registro["unidad_medida"]; $costo=$registro["costo_actual"]; $impuesto=$registro["tasa_impuesto"]; $campo_num2=$registro["campo_num2"];
  if($por_recibir>0){$ssql="SELECT ACTUALIZA_COMP042(1,'$codigo_mov','$cod_articulo','00000000','0000000000','$nro_linea','','$sfecha','$marca','$modelo','$unidad_medida','','00',$campo_num2,$impuesto,0,0,0,$por_recibir,0,0,0,0,0,0,'000','','$sfecha','','S','$nro_req','',0,0,'','$sfecha','','','$des_articulo','')";
  $resultado=pg_exec($conn,$ssql);     $error=pg_errormessage($conn);}  
-}pg_close();?>
+}pg_close($conn);?>
 
-<iframe src="Det_inc_des_req.php?codigo_mov=<?echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0">
+<iframe src="Det_inc_des_req.php?codigo_mov=<?php echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0">
 </iframe>

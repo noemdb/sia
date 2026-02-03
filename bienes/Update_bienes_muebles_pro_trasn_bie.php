@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $referencia_transf=$_POST["txtreferencia_transf"];
 $fecha_transf=$_POST["txtfecha_transf"];
 $tipo_transferencia=$_POST["txttipo_transferencia"];
@@ -22,11 +22,11 @@ $departamento1=$_POST["txtdepartamento1"];
 $sfecha=formato_aaaammdd($fecha_transf);
 $url="Act_bienes_muebles_pro_trasn_bie.php"; echo "ESPERE POR FAVOR MODIFICANDO....","<br>"; $error=0;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{  $sSQL="Select * from bien036 WHERE referencia_transf='$referencia_transf'";  $resultado=pg_exec($conn,$sSQL);  $filas=pg_numrows($resultado);
-  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE LA REFERENCIA NO EXISTE');</script> <? }
+  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE LA REFERENCIA NO EXISTE');</script> <?php }
    else{$error=1;$resultado=pg_exec($conn,"SELECT MODIFICA_BIEN036('$referencia_transf','$fecha_transf','$tipo_transferencia','$descripcion','$cod_empresa_e','$cod_dependencia_e','$cod_direccion_e','$cod_departamento_e','$cod_empresa_r','$cod_dependencia_r','$cod_direccion_r','$cod_departamento_r','$ced_responsable','$ced_res_uso','$nombre_e','$departamento_e','$nombre_r','$departamento_r','$nombre1','$departamento1')");$error=pg_errormessage($conn); $error=substr($error,0,91);
-     if (!$resultado){?> <script language="JavaScript"> muestra('<? echo $error; ?>'); </script> <? } else{ ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><? $error=0; }
+     if (!$resultado){?> <script language="JavaScript"> muestra('<?php  echo $error; ?>'); </script> <?php } else{ ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?php  $error=0; }
   }
 }
-pg_close();?> <script language="JavaScript"> LlamarURL('<?echo $url;?>'); </script>
+pg_close($conn);?> <script language="JavaScript"> LlamarURL('<?php echo $url;?>'); </script>

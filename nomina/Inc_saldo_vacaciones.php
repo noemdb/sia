@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();?>
+<?php include ("../class/ventana.php");include ("../class/fun_numeros.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Saldo de Vacaciones)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Saldo de Vacaciones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -93,9 +93,9 @@ return true;}
 			      <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  readonly></span></td>
                  <td width="216" ><span class="Estilo5">PERIODO DE CAUSACION DESDE : </span></td>
-                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_causa_desde" type="text" id="txtfecha_causa_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_causa_desde" type="text" id="txtfecha_causa_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="80" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_causa_hasta" type="text" id="txtfecha_causa_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="150" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_causa_hasta" type="text" id="txtfecha_causa_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -113,11 +113,11 @@ return true;}
              <td><table width="866">
                <tr>
                  <td width="200" ><span class="Estilo5">FECHA DE DISFRUTE DESDE : </span></td>
-                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="70" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="180" ><span class="Estilo5">FECHA A REINCORPORASE : </span></td>
-                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                </tr>
              </table></td>
            </tr>

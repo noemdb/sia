@@ -48,7 +48,7 @@ $criterio    = " (bien015.cod_bien_mue>='$cod_bien_mued' and bien015.cod_bien_mu
   (bien015.cod_dependencia>='$cod_dependenciad' and bien015.cod_dependencia<='$cod_dependenciah') and (bien015.cod_direccion>='$cod_direcciond' and bien015.cod_direccion<='$cod_direccionh') AND
   (bien015.cod_departamento>='$cod_departamentod' and bien015.cod_departamento<='$cod_departamentoh') and (bien015.fecha_incorporacion>='$fecha_desde' and bien015.fecha_incorporacion<='$fecha_hasta')";
 $conn        = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
-if (pg_ErrorMessage($conn)) {
+if (pg_last_error($conn)) {
 ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php
 } else {
     $php_os  = PHP_OS;

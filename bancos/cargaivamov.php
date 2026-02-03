@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $cod_banco=$_GET["cod_banco"]; $tipo_mov=$_GET["tipo_mov"]; $referencia=$_GET["referencia"]; $codigo_mov=$_GET["codigo_mov"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $resultado=pg_exec($conn,"SELECT BORRAR_BAN029('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 91);
@@ -17,4 +17,4 @@ while($reg=pg_fetch_array($resultado)){
     $ssql="SELECT INCLUYE_BAN029('$codigo_mov','$cod_banco','$tipo_mov','$referencia','$tipo_r','01-REG','$ced_rif','$fecha_e','$nro_orden','$nro_orden','C','$tipo_r','01','$nro_d','$nro_con_fac','','$fecha_f','00000000','',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";  $resul=pg_exec($conn,$ssql); $error=pg_errormessage($conn);
   }  
 }
-pg_close();?><iframe src="Det_inc_comp_iva.php?codigo_mov=<?echo $codigo_mov?>&agregar=S" width="870" height="310" scrolling="auto" frameborder="1"></iframe>
+pg_close($conn);?><iframe src="Det_inc_comp_iva.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S" width="870" height="310" scrolling="auto" frameborder="1"></iframe>

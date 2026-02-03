@@ -1,4 +1,4 @@
- <?
+ <?php 
 include("../../class/fun_fechas.php");
 include("../../class/fun_numeros.php");
 include("../../class/configura.inc");
@@ -67,8 +67,8 @@ if ($inc_benef == "SI") {
     }
 }
 $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
-if (pg_ErrorMessage($conn)) {
-?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?
+if (pg_last_error($conn)) {
+?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php 
 } else {
     $Nom_Emp = busca_conf();
     $php_os  = PHP_OS;
@@ -92,9 +92,9 @@ if (pg_ErrorMessage($conn)) {
     $error     = pg_errormessage($conn);
     $error     = "ERROR GRABANDO: " . substr($error, 0, 91);
     if (!$resultado) {
-?><script language="JavaScript">muestra('<?
+?><script language="JavaScript">muestra('<?php 
         echo $error;
-?>');</script><?
+?>');</script><?php 
     } else {
         $Sql       = "update CON013 set columna5=columna4*-1,columna6=columna3*-1 WHERE nombre_usuario='" . $usuario_sia . "' AND tipo_registro='8'";
         $resultado = pg_exec($conn, $Sql);
@@ -594,7 +594,7 @@ if (pg_ErrorMessage($conn)) {
                 <td width="90" align="left" ><strong></strong></td>
                 <td width="80" align="left" ><strong></strong></td>
                 <td width="80" align="left" ><strong></strong></td>
-                <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?
+                <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 
             echo $criterio1;
 ?></strong></font></td>
              </tr>
@@ -607,7 +607,7 @@ if (pg_ErrorMessage($conn)) {
                <td width="120" align="right" bgcolor="#99CCFF" ><strong>Haber</strong></td>
                <td width="120" align="right" bgcolor="#99CCFF" ><strong>Saldo</strong></td>
              </tr>
-          <?
+          <?php 
             $i          = 0;
             $totald     = 0;
             $totalh     = 0;
@@ -648,13 +648,13 @@ if (pg_ErrorMessage($conn)) {
                       <td width="90" align="left"></td>
                       <td width="80" align="left"></td>
                       <td width="80" align="left"></td>
-                      <td width="400" align="right"><?
+                      <td width="400" align="right"><?php 
                         echo "Total Cuenta  : ";
 ?></td>
-                      <td width="120" align="right"><?
+                      <td width="120" align="right"><?php 
                         echo $sub_totald;
 ?></td>
-                      <td width="120" align="right"><?
+                      <td width="120" align="right"><?php 
                         echo $sub_totalh;
 ?></td>
                       <td width="120" align="left"></td>
@@ -662,25 +662,25 @@ if (pg_ErrorMessage($conn)) {
                     <tr>
                       <td width="90" align="left"></td>
                     </tr>    
-                  <?
+                  <?php 
                     }
 ?>      
                    <tr>
-                     <td width="90" align="left"><?
+                     <td width="90" align="left"><?php 
                     echo $cta_enc;
 ?></td>
                      <td width="80" align="left"></td>
                      <td width="80" align="left"></td>
-                     <td width="400" align="left"><?
+                     <td width="400" align="left"><?php 
                     echo $nomb_cta_enc;
 ?></td>
                      <td width="120" align="left"></td>
                      <td width="120" align="right">Saldo Anterior :</td>
-                     <td width="120" align="right"><?
+                     <td width="120" align="right"><?php 
                     echo $anterior;
 ?></td>
                    </tr>
-                 <?
+                 <?php 
                     $prev_cta   = $cta_enc;
                     $sub_totald = 0;
                     $sub_totalh = 0;
@@ -715,29 +715,29 @@ if (pg_ErrorMessage($conn)) {
                 $descripcion = conv_cadenas($descripcion, 0);
 ?>      
                 <tr>
-                   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?
+                   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php 
                 echo $fechaf;
 ?></td>
-                   <td width="80" align="left">'<?
+                   <td width="80" align="left">'<?php 
                 echo $referencia;
 ?></td>
-                   <td width="80" align="left"><?
+                   <td width="80" align="left"><?php 
                 echo $tipo_asiento;
 ?></td>
-                   <td width="400" align="justify"><?
+                   <td width="400" align="justify"><?php 
                 echo $descripcion;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $debe;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $haber;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $saldo;
 ?></td>
                  </tr>
-               <?
+               <?php 
             }
             if (($sub_totald > 0) or ($sub_totalh > 0) or ($cant_mov > 0)) {
                 $sub_totald = formato_monto($sub_totald);
@@ -756,21 +756,21 @@ if (pg_ErrorMessage($conn)) {
               <td width="90" align="left"></td>
               <td width="80" align="left"></td>
               <td width="80" align="left"></td>
-              <td width="400" align="right"><?
+              <td width="400" align="right"><?php 
                 echo "Total Cuenta  : ";
 ?></td>
-              <td width="120" align="right"><?
+              <td width="120" align="right"><?php 
                 echo $sub_totald;
 ?></td>
-              <td width="120" align="right"><?
+              <td width="120" align="right"><?php 
                 echo $sub_totalh;
 ?></td>
               <td width="120" align="left"></td>
             </tr>    
             
-          <?
+          <?php 
             }
-?></table><?
+?></table><?php 
         }
         
         if ($tipo_rep == "EXCEL2") {
@@ -790,7 +790,7 @@ if (pg_ErrorMessage($conn)) {
                 <td width="80" align="left" ><strong></strong></td>
                 <td width="80" align="left" ><strong></strong></td>
                 <td width="200" align="left" ><strong></strong></td>
-                <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?
+                <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 
             echo $criterio1;
 ?></strong></font></td>
              </tr>
@@ -804,7 +804,7 @@ if (pg_ErrorMessage($conn)) {
                <td width="120" align="right" bgcolor="#99CCFF" ><strong>Haber</strong></td>
                <td width="120" align="right" bgcolor="#99CCFF" ><strong>Saldo</strong></td>
              </tr>
-          <?
+          <?php 
             $i          = 0;
             $totald     = 0;
             $totalh     = 0;
@@ -847,13 +847,13 @@ if (pg_ErrorMessage($conn)) {
                       <td width="80" align="left"></td>
                       <td width="80" align="left"></td>
                       <td width="200" align="left"></td>
-                      <td width="400" align="right"><?
+                      <td width="400" align="right"><?php 
                         echo "Total Cuenta  : ";
 ?></td>
-                      <td width="120" align="right"><?
+                      <td width="120" align="right"><?php 
                         echo $sub_totald;
 ?></td>
-                      <td width="120" align="right"><?
+                      <td width="120" align="right"><?php 
                         echo $sub_totalh;
 ?></td>
                       <td width="120" align="left"></td>
@@ -861,26 +861,26 @@ if (pg_ErrorMessage($conn)) {
                     <tr>
                       <td width="90" align="left"></td>
                     </tr>    
-                  <?
+                  <?php 
                     }
 ?>      
                    <tr>
-                     <td width="90" align="left"><?
+                     <td width="90" align="left"><?php 
                     echo $cta_enc;
 ?></td>
                      <td width="80" align="left"></td>
                      <td width="80" align="left"></td>
-                     <td width="200" align="left"><?
+                     <td width="200" align="left"><?php 
                     echo $nomb_cta_enc;
 ?></td>
                      <td width="400" align="left"></td>
                      <td width="120" align="left"></td>
                      <td width="120" align="right">Saldo Anterior :</td>
-                     <td width="120" align="right"><?
+                     <td width="120" align="right"><?php 
                     echo $anterior;
 ?></td>
                    </tr>
-                 <?
+                 <?php 
                     $prev_cta   = $cta_enc;
                     $sub_totald = 0;
                     $sub_totalh = 0;
@@ -913,32 +913,32 @@ if (pg_ErrorMessage($conn)) {
                 $descripcion = conv_cadenas($descripcion, 0);
 ?>      
                 <tr>
-                   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?
+                   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php 
                 echo $fechaf;
 ?></td>
-                   <td width="80" align="left">'<?
+                   <td width="80" align="left">'<?php 
                 echo $referencia;
 ?></td>
-                   <td width="80" align="left"><?
+                   <td width="80" align="left"><?php 
                 echo $tipo_asiento;
 ?></td>
-                   <td width="200" align="left"><?
+                   <td width="200" align="left"><?php 
                 echo $nombre;
 ?></td>
-                   <td width="400" align="justify"><?
+                   <td width="400" align="justify"><?php 
                 echo $descripcion;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $debe;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $haber;
 ?></td>
-                   <td width="120" align="right"><?
+                   <td width="120" align="right"><?php 
                 echo $saldo;
 ?></td>
                  </tr>
-               <?
+               <?php 
             }
             if (($sub_totald > 0) or ($sub_totalh > 0) or ($cant_mov > 0)) {
                 $sub_totald = formato_monto($sub_totald);
@@ -959,21 +959,21 @@ if (pg_ErrorMessage($conn)) {
               <td width="80" align="left"></td>
               <td width="80" align="left"></td>
               <td width="200" align="left"></td>
-              <td width="400" align="right"><?
+              <td width="400" align="right"><?php 
                 echo "Total Cuenta  : ";
 ?></td>
-              <td width="120" align="right"><?
+              <td width="120" align="right"><?php 
                 echo $sub_totald;
 ?></td>
-              <td width="120" align="right"><?
+              <td width="120" align="right"><?php 
                 echo $sub_totalh;
 ?></td>
               <td width="120" align="left"></td>
             </tr>    
             
-          <?
+          <?php 
             }
-?></table><?
+?></table><?php 
         }
     }
 }

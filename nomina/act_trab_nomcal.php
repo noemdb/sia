@@ -1,4 +1,4 @@
-<? include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");  
+<?php  include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");  
 
   echo "ESPERE POR FAVOR REVISANDO INF. NOMINAS CALCULADAS....","<br>";
   $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
@@ -24,5 +24,5 @@
 		   if(!$resultado){ echo "Error modificando Cargo ".$cod_empleado,"<br>"; }else{ echo "Cambio de Cargo : ".$cod_empleado." ".$nombre." ".$des_cargo,"<br>"; }
 		}
   }		
-  pg_close();
+  pg_close($conn);
 ?>

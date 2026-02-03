@@ -1,4 +1,4 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
  $equipo = getenv("COMPUTERNAME"); $mcod_m = "PRE009".$equipo; $codigo_mov=substr($mcod_m,0,49);
  if (!$_GET){$referencia_modif=''; $tipo_modif='';} 
   else{$referencia_modif=$_GET["txtreferencia_modif"];  $tipo_modif=$_GET["txttipo_modif"]; }
@@ -36,9 +36,9 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $descripcion="";$fecha_registro="";$modif_i_e="";$fecha_modif="";$modif_aprob="";$inf_usuario="";$aprobada_por="";$nro_documento="";$fecha_documento="";
 $res=pg_query($sql);$filas=pg_num_rows($res);
 if($filas>0){  $registro=pg_fetch_array($res);
@@ -101,12 +101,12 @@ $clave=$referencia_modif.$tipo_modif;
                       <td><table width="813" border="0">
                         <tr>
                           <td width="139"><p><span class="Estilo5">TIPO MODIFICACI&Oacute;N : </span></p>                          </td>
-                          <td width="204"><span class="Estilo5"><input class="Estilo10" name="txttipo_modif" type="text"  id="txttipo_modif2" value="<?echo $des_tipo_modif?>" size="30" readonly>     </span></td>
-                          <td width="21"><input class="Estilo10" name="txttipo_m" type="hidden" id="txttipo_m" value="<?echo $tipo_modif?>"></td>
+                          <td width="204"><span class="Estilo5"><input class="Estilo10" name="txttipo_modif" type="text"  id="txttipo_modif2" value="<?php echo $des_tipo_modif?>" size="30" readonly>     </span></td>
+                          <td width="21"><input class="Estilo10" name="txttipo_m" type="hidden" id="txttipo_m" value="<?php echo $tipo_modif?>"></td>
                           <td width="101"><span class="Estilo5">REFERENCIA :</span> </td>
-                          <td width="130"><div id="refer"><input class="Estilo10" name="txtreferencia_modif" type="text"  id="txtreferencia_modif"  value="<?echo $referencia_modif?>" size="12" readonly>    </div></td>
+                          <td width="130"><div id="refer"><input class="Estilo10" name="txtreferencia_modif" type="text"  id="txtreferencia_modif"  value="<?php echo $referencia_modif?>" size="12" readonly>    </div></td>
                           <td width="59"><span class="Estilo5">FECHA :</span> </td>
-                          <td width="129"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?echo $fecha_registro?>" readonly>     </span></td>
+                          <td width="129"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?php echo $fecha_registro?>" readonly>     </span></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -114,7 +114,7 @@ $clave=$referencia_modif.$tipo_modif;
                       <td height="90"><table width="810" border="0">
                         <tr>
                           <td width="106"><span class="Estilo5">DESCRIPCI&Oacute;N:</span></td>
-                          <td width="694"><textarea name="txtdescripcion" cols="90" readonly class="Estilo10" id="Estilo10"><?echo $descripcion?></textarea></td>
+                          <td width="694"><textarea name="txtdescripcion" cols="90" readonly class="Estilo10" id="Estilo10"><?php echo $descripcion?></textarea></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -122,9 +122,9 @@ $clave=$referencia_modif.$tipo_modif;
                       <td><table width="813">
                         <tr>
                           <td width="104"><span class="Estilo5">MODIFICACI&Oacute;N:</span></td>
-                          <td width="184"><span class="Estilo5"><input class="Estilo10" name="txtmodif_i_e" type="text" id="txtmodif_i_e" size="20"  value="<?echo $modif_i_e?>" readonly>       </span></td>
+                          <td width="184"><span class="Estilo5"><input class="Estilo10" name="txtmodif_i_e" type="text" id="txtmodif_i_e" size="20"  value="<?php echo $modif_i_e?>" readonly>       </span></td>
                           <td width="162"><span class="Estilo5">FECHA DE MODIFICACI&Oacute;N:</span></td>
-                          <td width="126"><span class="Estilo5"><input class="Estilo10" name="txtfecha_modif" type="text" id="txtfecha_modif" value="<?echo $fecha_modif?>" size="12" onFocus="encender(this)" onBlur="apagar(this)">    </span></td>
+                          <td width="126"><span class="Estilo5"><input class="Estilo10" name="txtfecha_modif" type="text" id="txtfecha_modif" value="<?php echo $fecha_modif?>" size="12" onFocus="encender(this)" onBlur="apagar(this)">    </span></td>
                           <td width="97"><span class="Estilo5">APROBADA :</span></td>
                           <td width="85"><span class="Estilo5"><select  class="Estilo10" name="txtmodif_aprob" size="1" id="txtmodif_aprob" onFocus="encender(this)" onBlur="apagar(this)">                              
 						  <option>SI</option> <option>NO</option> </select>    </span></td>
@@ -136,7 +136,7 @@ $clave=$referencia_modif.$tipo_modif;
                       <td><table width="814">
                         <tr>
                           <td width="108"><span class="Estilo5">APROBADO POR:</span></td>
-                          <td width="680"><span class="Estilo5"> <input class="Estilo10" name="txtaprobada_por" type="text" id="txtaprobada_por" value="<?ECHO $aprobada_por?>" size="100" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                          <td width="680"><span class="Estilo5"> <input class="Estilo10" name="txtaprobada_por" type="text" id="txtaprobada_por" value="<?php ECHO $aprobada_por?>" size="100" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -144,9 +144,9 @@ $clave=$referencia_modif.$tipo_modif;
                       <td><table width="827">
                         <tr>
                           <td width="240"><span class="Estilo5">NRO.DOCUMENTO/ACTA APROBACI&Oacute;N:</span></td>
-                          <td width="325"><input class="Estilo10" name="txtnro_documento" type="text"  id="txtnro_documento" value="<?echo $nro_documento?>" size="45" onFocus="encender(this)" onBlur="apagar(this)" ></td>
+                          <td width="325"><input class="Estilo10" name="txtnro_documento" type="text"  id="txtnro_documento" value="<?php echo $nro_documento?>" size="45" onFocus="encender(this)" onBlur="apagar(this)" ></td>
                           <td width="171"><span class="Estilo5">FECHA DOCUMENTO/ACTA:</span></td>
-                          <td width="71"><span class="Estilo5"><input class="Estilo10" name="txtfecha_documento" type="text" id="txtfecha_documento" value="<?echo $fecha_documento?>" size="10" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                          <td width="71"><span class="Estilo5"><input class="Estilo10" name="txtfecha_documento" type="text" id="txtfecha_documento" value="<?php echo $fecha_documento?>" size="10" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -160,7 +160,7 @@ $clave=$referencia_modif.$tipo_modif;
         </table>
         <table width="768">
           <tr>
-            <td width="664"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="664"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88" valign="middle"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
             <td width="88">&nbsp;</td>
           </tr>

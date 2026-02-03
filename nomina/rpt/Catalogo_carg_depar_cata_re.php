@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");error_reporting(E_ALL ^ E_NOTICE);  include "../../class/phpreports/PHPReportMaker.php"; 
+<?php include ("../../class/conect.php");error_reporting(E_ALL ^ E_NOTICE);  include "../../class/phpreports/PHPReportMaker.php"; 
      $date = date("d-m-Y");$hora = date("H:i:s a");
    $sSQL = "SELECT NOM005.Codigo_Departamento, NOM005.Descripcion_Dep, NOM043.Codigo_Cargo, NOM043.Cod_Tipo_Personal, NOM043.Nro_Cargos, NOM043.Asignados,NOM004.Denominacion
             FROM NOM005,NOM004,NOM043

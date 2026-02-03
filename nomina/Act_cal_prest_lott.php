@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $fecha_tope="30/04/2012"; 
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php"); $fecha_tope="30/04/2012"; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000040"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if (!$_GET){$cod_empleado=''; $p_letra='';$sql="SELECT * FROM CAL_PRESTA ORDER BY cod_empleado";
 } else {$codigo=$_GET["Gcodigo"];$p_letra=substr($codigo, 0, 1);
   if(($p_letra=="P")||($p_letra=="U")||($p_letra=="S")||($p_letra=="A")||($p_letra=="C")){$cod_empleado=substr($codigo,1,15);} else{$cod_empleado=substr($codigo,0,15);}
@@ -47,7 +47,7 @@ MM_reloadPage(true);
 </script>
 
 </head>
-<?
+<?php 
 $res=pg_query($sql);$filas=pg_num_rows($res);
 if ($filas==0){if ($p_letra=="S"){$sql="SELECT * FROM CAL_PRESTA Where Order by cod_empleado";}if ($p_letra=="A"){$sql="SELECT * FROM CAL_PRESTA Where  Order by cod_empleado desc";}  $res=pg_query($sql);$filas=pg_num_rows($res);}
 $nombre="";$cod_empleado=""; $cedula=""; $fecha_ingreso=""; $fecha_calculo=""; $sueldo_calculo=0;  $dias_prestaciones=0;  $sueldo_calculo_adic=0;  $dias_adicionales=0; $total_prestaciones=0;  $total_adelanto=0; $acumulado_total=0; $total_interes=0; $saldo_prestaciones668=0; $total_interes668=0;
@@ -69,16 +69,16 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
 <table width="978" height="376" border="1" id="tablacuerpo">
   <tr>
     <td width="92"><table width="92" height="373" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
-	  <?if ($Mcamino{0}=="S"){?>
+	  <?php if ($Mcamino{0}=="S"){?>
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Inc_cal_presta_lott.php?Gcriterio=<?echo $cod_empleado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Inc_cal_presta_lott.php?Gcriterio=<?echo $cod_empleado?>">Incluir</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Inc_cal_presta_lott.php?Gcriterio=<?php echo $cod_empleado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Inc_cal_presta_lott.php?Gcriterio=<?php echo $cod_empleado?>">Incluir</A></td>
       </tr>
       <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('Inc_cal_pres_lote_lott.php')";
                 onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="31"  bgcolor=#EAEAEA><a class=menu href="Inc_cal_pres_lote_lott.php">Incluir Lote </a></td>
      </tr>
-	 <?} if ($Mcamino{2}=="S"){?>
+	 <?php } if ($Mcamino{2}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('P')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Mover_Registro('P');">Primero</A></td>
@@ -98,21 +98,21 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cat_cal_presta_lott.php')";
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Cat_cal_presta_lott.php" class="menu">Catalogo</a></td>
       </tr>
-	  <?} if ($Mcamino{6}=="S"){?>
+	  <?php } if ($Mcamino{6}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
-             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Elim_cal_pres_lott.php?Gcriterio=<?echo $cod_empleado?>" class="menu">Eliminar</a></td>
+             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Elim_cal_pres_lott.php?Gcriterio=<?php echo $cod_empleado?>" class="menu">Eliminar</a></td>
       </tr>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
-             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Elim_cal_pres_lote_lott.php?Gcriterio=<?echo $cod_empleado?>" class="menu">Eliminar Lote</a></td>
+             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Elim_cal_pres_lote_lott.php?Gcriterio=<?php echo $cod_empleado?>" class="menu">Eliminar Lote</a></td>
       </tr>
-	  <?} if ($Mcamino{4}=="S"){?>
+	  <?php } if ($Mcamino{4}=="S"){?>
 	   <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
-             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Criterio_cont_ind_prest.php?Gcriterio=<?echo $cod_empleado?>" class="menu">Reportes</a></td>
+             onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Criterio_cont_ind_prest.php?Gcriterio=<?php echo $cod_empleado?>" class="menu">Reportes</a></td>
       </tr>
-	  <?} ?>
+	  <?php } ?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="menu.php" class="menu">Menu </a></td>
@@ -130,11 +130,11 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                  <td width="100"><span class="Estilo5">C&Eacute;DULA :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="200"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -142,12 +142,12 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
          </table>
-         <iframe src="Det_calculo_prest_lott.php?criterio=<?echo $criterio?>"  width="850" height="270" scrolling="auto" frameborder="1">
+         <iframe src="Det_calculo_prest_lott.php?criterio=<?php echo $criterio?>"  width="850" height="270" scrolling="auto" frameborder="1">
         </iframe>
          </div>
          </form>
@@ -156,4 +156,4 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

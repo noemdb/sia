@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
   $equipo = getenv("COMPUTERNAME");  $fecha_hoy=asigna_fecha_hoy();  $cod_bien_mue=$_GET["Gcod_bien_mue"]; $num_bien=$_GET["Gnum_bien"]; 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (CONSULTAR ORDENES DE PAGO)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (CONSULTAR ORDENES DE PAGO)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -43,8 +43,8 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
       <td>
       <table width="92" height="305" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_fichas_bienes_muebles_pro.php?Gcod_bien_mue=<? echo $cod_bien_mue;?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_fichas_bienes_muebles_pro.php?Gcod_bien_mue=<? echo $cod_bien_mue;?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_fichas_bienes_muebles_pro.php?Gcod_bien_mue=<?php  echo $cod_bien_mue;?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_fichas_bienes_muebles_pro.php?Gcod_bien_mue=<?php  echo $cod_bien_mue;?>">Atras</A></td>
       </tr>      
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -67,9 +67,9 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
 					 <td><table width="845">
 					   <tr>
 						 <td width="125"><span class="Estilo5">N&Uacute;MERO DEL BIEN:</span></td>
-						 <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtnum_bien" type="text" id="txtnum_bien" size="20" maxlength="20" value="<?echo $num_bien?>" onFocus="encender(this);" onBlur="apagar(this);"></div></td>
+						 <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtnum_bien" type="text" id="txtnum_bien" size="20" maxlength="20" value="<?php echo $num_bien?>" onFocus="encender(this);" onBlur="apagar(this);"></div></td>
 						 <td width="220"><span class="Estilo5"></span></td>
-						 <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue"  size="40" maxlength="30" value="<?echo $cod_bien_mue?>" readonly> </span></td>
+						 <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtcod_bien_mue" type="hidden" id="txtcod_bien_mue"  size="40" maxlength="30" value="<?php echo $cod_bien_mue?>" readonly> </span></td>
 					   </tr>
 					 </table></td>
 				   </tr>
@@ -80,7 +80,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
           </table>
         <table width="768">
           <tr>
-            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Buscar"></td>
             <td width="88"><input name="Submit" type="reset" value="Blanquear"></td>
           </tr>

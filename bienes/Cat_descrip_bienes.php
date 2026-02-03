@@ -1,6 +1,6 @@
-<?include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <script language="JavaScript">
 function cerrar_catalogo(mcodigo,mdenominacion){
@@ -18,7 +18,7 @@ function cerrar_catalogo(mcodigo,mdenominacion){
 <meta http-equiv="Pragma" content="no-cache" />
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 </head><body>
-<?
+<?php 
         $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $codigo_c="";
         if ($_GET){   if ($_GET["codigo_c"]!=""){$codigo_c = $_GET["codigo_c"]; }		
 		if ($_GET["criterio"]!=""){$txt_criterio = $_GET["criterio"];$txt_criterio = strtoupper ($txt_criterio); 		  
@@ -40,16 +40,16 @@ function cerrar_catalogo(mcodigo,mdenominacion){
                 if  ($linea>$limitInf+$tamPag){$Salir=true;}
                 if  (($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $registro["num_descrip"]; ?>','<? echo $registro["descripcion_b"]; ?>')" >
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["num_descrip"]; ?></b></font></td>
-    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["descripcion_b"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["num_descrip"]; ?>','<?php  echo $registro["descripcion_b"]; ?>')" >
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["num_descrip"]; ?></b></font></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["descripcion_b"]; ?></b></font></td>
   </tr>
-<?}}echo "</table>"; }
+<?php } }echo "</table>"; }
 ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      if($pagina>1){
+<?php       if($pagina>1){
            echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=1&orden=".$orden."&codigo_c=".$codigo_c."&criterio=".$txt_criterio."'>";
            echo "<font face='verdana' size='-2'>Principio</font>";
            echo "</a>&nbsp;";
@@ -78,6 +78,6 @@ function cerrar_catalogo(mcodigo,mdenominacion){
 
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

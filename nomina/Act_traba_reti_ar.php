@@ -1,12 +1,12 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");  $equipo=getenv("COMPUTERNAME"); $mcod_m="NOM062".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");  $equipo=getenv("COMPUTERNAME"); $mcod_m="NOM062".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy();
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="01-0000045"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){ $cedula=''; $p_letra=''; $sql="SELECT * FROM NOM062 ORDER BY cedula";}
 else {$cedula = $_GET["Gcedula"];$p_letra=substr($cedula, 0, 1);
   if(($p_letra=="P")||($p_letra=="U")||($p_letra=="S")||($p_letra=="A")||($p_letra=="C")){$cedula=substr($cedula,1,12);} else{$cedula=substr($cedula,0,12);}
@@ -51,7 +51,7 @@ MM_reloadPage(true);
 //-->
 </script>
 </head>
-<?
+<?php 
 $nombre="";$cedula=""; $nacionalidad=""; $res=pg_query($sql); $filas=pg_num_rows($res); $fecha_nacimiento=$fecha_hoy;
 if ($filas==0){if ($p_letra=="S"){$sql="SELECT * From NOM062 ORDER BY cedula";} if ($p_letra=="A"){$sql="SELECT * From NOM062 ORDER BY cedula desc";} $res=pg_query($sql);$filas=pg_num_rows($res);}
 if($filas>=1){$registro=pg_fetch_array($res,0); $cedula=$registro["cedula"]; $nombre=$registro["nombre"]; $nacionalidad=$registro["nacionalidad"];  }
@@ -101,9 +101,9 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cedula=$registro["cedula"]; $no
              <td><table width="864">
                <tr>
                  <td width="156"><span class="Estilo5">C&Eacute;DULA DE IDENTIDAD :</span></td>
-                 <td width="391"><span class="Estilo5"> <input name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="391"><span class="Estilo5"> <input name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="122"><span class="Estilo5">NACIONALIDAD : </span></td>
-                 <td width="155"><span class="Estilo5"> <input name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?echo $nacionalidad?>" readonly></span></td>
+                 <td width="155"><span class="Estilo5"> <input name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?php echo $nacionalidad?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -111,13 +111,13 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cedula=$registro["cedula"]; $no
              <td><table width="864">
                <tr>
                  <td width="124"><span class="Estilo5">NOMBRE COMPLETO  :</span></td>
-                 <td width="720"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
            <tr><td>&nbsp;</td></tr>
         </table>
-                <iframe src="Det_cons_trab_ret.php?cedula=<?echo $cedula?>"  width="850" height="350" scrolling="auto" frameborder="1">
+                <iframe src="Det_cons_trab_ret.php?cedula=<?php echo $cedula?>"  width="850" height="350" scrolling="auto" frameborder="1">
         </iframe>
 
       </form>

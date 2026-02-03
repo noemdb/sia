@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG001".$usuario_sia.$equipo;
 if (!$_GET){ $p_letra='';$criterio=''; $cod_banco=''; $num_cheque='';$sql="SELECT BAN006.Cod_Banco, BAN006.Num_Cheque, BAN006.Monto_Cheque, PRE099.Nombre, BAN002.Nombre_Banco, BAN002.Nro_Cuenta, BAN006.Num_Cheque,  BAN006.Fecha, BAN006.Nro_Orden_Pago, BAN006.Concepto FROM BAN002, BAN006, PRE099 WHERE BAN006.Cod_Banco = BAN002.Cod_Banco AND BAN006.Ced_Rif = PRE099.Ced_Rif AND BAN006.Nro_Orden_Pago='00000001' ORDER BY BAN006.Cod_Banco, BAN006.Num_Cheque";}
@@ -18,7 +18,7 @@ if (!$_GET){ $p_letra='';$criterio=''; $cod_banco=''; $num_cheque='';$sql="SELEC
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (NOTAS DE DEBITO)</title>
+<title>SIPAP CONTROL BANCARIO (NOTAS DE DEBITO)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK  href="../class/sia.css" type=text/css rel=stylesheet>
 <script language="JavaScript" type="text/JavaScript">
@@ -57,7 +57,7 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
 if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 else
@@ -112,10 +112,10 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                                 <tr>
                                         <td width="10" height="39"></td>
                                    <td width="646" height="39"><div align="left"> </div>
-                   <p align="left" class="Estilo14"><input name="textnum_cheque" style="visibility:hidden;"  type="text" id="textnum_cheque" value="<?echo $num_cheque?>" size="1" readonly>
-                                     <input name="textcod_banco" style="visibility:hidden;"  type="text" id="textcod_banco" value="<?echo $cod_banco?>" size="1" readonly><strong> </strong></p></td>
+                   <p align="left" class="Estilo14"><input name="textnum_cheque" style="visibility:hidden;"  type="text" id="textnum_cheque" value="<?php echo $num_cheque?>" size="1" readonly>
+                                     <input name="textcod_banco" style="visibility:hidden;"  type="text" id="textcod_banco" value="<?php echo $cod_banco?>" size="1" readonly><strong> </strong></p></td>
                                    <td width="335"><div align="left"> </div>
-                   <p align="right" class="Estilo14">***<? echo $monto_cheque; ?>***</p></td>
+                   <p align="right" class="Estilo14">***<?php  echo $monto_cheque; ?>***</p></td>
                                 </tr>
                                 </table></td>
                         </tr>
@@ -124,7 +124,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                                 <tr>
                                         <td width="265" height="39"></td>
                                    <td width="695" height="39"><div align="left"> </div>
-                   <p align="left" class="Estilo14">***<? echo $nombre; ?>***<strong> </strong></p></td>
+                   <p align="left" class="Estilo14">***<?php  echo $nombre; ?>***<strong> </strong></p></td>
 
                                 </tr>
                                 </table></td>
@@ -159,9 +159,9 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                         <tr>
                 <td colspan="3" height="51"><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
-                                        <td width="301" height="39"><div align="center"><b><? echo $nombre_banco; ?></b></div></td>
-                                    <td width="330" height="39"><div align="center"><b><? echo $nro_cuenta; ?></b></div></td>
-                                   <td width="325"><div align="center"><b><? echo $num_cheque; ?></b></div></td>
+                                        <td width="301" height="39"><div align="center"><b><?php  echo $nombre_banco; ?></b></div></td>
+                                    <td width="330" height="39"><div align="center"><b><?php  echo $nro_cuenta; ?></b></div></td>
+                                   <td width="325"><div align="center"><b><?php  echo $num_cheque; ?></b></div></td>
                                 </tr>
                                 </table></td>
                         </tr>
@@ -169,7 +169,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                 <td colspan="3" height="35"><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
                                         <td width="120" height="27"><div align="center"><strong>Orden de Pago : </strong></div></td>
-                                    <td width="158" height="27"><div align="left"><? echo $nro_orden_pago; ?></div></td>
+                                    <td width="158" height="27"><div align="left"><?php  echo $nro_orden_pago; ?></div></td>
                                    <td width="678"><div align="center"></div></td>
                                 </tr>
                           </table></td>
@@ -178,7 +178,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                 <td colspan="3" height="35"><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
                                         <td width="106" height="27"><div align="left"><strong>Concepto : </strong></div></td>
-                                    <td width="854" height="27"><div align="left"><? echo $concepto; ?></div></td>
+                                    <td width="854" height="27"><div align="left"><?php  echo $concepto; ?></div></td>
                                 </tr>
                           </table></td>
                         </tr>
@@ -187,7 +187,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                                 <tr>
                                         <td width="9" height="39"></td>
                                         <td colspan="2"><div align="left"> </div>
-                   <p align="left" class="Estilo14"><strong>BANCO HASTA :</strong><? echo $cod_banco; ?>           <? echo $num_cheque; ?></p></td>
+                   <p align="left" class="Estilo14"><strong>BANCO HASTA :</strong><?php  echo $cod_banco; ?>           <?php  echo $num_cheque; ?></p></td>
                             </tr>
                                 <tr>
                                         <td width="9" height="39"></td>
@@ -214,7 +214,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                                 <tr>
                                         <td width="982" height="21">
                     <div id="T11" class="tab-body">
-                      <iframe src="Det_contabilidad_financiera.php?criterio=<?echo $criterio?>"  width="1010" height="170" scrolling="auto" frameborder="0"> </iframe>
+                      <iframe src="Det_contabilidad_financiera.php?criterio=<?php echo $criterio?>"  width="1010" height="170" scrolling="auto" frameborder="0"> </iframe>
                   </div></td>
                                 </tr>
                           </table></td>
@@ -224,7 +224,7 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
                                 <tr>
                                         <td width="982" height="21">
                     <div id="T11" class="tab-body">
-                      <iframe src="Det_contabilidad_presupuestaria.php?clave=<?echo $nro_orden_pago?>"  width="1010" height="170" scrolling="auto" frameborder="0"> </iframe>
+                      <iframe src="Det_contabilidad_presupuestaria.php?clave=<?php echo $nro_orden_pago?>"  width="1010" height="170" scrolling="auto" frameborder="0"> </iframe>
                   </div></td>
                                 </tr>
                           </table></td>
@@ -248,4 +248,4 @@ $nombre_empresa="GOBERNACION DEL ESTADO YARACUY";
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close();?>

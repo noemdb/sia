@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$codigo_titulo='';} else {$codigo_titulo=$_GET["Gcodigo_titulo"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (TITULO FLUJO DE CAJA)</title>
+<title>SIPAP CONTROL BANCARIO (TITULO FLUJO DE CAJA)</title>
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type="text/javascript"></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
@@ -28,7 +28,7 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $denominacion="";
 $sql="Select codigo_titulo,denominacion_titulo from ban018 where codigo_titulo='$codigo_titulo'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){  $codigo_titulo=$registro["codigo_titulo"];  $denominacion_titulo=$registro["denominacion_titulo"];}
@@ -66,7 +66,7 @@ if ($registro=pg_fetch_array($res,0)){  $codigo_titulo=$registro["codigo_titulo"
                   <td width="820"><table width="820" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="200"><span class="Estilo5">C&Oacute;DIGO TITULO :</span></td>
-                      <td width="620"><span class="Estilo5"> <input name="txtcodigo_titulo" type="text" class="Estilo5" id="txtcodigo_titulo" readonly value="<?echo $codigo_titulo?>" >
+                      <td width="620"><span class="Estilo5"> <input name="txtcodigo_titulo" type="text" class="Estilo5" id="txtcodigo_titulo" readonly value="<?php echo $codigo_titulo?>" >
                       </span></td>
                     </tr>
                   </table></td>
@@ -76,7 +76,7 @@ if ($registro=pg_fetch_array($res,0)){  $codigo_titulo=$registro["codigo_titulo"
                   <td><table width="820" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="200"><span class="Estilo5">DENOMINACI&Oacute;N DEL TITULO : </span></td>
-                      <td width="620"><div align="left"><span class="Estilo5"><input name="txtdenominacion_titulo" type="text" class="Estilo5" id="txtdenominacion_titulo"  value="<?echo $denominacion_titulo?>" readonly size="100" maxlength="100">
+                      <td width="620"><div align="left"><span class="Estilo5"><input name="txtdenominacion_titulo" type="text" class="Estilo5" id="txtdenominacion_titulo"  value="<?php echo $denominacion_titulo?>" readonly size="100" maxlength="100">
                       </span></div></td>
                     </tr>
                   </table></td>

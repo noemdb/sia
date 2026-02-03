@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $mes=$_GET["mes"]; $ano=$_GET["ano"]; $solo_fact=$_GET["solo_fact"]; $codigo_mov=$_GET["codigo_mov"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $fecha_d="01-".$mes."-".$ano; $fecha_h=colocar_udiames($fecha_d); $fecha_1=formato_aaaammdd($fecha_d);  $fecha_2=formato_aaaammdd($fecha_h);
@@ -34,4 +34,4 @@ while($registro=pg_fetch_array($res)){ $fechad=$registro["fecha_factura"];  $cot
   $monto_p=$registro["monto_factura"]; $monto1=$registro["monto_sin_iva"];  $tasa=$registro["tasa_iva1"];  $monto_o=$registro["monto_iva1_so"]; $monto1=$monto1-$monto_o;  $iva_fact=$registro["monto_factura"]-$registro["monto_sin_iva"]; $monto_r=0;  $monto2=$iva_fact; $monto3=0;
   $ssql="SELECT INCLUYE_BAN029('$codigo_mov','$ano','$mes','".$registro["nro_orden"]."','$mes','01-REG','".$registro["ced_rif"]."','".$registro["fecha_factura"]."','$tipo_r','00000000','C','$tipo_r','01','$nro_d','$nro_con_fac','','$fechad','','',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";$resultado=pg_exec($conn,$ssql); $error=pg_errormessage($conn);}
 }
-pg_close();?><iframe src="Det_inc_libro_comp.php?codigo_mov=<?echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+pg_close($conn);?><iframe src="Det_inc_libro_comp.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S" width="870" height="360" scrolling="auto" frameborder="1"></iframe>

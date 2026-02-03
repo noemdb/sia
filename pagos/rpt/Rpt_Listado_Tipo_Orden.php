@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"]; $tipo_rpt=$_GET["tipo_rpt"]; $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} 
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } 
 else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     // LLAMAR A PHP_REPORT
     $sSQL = "SELECT * FROM TIPOS_ORDEN WHERE tipo_orden>='".$tipo_orden_d."' AND tipo_orden <='".$tipo_orden_h."'";
@@ -77,24 +77,24 @@ else{  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="
            <td width="400" align="left" bgcolor="#99CCFF"><strong>Descripcion</strong></td>
            <td width="100" align="left" bgcolor="#99CCFF"><strong>Codigo Contable</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$tipo_orden=$registro["tipo_orden"]; $des_tipo_orden=$registro["des_tipo_orden"]; $cod_contable_t=$registro["cod_contable_t"];  
 		$des_tipo_orden=conv_cadenas($des_tipo_orden,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $tipo_orden; ?></td>
-           <td width="400" align="left"><? echo $des_tipo_orden; ?></td>
-           <td width="100" align="left">'<? echo $cod_contable_t; ?></td>
+           <td width="100" align="left">'<?php  echo $tipo_orden; ?></td>
+           <td width="400" align="left"><?php  echo $des_tipo_orden; ?></td>
+           <td width="100" align="left">'<?php  echo $cod_contable_t; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
            </tr>
 	    
-	  </table><?
+	  </table><?php 
 	}
 }  
 ?>

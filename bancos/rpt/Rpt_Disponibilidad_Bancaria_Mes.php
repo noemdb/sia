@@ -1,14 +1,14 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$periodod=$_GET["periodod"];$imprimir=$_GET["imprimir"]; $tipo_rep=$_GET["tipo_rep"]; $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 $cfecha=formato_ddmmaaaa($Fec_Ini_Ejer); $cfecha="01/".$periodod."/".substr($cfecha,6,4);  $fecha_d=$cfecha; $fecha_h=colocar_udiames($cfecha); $criterio1=$fecha_h;
 if($fecha_d==""){$sfecha_d="2010-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="2010-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $mcod_m="BAN023".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $Sql="SELECT RPT_MES_BAN023('".$codigo_mov."','".$sfecha_d."','".$sfecha_h."','".$cod_banco_d."','".$cod_banco_h."','".$imprimir."')";
     $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);      $error="ERROR : ".substr($error,0,91);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }     
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }     
     $sSQL = "SELECT cod_banco,nombre_banco,nro_cuenta,monto1,monto2,monto3,monto4,monto5,(monto1+monto2-monto3) as saldo_ini, (monto1+monto2-monto3+monto4-monto5) as saldo_act from ban023 where codigo_mov='$codigo_mov' order by ban023.cod_banco";
   
    if($tipo_rep=="HTML"){	include ("../../class/phpreports/PHPReportMaker.php");  
@@ -97,7 +97,7 @@ $Sql="SELECT RPT_MES_BAN023('".$codigo_mov."','".$sfecha_d."','".$sfecha_h."','"
 	     </tr>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong></strong></td>
-            <td width="400" align="center" > <strong><? echo $criterio1; ?></strong></td>
+            <td width="400" align="center" > <strong><?php  echo $criterio1; ?></strong></td>
 			<td width="300" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
@@ -113,7 +113,7 @@ $Sql="SELECT RPT_MES_BAN023('".$codigo_mov."','".$sfecha_d."','".$sfecha_h."','"
            <td width="100" align="center" bgcolor="#99CCFF"><strong>HEBER</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>DISPONIBILIDAD</strong></font></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; 
 	  $res=pg_query($sSQL);
@@ -123,16 +123,16 @@ $Sql="SELECT RPT_MES_BAN023('".$codigo_mov."','".$sfecha_d."','".$sfecha_h."','"
 		   $saldo_act=formato_monto($saldo_act); $saldo_ini=formato_monto($saldo_ini); $monto4=formato_monto($monto4); $monto5=formato_monto($monto5);   $nombre_banco=conv_cadenas($nombre_banco,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
-           <td width="400" align="justify"><? echo $nombre_banco; ?></td>
-           <td width="300" align="left">'<? echo $nro_cuenta; ?></td>
-           <td width="100" align="right"><? echo $saldo_ini; ?></td>
-           <td width="100" align="right"><? echo $monto4; ?></td>
-           <td width="100" align="right"><? echo $monto5; ?></td>
-           <td width="100" align="right"><? echo $saldo_act; ?></td>
+           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre_banco; ?></td>
+           <td width="300" align="left">'<?php  echo $nro_cuenta; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_ini; ?></td>
+           <td width="100" align="right"><?php  echo $monto4; ?></td>
+           <td width="100" align="right"><?php  echo $monto5; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_act; ?></td>
 
          </tr>
-	<? } $total=formato_monto($total); ?>
+	<?php } $total=formato_monto($total); ?>
    
    <tr>
          <td width="100" align="left"><span class="Estilo5"></span></td>
@@ -143,11 +143,11 @@ $Sql="SELECT RPT_MES_BAN023('".$codigo_mov."','".$sfecha_d."','".$sfecha_h."','"
          <td width="100"><span class="Estilo5"><strong>TOTAL :</strong></span></td>
          <td width="100"><table width="150" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td align="right" class="Estilo5"><strong><? echo $total; ?></strong></td>
+             <td align="right" class="Estilo5"><strong><?php  echo $total; ?></strong></td>
            </tr>
          </table></td> 
     </tr>
-	  </table><?
+	  </table><?php 
 	}
 	 $Sql="Delete from ban023 Where (codigo_mov='".$codigo_mov."')"; $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);
 }   

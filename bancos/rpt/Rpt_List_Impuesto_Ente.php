@@ -1,10 +1,10 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); 
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php");  include ("../../class/configura.inc"); 
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_planilla_d=$_GET["tipo_planilla_d"];$tipo_planilla_h=$_GET["tipo_planilla_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tasa_d=$_GET["tasa_d"];$tasa_h=$_GET["tasa_h"];$tipo_rpt=$_GET["tipo_rep"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}  $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);} else{$fecha_h='';}  $fecha_hasta=$ano1.$mes1.$dia1;
 $criterio1="Fecha Enterado Desde: ".$fecha_d." Al: ".$fecha_h; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
      $sSQL = "SELECT BAN013.Nro_Planilla, BAN012.Cod_Banco, BAN012.Tipo_Mov, BAN012.Referencia, BAN012.Fecha_Emision,
                 BAN012.Tipo_Planilla, BAN012.Monto_Objeto, BAN012.Tasa, BAN012.Monto_Retencion, BAN013.Fecha_Enterado,
@@ -153,7 +153,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-			<td width="200" align="center" > <strong><? echo $criterio1?></strong></td>
+			<td width="200" align="center" > <strong><?php  echo $criterio1?></strong></td>
 		 </tr> 
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>NRO PLANILLA</strong></td>
@@ -168,7 +168,7 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
            <td width="100" align="left" bgcolor="#99CCFF"><strong>FECHA ENTERADO</strong></td>
            <td width="400" align="left" bgcolor="#99CCFF"><strong>NOMBRE BANCO</strong></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; $sub_total1=""; $sub_total2=""; $cantidad=0; $prev_ced_rif=""; 
 	  $res=pg_query($sSQL);
@@ -195,21 +195,21 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 				      <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
 			          <td width="100" align="left">SUB-TOTAL</td>
-				      <td width="100" align="right"><? echo $sub_total1; ?></td>
+				      <td width="100" align="right"><?php  echo $sub_total1; ?></td>
 				      <td width="100" align="right"></td>
-				     <td width="100" align="right"><? echo $sub_total2; ?></td>
+				     <td width="100" align="right"><?php  echo $sub_total2; ?></td>
 			      </tr>	
 			      <tr>
 				      <td width="100" align="left"></td>
 			      </tr>	
-               <?}?>	   
+               <?php }?>	   
 			      <tr>
 				  <td width="100" align="left">Ced/Rif :</td>
-				  <td width="100" align="left"><? echo $ced_rif; ?></td>
+				  <td width="100" align="left"><?php  echo $ced_rif; ?></td>
 				  <td width="100" align="left">Nombre :</td>
-				  <td width="200" align="left"><? echo $nombre; ?></td>
+				  <td width="200" align="left"><?php  echo $nombre; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_total1=0; $sub_total2=0;
 			}					
 			    
@@ -221,20 +221,20 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 		   $monto_objeto=formato_monto($monto_objeto); $tasa=formato_monto($tasa); $nombre=conv_cadenas($nombre,0);  
 	    ?>	   
 		   <tr>
-                 <td width="100" align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_planilla; ?></td>
-           		<td width="100" align="center">'<? echo $cod_banco; ?></td>
-           		<td width="100" align="center">'<? echo $tipo_mov; ?></td>
-           		<td width="100" align="center">'<? echo $referencia; ?></td>
-           		<td width="100" align="center"><? echo $fecha_emision; ?></td>
-           		<td width="100" align="center">'<? echo $tipo_planilla; ?></td>
-           		<td width="100" align="right"><? echo $monto_objeto; ?></td>
-           		<td width="100" align="right"><? echo $tasa; ?></td>
-           		<td width="100" align="right"><? echo $monto_retencion; ?></td>
-           		<td width="100" align="center"><? echo $fecha_enterado; ?></td>
-           		<td width="400" align="left"><? echo $nombre_banco_ent; ?></td>
+                 <td width="100" align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_planilla; ?></td>
+           		<td width="100" align="center">'<?php  echo $cod_banco; ?></td>
+           		<td width="100" align="center">'<?php  echo $tipo_mov; ?></td>
+           		<td width="100" align="center">'<?php  echo $referencia; ?></td>
+           		<td width="100" align="center"><?php  echo $fecha_emision; ?></td>
+           		<td width="100" align="center">'<?php  echo $tipo_planilla; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_objeto; ?></td>
+           		<td width="100" align="right"><?php  echo $tasa; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_retencion; ?></td>
+           		<td width="100" align="center"><?php  echo $fecha_enterado; ?></td>
+           		<td width="400" align="left"><?php  echo $nombre_banco_ent; ?></td>
 
                    </tr>
-	    <? 
+	    <?php  
 	    }  
         if(($sub_total1<>0)or($sub_total2<>0)){ $sub_total1=formato_monto($sub_total1); $sub_total2=formato_monto($sub_total2);
 		  ?>	 				 
@@ -256,16 +256,16 @@ else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="
 				      <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
 			          <td width="100" align="left">SUB-TOTAL</td>
-					  <td width="100" align="right"><? echo $sub_total1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total1; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_total2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total2; ?></td>
 			      </tr>	
 		  
-		<?
+		<?php 
 		}
 		?>	 				 
 
-	  </table><?
+	  </table><?php 
         }
 }
 ?>

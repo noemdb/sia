@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  include ("../presupuesto/Ver_dispon.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  include ("../presupuesto/Ver_dispon.php"); 
 $codigo_mov=$_GET["txtcodigo_mov"]; $nro_solicitud=$_GET["nro_sol"]; $fecha_hoy=asigna_fecha_hoy();
 
 ?>
@@ -9,13 +9,13 @@ function Llamar_Inc_Orden(){ document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 echo "ESPERE POR FAVOR CARGANDO SOLICITUD.... ","<br>";
 if ($codigo_mov==""){$codigo_mov="";}else{
- $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
- $res=pg_exec($conn,"SELECT BORRAR_COMP042('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
- $res=pg_exec($conn,"SELECT ACTUALIZA_PAG036(3,'$codigo_mov','00000000','0000','','','','NO')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+ $res=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+ $res=pg_exec($conn,"SELECT BORRAR_COMP042('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+ $res=pg_exec($conn,"SELECT ACTUALIZA_PAG036(3,'$codigo_mov','00000000','0000','','','','NO')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);  if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 }
 
 $mconf="";$Ssql="Select * from SIA005 where campo501='05'";$resultado=pg_query($Ssql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
@@ -50,7 +50,7 @@ while($registro=pg_fetch_array($res)){ $cod_articulo=$registro["cod_servicio"]; 
  $partida=$registro["cod_partida"]; $cod_cat=$registro["cod_categoria"];$tipo_imput_presu="P";  $ref_imput_presu="00000000";
 
 $StrSQL="SELECT ACTUALIZA_COMP042(1,'$codigo_mov','$cod_articulo','$ref_imput_presu','0000000000','$nro_linea','','$sfecha','$marca','$modelo','$unidad_medida','$cod_presup','$fuente_financ',$costo,$tasa,0,$monto_iva,$total_iva,$cantidad,0,0,0,$total,0,0,'$tipo_imput_presu','','$sfecha','','','$partida','$cod_cat',0,0,'','$sfecha','','','$des_articulo','')";
-$resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? $error=1;} 
+$resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php  $error=1;} 
 //echo $StrSQL,"<br>";
 } $fecha=$sfecha;
     $sql="SELECT * FROM comp042 where codigo_mov='$codigo_mov' order by nro_linea";$res=pg_query($sql); $gsub_total=0; $gtotal_iva=0; $gtotal_ord=0; $cant_articulo=0;
@@ -60,7 +60,7 @@ $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR 
 	  $tipo_imput_presu=$registro["cod_almacen"];  $ref_imput_presu=$registro["nro_articulo"]; $tasa=$registro["tasa_impuesto"]; if($aplica_impuesto=="S"){$tasa=$tasa;}else{$tasa=0;} 
 	  $gsub_total=$gsub_total+$total; $gtotal_iva=$gtotal_iva+$total_iva; $gtotal_ord=$gtotal_ord+($total_iva+$total);
 	  $sSQL="Select cod_servicio from COMP027 WHERE cod_servicio='$cod_articulo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-      if($filas==0){$error=1; echo "Codigo Servicio:".$cod_articulo; ?> <script language="JavaScript"> muestra('CODIGO DE SERVICIO NO EXISTE');</script><? }  
+      if($filas==0){$error=1; echo "Codigo Servicio:".$cod_articulo; ?> <script language="JavaScript"> muestra('CODIGO DE SERVICIO NO EXISTE');</script><?php }  
  	  if($error==0){ $sSQL="Select * from PRE026 WHERE codigo_mov='$codigo_mov' and cod_presup='$cod_presup' and fuente_financ='$fuente_financ'";
 		  $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
 		  if ($filas>0){ $exist_cod="S"; $reg=pg_fetch_array($resultado); $monto_cod=$reg["monto"]+$total; }
@@ -69,9 +69,9 @@ $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR 
 		  if(($error==0)and($tipo_imput_presu=="C")){ $monto_credito=$monto_cod;
 			$sSQL="Select * from PRE010 WHERE (referencia_adicion='$ref_imput_presu') and (cod_presup='$cod_presup') and (fuente_financ='$fuente_financ')";
 			$resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-			if ($filas==0){$error=1; echo "Codigo Servicio:".$cod_articulo; ?> <script language="JavaScript"> muestra('CÓDIGO NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><? }
+			if ($filas==0){$error=1; echo "Codigo Servicio:".$cod_articulo; ?> <script language="JavaScript"> muestra('CÓDIGO NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><?php }
 			 else{$registro=pg_fetch_array($resultado);
-			   if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <? echo $dispon; ?> ');</script><? }
+			   if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <?php  echo $dispon; ?> ');</script><?php }
 			 }
 		  }	  
 		}  
@@ -84,60 +84,60 @@ $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR 
 		  if(($error==0)and($tipo_imput_presu=="C")){ $monto_credito=$monto_cod;
 			$sSQL="Select * from PRE010 WHERE (referencia_adicion='$ref_imput_presu') and (cod_presup='$cod_pre_iva') and (fuente_financ='$fuente_financ')";
 			$resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-			if ($filas==0){$error=1; echo "Codigo Articulo:".$cod_articulo; ?> <script language="JavaScript"> muestra('CÓDIGO IVA NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><? }
+			if ($filas==0){$error=1; echo "Codigo Articulo:".$cod_articulo; ?> <script language="JavaScript"> muestra('CÓDIGO IVA NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><?php }
 			 else{$registro=pg_fetch_array($resultado);
-			   if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <? echo $dispon; ?> ');</script><? }
+			   if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <?php  echo $dispon; ?> ');</script><?php }
 			 }
 		  }	  
 		} } 	
 	  if($error==0){$StrSQL="SELECT INCLUYE_PRE026('$codigo_mov','$cod_presup','$fuente_financ','','0001','','0000','','0000','','0000','','','','','','','$sfecha','C','P','00000000','$sfecha',$monto_cod,0,0,0)"; if($exist_cod=="S"){$StrSQL="SELECT MODIFICA_PRE026('$codigo_mov','$cod_presup','$fuente_financ','','0001','','0000','','0000','','0000','','','','','','','$sfecha','C','P','00000000','$sfecha',$monto_cod,0,0,0)";}
-		  $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? } 
+		  $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } 
 		  if($total_iva>0){$StrSQL="SELECT INCLUYE_PRE026('$codigo_mov','$cod_pre_iva','$fuente_financ','','0001','','0000','','0000','','0000','','','','','','','$sfecha','C','P','00000000','$sfecha',$monto_cod_iva,0,0,0)"; if($exist_cod_iva=="S"){$StrSQL="SELECT MODIFICA_PRE026('$codigo_mov','$cod_iva','$fuente_financ','','0001','','0000','','0000','','0000','','','','','','','$sfecha','C','P','00000000','$sfecha',$monto_cod_iva,0,0,0)";} 
-			 if($error==0){$resultado=pg_exec($conn,$StrSQL);$error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? } }
+			 if($error==0){$resultado=pg_exec($conn,$StrSQL);$error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } }
 		} }
 	}  
 ?>
 <form name="form2" method="post" action="Inc_Orden_Servicio.php">
 <table width="10">
   <tr>
-     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input name="txtnro_ord" type="hidden" id="txtnro_ord" value="<?echo $nro_orden?> " ></td>
+     <td width="5"><input name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input name="txtnro_ord" type="hidden" id="txtnro_ord" value="<?php echo $nro_orden?> " ></td>
      <td width="5"><input name="txtasig_orden" type="hidden" id="txtasig_orden" value="S" ></td>
-     <td width="5"><input name="txtfecha_ord" type="hidden" id="txtfecha_ord" value="<?echo $fecha_orden?>" ></td>
-     <td width="5"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?echo $nro_aut?>" ></td>
-     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?echo $fecha_aut?>" ></td>	 
-     <td width="5"><input name="txtcod_tipos" type="hidden" id="txtcod_tipos" value="<?echo $cod_tipos?>" ></td>
-     <td width="5"><input name="txttipo_ords" type="hidden" id="txttipo_ords" value="<?echo $tipo_ords?>" ></td>
-     <td width="5"><input name="txtnombre_abrev" type="hidden" id="txtnombre_abrev" value="<?echo $nomb_a_ordc?>" ></td>
+     <td width="5"><input name="txtfecha_ord" type="hidden" id="txtfecha_ord" value="<?php echo $fecha_orden?>" ></td>
+     <td width="5"><input name="txtnro_aut" type="hidden" id="txtnro_aut" value="<?php echo $nro_aut?>" ></td>
+     <td width="5"><input name="txtfecha_aut" type="hidden" id="txtfecha_aut" value="<?php echo $fecha_aut?>" ></td>	 
+     <td width="5"><input name="txtcod_tipos" type="hidden" id="txtcod_tipos" value="<?php echo $cod_tipos?>" ></td>
+     <td width="5"><input name="txttipo_ords" type="hidden" id="txttipo_ords" value="<?php echo $tipo_ords?>" ></td>
+     <td width="5"><input name="txtnombre_abrev" type="hidden" id="txtnombre_abrev" value="<?php echo $nomb_a_ordc?>" ></td>
 	 
-     <td width="5"><input name="txtmodifc_presup" type="hidden" id="txtmodifc_presup" value="<?echo $modifc_presup?>" ></td>
-     <td width="5"><input name="txtcod_imp_unico" type="hidden" id="txtcod_imp_unico" value="<?echo $cod_imp_unico?>" ></td>
-     <td width="5"><input name="txtcod_imp_part" type="hidden" id="txtcod_imp_part" value="<?echo $cod_imp_part?>" ></td>
-     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>" ></td>
+     <td width="5"><input name="txtmodifc_presup" type="hidden" id="txtmodifc_presup" value="<?php echo $modifc_presup?>" ></td>
+     <td width="5"><input name="txtcod_imp_unico" type="hidden" id="txtcod_imp_unico" value="<?php echo $cod_imp_unico?>" ></td>
+     <td width="5"><input name="txtcod_imp_part" type="hidden" id="txtcod_imp_part" value="<?php echo $cod_imp_part?>" ></td>
+     <td width="5"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>" ></td>
      <td width="5"><input name="txtbloqueada" type="hidden" id="txtbloqueada" value="N" ></td>
 	 
-     <td width="5"><input name="txtnro_sol" type="hidden" id="txtnro_sol" value="<?echo $nro_solicitud?>"></td>   
-     <td width="5"><input name="txtfecha_sol"" type="hidden" id="txtfecha_sol"" value="<?echo $fecha_solicitud?>"></td>
+     <td width="5"><input name="txtnro_sol" type="hidden" id="txtnro_sol" value="<?php echo $nro_solicitud?>"></td>   
+     <td width="5"><input name="txtfecha_sol"" type="hidden" id="txtfecha_sol"" value="<?php echo $fecha_solicitud?>"></td>
 	 
-     <td width="5"><input name="txtdias_c" type="hidden" id="txtdias_c" value="<?echo $dias_credito?>"></td>  
-     <td width="5"><input name="txtoper" type="hidden" id="txtoper" value="<?echo $operacion?>"></td>
-     <td width="5"><input name="txtconcep" type="hidden" id="txtconcep" value="<?echo $concepto?>" ></td>	 
-	 <td width="5"><input name="txtuni_sol" type="hidden" id="txtuni_sol" value="<?echo $unidad_solicitante?>"></td>
-     <td width="5"><input name="txtdes_unidad" type="hidden" id="txtdes_unidad" value="<?echo $des_unidad_sol?>"></td>
-     <td width="5"><input name="txtlugar_ent" type="hidden" id="txtlugar_ent" value="<?echo $lugar_entrega?>"></td>     
-     <td width="5"><input name="txtced_r" type="hidden" id="txtced_r" value="<?echo $rif_proveedor?>"></td>
-     <td width="5"><input name="txtnomb_r" type="hidden" id="txtnomb_r" value="<?echo $nombre?>"></td>
-	 <td width="5"><input name="txtfecha_ven" type="hidden" id="txtfecha_ven" value="<?echo $fecha_vencim?>"></td>	
-     <td width="5"><input name="txtaplica_imp" type="hidden" id="txtaplica_imp" value="<?echo $aplica_impuesto?>" ></td>
-     <td width="5"><input name="txtcod_part_iva" type="hidden" id="txtcod_part_iva" value="<?echo $cod_part_iva?>" ></td> 
-     <td width="5"><input name="txtcod_pre_imp" type="hidden" id="txtcod_pre_imp" value="<?echo $cod_presup_imp?>" ></td>     	 
-	 <td width="5"><input name="txtf_inv" type="hidden" id="txtf_inv" value="<?echo $func_inv?>" ></td>
-     <td width="5"><input name="txttipo_f" type="hidden" id="txttipo_f" value="<?echo $campo_str1?>" ></td>
-     <td width="5"><input name="txttiene_ant" type="hidden" id="txttiene_ant" value="<?echo $tiene_anticipo?>" ></td>
-     <td width="5"><input name="txttasa_ant" type="hidden" id="txttasa_ant" value="<?echo $tasa_anticipo?>"></td>
-     <td width="5"><input name="txtcta_ant" type="hidden" id="txtcta_ant" value="<?echo $cod_con_anticipo?>"></td>
+     <td width="5"><input name="txtdias_c" type="hidden" id="txtdias_c" value="<?php echo $dias_credito?>"></td>  
+     <td width="5"><input name="txtoper" type="hidden" id="txtoper" value="<?php echo $operacion?>"></td>
+     <td width="5"><input name="txtconcep" type="hidden" id="txtconcep" value="<?php echo $concepto?>" ></td>	 
+	 <td width="5"><input name="txtuni_sol" type="hidden" id="txtuni_sol" value="<?php echo $unidad_solicitante?>"></td>
+     <td width="5"><input name="txtdes_unidad" type="hidden" id="txtdes_unidad" value="<?php echo $des_unidad_sol?>"></td>
+     <td width="5"><input name="txtlugar_ent" type="hidden" id="txtlugar_ent" value="<?php echo $lugar_entrega?>"></td>     
+     <td width="5"><input name="txtced_r" type="hidden" id="txtced_r" value="<?php echo $rif_proveedor?>"></td>
+     <td width="5"><input name="txtnomb_r" type="hidden" id="txtnomb_r" value="<?php echo $nombre?>"></td>
+	 <td width="5"><input name="txtfecha_ven" type="hidden" id="txtfecha_ven" value="<?php echo $fecha_vencim?>"></td>	
+     <td width="5"><input name="txtaplica_imp" type="hidden" id="txtaplica_imp" value="<?php echo $aplica_impuesto?>" ></td>
+     <td width="5"><input name="txtcod_part_iva" type="hidden" id="txtcod_part_iva" value="<?php echo $cod_part_iva?>" ></td> 
+     <td width="5"><input name="txtcod_pre_imp" type="hidden" id="txtcod_pre_imp" value="<?php echo $cod_presup_imp?>" ></td>     	 
+	 <td width="5"><input name="txtf_inv" type="hidden" id="txtf_inv" value="<?php echo $func_inv?>" ></td>
+     <td width="5"><input name="txttipo_f" type="hidden" id="txttipo_f" value="<?php echo $campo_str1?>" ></td>
+     <td width="5"><input name="txttiene_ant" type="hidden" id="txttiene_ant" value="<?php echo $tiene_anticipo?>" ></td>
+     <td width="5"><input name="txttasa_ant" type="hidden" id="txttasa_ant" value="<?php echo $tasa_anticipo?>"></td>
+     <td width="5"><input name="txtcta_ant" type="hidden" id="txtcta_ant" value="<?php echo $cod_con_anticipo?>"></td>
      <td width="5"><input name="txtfecha_d" type="hidden" id="txtfecha_d" value=""></td>
      <td width="5"><input name="txtfecha_h" type="hidden" id="txtfecha_h" value=""></td>
   </tr>
@@ -145,6 +145,6 @@ $resultado=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error="ERROR 
 </form>
 </body>
 </html>
-<?pg_close();
-if ($error==0){?><script language="JavaScript">alert('Solicitud de Servicio Cargada'); Llamar_Inc_Orden();</script> <? }else {?>  <script language="JavaScript"> alert('Error en Carga'); history.back();</script> <? }
+<?php pg_close($conn);
+if ($error==0){?><script language="JavaScript">alert('Solicitud de Servicio Cargada'); Llamar_Inc_Orden();</script> <?php }else {?>  <script language="JavaScript"> alert('Error en Carga'); history.back();</script> <?php }
 ?>

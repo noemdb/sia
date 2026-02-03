@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
  $cod_estructura=$_GET["Gcod_estructura"]; $codigo_mov=$_GET["codigo_mov"]; $bloqueada=$_GET["bloqueada"]; $fecha_hoy=asigna_fecha_hoy();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -54,9 +54,9 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * from ESTRUCTURA_ORD where cod_estructura='$cod_estructura'";
 $descripcion_est="";$ced_rif_est="";$fecha_desde_est="";$fecha_hasta_est="";$modulo="";$tipo_documento="";$nro_documento="";$inf_usuario="";
 $cod_tipo_ord="";$concepto_est=""; $nombre="";  $des_tipo_orden="";
@@ -84,8 +84,8 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
         <td width="86">
       <td><table width="92" height="602" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_estructura_orden.php?Gcod_estructura=<?echo $cod_estructura?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_estructura_orden.php?Gcod_estructura=<?echo $cod_estructura?>">Atras</A></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_estructura_orden.php?Gcod_estructura=<?php echo $cod_estructura?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Act_estructura_orden.php?Gcod_estructura=<?php echo $cod_estructura?>">Atras</A></td>
       </tr>
   <tr>
     <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -107,10 +107,10 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                       <td><table width="855" >
                         <tr>
                           <td width="69" height="24"><span class="Estilo5">C&Oacute;DIGO : </span></td>
-                          <td width="94"><span class="Estilo5"> <input class="Estilo10" name="txtcod_estructura" type="text" id="txtcod_estructura"  value="<?echo $cod_estructura?>" size="10" maxlength="8" readonly>
+                          <td width="94"><span class="Estilo5"> <input class="Estilo10" name="txtcod_estructura" type="text" id="txtcod_estructura"  value="<?php echo $cod_estructura?>" size="10" maxlength="8" readonly>
                           </span></td>
                           <td width="93"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
-                          <td width="542"><span class="Estilo5"> <input class="Estilo10" name="txtdescripcion_est" type="text" id="txtdescripcion_est"  onFocus="encender(this);" onBlur="apagar(this);" value="<?echo $descripcion_est?>"  size="85">
+                          <td width="542"><span class="Estilo5"> <input class="Estilo10" name="txtdescripcion_est" type="text" id="txtdescripcion_est"  onFocus="encender(this);" onBlur="apagar(this);" value="<?php echo $descripcion_est?>"  size="85">
                           </span></td>
                         </tr>
                       </table></td>
@@ -120,13 +120,13 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                         <tr>
                           <td width="160"><span class="Estilo5">CED./RIF BENEFICIARIO:</span></td>
                           <td width="96"><span class="Estilo5">
-                            <input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="15" onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $ced_rif_est?>" >
+                            <input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="15" maxlength="15" onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $ced_rif_est?>" >
                           </span></td>
                           <td width="44"><span class="Estilo5">
                             <input class="Estilo10" name="btced_rif" type="button" id="btced_rif" title="Abrir Catalogo de Beneficiarios" onClick="VentanaCentrada('Cat_beneficiarios.php?criterio=','SIA','','750','500','true')" value="...">
                           </span></td>
                           <td width="525"><span class="Estilo5">
-                            <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" value="<?echo $nombre?>" size="80" readonly>
+                            <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" value="<?php echo $nombre?>" size="80" readonly>
                           </span></td>
                         </tr>
                       </table></td>
@@ -135,7 +135,7 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                       <td><table width="827" border="0">
                         <tr>
                           <td width="106"><span class="Estilo5">CONCEPTO:</span></td>
-                          <td width="694"><textarea name="txtconcepto_est" cols="85" onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="txtconcepto_est"><?echo $concepto_est?></textarea></td>
+                          <td width="694"><textarea name="txtconcepto_est" cols="85" onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="txtconcepto_est"><?php echo $concepto_est?></textarea></td>
                         </tr>
                       </table></td>
                     </tr>
@@ -144,11 +144,11 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                         <tr>
                           <td width="123" height="24"><span class="Estilo5">TIPO DOCUMENTO : </span></td>
                           <td width="154"><span class="Estilo5">
-                            <input class="Estilo10" name="txttipo_documento" type="text" id="txttipo_documento"  onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $tipo_documento?>" size="20">
+                            <input class="Estilo10" name="txttipo_documento" type="text" id="txttipo_documento"  onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $tipo_documento?>" size="20">
                           </span> </td>
                           <td width="145"><span class="Estilo5">NUMERO DOCUMENTO :</span></td>
                           <td width="410"><span class="Estilo5">
-                            <input class="Estilo10" name="txtnro_documento" type="text" id="txtnro_documento"  onFocus="encender(this); " onBlur="apagar(this);" value="<?echo $nro_documento?>" size="60">
+                            <input class="Estilo10" name="txtnro_documento" type="text" id="txtnro_documento"  onFocus="encender(this); " onBlur="apagar(this);" value="<?php echo $nro_documento?>" size="60">
                           </span> </td>
                         </tr>
                       </table></td>
@@ -158,13 +158,13 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                         <tr>
                           <td width="123"><span class="Estilo5">TIPO DE ORDEN :</span></td>
                           <td width="73"><span class="Estilo5">
-                            <input class="Estilo10" name="txttipo_orden" type="text" id="txttipo_orden" size="8" maxlength="15"  onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $cod_tipo_ord?>">
+                            <input class="Estilo10" name="txttipo_orden" type="text" id="txttipo_orden" size="8" maxlength="15"  onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $cod_tipo_ord?>">
                           </span> </td>
                            <td width="53"><span class="Estilo5">
                             <input class="Estilo10" name="bttipo_orden" type="button" id="bttipo_orden" title="Abrir Catalogo Tipo de Orden " onClick="VentanaCentrada('Cat_tipo_orden.php?criterio=','SIA','','750','500','true')" value="...">
                           </span></td>
                                                   <td width="581"><span class="Estilo5">
-                            <input class="Estilo10" name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="80" readonly value="<?echo $des_tipo_orden?>">
+                            <input class="Estilo10" name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="80" readonly value="<?php echo $des_tipo_orden?>">
                           </span></td>
                         </tr>
                       </table></td>
@@ -174,11 +174,11 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                         <tr>
                           <td width="123"><span class="Estilo5">FECHA DESDE :</span></td>
                           <td width="370"><span class="Estilo5">
-                            <input class="Estilo10" name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" onchange="checkrefecha_desde(this.form)" onFocus="encender(this);" onBlur="apagar(this);" value="<?echo $fecha_desde_est?>" >
+                            <input class="Estilo10" name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" onchange="checkrefecha_desde(this.form)" onFocus="encender(this);" onBlur="apagar(this);" value="<?php echo $fecha_desde_est?>" >
                           </span></td>
                           <td width="107"><span class="Estilo5">FECHA HASTA :</span></td>
                           <td width="226"><span class="Estilo5">
-                            <input class="Estilo10" name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" onFocus="encender(this);" onchange="checkrefecha_hasta(this.form)" onBlur="apagar(this);" onchange="checkrefecha(this.form)" size="15" value="<?echo $fecha_hasta_est?>" >
+                            <input class="Estilo10" name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" onFocus="encender(this);" onchange="checkrefecha_hasta(this.form)" onBlur="apagar(this);" onchange="checkrefecha(this.form)" size="15" value="<?php echo $fecha_hasta_est?>" >
                           </span></td>
                         </tr>
                       </table></td>
@@ -196,31 +196,31 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
    rows[1][2] = "Retenciones";        // Requiere: <div id="T12" class="tab-body">  ... </div>
     rows[1][3] = "Otros Pasivos";
 </script>
-<?include ("../class/class_tab.php");?>
+<?php include ("../class/class_tab.php");?>
 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
 <!-- PESTAÑA 1 -->
 <div id="T11" class="tab-body">
-   <? if($bloqueada=='S'){?>
-   <iframe src="Det_cons_estructura.php?criterio=<?echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <?php  if($bloqueada=='S'){?>
+   <iframe src="Det_cons_estructura.php?criterio=<?php echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
-   <? }else{?>
-   <iframe src="Det_inc_cod_est.php?codigo_mov=<?echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <?php }else{?>
+   <iframe src="Det_inc_cod_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
-    <? }?>
+    <?php }?>
 </div>
 <!--PESTAÑA 2 -->
 <div id="T12" class="tab-body" >
-   <? if($bloqueada=='S'){?>
-   <iframe src="Det_ret_estructura.php?criterio=<?echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <?php  if($bloqueada=='S'){?>
+   <iframe src="Det_ret_estructura.php?criterio=<?php echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
-   <? }else{?>
-   <iframe src="Det_inc_ret_est.php?codigo_mov=<?echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
+   <?php }else{?>
+   <iframe src="Det_inc_ret_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="845" height="290" scrolling="auto" frameborder="0">
    </iframe>
-   <? }?>
+   <?php }?>
 </div>
 <!--PESTAÑA 3 -->
 <div id="T13" class="tab-body" >
-    <iframe src="Det_inc_pas_est.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+    <iframe src="Det_inc_pas_est.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
   </div>
 
 </div>
@@ -237,8 +237,8 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
   <p>&nbsp;</p>
   <table width="758">
     <tr>
-      <td width="486"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-      <td width="100"><input name="txtbloqueada" type="hidden" id="txtbloqueada" value="<?echo $bloqueada?>"></td>
+      <td width="486"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+      <td width="100"><input name="txtbloqueada" type="hidden" id="txtbloqueada" value="<?php echo $bloqueada?>"></td>
       <td width="68" valign="middle"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
     </tr>
   </table>

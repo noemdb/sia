@@ -1,5 +1,5 @@
-<?include ("../class/seguridad.inc");?>
-<? include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");?>
+<?php  include ("../class/funciones.php");
 if (!$_GET){
   $cod_estructura='';
   $p_letra='';
@@ -91,15 +91,15 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $resultado=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')");
 $error=pg_errormessage($conn); $error=substr($error, 0, 61);
-if (!$resultado){ ?> <script language="JavaScript">muestra('<? echo $error; ?>');</script><?}
+if (!$resultado){ ?> <script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 $resultado=pg_exec($conn,"SELECT BORRAR_PAG028('$codigo_mov')");
 $error=pg_errormessage($conn); $error=substr($error, 0, 61);
-if (!$resultado){ ?> <script language="JavaScript">muestra('<? echo $error; ?>');</script><?}
+if (!$resultado){ ?> <script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 $descripcion_est="";$ced_rif_est="";$fecha_desde_est="";$fecha_hasta_est="";
 $bloqueada="";$modulo="";$tipo_documento="";$nro_documento="";$inf_usuario="";
 $cod_tipo_ord="";$concepto_est=""; $nombre="";  $des_tipo_orden="";
@@ -191,13 +191,13 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                         <td width="69" height="24"><span class="Estilo5">C&Oacute;DIGO : </span></td>
                         <td width="94"><span class="Estilo5">
                         <span class="Estilo5">
-                        <input name="txtcod_estructura" type="text" id="txtcod_estructura"  readonly value="<?echo $cod_estructura?>" size="10" maxlength="8">
+                        <input name="txtcod_estructura" type="text" id="txtcod_estructura"  readonly value="<?php echo $cod_estructura?>" size="10" maxlength="8">
                         </span> </span></td>
                         <td width="93"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
                         <td width="542"><span class="Estilo5">
-                          <input name="txtdescripcion_est" type="text" id="txtdescripcion_est"  readonly value="<?echo $descripcion_est?>" size="85">
+                          <input name="txtdescripcion_est" type="text" id="txtdescripcion_est"  readonly value="<?php echo $descripcion_est?>" size="85">
                         </span></td>
-                        <td width="24"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
+                        <td width="24"><img src="../imagenes/b_info.png" width="11" height="11" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
                       </tr>
                   </table></td>
                 </tr>
@@ -206,10 +206,10 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                     <tr>
                       <td width="170" height="24"><span class="Estilo5">C&Eacute;DULA/RIF BENEFICIARIO : </span></td>
                       <td width="133"><span class="Estilo5">
-                        <input name="txtced_rif_est" type="text" id="txtced_rif_est"  readonly value="<?echo $ced_rif_est?>" size="15" maxlength="15">
+                        <input name="txtced_rif_est" type="text" id="txtced_rif_est"  readonly value="<?php echo $ced_rif_est?>" size="15" maxlength="15">
                       </span></td>
                       <td width="532"><span class="Estilo5">
-                        <input name="txtnombre" type="text" id="txtnombre" value="<?echo $nombre?>" size="81" readonly>
+                        <input name="txtnombre" type="text" id="txtnombre" value="<?php echo $nombre?>" size="81" readonly>
                       </span></td>
                     </tr>
                   </table></td>
@@ -219,7 +219,7 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                       <tr>
                         <td width="91" height="24"><span class="Estilo5">CONCEPTO :</span></td>
                         <td width="738"><span class="Estilo5">
-                          <textarea name="txtconcepto_est" cols="88" readonly="readonly" class="headers" id="txtconcepto_est"><?echo $concepto_est?></textarea>
+                          <textarea name="txtconcepto_est" cols="88" readonly="readonly" class="headers" id="txtconcepto_est"><?php echo $concepto_est?></textarea>
                         </span></td>
                       </tr>
                   </table></td>
@@ -229,11 +229,11 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                     <tr>
                       <td width="123" height="24"><span class="Estilo5">TIPO DOCUMENTO  : </span></td>
                       <td width="154"><span class="Estilo5">
-                        <input name="txttipo_documento" type="text" id="txttipo_documento"  readonly value="<?echo $tipo_documento?>" size="20">
+                        <input name="txttipo_documento" type="text" id="txttipo_documento"  readonly value="<?php echo $tipo_documento?>" size="20">
                       </span> </td>
                       <td width="145"><span class="Estilo5">NUMERO DOCUMENTO :</span></td>
                       <td width="410"><span class="Estilo5">
-                        <input name="txtnro_documento" type="text" id="txtnro_documento"  readonly value="<?echo $nro_documento?>" size="60">
+                        <input name="txtnro_documento" type="text" id="txtnro_documento"  readonly value="<?php echo $nro_documento?>" size="60">
                       </span> </td>
                     </tr>
                   </table></td>
@@ -243,10 +243,10 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                     <tr>
                       <td width="124"><span class="Estilo5">TIPO DE ORDEN :</span></td>
                       <td width="92"><span class="Estilo5">
-                        <input name="txtcod_tipo_ord" type="text" id="txtcod_tipo_ord" size="8" maxlength="15"  readonly  value="<?echo $cod_tipo_ord?>">
+                        <input name="txtcod_tipo_ord" type="text" id="txtcod_tipo_ord" size="8" maxlength="15"  readonly  value="<?php echo $cod_tipo_ord?>">
                       </span> </td>
                       <td width="618"><span class="Estilo5">
-                        <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="96" readonly  value="<?echo $des_tipo_orden?>">
+                        <input name="txtdes_tipo_orden" type="text" id="txtdes_tipo_orden" size="96" readonly  value="<?php echo $des_tipo_orden?>">
                       </span></td>
                     </tr>
                   </table></td>
@@ -256,11 +256,11 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
                     <tr>
                       <td width="123"><span class="Estilo5">FECHA DESDE :</span></td>
                       <td width="370"><span class="Estilo5">
-                        <input name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" value="<?echo $fecha_desde_est?>" readonly>
+                        <input name="txtfecha_desde_est" type="text" id="txtfecha_desde_est" size="15" value="<?php echo $fecha_desde_est?>" readonly>
                       </span></td>
                       <td width="107"><span class="Estilo5">FECHA HASTA :</span></td>
                       <td width="226"><span class="Estilo5">
-                        <input name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" value="<?echo $fecha_hasta_est?>" size="15" readonly>
+                        <input name="txtfecha_hasta_est" type="text" id="txtfecha_hasta_est" value="<?php echo $fecha_hasta_est?>" size="15" readonly>
                        </span></td>
                     </tr>
                   </table></td>
@@ -270,10 +270,10 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
 <div id="divtab" style="position:absolute; width:846px; height:280px; z-index:2; left: 117px; top: 332px;">
 <ul id="maintab" class="shadetabs">
 <li class="selected"><a href="#default" rel="ajaxcontentarea">Cód. Presupuestario</a></li>
-<li><a href="Det_ret_estruct.php?criterio=<?echo $cod_estructura?>" rel="ajaxcontentarea">Retenciones</a></li>
+<li><a href="Det_ret_estruct.php?criterio=<?php echo $cod_estructura?>" rel="ajaxcontentarea">Retenciones</a></li>
 </ul>
 <div id="ajaxcontentarea" class="contentstyle">
-  <iframe src="Det_cons_estructura.php?criterio=<?echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="1"> </iframe>
+  <iframe src="Det_cons_estructura.php?criterio=<?php echo $cod_estructura?>"  width="845" height="290" scrolling="auto" frameborder="1"> </iframe>
 </div>
 
 <script type="text/javascript"> startajaxtabs("maintab")</script>
@@ -284,4 +284,4 @@ if($fecha_hasta_est==""){$fecha_hasta_est="";}else{$fecha_hasta_est=formato_ddmm
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

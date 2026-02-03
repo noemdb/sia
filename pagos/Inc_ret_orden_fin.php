@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME"); $monto_ret=0; $monto_ob=0;
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME"); $monto_ret=0; $monto_ob=0;
 if (!$_GET){$mcod_m="PAG001".$usuario_sia.$equipo;$codigo_mov=substr($mcod_m,0,49);$monto_ob=0;} else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"];$monto_ob=$_GET["monto_ob"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Retencion en la orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Retencion en la orden)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <SCRIPT language="JavaScript" src="../class/sia.js" type=text/javascript></SCRIPT>
 <script language="javascript" src="ajax_pag.js" type="text/javascript"></script>
@@ -26,7 +26,7 @@ function daformatomonto (monto){var i;var str2 ="";
 function eliminapunto (monto){var i;var str2 =""; 
    for (i = 0; i < monto.length; i++){if((monto.charAt(i) == '.')){str2 = str2;} else{str2 = str2 + monto.charAt(i);}  }
 return str2;} 
-function llamar_anterior(){ document.location ='Det_inc_ret_ord_fin.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_ret_ord_fin.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_tipo(mform){var mref; mref=mform.txttipo_retencion.value;
    mref=Rellenarizq(mref,"0",3);  mform.txttipo_retencion.value=mref;
 return true;}
@@ -140,7 +140,7 @@ return true;}
               <td width="90"><span class="Estilo5">SUSTRAENDO:</span></td>
               <td width="75"><span class="Estilo5"><input name="txtsustraendo" type="text" id="txtsustraendo" size="6" maxlength="5" style="text-align:right" readonly onchange="chequea_tasa(this.form);" onKeypress="return validarNum(event)"> </span></td>
               <td width="111"><span class="Estilo5">MONTO OBJETO: </span></td>
-              <td width="135"><span class="Estilo5"><div id="montOb"> <input name="txtmonto_objeto" type="text" id="txtmonto_objeto" size="15" style="text-align:right" maxlength="22"  onFocus="encende_objeto(this)" onBlur="apaga_objeto(this)" value="<?echo $monto_objeto?>" onchange="chequea_objeto(this.form);" onKeypress="return validarNum(event)"> </div></span></td>
+              <td width="135"><span class="Estilo5"><div id="montOb"> <input name="txtmonto_objeto" type="text" id="txtmonto_objeto" size="15" style="text-align:right" maxlength="22"  onFocus="encende_objeto(this)" onBlur="apaga_objeto(this)" value="<?php echo $monto_objeto?>" onchange="chequea_objeto(this.form);" onKeypress="return validarNum(event)"> </div></span></td>
               <td width="83"><span class="Estilo5">RETENCI&Oacute;N:</span></td>
               <td width="114"><span class="Estilo5"><input name="txtmonto_retencion" type="text" id="txtmonto_retencion" size="14" style="text-align:right" maxlength="22" onFocus="encender(this)" onBlur="apaga_monto_ret(this)" onKeypress="return validarNum(event)">
               </span></td>
@@ -167,7 +167,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="10"><input name="txtdes_orden_ret" type="hidden" id="txtdes_orden_ret" ></td>
             <td width="80">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>

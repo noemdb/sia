@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
 if (!$_GET){$tipo_nomina="";$cod_concepto="";$cod_empleado="";$fecha_h="";$tp_calculo=="N";} else{$tipo_nomina=$_GET["tipo_nomina"];$cod_concepto=$_GET["cod_concepto"];$cod_empleado=$_GET["cod_empleado"];$fecha_h=$_GET["fecha_h"];$tp_calculo=$_GET["tp_calculo"];}
 $fechab=formato_ddmmaaaa($fecha_h);
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
@@ -7,7 +7,7 @@ if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="";}else{ $temp_
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Modificar Carga Manual)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Modificar Carga Manual)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -27,7 +27,7 @@ function encende_monto(mthis){var mmonto; encender(mthis);
 function apaga_monto(mthis){var mmonto;
    apagar(mthis);    mmonto=mthis.value;  mmonto=camb_punto_coma(mmonto); mthis=mmonto;
 return true;}
-function llamar_anterior(){ document.location ='Det_conc_hist_nom.php?cod_empleado=<?echo $cod_empleado?>&tipo_nomina=<?echo $tipo_nomina?>&fecha_nomina=<?echo $fechab?>'; }
+function llamar_anterior(){ document.location ='Det_conc_hist_nom.php?cod_empleado=<?php echo $cod_empleado?>&tipo_nomina=<?php echo $tipo_nomina?>&fecha_nomina=<?php echo $fechab?>'; }
 function revisar(){var f=document.form1; var Valido=true;
    if(f.txtcod_empleado.value==""){alert("Codigo de Trabajador no puede estar Vacio");return false;}
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
@@ -47,7 +47,7 @@ return false;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $observacion="";
 $cantidad=0;$monto=0;$fecha_ini="";$fecha_exp="";$activo="";$calculable="";$denominacion="";$descripcion="";$nombre="";$frec="0";$imp_fija="SI"; $fecha_ini="";$fecha_exp=""; $cod_presup="";
 $sql="Select * from nom019 where tipo_nomina='$tipo_nomina' and cod_empleado='$cod_empleado' and  cod_concepto='$cod_concepto' and (fecha_p_hasta='$fecha_h') and (tp_calculo='$tp_calculo') ".$criterioc.""; $res=pg_query($sql);
@@ -68,8 +68,8 @@ if ($registro=pg_fetch_array($res,0)){  $tipo_nomina=$registro["tipo_nomina"]; $
              <td><table width="760">
                  <tr>
                    <td width="100"><span class="Estilo5">TRABAJADOR : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" readonly value="<?echo $cod_empleado?>" onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="510"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="60" maxlength="60" readonly value="<?echo $nombre?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" readonly value="<?php echo $cod_empleado?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="510"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="60" maxlength="60" readonly value="<?php echo $nombre?>" onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -78,8 +78,8 @@ if ($registro=pg_fetch_array($res,0)){  $tipo_nomina=$registro["tipo_nomina"]; $
              <td><table width="866">
                  <tr>
                    <td width="126"><span class="Estilo5">CONCEPTO : </span></td>
-                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="4" readonly value="<?echo $cod_concepto?>"> </span></td>
-                   <td width="620"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80" readonly value="<?echo $denominacion?>"> </span></td>
+                   <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="4" readonly value="<?php echo $cod_concepto?>"> </span></td>
+                   <td width="620"><span class="Estilo5"> <input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80" readonly value="<?php echo $denominacion?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -89,10 +89,10 @@ if ($registro=pg_fetch_array($res,0)){  $tipo_nomina=$registro["tipo_nomina"]; $
              <td><table width="760">
                  <tr>
                    <td width="100"><span class="Estilo5">MONTO ACTUAL : </span></td>
-                   <td width="260"><span class="Estilo5"><input class="Estilo10" name="txtmonto_a" type="text" id="txtmonto_a" style="text-align:right" size="14" maxlength="14" readonly value="<?echo $monto?>" onKeypress="return validarNum(event,this)" > </span></td>
+                   <td width="260"><span class="Estilo5"><input class="Estilo10" name="txtmonto_a" type="text" id="txtmonto_a" style="text-align:right" size="14" maxlength="14" readonly value="<?php echo $monto?>" onKeypress="return validarNum(event,this)" > </span></td>
                    <td width="100"><span class="Estilo5">MONTO NUEVO : </span></td>
 				   
-                   <td width="300"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto?>" onKeypress="return validarNum(event,this)"> </span></td>
+                   <td width="300"><span class="Estilo5"><input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encende_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto?>" onKeypress="return validarNum(event,this)"> </span></td>
                 
 				 </tr>
              </table></td>
@@ -102,9 +102,9 @@ if ($registro=pg_fetch_array($res,0)){  $tipo_nomina=$registro["tipo_nomina"]; $
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input class="Estilo10" name="txtfecha_p_hasta" type="hidden" id="txtfecha_p_hasta" value="<?echo $fecha_h?>"></td>
-            <td width="20"><input class="Estilo10" name="txttp_calculo" type="hidden" id="txttp_calculo" value="<?echo $tp_calculo?>"></td>
-            <td width="20"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $tipo_nomina?>"></td>
+            <td width="20"><input class="Estilo10" name="txtfecha_p_hasta" type="hidden" id="txtfecha_p_hasta" value="<?php echo $fecha_h?>"></td>
+            <td width="20"><input class="Estilo10" name="txttp_calculo" type="hidden" id="txttp_calculo" value="<?php echo $tp_calculo?>"></td>
+            <td width="20"><input class="Estilo10" name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $tipo_nomina?>"></td>
             <td width="60">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

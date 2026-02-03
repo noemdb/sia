@@ -1,4 +1,4 @@
-<? include ("../class/ventana.php"); include ("../class/fun_fechas.php"); 
+<?php  include ("../class/ventana.php"); include ("../class/fun_fechas.php"); 
  $SIA_Definicion=$_POST["txtSIA_Definicion"];  $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"];  
  $fecha_fin=$_POST["txtfecha_fin"];$Formato_Cuenta=$_POST["txtformato"]; 
  $fecha_hoy=asigna_fecha_hoy(); $fecha_c="01/01/".substr($fecha_fin,0,4);
@@ -9,7 +9,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Definicion de Cuentas en Dolares)</title>
+<title>SIPAP CONTROL BANCARIO (Definicion de Cuentas en Dolares)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language="JavaScript" src="../class/sia.js"  type=text/javascript></SCRIPT>

@@ -1,4 +1,4 @@
-<?include ("../class/funciones.php");
+<?php include ("../class/funciones.php");
 
    $conn = pg_connect("host=localhost port=5432 password=super user=usia dbname=DATOS");
    if (!$conn) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }

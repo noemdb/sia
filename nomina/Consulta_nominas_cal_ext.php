@@ -1,5 +1,5 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if(pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php"); include ("../class/funciones.php");
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if(pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <script language="JavaScript">
 function cerrar_catalogo(tipo_nomina,des_nomina,fecha_p_d,fecha_p_h,num_per){ 
@@ -34,23 +34,23 @@ $sql="select distinct tipo_nomina,des_nomina,tp_calculo,fecha_p_desde,fecha_p_ha
            <td width="100" align="left" bgcolor="#99CCFF"><strong>Fechas Hasta</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Conceptos</strong></td>
          </tr>
-         <? while($registro=pg_fetch_array($res)){ $tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"];  $fecha_p_desde=$registro["fecha_p_desde"]; $fecha_p_desde = substr($fecha_p_desde,8,2)."/".substr($fecha_p_desde,5,2)."/".substr($fecha_p_desde,0,4);
+         <?php  while($registro=pg_fetch_array($res)){ $tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"];  $fecha_p_desde=$registro["fecha_p_desde"]; $fecha_p_desde = substr($fecha_p_desde,8,2)."/".substr($fecha_p_desde,5,2)."/".substr($fecha_p_desde,0,4);
  $fecha_p_hasta=$registro["fecha_p_hasta"]; $fecha_p_hasta = substr($fecha_p_hasta,8,2)."/".substr($fecha_p_hasta,5,2)."/".substr($fecha_p_hasta,0,4); $num_periodos=$registro["num_periodos"];
  if ($registro["tp_calculo"]=="E"){$tp_calculo="EXTRAORDINARIA"; if ($registro["concepto_vac"]=="S"){$concepto_vac="VACACIONES - ".$num_periodos;}else{ $concepto_vac="NOMINA - ".$num_periodos;}
  }else{ $tp_calculo="NORMAL"; if ($registro["concepto_vac"]=="S"){$concepto_vac="VACACIONES";}else{ $concepto_vac="NOMINA";} }
 /*
- onDblClick="javascript:cerrar_catalogo('<? echo $tipo_nomina; ?>','<? echo $des_nomina; ?>'),'<? echo $fecha_p_desde; ?>'),'<? echo $fecha_p_hasta; ?>'),'<? echo $num_periodos; ?>')"
+ onDblClick="javascript:cerrar_catalogo('<?php  echo $tipo_nomina; ?>','<?php  echo $des_nomina; ?>'),'<?php  echo $fecha_p_desde; ?>'),'<?php  echo $fecha_p_hasta; ?>'),'<?php  echo $num_periodos; ?>')"
  */
  ?>
-        <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $tipo_nomina; ?>','<? echo $des_nomina; ?>','<? echo $fecha_p_desde; ?>','<? echo $fecha_p_hasta; ?>','<? echo $num_periodos; ?>'); " >
+        <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $tipo_nomina; ?>','<?php  echo $des_nomina; ?>','<?php  echo $fecha_p_desde; ?>','<?php  echo $fecha_p_hasta; ?>','<?php  echo $num_periodos; ?>'); " >
          
-		   <td width="100" align="center"><? echo $tipo_nomina; ?></td>
-		   <td width="300" align="left"><? echo $des_nomina; ?></td>
-		   <td width="100" align="left"><? echo $fecha_p_desde; ?></td>
-		   <td width="100" align="left"><? echo $fecha_p_hasta; ?></td>
-		   <td width="100" align="center"><? echo $concepto_vac; ?></td>           
+		   <td width="100" align="center"><?php  echo $tipo_nomina; ?></td>
+		   <td width="300" align="left"><?php  echo $des_nomina; ?></td>
+		   <td width="100" align="left"><?php  echo $fecha_p_desde; ?></td>
+		   <td width="100" align="left"><?php  echo $fecha_p_hasta; ?></td>
+		   <td width="100" align="center"><?php  echo $concepto_vac; ?></td>           
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
    <tr>
@@ -63,4 +63,4 @@ $sql="select distinct tipo_nomina,des_nomina,tp_calculo,fecha_p_desde,fecha_p_ha
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close(); ?>
+<?php   pg_close($conn); ?>

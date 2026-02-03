@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/conect.php"); include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();
   
    $conn=pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");  if (!$conn) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
    $codigo_mov="00000004";  $cod_pre_ret="01-00-54-401-01-18-00"; $tipo_nomina="03"; $tp_calculo="N"; $codigo_mov2="00000009"; 
@@ -25,11 +25,11 @@
 		$sSQL="select * from pag037 WHERE cod_estructura='$codigo_mov' and ced_rif_est='$cedula'"; $res=pg_query($sSQL);  $filas=pg_num_rows($res);
         if ($filas>0){ $reg=pg_fetch_array($res); $referencia_comp=$reg["ref_comp_est"]; $tipo_compromiso=$reg["tipo_comp_est"]; 
 		   $ssql="UPDATE pag037 SET monto_est=monto_est+$monto where cod_estructura='$codigo_mov' and ced_rif_est='$cedula'"; $resultado=pg_exec($conn,$ssql);}
-		 else{$error=1;  $error_comp=1; echo "Compromiso no localizado de la Cedula: ".$cedula,"<br>"; ?><script language="JavaScript">muestra('COMPROMISO NO LOCALIZADO DE CEDULA: <? echo $cedula; ?>');</script><?}		 
+		 else{$error=1;  $error_comp=1; echo "Compromiso no localizado de la Cedula: ".$cedula,"<br>"; ?><script language="JavaScript">muestra('COMPROMISO NO LOCALIZADO DE CEDULA: <?php  echo $cedula; ?>');</script><?php }		 
 		if($error==0){
 		  $sSQL="select sum(monto-causado-ajustado) as saldo from pre036 WHERE referencia_comp='$referencia_comp' and tipo_compromiso='$tipo_compromiso'"; $res=pg_query($sSQL);  $filas=pg_num_rows($res);
         if ($filas>0){ $reg=pg_fetch_array($res); $saldo=$reg["saldo"]; 
-		   if($saldo<$monto){ $error=1; $error_comp=1;  echo "Compromiso no tiene Saldo de la Cedula:".$cedula." Referencia:".$referencia_comp." Tipo:".$tipo_compromiso." Saldo:".$saldo." Monto:".$monto,"<br>"; ?><script language="JavaScript">muestra('COMPROMISO NO TIENE SALDO DE CEDULA: <? echo $cedula; ?>');</script><? }
+		   if($saldo<$monto){ $error=1; $error_comp=1;  echo "Compromiso no tiene Saldo de la Cedula:".$cedula." Referencia:".$referencia_comp." Tipo:".$tipo_compromiso." Saldo:".$saldo." Monto:".$monto,"<br>"; ?><script language="JavaScript">muestra('COMPROMISO NO TIENE SALDO DE CEDULA: <?php  echo $cedula; ?>');</script><?php }
 		} } 		
 		$sSQL="Select * from pag009 WHERE cod_estructura='$codigo_mov' and ref_comp_est='$referencia_comp' and tipo_comp_est='$tipo_compromiso' and cod_presup_est='$cod_presup' and fuente_est='$fuente_financ'";
         $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
@@ -71,12 +71,12 @@
    $sql="Select cod_presup_est,fuente_est,sum(monto_est) as monto from pag009 WHERE cod_estructura='$codigo_mov2' group by cod_presup_est,fuente_est"; $res=pg_query($sql);
    while($registro=pg_fetch_array($res)){ $monto=$registro["monto"]; $cod_presup=$registro["cod_presup_est"]; $cod_fuente=$registro["fuente_est"];
     $sqlp = "SELECT denominacion,disponible,diferido FROM PRE001 WHERE (Cod_Presup='$cod_presup') and (Cod_Fuente='$cod_fuente')"; $resp=pg_query($sqlp); $filas=pg_num_rows($resp);
-    if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO <? echo $cod_presup; ?> NO EXISTE EN DISPONIBILIDAD');</script><? }
+    if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO PRESUPUESTARIO <?php  echo $cod_presup; ?> NO EXISTE EN DISPONIBILIDAD');</script><?php }
     else{ $regp=pg_fetch_array($resp); $disponible=$regp["disponible"]; if($disponible<$monto){ echo "Codigo: ".$cod_presup." Requiere: ".$monto." Disponible: ".$disponible,"<br>";
-        ?><script language="JavaScript">muestra('NO EXISTE DISPONIBILIDAD PARA EL CODIGO PRESUPUESTARIO:<? echo $cod_presup; ?> FUENTE:<? echo $cod_fuente; ?> \n DISPONIBILIDAD ACTUAL:<? echo $disponible; ?> MONTO REQUERIDO:<? echo $monto; ?> \n POR FAVOR VERIFIQUE');</script><?}}
+        ?><script language="JavaScript">muestra('NO EXISTE DISPONIBILIDAD PARA EL CODIGO PRESUPUESTARIO:<?php  echo $cod_presup; ?> FUENTE:<?php  echo $cod_fuente; ?> \n DISPONIBILIDAD ACTUAL:<?php  echo $disponible; ?> MONTO REQUERIDO:<?php  echo $monto; ?> \n POR FAVOR VERIFIQUE');</script><?php } }
    
    } 
    if(($error==0)and($error_comp==0)){ echo "GRABO CON EXITO","<br>";    
-   ?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?
+   ?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php 
    } else { echo $error;} 
 ?>

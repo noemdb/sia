@@ -1,7 +1,7 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();
 if($_GET["fecha"]){$fecha=$_GET["fecha"];$codigo_mov=$_GET["codigo_mov"];}else{$codigo_mov="";$fecha=formato_aaaammdd($fecha_hoy);}
-$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; }
-$res=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; }
+$res=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 $resultado=pg_exec($conn,"SELECT BORRAR_PRE026('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
 $cdia=substr($fecha,0,2); $cmes=substr($fecha,3,2); $cano=substr($fecha,6,4);
 $ndia=$cdia*1; $nmes=$cmes*1; $nano=$cano*1;
@@ -136,8 +136,8 @@ $sql="SELECT INCLUYE_PRE026('$codigo_mov','$cod_presup','$fuente_financ','','000
   }
 } 
 
-pg_close();?>
-<iframe src="Det_inc_comp_caus.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
+pg_close($conn);?>
+<iframe src="Det_inc_comp_caus.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="390" scrolling="auto" frameborder="0"> </iframe>
 
 
 

@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS; error_reporting(E_ALL ^ E_NOTICE);
 $orden=$_GET["orden"];  $tipo_planilla=$_GET["tipo"]; $ano_fiscal=""; $fecha_hoy=asigna_fecha_hoy();
 
 $tipo_planilla="03"; $tipo_planilla_lab="05";
 $nombre_planilla="COMPROBANTE DE RETENCION FIEL CUMPLIMIENTO/LABORAL";
 
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  $error=0;
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }  $error=0;
 $direccion=""; $nombre_emp=""; $ced_rif_emp="";$sql="Select * from SIA000 order by campo001"; $resultado=pg_query($sql);
 if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"]; $direccion=$registro["campo006"]; $nombre_emp=$registro["campo004"]; $nom_completo=$registro["campo005"]; $ced_rif_emp=$registro["campo007"]; $nit_emp=$registro["campo008"]; }
 $nro_comp=""; $sustraendo=0; $descripcion_ret=""; $fechae=""; $tipo_en=""; $tipo_documento=""; $nro_documento=""; $nro_con_factura=""; $fecha=""; $descripcion=""; $tipo_operacion="A";
@@ -259,7 +259,7 @@ class PDF extends FPDF{
 
   
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 
 
 ?>

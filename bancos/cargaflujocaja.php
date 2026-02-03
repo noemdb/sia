@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $mes=$_GET["mes"]; $ano=$_GET["ano"]; 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $mes=$_GET["mes"]; $ano=$_GET["ano"]; 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $fecha_d="01-".$mes."-".$ano; $fecha_h=colocar_udiames($fecha_d); $fecha_1=formato_aaaammdd($fecha_d);  $fecha_2=formato_aaaammdd($fecha_h);
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
@@ -222,7 +222,7 @@ else{ $aperiodo=$mes-1; if($aperiodo<=9){$aperiodo="0".$aperiodo;}  $contador=0;
  $num_linea=$num_linea+1; $len=strlen($num_linea); $linea=substr("000",0,3-$len).$num_linea; $mdescrip="SALDO FINAL DE CAJA"; $monto=$tegreso;$acumulado=$tegresoa; $operacion="F";
  $ssqlg="SELECT ACTUALIZA_BAN016(1,'$mes','$linea','000','$mdescrip',$monto,$acumulado,'$operacion','M')";$resultadog=pg_exec($conn,$ssqlg); $errorg=pg_errormessage($conn);  $error=substr($errorg, 0, 100); if(!$resultadog){ echo $error,"<br>";  }
 }
-pg_close();
+pg_close($conn);
 ?>
 <!-- -->
-<iframe src="Det_inc_flujo_caja.php?criterio=<?echo $mes?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>
+<iframe src="Det_inc_flujo_caja.php?criterio=<?php echo $mes?>" width="870" height="360" scrolling="auto" frameborder="1"></iframe>

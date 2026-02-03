@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");
 if (!$_GET){ $cod_empleado='';} else{$cod_empleado=$_GET["txtcod_empleado"];}   $sql="Select * FROM CALCULO_VACACIONES where (cod_empleado='$cod_empleado')";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -27,9 +27,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $nombre=""; $cedula=""; $fecha_ingreso=""; $fecha_caus_hasta=""; $fecha_caus_desde=""; $denominacion=""; $cod_concepto_v=""; $fecha_d_desde=""; $fecha_d_hasta="";
 $dias_habiles=0; $dias_no_habiles=0; $fecha_d_desde=""; $fecha_d_hasta=""; $fecha_reincorp=""; $dias_bono_vac=0; $monto_bono_vac=0; $dias_disfrutados=0; $inf_usuario="";
  $calcula_nomina="NO"; $fecha_cal_d=""; $fecha_cal_h=""; $des_cargo=""; $des_departamento=""; $monto_concepto=0; $des_nomina=""; $tipo_nomina="";
@@ -75,11 +75,11 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="150"><span class="Estilo17"><strong>Apellidos y Nombres:</strong></span></td>
-            <td width="470"><span class="Estilo17"><?echo $nombre?></span></td>
+            <td width="470"><span class="Estilo17"><?php echo $nombre?></span></td>
 			<td width="60"><span class="Estilo17"><strong>Cedula:</strong></span></td>
-			<td width="100"><span class="Estilo17"><?echo $cedula?></span></td>
+			<td width="100"><span class="Estilo17"><?php echo $cedula?></span></td>
 			<td width="110"><span class="Estilo17"><strong>Fecha Ingreso:</strong></span></td>
-			<td width="90"><span class="Estilo17"><?echo $fecha_ingreso?></span></td>
+			<td width="90"><span class="Estilo17"><?php echo $fecha_ingreso?></span></td>
           </tr>
       </table></td>
     </tr>
@@ -91,9 +91,9 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980" height="25"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="60"><span class="Estilo17"><strong>Cargo:</strong></span></td>
-            <td width="650"><span class="Estilo17"><?echo $des_cargo?></span></td>
+            <td width="650"><span class="Estilo17"><?php echo $des_cargo?></span></td>
 			<td width="150"><span class="Estilo17"><strong>Periodo de Disfrute:</strong></span></td>
-			<td width="100"><span class="Estilo17"><?echo $mperiodo?></span></td>
+			<td width="100"><span class="Estilo17"><?php echo $mperiodo?></span></td>
           </tr>
       </table></td>
         </tr>
@@ -104,9 +104,9 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980" height="25"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="90"><span class="Estilo17"><strong>Adscripcion:</strong></span></td>
-            <td width="520"><span class="Estilo17"><?echo $des_departamento?></span></td>
+            <td width="520"><span class="Estilo17"><?php echo $des_departamento?></span></td>
 			<td width="150"><span class="Estilo17"><strong>Tipo de Nomina:</strong></span></td>
-			<td width="200"><span class="Estilo17"><?echo $des_nomina?></span></td>
+			<td width="200"><span class="Estilo17"><?php echo $des_nomina?></span></td>
           </tr>
       </table></td>
         </tr>
@@ -118,11 +118,11 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980" height="25"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="200"><span class="Estilo17"><strong>Fecha de Disfrute Desde :</strong></span></td>
-            <td width="100"><span class="Estilo17"><?echo $fecha_d_desde?></span></td>
+            <td width="100"><span class="Estilo17"><?php echo $fecha_d_desde?></span></td>
 			<td width="60"><span class="Estilo17"><strong>Hasta:</strong></span></td>
-			<td width="240"><span class="Estilo17"><?echo $fecha_d_hasta?></span></td>			
+			<td width="240"><span class="Estilo17"><?php echo $fecha_d_hasta?></span></td>			
 			<td width="180"><span class="Estilo17"><strong>Fecha a Reincorporase :</strong></span></td>
-            <td width="200"><span class="Estilo17"><?echo $fecha_reincorp?></span></td>
+            <td width="200"><span class="Estilo17"><?php echo $fecha_reincorp?></span></td>
           </tr>
       </table></td>
         </tr>
@@ -134,11 +134,11 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980" height="25"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="150"><span class="Estilo17"><strong>Dias de Vacaciones :</strong></span></td>
-            <td width="100"><span class="Estilo17"><?echo $dias1?></span></td>
+            <td width="100"><span class="Estilo17"><?php echo $dias1?></span></td>
 			<td width="150"><span class="Estilo17"><strong>Dias Adicionales :</strong></span></td>
-			<td width="200"><span class="Estilo17"><?echo $dias2?></span></td>			
+			<td width="200"><span class="Estilo17"><?php echo $dias2?></span></td>			
 			<td width="280"><span class="Estilo17"><strong>Dias Feriados, Sabados y Domingos :</strong></span></td>
-            <td width="100"><span class="Estilo17"><?echo $dias_no_habiles ?></span></td>
+            <td width="100"><span class="Estilo17"><?php echo $dias_no_habiles ?></span></td>
           </tr>
       </table></td>
         </tr>
@@ -149,9 +149,9 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="980" height="25"><table width="980" border="0" cellpadding="3" cellspacing="0">
           <tr>
             <td width="230"><span class="Estilo17"><strong>Salario Basico para Vacaciones :</strong></span></td>
-            <td width="100"><span class="Estilo17"><?echo $mmensual?></span></td>
+            <td width="100"><span class="Estilo17"><?php echo $mmensual?></span></td>
 			<td width="100"><span class="Estilo17"><strong>Salario Diario :</strong></span></td>
-			<td width="200"><span class="Estilo17"><?echo $mdia?></span></td>			
+			<td width="200"><span class="Estilo17"><?php echo $mdia?></span></td>			
 			<td width="200"><span class="Estilo17"></span></td>
             <td width="130"><span class="Estilo17"></span></td>
           </tr>
@@ -168,7 +168,7 @@ $sql="select * from sia001 where campo101='$usuario_vac'";$res=pg_query($sql);$f
       <td width="140" align="center"><span class="Estilo17">ASIGNACION</span></td>
 	  <td width="140" align="center"><span class="Estilo17">DEDUCCION</span></td>
     </tr>
-<? $total=0; $totala=0; $totald=0;
+<?php  $total=0; $totala=0; $totald=0;
 $sql="SELECT cod_concepto,denominacion,asig_ded_apo,sum(monto) as monto,sum(cantidad) as cantidad FROM NOM023 where (oculto='NO') and (cod_empleado='$cod_empleado') group by cod_concepto,denominacion,asig_ded_apo order by cod_concepto";
 $res=pg_query($sql); $filas=pg_num_rows($res);
 while($registro=pg_fetch_array($res)){ $monto=formato_monto($registro["monto"]);
@@ -176,19 +176,19 @@ $asig_ded_apo=$registro["asig_ded_apo"]; $asignacion=""; $deduccion=""; $cantida
 if($asig_ded_apo=="A"){ $total=$total+$registro["monto"]; $totala=$totala+$registro["monto"]; $asignacion=$monto;} if($asig_ded_apo=="D"){ $totald=$totald+$registro["monto"];  $cantidad=""; $total=$total-$registro["monto"]; $deduccion=$monto;}
 ?>
     <tr>
-      <td width="60" align="left"><span class="Estilo17"><? echo $registro["cod_concepto"]; ?></span></td>
-	  <td width="540" align="left"><span class="Estilo17"><? echo $registro["denominacion"]; ?></span></td>  
-      <td width="100" align="center"><span class="Estilo17"><? echo $cantidad; ?></span></td>
-      <td width="140" align="right"><span class="Estilo17"><? echo $asignacion; ?></span></td>
-	  <td width="140" align="right"><span class="Estilo17"><? echo $deduccion; ?></span></td>
+      <td width="60" align="left"><span class="Estilo17"><?php  echo $registro["cod_concepto"]; ?></span></td>
+	  <td width="540" align="left"><span class="Estilo17"><?php  echo $registro["denominacion"]; ?></span></td>  
+      <td width="100" align="center"><span class="Estilo17"><?php  echo $cantidad; ?></span></td>
+      <td width="140" align="right"><span class="Estilo17"><?php  echo $asignacion; ?></span></td>
+	  <td width="140" align="right"><span class="Estilo17"><?php  echo $deduccion; ?></span></td>
     </tr>
-<?}$total=formato_monto($total); $totala=formato_monto($totala); $totald=formato_monto($totald); ?>
+<?php }$total=formato_monto($total); $totala=formato_monto($totala); $totald=formato_monto($totald); ?>
     <tr>
 	  <td width="60" align="center"><span class="Estilo17"></span></td>
-      <td width="540" align="right"><span class="Estilo17"><? echo "TOTALES"; ?></span></td>
+      <td width="540" align="right"><span class="Estilo17"><?php  echo "TOTALES"; ?></span></td>
       <td width="100" align="center"><span class="Estilo17"></span></td>
-      <td width="140" align="right"><span class="Estilo17"><? echo $totala; ?></span></td>
-	  <td width="140" align="right"><span class="Estilo17"><? echo $totald; ?></span></td>
+      <td width="140" align="right"><span class="Estilo17"><?php  echo $totala; ?></span></td>
+	  <td width="140" align="right"><span class="Estilo17"><?php  echo $totald; ?></span></td>
     </tr>
     </table></td>
   </tr>
@@ -196,7 +196,7 @@ if($asig_ded_apo=="A"){ $total=$total+$registro["monto"]; $totala=$totala+$regis
     <tr>
       <td height="25"><table width="994" border="0" cellpadding="3" cellspacing="0">
           <tr>
-            <td width="980" align="center"><span class="Estilo18"><strong>NETO A COBRAR : <?echo $total?></strong></span></td>
+            <td width="980" align="center"><span class="Estilo18"><strong>NETO A COBRAR : <?php echo $total?></strong></span></td>
           </tr>
       </table></td>
         </tr>
@@ -221,12 +221,12 @@ if($asig_ded_apo=="A"){ $total=$total+$registro["monto"]; $totala=$totala+$regis
     <tr>
       <td width="320" align="center"><span class="Estilo17">ANALISTA</span></td>
       <td width="330" align="center"><span class="Estilo17">GERENCIA DE CAPITAL HUMANO</span></td>
-	  <td width="330" align="center"><span class="Estilo17"><?echo $nombre?></span></td>
+	  <td width="330" align="center"><span class="Estilo17"><?php echo $nombre?></span></td>
     </tr>
 	 <tr>
-      <td width="320" align="center"><span class="Estilo17"><?echo $nomb_usuario_comp?></span></td>
+      <td width="320" align="center"><span class="Estilo17"><?php echo $nomb_usuario_comp?></span></td>
       <td width="330" align="center"><span class="Estilo17"></span></td>
-	  <td width="330" align="center"><span class="Estilo17"><?echo $cedula?></span></td>
+	  <td width="330" align="center"><span class="Estilo17"><?php echo $cedula?></span></td>
     </tr>
   </table></td></tr>
   

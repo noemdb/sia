@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc");?>
-<?include ("../class/ventana.php");?>
+<?php include ("../class/seguridad.inc");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Tipos de Movimiento)</title>
+<title>SIPAP CONTROL BANCARIO (Tipos de Movimiento)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js"  type=text/javascript></SCRIPT>
@@ -22,7 +22,7 @@ MM_reloadPage(true);
 function revisar(){
 var f=document.form1;
   if(f.txttipo_movimiento.value==""){alert("Tipo de Movimiento no puede estar Vacio");return false;}else{f.txttipo_movimiento.value=f.txttipo_movimiento.value.toUpperCase();}
-  if(f.txtdes_tipo_mov.value==""){alert("Descripción no puede estar Vacia"); return false; } else{f.txtdes_tipo_mov.value=f.txtdes_tipo_mov.value.toUpperCase();}
+  if(f.txtdes_tipo_mov.value==""){alert("Descripciï¿½n no puede estar Vacia"); return false; } else{f.txtdes_tipo_mov.value=f.txtdes_tipo_mov.value.toUpperCase();}
   document.form1.submit;
 return true;}
 </script>

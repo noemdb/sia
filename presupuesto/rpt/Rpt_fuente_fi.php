@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$fuente_d=$_GET["fuente_d"];$fuente_h=$_GET["fuente_h"];$tipo_rep=$_GET["tipo_rep"];}else{$tipo_rep="HTML";} $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 $sSQL = "select cod_fuente_financ, des_fuente_financ, nombre_abrev_dife from pre024 where pre024.cod_fuente_financ>='".$fuente_d."' and pre024.cod_fuente_financ<='".$fuente_h."'  order by cod_fuente_financ";
 
@@ -79,17 +79,17 @@ if($tipo_rep=="EXCEL"){
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>CODIGO</strong></td>
            <td width="400" align="left" bgcolor="#99CCFF"><strong>NOMBRE FUENTE</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$cod_fuente_financ=$registro["cod_fuente_financ"]; $des_fuente_financ=$registro["des_fuente_financ"]; 
 		$des_fuente_financ=conv_cadenas($des_fuente_financ,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $cod_fuente_financ; ?></td>
-           <td width="400" align="left"><? echo $des_fuente_financ; ?></td>
+           <td width="100" align="left">'<?php  echo $cod_fuente_financ; ?></td>
+           <td width="400" align="left"><?php  echo $des_fuente_financ; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -98,7 +98,7 @@ if($tipo_rep=="EXCEL"){
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

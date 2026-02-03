@@ -1,4 +1,4 @@
-<? include ("../class/conect.php");  include ("../class/fun_fechas.php"); //include ("../class/fun_numeros.php");
+<?php  include ("../class/conect.php");  include ("../class/fun_fechas.php"); //include ("../class/fun_numeros.php");
 $codigo_mov=$_POST["txtcodigo_mov"]; $planilla=$_POST["txtplanilla"];  $ano=$_POST["txtano"]; $mes=$_POST["txtmes"]; $tipo_formato=$_POST["txttipo_formato"];
 function elimina_comas($str){$texto=""; for ($i=0; $i<strlen($str); $i++) { if (substr($str,$i, 1)==",") {$texto=$texto; }  else {$texto=$texto.substr($str,$i, 1);}  } return $texto;}
 function elimina_guion($str){$texto=""; for ($i=0; $i<strlen($str); $i++) { if (substr($str,$i, 1)=="-") {$texto=$texto; }  else {$texto=$texto.substr($str,$i, 1);}  } return $texto;}
@@ -9,7 +9,7 @@ $sql="SELECT  ban029.fecha_emision,ban029.nro_orden,ban029.tipo_mov,ban029.ced_r
 if(($tipo_formato=="EXCEL")and($planilla<>"06")){
 	header("Content-type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=decla_otros.xls");	
-	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?	
+	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?php 	
 	while($registro=pg_fetch_array($res)){ $tipo_mov=$registro["tipo_mov"]; $ced_rif=$registro["ced_rif"]; $ced_rif=elimina_guion($ced_rif);
 	  $sfechae=$registro["fecha_emision"]; $sfechae=formato_ddmmaaaa($sfechae); $nro_orden=$registro["nro_orden"]; $concepto=$registro["concepto"];
 	  $tipo_operacion=$registro["tipo_operacion"]; $tipo_doc=$registro["tipo_documento"]; $nro_doc=$registro["nro_documento"];  $nro_con_doc=$registro["nro_con_factura"]; $nombre=$registro["nombre"]; 
@@ -18,32 +18,32 @@ if(($tipo_formato=="EXCEL")and($planilla<>"06")){
 	/* esto es de yaracuy
 	?><tr>
 
-             <td width="300" align="left"><? echo $nombre; ?></td> 
-             <td width="120" align="left"><? echo $ced_rif; ?></td>
-			 <td width="100" align="left" style="mso-number-format:'@';"><? echo $nro_orden; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montoo; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montor; ?></td>
-			 <td width="500" align="left" style="mso-number-format:'@';"><? echo $concepto; ?></td>
-    </tr> <?	
+             <td width="300" align="left"><?php  echo $nombre; ?></td> 
+             <td width="120" align="left"><?php  echo $ced_rif; ?></td>
+			 <td width="100" align="left" style="mso-number-format:'@';"><?php  echo $nro_orden; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montoo; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montor; ?></td>
+			 <td width="500" align="left" style="mso-number-format:'@';"><?php  echo $concepto; ?></td>
+    </tr> <?php 	
 	*/
 	?><tr>
-             <td width="100" align="center"><? echo $tipo_mov; ?></td> 
-			 <td width="100" align="center"><? echo $sfechae; ?></td>   
-             <td width="100" align="center" style="mso-number-format:'@';"><? echo $nro_orden; ?></td>			 
-             <td width="300" align="left"><? echo $nombre; ?></td> 
-             <td width="120" align="left"><? echo $ced_rif; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $monto1; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montoo; ?></td>			 
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montor; ?></td>
-			 <td width="100" align="center"><? echo $tp_pago; ?></td> 
-			 <td width="100" align="center"><? echo $mmunic; ?></td>   
-    </tr> <?  }
-	?></table><?
+             <td width="100" align="center"><?php  echo $tipo_mov; ?></td> 
+			 <td width="100" align="center"><?php  echo $sfechae; ?></td>   
+             <td width="100" align="center" style="mso-number-format:'@';"><?php  echo $nro_orden; ?></td>			 
+             <td width="300" align="left"><?php  echo $nombre; ?></td> 
+             <td width="120" align="left"><?php  echo $ced_rif; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $monto1; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montoo; ?></td>			 
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montor; ?></td>
+			 <td width="100" align="center"><?php  echo $tp_pago; ?></td> 
+			 <td width="100" align="center"><?php  echo $mmunic; ?></td>   
+    </tr> <?php   }
+	?></table><?php 
 }
 if(($tipo_formato=="EXCEL")and($planilla=="06")){
 	header("Content-type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=decla_otros.xls");	
-	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?	
+	?><table border="0" cellspacing='0' cellpadding='0' align="left"><?php 	
 	while($registro=pg_fetch_array($res)){ $tipo_mov=$registro["tipo_mov"]; $ced_rif=$registro["ced_rif"]; $ced_rif=elimina_guion($ced_rif);
 	  $sfechae=$registro["fecha_emision"]; $sfechae=formato_ddmmaaaa($sfechae); $nro_orden=$registro["nro_orden"]; $concepto=$registro["concepto"];
 	  $tipo_operacion=$registro["tipo_operacion"]; $tipo_doc=$registro["tipo_documento"]; $nro_doc=$registro["nro_documento"];  $nro_con_doc=$registro["nro_con_factura"]; $nombre=$registro["nombre"]; 
@@ -51,24 +51,24 @@ if(($tipo_formato=="EXCEL")and($planilla=="06")){
 	  $montop=cambia_punto_comas($montop); $montor=cambia_punto_comas($montor); $monto1=cambia_punto_comas($monto1); $tp_pago="UNICO"; $mmunic="IRIBARREN"; $tasa2=$tasa*100;  $tasa=cambia_punto_comas($tasa); 
     /* esto es de yaracuy
 	?><tr>
-             <td width="300" align="left"><? echo $nombre; ?></td> 
-             <td width="120" align="left"><? echo $ced_rif; ?></td>
-			 <td width="100" align="left" style="mso-number-format:'@';"><? echo $nro_orden; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montoo; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montor; ?></td>
-			 <td width="500" align="left" style="mso-number-format:'@';"><? echo $concepto; ?></td>
-    </tr> <?	
+             <td width="300" align="left"><?php  echo $nombre; ?></td> 
+             <td width="120" align="left"><?php  echo $ced_rif; ?></td>
+			 <td width="100" align="left" style="mso-number-format:'@';"><?php  echo $nro_orden; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montoo; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montor; ?></td>
+			 <td width="500" align="left" style="mso-number-format:'@';"><?php  echo $concepto; ?></td>
+    </tr> <?php 	
 	*/
 	?><tr>
              
-			 <td width="100" align="center"><? echo $sfechae; ?></td>   
-			 <td width="100" align="center"><? echo $nro_doc; ?></td> 
-             <td width="300" align="left"><? echo $nombre; ?></td> 
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $tasa; ?></td>
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montoo; ?></td>			 
-			 <td width="150" align="right" style="mso-number-format:'0.00';"><? echo $montor; ?></td>
-    </tr> <? }
-	?></table><?
+			 <td width="100" align="center"><?php  echo $sfechae; ?></td>   
+			 <td width="100" align="center"><?php  echo $nro_doc; ?></td> 
+             <td width="300" align="left"><?php  echo $nombre; ?></td> 
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $tasa; ?></td>
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montoo; ?></td>			 
+			 <td width="150" align="right" style="mso-number-format:'0.00';"><?php  echo $montor; ?></td>
+    </tr> <?php }
+	?></table><?php 
 }
 if($tipo_formato=="TXT"){
   $tabla="<table>";
@@ -84,5 +84,5 @@ if($tipo_formato=="TXT"){
   //header("Content-Disposition: attachment; filename=".$nom_arch);
   echo $tabla;
 }
-pg_close();
+pg_close($conn);
 ?>

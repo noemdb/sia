@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Causados)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Causados)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -17,7 +17,7 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtdoc_causado.value==""){alert("Código de Documento Causado no puede estar Vacio");return false;}
+    if(f.txtdoc_causado.value==""){alert("Cï¿½digo de Documento Causado no puede estar Vacio");return false;}
         if(f.txtdoc_causado.value.charAt(0)=='A'){alert("Documento de Causado no valido");return false;}
     if(f.txtnombre_doc_causado.value==""){alert("Nombre del Documento Causado no puede estar Vacio");return false; }
        else{f.txtnombre_doc_causado.value=f.txtnombre_doc_causado.value.toUpperCase();}
@@ -28,7 +28,7 @@ var f=document.form1;
     if(f.TxtAfecta.value=="SI" || f.TxtAfecta.value=="NO") {Valido=true;}
         else{alert("Valor de Afecta Presupuesto no valido");return false; }
     if(f.txtdoc_causado.value.length==4){f.txtdoc_causado.value=f.txtdoc_causado.value.toUpperCase();}
-       else{alert("Longitud Código de Documento Causado Invalida");return false;}
+       else{alert("Longitud Cï¿½digo de Documento Causado Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>

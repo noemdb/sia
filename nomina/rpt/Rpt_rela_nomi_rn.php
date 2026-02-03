@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php");  require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nomina_d=$_GET["tipo_nomina_d"];   $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist=$_GET["act_hist"]; $fecha_nom=$_GET["fecha_nom"]; $tipo_concepto=$_GET["tipo_concepto"];
    $estatus_trab_d=$_GET["estatus_trab_d"];   $ocultar_n=$_GET["ocultar_n"]; $imprimir_esp=$_GET["imprimir_esp"];   $mostrar_cant=$_GET["mostrar_cant"];  $tipo_rpt=$_GET["tipo_rpt"];
    $mostrar_saldo=$_GET["mostrar_saldo"];   $forma_pago=$_GET["forma_pago"]; $tipo_reporte=$_GET["tipo_reporte"];   $tipo_calculo=$_GET["tipo_calculo"];  $num_periodos=$_GET["num_periodos"];
@@ -23,7 +23,7 @@
   
   
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else {  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
     function muestra_cant($mop,$mtipo,$mdep,$mcod_emp){global $criterio; global $host;  global $port; global $password; global $user; global $dbname;
 	   $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");    $cant=0;

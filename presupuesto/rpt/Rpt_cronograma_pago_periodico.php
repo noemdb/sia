@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");?>
-<?include ("../../class/conects.php");  include ("../../class/funciones.php"); ?>
+<?php include ("../../class/seguridad.inc");?>
+<?php include ("../../class/conects.php");  include ("../../class/funciones.php"); ?>
 <?php include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $periodod='01';
  $periodoh='01';
  $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
@@ -127,12 +127,12 @@ var url;
           <td height="30"><table width="827" border="0">
             <tr>
               <td width="244" height="26">                <div align="left">N&Uacute;MERO CRONOGRAMA  : </div></td><td width="198"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtcodbancoh342" type="text" id="txtcodbancoh342" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_banco_h?>" size="10" maxlength="10">
+                <input name="txtcodbancoh342" type="text" id="txtcodbancoh342" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_banco_h?>" size="10" maxlength="10">
               </span></span></td>
               <td width="141"><span class="Estilo5">
               </span></td>
               <td width="197"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtcodbancoh3422" type="text" id="txtcodbancoh3422" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_banco_h?>" size="10" maxlength="10">
+                <input name="txtcodbancoh3422" type="text" id="txtcodbancoh3422" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_banco_h?>" size="10" maxlength="10">
               </span></span></td>
               <td width="25"><span class="Estilo5">
               </span></td>
@@ -148,12 +148,12 @@ var url;
               <td width="241" height="26">
                 <div align="left">FECHA CRONOGRAMA : </div></td>
               <td width="158"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtFechad3" type="text" id="txtFechad3" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
+                <input name="txtFechad3" type="text" id="txtFechad3" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></span></td>
               <td width="186"><span class="Estilo5"> </span></td>
               <td width="197"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtFechad22" type="text" id="txtFechad22" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
+                <input name="txtFechad22" type="text" id="txtFechad22" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></span></td>
               <td width="23"><span class="Estilo5"> </span></td>
@@ -169,12 +169,12 @@ var url;
               <td width="240" height="26">
                 <div align="left">FECHA DE CUOTAS : </div></td>
               <td width="200"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
+                <input name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></span></td>
               <td width="145"><span class="Estilo5"> </span></td>
               <td width="197"><span class="Estilo12"><span class="Estilo5">
-                <input name="txtFechad2" type="text" id="txtFechad2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
+                <input name="txtFechad2" type="text" id="txtFechad2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="12" onChange="checkrefechad(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></span></span></td>
               <td width="23"><span class="Estilo5"> </span></td>
@@ -276,4 +276,4 @@ var url;
 </body>
 </html>
 
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,14 +1,14 @@
-<?include ("../class/ventana.php"); if(!$_GET){$codigo_dep="";}else{$codigo_dep=$_GET["codigo"];}?>
+<?php include ("../class/ventana.php"); if(!$_GET){$codigo_dep="";}else{$codigo_dep=$_GET["codigo"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Cargos al Departamento)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Cargos al Departamento)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_cargo_dep.php?Gcodigo=<?echo $codigo_dep?>'; }
+function llamar_anterior(){ document.location ='Det_cargo_dep.php?Gcodigo=<?php echo $codigo_dep?>'; }
 function revisar(){var f=document.form1;var Valido=true;
    if(f.txtcodigo_cargo.value==""){alert("Cargo no puede estar Vacio");return false;}
    if(f.txtdenominacion.value==""){alert("Descripcion Cargo no puede estar Vacio");return false;}
@@ -83,7 +83,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_dep" type="hidden" id="txtcodigo_dep" value="<?echo $codigo_dep?>"></td>
+            <td width="17"><input name="txtcodigo_dep" type="hidden" id="txtcodigo_dep" value="<?php echo $codigo_dep?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

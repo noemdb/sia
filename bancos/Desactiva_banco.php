@@ -6,7 +6,7 @@ if (!$_GET){$cod_banco='';}  else{$cod_banco=$_GET["txtcod_banco"];} $fecha_hoy=
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (DESCATIVA CUENTA BANCARIA)</title>
+<title>SIPAP CONTROL BANCARIO (DESCATIVA CUENTA BANCARIA)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -37,7 +37,7 @@ return true;}
     <tr>
       <td><table width="707" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="31" align="center" bgcolor="#000066"><span class="Estilo9">DESACTIVAR CÓDGO DE BANCO </span></td>
+          <td height="31" align="center" bgcolor="#000066"><span class="Estilo9">DESACTIVAR Cï¿½DGO DE BANCO </span></td>
         </tr>
         <tr>
           <td><p><strong>ADVERTENCIA: ESTE PROCESO DESACTIVA EL CODIGO DEL BANCO, EL CUAL NO PUEDE SER UTILIZADO EN LOS PROCESOS BANCARIOS. </strong></p> </td>
@@ -48,7 +48,7 @@ return true;}
               <tr>
                 <td width="300" align="right"><span class="Estilo5">FECHA DE DESACTIVACI&Oacute;N: </span></td>
                 <td width="280"><span class="Estilo5">
-                  <input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="10" maxlength="10" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="10" maxlength="10" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span></td>
                 <td width="100"></td>
               </tr>
@@ -57,7 +57,7 @@ return true;}
           <tr> <td>&nbsp;</td> </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input class="Estilo10" name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?echo $cod_banco?>"></td>
+            <td width="40"><input class="Estilo10" name="txtcod_banco" type="hidden" id="txtcod_banco" value="<?php echo $cod_banco?>"></td>
            </tr></table></td>
           </tr>
           <tr> <td>&nbsp;</td> </tr>

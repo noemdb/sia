@@ -1,4 +1,4 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
    $cod_empleado_d=$_GET["cod_empleado_d"];  $cod_empleado_h=$_GET["cod_empleado_h"];  $fecha_d=$_GET["fecha_d"];   $fecha_h=$_GET["fecha_h"]; $tipo_rpt=$_GET["tipo_rpt"];  
    $tipo_nominad=$_GET["tipo_nominad"];  $tipo_nominah=$_GET["tipo_nominah"];   
    $date = date("d-m-Y");   $hora = date("H:i:s a");   $Sql="";       
@@ -6,7 +6,7 @@
    if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);} else{$fecha_h='';} $fecha_hasta=$ano1.$mes1.$dia1;
   
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $nom_emp=busca_conf(); $php_os=PHP_OS;  if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
          
 	$criterio3="";
@@ -114,7 +114,7 @@ else{ $nom_emp=busca_conf(); $php_os=PHP_OS;  if($utf_rpt=="SI"){if($php_os=="WI
 		   <td width="100" align="right"  bgcolor="#99CCFF"><strong>Sueldo Antiguedad</strong></td>
 		   <td width="100" align="right"  bgcolor="#99CCFF"><strong>Sueldo Dias Adic.</strong></td>
 		 </tr>
-		<?  $i=0; $cantidad=0; $total_cantidad=0;  $prev_cod_empleado=""; $prev_nombre=""; $res=pg_query($sSQL);
+		<?php   $i=0; $cantidad=0; $total_cantidad=0;  $prev_cod_empleado=""; $prev_nombre=""; $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $cod_empleado=$registro["cod_empleado"]; $cedula=$registro["cedula"]; $nombre=$registro["nombre"]; $fecha_sueldo=$registro["fecha_sueldo"];   
 		   $monto_sueldo=$registro["monto_sueldo"]; $monto_sueldo_adic=$registro["monto_sueldo_adic"]; 
@@ -122,29 +122,29 @@ else{ $nom_emp=busca_conf(); $php_os=PHP_OS;  if($utf_rpt=="SI"){if($php_os=="WI
 		   if($prev_cod_empleado<>$cod_empleado){ $prev_cod_empleado=$cod_empleado;
 			?>	 				 
              <tr>
-				<td width="100" align="left">'<? echo $cod_empleado; ?></td>
-				<td width="100" align="center">'<? echo $cedula; ?></td>
-				<td width="400" align="left"><? echo $nombre; ?></td>
-				<td width="100" align="center"><? echo $fecha_sueldo; ?></td>	
-				<td width="100" align="right"><? echo $monto_sueldo; ?></td>
-				<td width="100" align="right"><? echo $monto_sueldo_adic; ?></td>	
+				<td width="100" align="left">'<?php  echo $cod_empleado; ?></td>
+				<td width="100" align="center">'<?php  echo $cedula; ?></td>
+				<td width="400" align="left"><?php  echo $nombre; ?></td>
+				<td width="100" align="center"><?php  echo $fecha_sueldo; ?></td>	
+				<td width="100" align="right"><?php  echo $monto_sueldo; ?></td>
+				<td width="100" align="right"><?php  echo $monto_sueldo_adic; ?></td>	
 			 </tr>
-            <?
+            <?php 
             }else{
 			?>	 				 
              <tr>
 				<td width="100" align="left"></td>
 				<td width="100" align="center"></td>
 				<td width="400" align="left"></td>
-				<td width="100" align="center"><? echo $fecha_sueldo; ?></td>	
-				<td width="100" align="right"><? echo $monto_sueldo; ?></td>
-				<td width="100" align="right"><? echo $monto_sueldo_adic; ?></td>	
+				<td width="100" align="center"><?php  echo $fecha_sueldo; ?></td>	
+				<td width="100" align="right"><?php  echo $monto_sueldo; ?></td>
+				<td width="100" align="right"><?php  echo $monto_sueldo_adic; ?></td>	
 			 </tr>
-            <?
+            <?php 
             }			
 		}
        ?>	   
-	  </table><?
+	  </table><?php 
 	}
 	
 }

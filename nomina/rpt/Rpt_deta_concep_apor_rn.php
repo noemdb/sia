@@ -1,4 +1,4 @@
-<?  include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php   include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
    $tipo_nomina_d=$_GET["tipo_nomina_d"]; $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist=$_GET["act_hist"]; $fecha_nom=$_GET["fecha_nom"];
    $cod_conceptod=$_GET["cod_conceptod"]; $cod_conceptoh=$_GET["cod_conceptoh"]; $mes_comp=$_GET["mes_comp"]; $tipo_rpt=$_GET["tipo_rpt"];   $php_os=PHP_OS;
    $cod_departd=$_GET["cod_departd"];  $cod_departh=$_GET["cod_departh"]; $estatus_trab_d=$_GET["estatus_trab_d"]; $tipo_calculo=$_GET["tipo_calculo"];
@@ -12,7 +12,7 @@
    if($estatus_trab_d=='TODOS'){$criterio=$criterio;}else{$criterio=$criterio." and (status_emp='".$estatus_trab_d."') ";}
    
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{    $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    $sSQL = "SELECT *  FROM ".$criterio." and (tp_calculo='".$tipo_calculo."') and (tipo_nomina>='".$tipo_nomina_d."' and tipo_nomina<='".$tipo_nomina_h."') and
 		  (cod_departam>='".$cod_departd."' and cod_departam<='".$cod_departh."') and (cod_concepto>='".$cod_conceptod."' AND cod_concepto<='".$cod_conceptoh."')  ORDER BY tipo_nomina, cod_concepto, cod_empleado";
@@ -127,16 +127,16 @@ else{    $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os==
 		 </tr>
 		 <tr height="20">
 		    	<td width="100" align="left" ><strong>Nomina: </strong></td>
-		    	<td width="400" align="left" ><strong><? echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
+		    	<td width="400" align="left" ><strong><?php  echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
 		 </tr>
 		        <tr height="20">
 		    	<td width="100" align="left" ><strong>Fecha: </strong></td>
-				<?if($mes_comp=='S'){ ?>
-		    	<td width="400" align="left" ><strong><? echo $fecha_nom_d."  "." Al   ".$fecha_nom; ?></strong></td>
-				<?}else{ ?>
-				<td width="400" align="left" ><strong><? echo $fechad."  "." Al   ".$fechah; ?></strong></td>
+				<?php if($mes_comp=='S'){ ?>
+		    	<td width="400" align="left" ><strong><?php  echo $fecha_nom_d."  "." Al   ".$fecha_nom; ?></strong></td>
+				<?php }else{ ?>
+				<td width="400" align="left" ><strong><?php  echo $fechad."  "." Al   ".$fechah; ?></strong></td>
 				
-				<?} ?>
+				<?php } ?>
 		 </tr>
 		 <tr height="20">
 		   <td width="100" align="left"><strong>Codigo Trabajador</strong></td>
@@ -147,10 +147,10 @@ else{    $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os==
 		 <tr height="20">
 		 </tr>
 		 <tr height="20">
-		   <td width="100" align="left"><strong><? echo $cod_concepto; ?></strong></td>
-		   <td width="400" align="left"><strong><? echo $denominacion; ?></strong></td>
+		   <td width="100" align="left"><strong><?php  echo $cod_concepto; ?></strong></td>
+		   <td width="400" align="left"><strong><?php  echo $denominacion; ?></strong></td>
 		 </tr>
-		<?  $can_conc=0; $total_aporte=0; $cant_emp=0;    $res=pg_query($sSQL);
+		<?php   $can_conc=0; $total_aporte=0; $cant_emp=0;    $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"];
 	       $fechad=$registro["fechapd"]; $fechah=$registro["fechaph"]; $cod_departam=$registro["cod_departam"]; $des_departam=$registro["des_departam"]; 
@@ -166,31 +166,31 @@ else{    $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os==
 					  <td width="100" align="right">-----------------</td>
 				    </tr>	
 				    <tr>
-				      <td width="100" align="left"><? echo "Nro. Trabjadores : ".$cant_emp; ?></td>
-					  <td width="400" align="right"><? echo "TOTAL  : ".$den_conc; ?></td>
+				      <td width="100" align="left"><?php  echo "Nro. Trabjadores : ".$cant_emp; ?></td>
+					  <td width="400" align="right"><?php  echo "TOTAL  : ".$den_conc; ?></td>
 					  <td width="100" align="left"></td>
-					  <td width="100" align="right"><? echo $total_aporte; ?></td> 
+					  <td width="100" align="right"><?php  echo $total_aporte; ?></td> 
 				    </tr>	
 				    <tr>
 				      <td width="90" align="left"></td>
 				    </tr>
 		 		    <tr height="20">
-		                <td width="100" align="left"><strong><? echo $cod_concepto; ?></strong></td>
-		                 <td width="400" align="left"><strong><? echo $denominacion; ?></strong></td>
+		                <td width="100" align="left"><strong><?php  echo $cod_concepto; ?></strong></td>
+		                 <td width="400" align="left"><strong><?php  echo $denominacion; ?></strong></td>
 		            </tr>
-				<?	$prev_conc=$cod_concepto; $den_conc=$denominacion; $total_aporte=0;  $cant_emp=0;$prev_tipo=$tipo_nomina;          
+				<?php 	$prev_conc=$cod_concepto; $den_conc=$denominacion; $total_aporte=0;  $cant_emp=0;$prev_tipo=$tipo_nomina;          
 		} 
 			$cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $monto_aporte=$registro["monto_aporte"]; 
 			$total_aporte=$total_aporte+$monto_aporte; $cant_emp=$cant_emp+1;  
 
 		    ?>	   
 			<tr>
-			   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_empleado; ?></td>
-			   <td width="400" align="justify"><? echo $nombre; ?></td>				   
-			   <td width="100" align="center"><? echo $cedula; ?></td>
-			   <td width="100" align="right"><? echo $monto_aporte; ?></td>
+			   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_empleado; ?></td>
+			   <td width="400" align="justify"><?php  echo $nombre; ?></td>				   
+			   <td width="100" align="center"><?php  echo $cedula; ?></td>
+			   <td width="100" align="right"><?php  echo $monto_aporte; ?></td>
 			 </tr>
-		    <? 		  
+		    <?php  		  
 		  }$total_aporte=formato_monto($total_aporte);  ?>
                     <tr>
 					  <td width="100" align="left"></td>
@@ -199,16 +199,16 @@ else{    $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os==
 					  <td width="100" align="right">-----------------</td>
 				    </tr>	
 				    <tr>
-				       <td width="100" align="left"><? echo "Nro. Trabjadores : ".$cant_emp; ?></td>
-					  <td width="400" align="right"><? echo "TOTAL  : ".$den_conc; ?></td>
+				       <td width="100" align="left"><?php  echo "Nro. Trabjadores : ".$cant_emp; ?></td>
+					  <td width="400" align="right"><?php  echo "TOTAL  : ".$den_conc; ?></td>
 					  <td width="100" align="left"></td>
-					  <td width="100" align="right"><? echo $total_aporte; ?></td> 
+					  <td width="100" align="right"><?php  echo $total_aporte; ?></td> 
 				    </tr>	
 				    <tr>
 				      <td width="90" align="left"></td>
 				    </tr>
-				<?
-		  ?></table><?
+				<?php 
+		  ?></table><?php 
 	}	
 }	
 ?>

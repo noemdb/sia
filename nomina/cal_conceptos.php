@@ -1,4 +1,4 @@
-<?
+<?php 
 function Conv_Num($mval) {$fmonto=$mval*1; return $fmonto;}
 function frecuencia_valida($frecn,$cal_frec,$cfrec,$u_sem){$mval=false;
 if($frecn=="Q"){ if(($cfrec==1)and($cal_frec==1)){$mval=true;} if(($cfrec==2)and($cal_frec==2)){$mval=true;} if($cfrec==3){$mval=true;} }

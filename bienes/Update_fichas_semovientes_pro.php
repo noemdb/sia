@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
   $cod_bien_sem=$_POST["txtcod_bien_sem"];
   $cod_clasificacion=$_POST["txtcod_clasificacion"];
   $num_bien=$_POST["txtnum_bien"];
@@ -62,13 +62,13 @@
   $nom_proveedor=$_POST["txtnombre_proveedor"]; 
 $url="Act_fichas_semovientes_pro.php"; echo "ESPERE POR FAVOR MODIFICANDO....","<br>"; $error=0;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
  else{  $sSQL="Select * from BIEN016 WHERE cod_bien_sem='$cod_bien_sem'";  $resultado=pg_exec($conn,$sSQL);  $filas=pg_numrows($resultado);
-  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DEL SEMOVIENTE NO EXISTE');</script> <? }
+  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DEL SEMOVIENTE NO EXISTE');</script> <?php }
    else{$error=1;$resultado=pg_exec($conn,"SELECT ACTUALIZA_BIEN016(2,
 '$cod_bien_sem','$cod_clasificacion','$num_bien','$denominacion', '$cod_empresa','$cod_direccion', '$cod_departamento', '$cod_dependencia', '$ced_responsable','$fecha_actualizacion', '$ced_responsable_uso','$cod_metodo_rot','$ced_rotulador','$fecha_rotulacion','$direccion', '$cod_region', '$cod_entidad','$cod_municipio', '$cod_ciudad', '$cod_parroquia', '$cod_postal','$caracteristicas','$raza','$color','$sexo','$fecha_nacimiento','$edad','$tam_peso','$uso','$cod_contablea', '$cod_contabled','$tipo_depreciacion', '$tasa_deprec','$vida_util','$valor_residual', '$cod_presup_dep', '$monto_depreciado', '$desincorporado', '$fecha_desincorporado','$sit_contable', '$sit_legal','$ced_verificador',  '$fecha_verificacion','$codigo_tipo_incorp',  '$tipo_incorporacion','$cod_imp_presup','$nom_imp_presup','$des_imp_nopresup','$valor_incorporacion','$fecha_incorporacion', '$nro_oc', '$fecha_oc', '$nro_op', '$fecha_op', '$tipo_doc_cancela','$nro_doc_cancela', '$fecha_doc_cancela',  
 '$nro_factura', '$fecha_factura','$ced_rif_proveedor','$nom_proveedor')"); $error=pg_errormessage($conn);  $error=substr($error,0,91);
-     if (!$resultado){?> <script language="JavaScript"> muestra('<? echo $error; ?>'); </script> <? } else{ ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><? $error=0; }
+     if (!$resultado){?> <script language="JavaScript"> muestra('<?php  echo $error; ?>'); </script> <?php } else{ ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?php  $error=0; }
   }
 }
-pg_close();?> <script language="JavaScript"> LlamarURL('<?echo $url;?>'); </script>
+pg_close($conn);?> <script language="JavaScript"> LlamarURL('<?php echo $url;?>'); </script>

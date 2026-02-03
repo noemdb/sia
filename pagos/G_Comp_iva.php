@@ -20,7 +20,7 @@ function g_comp_ret_iva($mconn,$codigo_mov,$orden,$minf_usuario){
     $ssql="SELECT INCLUYE_BAN029('$codigo_mov','0000','O/P','$orden','$tipo_r','$tipo_mov','$ced_rif','$fecha_e','$orden','$orden','C','$tipo_r','$tipo_planilla','$nro_d','$nro_con_fac','$nro_doc_afec','$fecha_f','00000000','',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";  $resultado=pg_exec($mconn,$ssql); $error=pg_errormessage($mconn);
    // echo $ssql,"<br>";
   }  if($monto_ret_ord>$tot_ret_fact){$diferencia=$monto_ret_ord-$tot_ret_fact; }else{$diferencia=$tot_ret_fact-$monto_ret_ord; } 
-  if($diferencia>0.01){ echo ' Monto Retencion: '.$monto_ret_ord.' Total ret. Facturas: '.$tot_ret_fact.' Diferencia:'.$diferencia,"<br>"; ?><script language="JavaScript">muestra('MONTO TOTAL RETENCION COMPROBANTE IVA NO CUADRA CON RETENCION DE LA ORDEN');</script><?}
+  if($diferencia>0.01){ echo ' Monto Retencion: '.$monto_ret_ord.' Total ret. Facturas: '.$tot_ret_fact.' Diferencia:'.$diferencia,"<br>"; ?><script language="JavaScript">muestra('MONTO TOTAL RETENCION COMPROBANTE IVA NO CUADRA CON RETENCION DE LA ORDEN');</script><?php }
   else{$ano_fiscal=substr($fecha_ord,0,4);  $mes_fiscal=substr($fecha_ord,5,2);  $nro_comprobante="00000001"; $fecha_emision=$fecha_ord;
   $StrSQL="select max(nro_comprobante) as ref from ban027 where ano_fiscal='$ano_fiscal'";
   if($corr_iva_ano=="N"){$StrSQL="select max(nro_comprobante) as ref from ban027 where ano_fiscal='$ano_fiscal' and mes_fiscal='$mes_fiscal'";} else{$StrSQL="select max(nro_comprobante) as ref from ban027 where ano_fiscal='$ano_fiscal'";}
@@ -31,7 +31,7 @@ function g_comp_ret_iva($mconn,$codigo_mov,$orden,$minf_usuario){
   while($registro=pg_fetch_array($res)){ $tipo_retencion=$registro["tipo_retencion"]; $nro_op=$tipo_retencion*1; $tipo_operacion=$registro["tipo_operacion"]; $tipo_documento=$registro["tipo_documento"]; $sfechaf=$registro["fecha_factura"]; $nro_orden=$registro["nro_orden"]; $ced_rif=$registro["ced_rif"];
     $nro_documento=$registro["nro_documento"];  $nro_con_factura=$registro["nro_con_factura"]; $nro_doc_afectado=$registro["nro_doc_afectado"];  $tipo_transaccion=$registro["nro_planilla"]; $monto=$registro["monto_pago"]; $montob=$registro["monto_objeto"];  $montos=$registro["monto1"];$retenc=$registro["monto3"]; $montoi=$registro["monto2"]; $tasa=$registro["tasa"]; $montor=$registro["monto_retencion"];
     $sSQL="SELECT  INCLUYE_BAN027('$ano_fiscal','$mes_fiscal','$nro_comprobante',$nro_op,'$ced_rif','$fecha_emision','$tipo_operacion','$tipo_documento','$sfechaf','$nro_documento','$nro_con_factura','$nro_doc_afectado','$tipo_transaccion',$monto,$montos,$montob,$tasa,$montoi,$retenc,$montor,'0000','O/P','$nro_orden','','$minf_usuario')";
-    $resultado=pg_exec($mconn,$sSQL); $error=pg_errormessage($mconn); $error="ERROR GRABANDO: ".substr($error, 0, 91);  if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? } else{}
+    $resultado=pg_exec($mconn,$sSQL); $error=pg_errormessage($mconn); $error="ERROR GRABANDO: ".substr($error, 0, 91);  if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php } else{}
   }
   }
   }  

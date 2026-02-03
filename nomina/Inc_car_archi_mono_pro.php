@@ -1,6 +1,6 @@
-<?include ("../class/funciones.php");
+<?php include ("../class/funciones.php");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){
   $ced_rif='';$p_letra="";
   $sql="SELECT * FROM PRE099 ORDER BY ced_rif";}
@@ -86,7 +86,7 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $nombre="";$cedula="";
 $rif="";$nit="";
 $direccion="";$tipo_benef="";
@@ -121,11 +121,11 @@ if($filas>=1){
 <body>
 <div id="Layer3" style="position:absolute; width:807px; height:177px; z-index:2; left: 116px; top: 171px;">
   
-  <?include ("../class/class_tab.php");?>
+  <?php include ("../class/class_tab.php");?>
   <script type="text/javascript" language="javascript"> DrawTabs(); </script>
   <!-- PESTAÑA 1 -->
   <div id="T11" class="tab-body">
-    <iframe src="Det_carga_archivo.php?criterio=<?echo $cod_estructura?>"  width="846" height="170" scrolling="auto" frameborder="0"> </iframe>
+    <iframe src="Det_carga_archivo.php?criterio=<?php echo $cod_estructura?>"  width="846" height="170" scrolling="auto" frameborder="0"> </iframe>
   </div>
 </div>
 <table width="977" height="38" border="0" bgcolor="#000066">
@@ -243,4 +243,4 @@ if($filas>=1){
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

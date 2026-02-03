@@ -1,11 +1,11 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php");  include ("../../class/funciones.php"); include ("../../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="03-0000201"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S'); if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='../menu.php';</script><?php }
 
 $cedula_d="";$cedula_h="";$sexo="";$estado_civil="";;$fecha_d="01/01/1900";$fecha_h="31/12/9999";$edad_d="0";$edad_h="99";$profesion="TODAS";
 ?>
@@ -37,7 +37,7 @@ function Llama_Rpt_ma_ele_me(murl){var url;var r;
 function Llama_Menu_Rpt(murl){var url;url="../"+murl;LlamarURL(url);}
 </script>
 </head>
-<?
+<?php 
 $nombre_d="";$nombre_h="";
 $sql="SELECT MAX(cedula) As Max_cedula, MIN(cedula) As Min_cedula FROM NOM053";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$encontro=true;}else{$encontro=false;}
@@ -67,10 +67,10 @@ if($encontro=true){$cedula_d=$registro["min_cedula"];$cedula_h=$registro["max_ce
           <td height="18" colspan="8" align="center"><table width="905">
             <tr>
               <td width="180" ><div align="right"><span class="Estilo5">CEDULA TRABAJADOR DESDE:</span></div></td>
-              <td width="94" ><div align="left"><span class="Estilo5"> <input name="txtcedula_d" type="text" id="txtcedula_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cedula_d?>">    </div></td>
+              <td width="94" ><div align="left"><span class="Estilo5"> <input name="txtcedula_d" type="text" id="txtcedula_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cedula_d?>">    </div></td>
               <td width="171" ><span class="Estilo5"><input class="Estilo10" name="Catalogo5" type="button" id="Catalogo55" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_d.php?criterio=','SIA','','650','500','true')" value="...">   </td>
               <td width="56" class="Estilo5" >HASTA : </td>
-              <td width="94" ><span class="Estilo5"><input class="Estilo10" name="txtcedula_h" type="text" id="txtcedula_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $cedula_h?>">    </td>
+              <td width="94" ><span class="Estilo5"><input class="Estilo10" name="txtcedula_h" type="text" id="txtcedula_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $cedula_h?>">    </td>
               <td width="282" ><span class="Estilo5"><input class="Estilo10" name="Catalogo6" type="button" id="Catalogo64" title="Abrir Catalogo de C&eacute;dula" onClick="VentanaCentrada('../Cat_cedula_re_h.php?criterio=','SIA','','650','500','true')" value="...">  </td>
             </tr>
           </table></td>
@@ -109,11 +109,11 @@ if($encontro=true){$cedula_d=$registro["min_cedula"];$cedula_h=$registro["max_ce
           <td height="22" colspan="8"><table width="905">
             <tr>
               <td width="182" ><div align="right"><span class="Estilo5">FECHA NACIMIENTO DESDE :</span></div></td>
-              <td width="269" ><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
+              <td width="269" ><div align="left"><span class="Estilo5"> <input class="Estilo10" name="txtFechad" type="text" id="txtFechad" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_d?>" size="12" maxlength="10" onChange="checkrefechad(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario1" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario1')"  /></div></td>
               <td width="56" ><span class="Estilo5">HASTA :</span></td>
-              <td width="378" ><span class="Estilo5">  <input class="Estilo10" name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
+              <td width="378" ><span class="Estilo5">  <input class="Estilo10" name="txtFechah" type="text" id="txtFechah" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_h?>" size="12" maxlength="10" onChange="checkrefechah(this.form)">
                 <img src="../../imagenes/img_cal.png" width="20" height="14" id="calendario2" style="cursor: pointer; border: 1px solid blue;" title="Seleccionar Fecha"
                 onMouseOver="this.style.background='blue';" onMouseOut="this.style.background=''"  onClick="javascript:showCal('Calendario2')"  />  </td>
             </tr>
@@ -130,9 +130,9 @@ if($encontro=true){$cedula_d=$registro["min_cedula"];$cedula_h=$registro["max_ce
           <td width="8">&nbsp;</td>
           <td width="6">&nbsp;</td>
           <td height="18" class="Estilo5">EDAD:</td>
-          <td width="339"><span class="Estilo5"><input class="Estilo10" name="txtedad_d" type="text" id="txtedad_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $edad_d?>">
+          <td width="339"><span class="Estilo5"><input class="Estilo10" name="txtedad_d" type="text" id="txtedad_d" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $edad_d?>">
           </span></td>
-          <td width="116"><span class="Estilo5"><input class="Estilo10" name="txtedad_h" type="text" id="txtedad_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?echo $edad_h?>">
+          <td width="116"><span class="Estilo5"><input class="Estilo10" name="txtedad_h" type="text" id="txtedad_h" onFocus="encender(this)" onBlur="apagar(this)" size="12" maxlength="12" value="<?php echo $edad_h?>">
           </span></td>
           <td width="266">&nbsp;</td>
         </tr>
@@ -142,7 +142,7 @@ if($encontro=true){$cedula_d=$registro["min_cedula"];$cedula_h=$registro["max_ce
         <tr>
           <td height="18" colspan="4">&nbsp;</td>
           <td width="146" class="Estilo5">PROFESION:</td>
-          <td height="18"><span class="Estilo5"><input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" onFocus="encender(this)" onBlur="apagar(this)" size="40" maxlength="60" value="<?echo $profesion?>"> </span></td>
+          <td height="18"><span class="Estilo5"><input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" onFocus="encender(this)" onBlur="apagar(this)" size="40" maxlength="60" value="<?php echo $profesion?>"> </span></td>
           <td height="18">&nbsp;</td>
           <td height="18">&nbsp;</td>
         </tr>
@@ -169,4 +169,4 @@ if($encontro=true){$cedula_d=$registro["min_cedula"];$cedula_h=$registro["max_ce
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

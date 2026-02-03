@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $criterio=$_GET["criterio"]; $codigo_mov=$_GET["codigo_mov"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $resultado=pg_exec($conn,"SELECT BORRAR_BAN029('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
@@ -14,4 +14,4 @@ while($registro=pg_fetch_array($res))
   $iva_fact=$registro["monto_factura"]-$registro["monto_sin_iva"]; $monto_r=$iva_fact*($tasa_retencion/100);  $monto2=cambia_coma_numero($iva_fact); $monto3=$tasa_retencion; $monto_r=cambia_coma_numero($monto_r);  $monto1=cambia_coma_numero($monto1);
   $ssql="SELECT INCLUYE_BAN029('$codigo_mov','0000','O/P','$referencia','$tipo_r','01-REG','$ced_rif','$fecha_e','$referencia','$referencia','C','$tipo_r','01','$nro_d','$nro_con_fac','','$fecha_f','00000000','',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";  $resultado=pg_exec($conn,$ssql); $error=pg_errormessage($conn);
 }
-pg_close();?><iframe src="Det_inc_comp_iva.php?codigo_mov=<?echo $codigo_mov?>&agregar=S" width="870" height="310" scrolling="auto" frameborder="1"></iframe>
+pg_close($conn);?><iframe src="Det_inc_comp_iva.php?codigo_mov=<?php echo $codigo_mov?>&agregar=S" width="870" height="310" scrolling="auto" frameborder="1"></iframe>

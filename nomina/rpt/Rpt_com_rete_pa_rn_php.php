@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG001".$usuario_sia.$equipo;
 if (!$_GET){ $p_letra='';$criterio=''; $tipo_nomina=''; $cod_empleado=''; $cod_concepto; $sql="SELECT * FROM NOM017  Union All SELECT * FROM NOM019  order by Tipo_Nomina, Cod_Empleado, Cod_Concepto";}
@@ -67,9 +67,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 else
 {
 }
@@ -143,11 +143,11 @@ print_r ($monto);
           <table width="1015" height="396" border="0">
                         <tr>
               <td width="460" height="65">
-                                         <? echo $tipo_nomina; ?><input name="txttipo_nomina" type="text" id="txttipo_nomina" value="<?echo $tipo_nomina?>" style="visibility:hidden;" size="1" readonly>
-                                                                               <input name="txtcod_empleado" type="text" id="txtcod_empleado" value="<?echo $cod_empleado?>" style="visibility:hidden;" size="1" readonly>
-                                                       <input name="txtcod_concepto" type="text" id="txtcod_concepto" value="<?echo $cod_concepto?>" style="visibility:hidden;" size="1" readonly></td>
-                <td width="379"><? echo $cod_empleado; ?></td>
-                <td width="161"><? echo $cod_concepto; ?></td>
+                                         <?php  echo $tipo_nomina; ?><input name="txttipo_nomina" type="text" id="txttipo_nomina" value="<?php echo $tipo_nomina?>" style="visibility:hidden;" size="1" readonly>
+                                                                               <input name="txtcod_empleado" type="text" id="txtcod_empleado" value="<?php echo $cod_empleado?>" style="visibility:hidden;" size="1" readonly>
+                                                       <input name="txtcod_concepto" type="text" id="txtcod_concepto" value="<?php echo $cod_concepto?>" style="visibility:hidden;" size="1" readonly></td>
+                <td width="379"><?php  echo $cod_empleado; ?></td>
+                <td width="161"><?php  echo $cod_concepto; ?></td>
                         </tr>
                         <tr>
               <td height="21" colspan="3">&nbsp; </td>
@@ -165,8 +165,8 @@ print_r ($monto);
                            <td width="49"></td>
                            </tr>
                            <tr>
-                           <td width="120" height="21"><? echo $mes; ?></td>
-                           <td width="496"><? echo $monto; ?></td>
+                           <td width="120" height="21"><?php  echo $mes; ?></td>
+                           <td width="496"><?php  echo $monto; ?></td>
                            <td width="324"></td>
                            <td width="49"></td>
                            </tr>
@@ -204,4 +204,4 @@ print_r ($monto);
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

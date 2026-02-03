@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 if (!$_GET){$cod_empleado="";} else{$tipo_nomina=$_GET["Gtipo_nomina"]; $cod_empleado=$_GET["Gcod_empleado"]; } $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -32,8 +32,8 @@ return true;}
 -->
 </style>
 </head>
-<? $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); $nombre="";
-if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_nomina"]; $nombre=$registro["nombre"]; }  $tipo_new=$tipo_nomina;  pg_close();
+<?php  $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); $nombre="";
+if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_nomina"]; $nombre=$registro["nombre"]; }  $tipo_new=$tipo_nomina;  pg_close($conn);
 ?>
 <body>
 <form name="form1" method="post" action="Update_camb_tipo_nom.php" onSubmit="return revisar()">
@@ -48,8 +48,8 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
              <td align="center"><table width="560" border="0">
                <tr>
                  <td width="110"><span class="Estilo5">TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
-                 <td width="300"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="50" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
+                 <td width="300"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="50" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -57,7 +57,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="180" ><span class="Estilo5"> TIPO DE NOMINA  ACTUAL :</span> </td>
-                <td width="370"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2"  readonly value="<?echo $tipo_nomina;?>"></span></td>
+                <td width="370"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2"  readonly value="<?php echo $tipo_nomina;?>"></span></td>
               </tr>
           </table></td>
         </tr>
@@ -65,7 +65,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="180" ><span class="Estilo5"> TIPO DE NOMINA  NUEVA :</span> </td>
-                <td width="370"><span class="Estilo5"><input class="Estilo10" name="txttipo_new" type="text" id="txttipo_new" size="4" maxlength="2"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_new;?>"></span></td>
+                <td width="370"><span class="Estilo5"><input class="Estilo10" name="txttipo_new" type="text" id="txttipo_new" size="4" maxlength="2"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_new;?>"></span></td>
               </tr>
           </table></td>
         </tr>

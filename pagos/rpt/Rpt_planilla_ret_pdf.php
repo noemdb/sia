@@ -1,11 +1,11 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
 $orden=$_GET["orden"];  $tipo_planilla=$_GET["tipo"]; $ano_fiscal="";
 $fecha_hoy=asigna_fecha_hoy();
 $nombre_planilla="COMPROBANTE DE RETENCION DE IMPUESTO SOBRE LA RENTA";
 if($tipo_planilla=="02"){$nombre_planilla="COMPROBANTE DE RETENCION DE 1*1000"; }
 
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $direccion="AVENIDA CARACAS CON LIBERTADOR EDIFICIO ADMINISTRATIVO PISO 2A"; $nombre_emp="GOBERNACIÓN DEL ESTADO YARACUY"; $ced_rif_emp="G-20000164-0";
 $sql="Select * from SIA000 order by campo001"; $resultado=pg_query($sql);
 if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"];
@@ -22,7 +22,7 @@ if ($registro=pg_fetch_array($res,0)){
   $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
   $nro_comp=$nro_planilla; $ced_rif=$registro["ced_rif"];  $nombre_benef=$registro["nombre"];
   $sustraendo=$registro["sustraendo"];
-} else{echo $sql;  $error=1; ?> <script language="JavaScript">muestra('COMPROBANTE  NO LOCALIZADO');</script><?}
+} else{echo $sql;  $error=1; ?> <script language="JavaScript">muestra('COMPROBANTE  NO LOCALIZADO');</script><?php }
 
 
 $total_d=0;  $total_s=0;  $total_b=0;  $total_iva=0;  $total_ret=0; $aplica_sust=1;
@@ -223,7 +223,7 @@ class PDF extends FPDF{
 
   
  $pdf->Output();
- pg_close();
+ pg_close($conn);
 
 
 ?>

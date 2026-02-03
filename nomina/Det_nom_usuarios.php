@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -28,14 +28,14 @@ $sql="select nom059.tipo_nomina,nom001.descripcion FROM nom059,nom001 Where (nom
            <td width="120" align="center" bgcolor="#99CCFF"><strong>C&oacute;digo n&oacute;mina</strong></td>
            <td width="620" align="center" bgcolor="#99CCFF"><strong>Denominaci&oacute;n</strong></td>
          </tr>
-         <?
+         <?php 
 while($registro=pg_fetch_array($res)){
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:llamar_eliminar('<? echo $registro["tipo_nomina"]; ?>');" >
-           <td width="120" align="left"><? echo $registro["tipo_nomina"]; ?></td>
-           <td width="620" align="left"><? echo $registro["descripcion"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:llamar_eliminar('<?php  echo $registro["tipo_nomina"]; ?>');" >
+           <td width="120" align="left"><?php  echo $registro["tipo_nomina"]; ?></td>
+           <td width="620" align="left"><?php  echo $registro["descripcion"]; ?></td>
          </tr>
-         <?}
+         <?php }
 ?>
        </table></td>
    </tr>
@@ -44,16 +44,16 @@ while($registro=pg_fetch_array($res)){
  <p>&nbsp;</p>
 </body>
 </html>
-<?   pg_close(); ?>
+<?php    pg_close($conn); ?>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_agregar(){var mcodigo='<?echo $criterio?>';
-if(mcodigo==""){ alert('Usuario Invalido');}else{document.location='Inc_nomina_usuario.php?criterio=<?echo $criterio?>'; } }
+function llamar_agregar(){var mcodigo='<?php echo $criterio?>';
+if(mcodigo==""){ alert('Usuario Invalido');}else{document.location='Inc_nomina_usuario.php?criterio=<?php echo $criterio?>'; } }
 
 function llamar_eliminar(mtipo){ var r;
   r=confirm("Esta seguro en Eliminar el Tipo de Nomina del Usuario ?");
   if(r==true){ r=confirm("Esta Realmente seguro en Eliminar el Tipo de Nomina del Usuario ?");
-    if(r==true){document.location='Delete_nom_usuario.php?criterio=<?echo $criterio?>'+'&tipo_nomina='+mtipo;  }}
+    if(r==true){document.location='Delete_nom_usuario.php?criterio=<?php echo $criterio?>'+'&tipo_nomina='+mtipo;  }}
       else { url="Cancelado, no elimino"; }
 }
 </script>

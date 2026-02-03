@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");
 if ($gnomina=="00"){ $criterion=""; $criterioc="";}else{ $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 if (!$_GET){$codigo="";} else{$codigo=$_GET["Gcodigo"];} $tipo_nomina=substr($codigo,0,2);$cod_concepto=substr($codigo,2,3);
 ?>
@@ -46,8 +46,8 @@ function tabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;
 return false;} 
 </script>
 </head>
-<?
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php 
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * from conceptos where tipo_nomina='$tipo_nomina' and cod_concepto='$cod_concepto' ".$criterioc." "; $res=pg_query($sql);$filas=pg_num_rows($res);
 $denominacion="";$cod_partida="";$cod_cat_alter=""; $cod_contable="";$asignacion="";$tipo_asigna="";$asig_ded_apo="";$activo=""; $frec="3"; $descripcion=""; $tipo_concepto=""; $tipo_a=""; $cal_vac=""; $fuente="00";
 $inicializable="";$inicializable_c="";$oculto="";$acumula="";$tipo_grupo="";$frecuencia="";$afecta_presup="";$cod_retencion="";$grupo_retencion="";$prestamo="";$status="";$cod_orden=""; $cod_aporte=""; $inf_usuario="";
@@ -63,7 +63,7 @@ if(substr($status,0,1)=="S"){$cal_vac="SI";}else{$cal_vac="NO";}  if(substr($pre
 if($frec=="1"){$frecuencia="PRIMERA QUINCENA";} if($frec=="2"){$frecuencia="SEGUNDA QUINCENA";} if($frec=="3"){$frecuencia="PRIMERA Y SEGUNDA QUINCENA";}
 if($frec=="4"){$frecuencia="PRIMERA SEMANA";} if($frec=="5"){$frecuencia="SEGUNDA SEMANA";} if($frec=="6"){$frecuencia="TERCERA SEMANA";}
 if($frec=="7"){$frecuencia="CUARTA SEMANA";} if($frec=="8"){$frecuencia="QUINTA SEMANA";} if($frec=="9"){$frecuencia="TODAS LAS SEMANAS";} if($frec=="0"){$frecuencia="ULTIMA SEMANA";}
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -77,8 +77,8 @@ pg_close();
   <tr>
     <td width="92" height="403"><table width="92" height="403" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
      <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_concep_ar.php?Gcodigo=C<?echo $codigo?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_concep_ar.php?Gcodigo=C<?echo $codigo?>">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_concep_ar.php?Gcodigo=C<?php echo $codigo?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="Act_concep_ar.php?Gcodigo=C<?php echo $codigo?>">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -96,8 +96,8 @@ pg_close();
              <td><table width="866">
                  <tr>
                    <td width="130"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="90"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="4" readonly value="<?echo $tipo_nomina?>"  onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="665"><span class="Estilo5"><input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="80" readonly value="<?echo $descripcion?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="90"><span class="Estilo5"><input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="4" readonly value="<?php echo $tipo_nomina?>"  onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="665"><span class="Estilo5"><input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="80" maxlength="80" readonly value="<?php echo $descripcion?>" onkeypress="return tabular(event,this)"> </span></td>
                   </tr>
              </table></td>
            </tr>
@@ -105,9 +105,9 @@ pg_close();
              <td><table width="866">
                  <tr>
                    <td width="156"><span class="Estilo5">C&Oacute;DIGO DE CONCEPTO : </span></td>
-                   <td width="90"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="4" readonly value="<?echo $cod_concepto?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="90"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto" type="text" id="txtcod_concepto" size="4" maxlength="4" readonly value="<?php echo $cod_concepto?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="100"><span class="Estilo5">DENOMINACI&Oacute;N : </span></td>
-                   <td width="520"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="65" maxlength="80" onFocus="encender(this)" onBlur="apagar(this)"  value="<?echo $denominacion?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="520"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="65" maxlength="80" onFocus="encender(this)" onBlur="apagar(this)"  value="<?php echo $denominacion?>" onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -115,12 +115,12 @@ pg_close();
              <td><table width="866">
                  <tr>
                    <td width="150"><span class="Estilo5">C&Oacute;DIGO DE PARTIDA : </span></td>
-                   <td width="145"><span class="Estilo5"><input class="Estilo10" name="txtcod_partida" type="text" id="txtcod_partida" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_partida?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="145"><span class="Estilo5"><input class="Estilo10" name="txtcod_partida" type="text" id="txtcod_partida" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_partida?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="40"><input class="Estilo10" name="btcodpart" type="button" id="btcodpart" title="Abrir Catalogo Partidas"  onClick="VentanaCentrada('Cat_codigos_par.php?criterio=','SIA','','750','500','true')" value="..." onkeypress="return tabular(event,this)"> </span></td>
-                   <td width="121"><span class="Estilo5">FUENTE : <span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fuente?>"  onkeypress="return tabular(event,this)">  </span></td>
+                   <td width="121"><span class="Estilo5">FUENTE : <span class="Estilo5"><input class="Estilo10" name="txtfuente" type="text" id="txtfuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fuente?>"  onkeypress="return tabular(event,this)">  </span></td>
 				   
 				   <td width="210"><span class="Estilo5">CODIGO DE CATEGORIA ALTERNA : </span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_cat_alter" type="text" id="txtcod_cat_alter" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_cat_alter?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_cat_alter" type="text" id="txtcod_cat_alter" size="20" maxlength="20" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_cat_alter?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="50"><input class="Estilo10" name="btcodcat" type="button" id="btcodcat" title="Abrir Catalogo Categorias"  onClick="VentanaCentrada('Cat_codigos_cat.php?criterio=','SIA','','750','500','true')" value="..." onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
@@ -145,11 +145,11 @@ function asig_tipo_asigna(mvalor){var f=document.form1;
                    <td width="150"><span class="Estilo5">TIPO DE CONCEPTO : </span></td>
                    <td width="366"><span class="Estilo5"><select class="Estilo10" name="txttipo_concepto" size="1" id="txttipo_concepto" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)">
                       <option>ASIGNACION</option> <option>DEDUCCION</option> <option>APORTE</option> </select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_tipo_conc('<?echo $tipo_concepto;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tipo_conc('<?php echo $tipo_concepto;?>');</script>
                    <td width="150"><span class="Estilo5">TIPO DE ASIGNACI&Oacute;N : </span></td>
                    <td width="200"><span class="Estilo5"><select class="Estilo10" name="txttipo_asigna" size="1" id="txttipo_asigna" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)">
                       <option>SUELDO</option> <option>COMPENSACION</option> <option>PRIMA</option> <option>OTRO</option> <option>CESTATICKET</option> </select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_tipo_asigna('<?echo $tipo_asigna;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tipo_asigna('<?php echo $tipo_asigna;?>');</script>
                  </tr>
              </table></td>
            </tr>
@@ -159,12 +159,12 @@ function asig_tipo_asigna(mvalor){var f=document.form1;
                    <td width="216" ><span class="Estilo5">CONCEPTO AFECTA PRESUPUESTO : </span></td>
 <script language="JavaScript" type="text/JavaScript"> function asig_afecta_pre(mvalor){var f=document.form1;  if(mvalor=="SI"){document.form1.txtafecta_presup.options[0].selected = true;}else{document.form1.txtafecta_presup.options[1].selected = true;}} </script>
                    <td width="110"><span class="Estilo5"><select class="Estilo10" name="txtafecta_presup" size="1" id="txtafecta_presup" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"><option>SI</option> <option>NO</option></select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_afecta_pre('<?echo $afecta_presup;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_afecta_pre('<?php echo $afecta_presup;?>');</script>
                    <td width="180" ><span class="Estilo5">C&Oacute;DIGO TIPO DE RETENCI&Oacute;N : </span></td>
-                   <td width="60" ><span class="Estilo5"><input class="Estilo10" name="txtcod_retencion" type="text" id="txtcod_retencion" size="4" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_retencion?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="60" ><span class="Estilo5"><input class="Estilo10" name="txtcod_retencion" type="text" id="txtcod_retencion" size="4" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_retencion?>" onkeypress="return tabular(event,this)"> </span></td>
                    <td width="60"><input class="Estilo10" name="bttiporet" type="button" id="bttiporet" title="Abrir Catalogo Tipos de Retencion"  onClick="VentanaCentrada('Cat_tipo_ret.php?criterio=','SIA','','750','500','true')" value="..." onkeypress="return tabular(event,this)"> </span></td>
                    <td width="150"><span class="Estilo5">C&Oacute;DIGO DE APORTE : </span></td>
-                   <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_aporte" type="text" id="txtcod_aporte" size="4" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_aporte(this.form);"   value="<?echo $cod_aporte?>" onkeypress="return tabular(event,this)"> </span></td>
+                   <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_aporte" type="text" id="txtcod_aporte" size="4" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_aporte(this.form);"   value="<?php echo $cod_aporte?>" onkeypress="return tabular(event,this)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -199,7 +199,7 @@ function asig_frecuencia(mvalor){var f=document.form1;
                    <td width="110"><span class="Estilo5"><select class="Estilo10" name="txtinicializable" size="1" id="txtinicializable" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"><option>NO</option> <option>SI</option></select>  </span></td>
                    <td width="166" ><span class="Estilo5">CANTIDAD INICIALIZABLE : </span></td>
                    <td width="80"><span class="Estilo5"><select class="Estilo10" name="txtinicializable_c" size="1" id="txtinicializable_c" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"><option>NO</option> <option>SI</option></select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_activo('<?echo $activo;?>'); asig_oculto('<?echo $oculto;?>'); asig_monto_ini('<?echo $inicializable;?>'); asig_cantidad_ini('<?echo $inicializable_c;?>'); </script>
+<script language="JavaScript" type="text/JavaScript"> asig_activo('<?php echo $activo;?>'); asig_oculto('<?php echo $oculto;?>'); asig_monto_ini('<?php echo $inicializable;?>'); asig_cantidad_ini('<?php echo $inicializable_c;?>'); </script>
                  </tr>
              </table></td>
            </tr>
@@ -211,8 +211,8 @@ function asig_frecuencia(mvalor){var f=document.form1;
                    <td width="260"><span class="Estilo5">INTERVIENE EN CALCULO DE VACACIONES : </span></td>
                    <td width="146"><span class="Estilo5"><select class="Estilo10" name="txtcal_vac" size="1" id="txtcal_vac" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"><option>SI</option> <option>NO</option></select>  </span></td>
                    <td width="120" ><span class="Estilo5">TIPO DE GRUPO : </span></td>
-                   <td width="80" ><span class="Estilo5"> <input class="Estilo10" name="txttipo_grupo" type="text" id="txttipo_grupo" size="4" maxlength="1" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_grupo?>"  onkeypress="return tabular(event,this)"></span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_acumula('<?echo $acumula;?>'); asig_cal_vac('<?echo $cal_vac;?>'); </script>
+                   <td width="80" ><span class="Estilo5"> <input class="Estilo10" name="txttipo_grupo" type="text" id="txttipo_grupo" size="4" maxlength="1" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_grupo?>"  onkeypress="return tabular(event,this)"></span></td>
+<script language="JavaScript" type="text/JavaScript"> asig_acumula('<?php echo $acumula;?>'); asig_cal_vac('<?php echo $cal_vac;?>'); </script>
                  </tr>
              </table></td>
            </tr>
@@ -227,8 +227,8 @@ function asig_frecuencia(mvalor){var f=document.form1;
                    <td width="166"><span class="Estilo5">CONCEPTO DE PRESTAMO : </span></td>
                    <td width="90"><span class="Estilo5"><select class="Estilo10" name="txtprestamo" size="1" id="txtprestamo" onFocus="encender(this)" onBlur="apagar(this)"  onkeypress="return tabular(event,this)"><option>NO</option> <option>SI</option></select>  </span></td>
                    <td width="130"><span class="Estilo5">ORDEN DE C&Aacute;LCULO : </span></td>
-                   <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_orden" type="text" id="txtcod_orden" size="4" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_orden(this.form);"  value="<?echo $cod_orden?>"  onkeypress="return tabular(event,this)"></span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_prestamo('<?echo $prestamo;?>'); asig_frecuencia('<?echo $frecuencia;?>'); </script>
+                   <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_orden" type="text" id="txtcod_orden" size="4" maxlength="4" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_orden(this.form);"  value="<?php echo $cod_orden?>"  onkeypress="return tabular(event,this)"></span></td>
+<script language="JavaScript" type="text/JavaScript"> asig_prestamo('<?php echo $prestamo;?>'); asig_frecuencia('<?php echo $frecuencia;?>'); </script>
                  </tr>
              </table></td>
            </tr>

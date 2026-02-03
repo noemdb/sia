@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_nomina=$_GET["tipo_nomina"]; $tp_calculo=$_GET["tp_calculo"]; $num_periodos=$_GET["num_periodos"]; ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $tipo_nomina=$_GET["tipo_nomina"]; $tp_calculo=$_GET["tp_calculo"]; $num_periodos=$_GET["num_periodos"]; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -11,7 +11,7 @@
 function llamar_anterior(){ document.location='Cierre_nomina.php?'; }
 </script>
 </head>
-<? if($tp_calculo=="N"){ $num_periodos=1; }
+<?php  if($tp_calculo=="N"){ $num_periodos=1; }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $existe_calculo="N";  $inf_orden_g="S"; $exist_vac="N"; $MDivisible=15; $carga_bono_vac="N";
 $StrSQL="select fecha_p_desde,fecha_p_hasta from nom017 where (tipo_nomina='$tipo_nomina') and (tp_calculo='$tp_calculo') and (num_periodos=$num_periodos) "; $resultado=pg_query($StrSQL); $filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $existe_calculo="S"; $fecha_desde=$registro["fecha_p_desde"]; $fecha_hasta=$registro["fecha_p_hasta"]; $fechah=$registro["fecha_p_hasta"]; $fecha_desde=formato_ddmmaaaa($fecha_desde); $fecha_hasta=formato_ddmmaaaa($fecha_hasta);}
@@ -22,7 +22,7 @@ if($tp_calculo=="N"){ $campo502="NNNNNNNNNNNNNNNNNNN"; $sql="Select campo502,cam
 $sSQL="Select cod_empleado,fecha_reincorp FROM NOM024 Where (fecha_reincorp<='$fechah') And (NOM024.cod_empleado IN (SELECT NOM006.cod_empleado FROM NOM006 Where tipo_nomina='$'tipo_nomina))";$resultado=pg_query($sSQL);$filas=pg_num_rows($resultado); if($filas>=1){$exist_vac="S";}}
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="00";}else{$temp_nomina=$gnomina; $tipo_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 }
-pg_close();?>
+pg_close($conn);?>
 <body>
 <form name="form1" method="post" >
   <table width="560" height="360" border="1" align="center" cellpadding="0" cellspacing="0">

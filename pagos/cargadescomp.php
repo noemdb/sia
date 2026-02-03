@@ -11,6 +11,6 @@ $sql="SELECT * FROM pre006 where tipo_compromiso='$tipo_compromiso' and referenc
 if ($filas>0){ $registro=pg_fetch_array($res); $concepto=$registro["descripcion_comp"];  $nro_documento=$registro["nro_documento"];
   if(($tipo_compromiso>="0005")AND ($tipo_compromiso<="0010")){$concepto="CONTRATO NRO.".$nro_documento." ".$registro["descripcion_comp"]; } }
 } }
-pg_close();
+pg_close($conn);
 ?>
-<textarea name="txtconcepto" cols="95" onFocus="encender(this); " onBlur="apagar(this);" class="Estilo10" id="txtconcepto"><?echo $concepto?></textarea>
+<textarea name="txtconcepto" cols="95" onFocus="encender(this); " onBlur="apagar(this);" class="Estilo10" id="txtconcepto"><?php echo $concepto?></textarea>

@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);include ("../class/fun_fechas.php");
+<?php include ("../class/conect.php");  error_reporting(E_ALL ^ E_NOTICE);include ("../class/fun_fechas.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <script language="JavaScript">
 function cerrar_catalogo(tipo_nomina,des_nomina,fdesde,fhasta,nsemana){
@@ -21,7 +21,7 @@ function cerrar_catalogo(tipo_nomina,des_nomina,fdesde,fhasta,nsemana){
 <meta http-equiv="Pragma" content="no-cache" />
 <LINK  href="../class/sia.css" type="text/css"   rel="stylesheet">
 </head><body>
-<?
+<?php 
         $criterio=""; $txt_criterio=""; $pagina=1;$inicio=1;$final=1; $numPags=1; 
         if ($_GET["criterio"]!=""){ $txt_criterio = $_GET["criterio"]; $txt_criterio = strtoupper ($txt_criterio);
         $criterio = " where tipo_nomina like '%" . $txt_criterio . "%' or descripcion like '%" . $txt_criterio . "%'"; }
@@ -39,15 +39,15 @@ function cerrar_catalogo(tipo_nomina,des_nomina,fdesde,fhasta,nsemana){
                 if(($linea>=$limitInf) and ($linea<=$limitInf+$tamPag)){  $frec=$registro["frecuencia"]; $ultima_fecha=$registro["ultima_fecha"]; $proxima_fecha=$registro["proxima_fecha"]; $num_semana=$registro["nro_semana"]; $fecha_desde=formato_ddmmaaaa($ultima_fecha); $fecha_hasta=formato_ddmmaaaa($proxima_fecha); $nro_semanas=0;
                   $fecha_desde=nextDate($fecha_desde,1);  if($frec=="M"){$fecha_hasta=colocar_udiames($fecha_desde);} if($frec=="S"){$fecha_hasta=nextDate($fecha_desde,7);$nro_semanas=$num_semana+1;} if($frec=="Q"){$dia=substr($fecha_desde,0,2); if($dia=='01'){$fecha_hasta=nextDate($fecha_desde,14);}}    }
 ?>
-  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<? echo $registro["tipo_nomina"]; ?>','<? echo $registro["descripcion"]; ?>','<? echo $fecha_desde; ?>','<? echo $fecha_hasta; ?>','<? echo $nro_semanas; ?>')" >
-   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["tipo_nomina"]; ?></b></font></td>
-   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><? echo $registro["descripcion"]; ?></b></font></td>
+  <tr bgcolor='#FFFFFF' bordercolor='#000000' onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:cerrar_catalogo('<?php  echo $registro["tipo_nomina"]; ?>','<?php  echo $registro["descripcion"]; ?>','<?php  echo $fecha_desde; ?>','<?php  echo $fecha_hasta; ?>','<?php  echo $nro_semanas; ?>')" >
+   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["tipo_nomina"]; ?></b></font></td>
+   <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><b><?php  echo $registro["descripcion"]; ?></b></font></td>
    </tr>
-<?} } echo "</table>"; } ?>
+<?php } } echo "</table>"; } ?>
         <br>
         <table border="0" cellspacing="0" cellpadding="0" align="center"  bordercolor='#000033'>
         <tr><td align="center" valign="top">
-<?      if($pagina>1){
+<?php       if($pagina>1){
                 echo "<a class='p' href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina-1)."&orden=".$orden."&criterio=".$txt_criterio."'>";
                 echo "<font face='verdana' size='-2'>anterior</font>";
                 echo "</a>&nbsp;"; }
@@ -69,4 +69,4 @@ Criterio de b&uacute;squeda:
 </form>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -34,8 +34,8 @@ return true;}
 -->
 </style>
 </head>
-<? $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); $nombre="";
-if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_nomina"]; $nombre=$registro["nombre"]; }  $tipo_new=$tipo_nomina;  pg_close();
+<?php  $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); $nombre="";
+if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_nomina"]; $nombre=$registro["nombre"]; }  $tipo_new=$tipo_nomina;  pg_close($conn);
 ?>
 <body>
 <form name="form1" method="post" action="Update_retira_trab.php" onSubmit="return revisar()">
@@ -50,7 +50,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">CÓDIGO DEL TRABAJADOR :</span></td>
-                 <td width="350"><span class="Estilo5"><input name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="350"><span class="Estilo5"><input name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                </tr>
              </table></td>
         </tr>
@@ -58,7 +58,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="80"><span class="Estilo5">NOMBRE :</span></td>
-                 <td width="470"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="70" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="470"><span class="Estilo5"><input name="txtnombre" type="text" id="txtnombre" size="70" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
         </tr>
@@ -75,7 +75,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $tipo_nomina=$registro["tipo_no
           <td align="center"><table width="550" border="0">
               <tr>
                 <td width="150" ><span class="Estilo5"> FECHA DE EGRESO :</span> </td>
-                <td width="400"><span class="Estilo5"><input name="txtfecha_eg" type="text" id="txtfecha_eg" size="11" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onchange="chequea_fecha(this);"></span></td>
+                <td width="400"><span class="Estilo5"><input name="txtfecha_eg" type="text" id="txtfecha_eg" size="11" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onchange="chequea_fecha(this);"></span></td>
               </tr>
           </table></td>
         </tr>

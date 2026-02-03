@@ -1,4 +1,4 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $tipo_rpt=$_GET["tipo_rpt"];
 $clasificacion_d=$_GET["clasificacion_d"]; $clasificacion_h=$_GET["clasificacion_h"];$tipo_bene_d=$_GET["tipo_bene_d"];$tipo_bene_h=$_GET["tipo_bene_h"];
 $ordenado="pag016.nro_orden"; $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS; 
@@ -6,7 +6,7 @@ $criterio1="Fecha Desde: ".$fecha_d." Al: ".$fecha_h; $criterio2="LISTADO FACTUR
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';} $fecha_hasta=$ano1.$mes1.$dia1;
    $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else{ $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
    $sSQL = "select pag016.nro_orden,pag016.nro_factura,pag016.nro_con_factura,pag016.fecha_factura,pag016.monto_sin_iva,pag016.monto_iva1_so,pag016.tasa_iva1,pag016.monto_iva1,pag016.monto_iva4_so,pag016.monto_iva4,pag016.monto_factura,pag016.rif_factura,pag016.status_2,
             pre099.Nombre,pre099.clasificacion,pre099.tipo_benef,pag001.fecha,pag001.anulado,pag001.status,to_char(pag001.fecha,'DD/MM/YYYY') as fechae,to_char(pag016.fecha_factura,'DD/MM/YYYY') as fechaf, substring(pag016.nro_factura,12,8) as nfactura 
@@ -110,7 +110,7 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
-		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		    <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>NRO ORDEN</strong></td>
@@ -123,7 +123,7 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>IVA </strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO CON IVA</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_orden=$registro["nro_orden"];  $fecha=$registro["fecha"]; $ced_rif=$registro["rif_factura"]; 
@@ -135,17 +135,17 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
 		   $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	?>	   
 		   <tr>
-           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_orden; ?></td>
-           <td width="100" align="left"><? echo $fecha; ?></td>
-           <td width="100" align="left"><? echo $nfactura; ?></td>
-           <td width="100" align="left"><? echo $fecha_factura; ?></td>
-           <td width="100" align="left"><? echo $ced_rif; ?></td>
-           <td width="400" align="justify"><? echo $nombre; ?></td>
-           <td width="100" align="right"><? echo $monto_sin_iva; ?></td>
-           <td width="100" align="right"><? echo $monto_iva1; ?></td>
-           <td width="100" align="right"><? echo $monto_factura; ?></td>
+           <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_orden; ?></td>
+           <td width="100" align="left"><?php  echo $fecha; ?></td>
+           <td width="100" align="left"><?php  echo $nfactura; ?></td>
+           <td width="100" align="left"><?php  echo $fecha_factura; ?></td>
+           <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre; ?></td>
+           <td width="100" align="right"><?php  echo $monto_sin_iva; ?></td>
+           <td width="100" align="right"><?php  echo $monto_iva1; ?></td>
+           <td width="100" align="right"><?php  echo $monto_factura; ?></td>
          </tr>
-	<? }   
+	<?php }   
              $total=formato_monto($total); 
         ?>
    <tr>
@@ -160,9 +160,9 @@ if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$d
          <td width="400"><span class="Estilo5"></span></td>
          <td width="100"><span class="Estilo5"></span></td>
          <td width="100" align="right"><strong>TOTAL :</strong></td>
-		 <td width="100" align="right"><strong><? echo $total; ?></strong></font></td>
+		 <td width="100" align="right"><strong><?php  echo $total; ?></strong></font></td>
     </tr>
-	  </table><?
+	  </table><?php 
 	}
 } 
 ?>

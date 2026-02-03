@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PAG001".$equipo;$codigo_mov=substr($mcod_m,0,49);$formato="XX-XX-XX-XXX-XX-XX-XX";}else{$codigo_mov=$_GET["codigo_mov"];$user=$_GET["user"];$password=$_GET["password"];$dbname=$_GET["dbname"]; $formato=$_GET["formato"]; }  $mpatron="Array(2,2,2,2,2,3,2,2,2,2)";  $mpatron=arma_patron($formato); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGO (Incluir Codigos en la Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGO (Incluir Codigos en la Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
@@ -31,15 +31,15 @@ function validarNum(e,obj){tecla=(document.all) ? e.keyCode : e.which;  if(tecla
     patron=/[0-9\,\-\.]/;  te=String.fromCharCode(tecla); return patron.test(te);
 }
 function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla!=13) return;  frm=obj.form;  for(i=0;i<frm.elements.length;i++)  if(frm.elements[i]==obj) {if (i==frm.elements.length-1) i=-1; break } frm.elements[i+1].focus(); return false;} 
-function llamar_anterior(){ document.location ='Det_inc_cod_ord.php?codigo_mov=<?echo $codigo_mov?>&bloqueada=N'; }
+function llamar_anterior(){ document.location ='Det_inc_cod_ord.php?codigo_mov=<?php echo $codigo_mov?>&bloqueada=N'; }
 function chequea_codpresup(mform){var cod_presup;
   cod_presup=mform.txtcod_presup.value;
-  ajaxSenddoc('GET', 'amontcod.php?cod_presup='+cod_presup+'&codigo_mov=<?echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'montcod', 'innerHTML');
+  ajaxSenddoc('GET', 'amontcod.php?cod_presup='+cod_presup+'&codigo_mov=<?php echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'montcod', 'innerHTML');
 return true;}
 function apaga_codpresup(mthis){var cod_presup;
  apagar(mthis);
  cod_presup=document.form1.txtcod_presup.value;
- ajaxSenddoc('GET', 'amontcod.php?cod_presup='+cod_presup+'&codigo_mov=<?echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'montcod', 'innerHTML');
+ ajaxSenddoc('GET', 'amontcod.php?cod_presup='+cod_presup+'&codigo_mov=<?php echo $codigo_mov?>'+'&password='+mpassword+'&user='+muser+'&dbname='+mdbname, 'montcod', 'innerHTML');
 }
 function llama_codpresup(){var cod_presup;
   cod_presup=document.form1.txtcod_presup.value;
@@ -148,7 +148,7 @@ return true;}
       </table>
         <table width="653" align="center">
           <tr>
-            <td width="20"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="20"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="131">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input class="Estilo10" name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input class="Estilo10" name="Blanquear" type="reset" value="Blanquear"></td>

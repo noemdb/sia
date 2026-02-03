@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
-$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
+$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$codigo_mov='';$ref_comp='N';$ced_rif="";}else{$codigo_mov=$_GET["codigo_mov"];$ref_comp=$_GET["ref_comp"];$ced_rif=$_GET["ced_rif"];}
 $ivag=0;$sql="Select * from SIA000"; $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){$ivag=$registro["campo056"]; }
 ?>
@@ -16,7 +16,7 @@ function cerrar_fact(mfacturas){
 }
 function Llamar_Inc_factura(codigo_mov,iva,ref_comp,ced_rif){
 var murl;var mtipo_comp="";var mref_comp="";
- murl="Inc_fact_ord.php?codigo_mov=<?echo $codigo_mov?>&password=<?echo $password?>&user=<?echo $user?>&dbname=<?echo $dbname?>&ivag="+iva+"&ref_comp="+ref_comp+"&ced_rif="+ced_rif+"&tipo_comp=&ref_compromiso=&monto=";
+ murl="Inc_fact_ord.php?codigo_mov=<?php echo $codigo_mov?>&password=<?php echo $password?>&user=<?php echo $user?>&dbname=<?php echo $dbname?>&ivag="+iva+"&ref_comp="+ref_comp+"&ced_rif="+ced_rif+"&tipo_comp=&ref_compromiso=&monto=";
  document.location=murl;
 }
 function Llama_Modificar(codigo_mov,factura,ref_comp,ced_rif){var murl;
@@ -28,7 +28,7 @@ function Llama_Modificar(codigo_mov,factura,ref_comp,ced_rif){var murl;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Factura" onclick="javascript:Llamar_Inc_factura('<? echo $codigo_mov; ?>','<? echo $ivag; ?>','<? echo $ref_comp; ?>','<? echo $ced_rif; ?>');"></td>
+            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Factura" onclick="javascript:Llamar_Inc_factura('<?php  echo $codigo_mov; ?>','<?php  echo $ivag; ?>','<?php  echo $ref_comp; ?>','<?php  echo $ced_rif; ?>');"></td>
             <td width="255" align="center">&nbsp;</td>
             <td width="215" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar las Facturas"></td>
@@ -56,7 +56,7 @@ function Llama_Modificar(codigo_mov,factura,ref_comp,ced_rif){var murl;
            <td width="80" align="left" bgcolor="#99CCFF"><strong>Ref.Comp</strong></td>
            <td width="40" align="left" bgcolor="#99CCFF"><strong>Tipo</strong></td>
          </tr>
-         <? $total=0; $subtotal=0; $stfact="";
+         <?php  $total=0; $subtotal=0; $stfact="";
 while($registro=pg_fetch_array($res))
 {  $sfecha=$registro["fecha_factura"]; $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
 $monto=$registro["monto_factura"]; $total=$total+$monto; $monto=formato_monto($monto);
@@ -66,20 +66,20 @@ $montoo=$registro["monto_iva1_so"];  $montoo=formato_monto($montoo);
 $montoor=$registro["monto_iva4_so"];  $montoor=formato_monto($montoor);
 if ($stfact=="") {$stfact="";}else{$stfact=$stfact.",";}$stfact=$stfact.elimina_ceros($registro["nro_factura"]);
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $registro["nro_factura"]; ?>','<? echo $ref_comp; ?>','<? echo $ced_rif; ?>');">
-           <td width="120" align="left"><? echo $registro["rif_factura"]; ?></td>
-           <td width="150" align="left"><? echo $registro["nro_factura"]; ?></td>
-           <td width="80" align="left"><? echo $fecha; ?></td>
-           <td width="170" align="left"><? echo $registro["nro_con_factura"]; ?></td>
-           <td width="100" align="right"><? echo $montos; ?></td>
-           <td width="60" align="right"><? echo $tasa; ?></td>
-           <td width="100" align="right"><? echo $montoo; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-		   <td width="100" align="right"><? echo $montoor; ?></td>
-           <td width="80" align="left"><? echo $registro["ref_compromiso"]; ?></td>
-           <td width="40" align="left"><? echo $registro["tipo_compromiso"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $registro["nro_factura"]; ?>','<?php  echo $ref_comp; ?>','<?php  echo $ced_rif; ?>');">
+           <td width="120" align="left"><?php  echo $registro["rif_factura"]; ?></td>
+           <td width="150" align="left"><?php  echo $registro["nro_factura"]; ?></td>
+           <td width="80" align="left"><?php  echo $fecha; ?></td>
+           <td width="170" align="left"><?php  echo $registro["nro_con_factura"]; ?></td>
+           <td width="100" align="right"><?php  echo $montos; ?></td>
+           <td width="60" align="right"><?php  echo $tasa; ?></td>
+           <td width="100" align="right"><?php  echo $montoo; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+		   <td width="100" align="right"><?php  echo $montoor; ?></td>
+           <td width="80" align="left"><?php  echo $registro["ref_compromiso"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["tipo_compromiso"]; ?></td>
          </tr>
-         <?}
+         <?php }
  $tiva=$total-$subtotal; $total=formato_monto($total); $subtotal=formato_monto($subtotal); $tiva=formato_monto($tiva);
 ?>
        </table></td>
@@ -93,24 +93,24 @@ if ($stfact=="") {$stfact="";}else{$stfact=$stfact.",";}$stfact=$stfact.elimina_
          <td width="20">&nbsp;</td>
          <td width="80"><span class="Estilo5">SUBTOTAL :</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $subtotal; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $subtotal; ?></td> </tr>
          </table></td>
          <td width="60"><span class="Estilo5">I.V.A. :</span></td>
          <td width="150"><table width="141" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $tiva; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $tiva; ?></td> </tr>
          </table></td>
          <td width="70"><span class="Estilo5">TOTAL :</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
-             <tr> <td align="right" class="Estilo5"><? echo $total; ?></td> </tr>
+             <tr> <td align="right" class="Estilo5"><?php  echo $total; ?></td> </tr>
          </table></td>
        </tr>
      </table><p>&nbsp;</p></td>
    </tr>
    <tr>
-     <td align="center"><input name="btcerrar" type="button" id="btcerrar" value="Cerra Ventana" onclick="javascrip:cerrar_fact('<? echo $stfact; ?>');"></td>
+     <td align="center"><input name="btcerrar" type="button" id="btcerrar" value="Cerra Ventana" onclick="javascrip:cerrar_fact('<?php  echo $stfact; ?>');"></td>
    </tr>
  </table>
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

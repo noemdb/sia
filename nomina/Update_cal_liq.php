@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  $fecha_ley="19/06/2007";
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy();  $fecha_ley="19/06/2007";
 $equipo=getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");echo "ESPERE POR FAVOR MODIFICANDO....","<br>";
 $cod_empleado=$_POST["txtcod_empleado"];  $codigo_mov=$_POST["txtcodigo_mov"]; $fecha_liquidacion=$_POST["txtfecha_liquidacion"]; $tipo_liquidacion=$_POST["txttipo_liquidacion"];
 $ant_ano=$_POST["txtant_ano"]; $ant_mes=$_POST["txtant_mes"]; $ant_dia=$_POST["txtant_dia"]; $con_bon_vac=$_POST["txtcon_bon_vac"]; $con_cal_vac=$_POST["txtcon_cal_vac"];
@@ -27,28 +27,28 @@ $total_vacaciones_p=$_POST["txttotal_vacaciones_p"]; $total_vacaciones_p=formato
 $total_bono_vac_p=$_POST["txttotal_bono_vac_p"]; $total_bono_vac_p=formato_numero($total_bono_vac_p); if(is_numeric($total_bono_vac_p)){$total_bono_vac_p=$total_bono_vac_p;}else{$total_bono_vac_p=0;}
 $url="Act_liqui_presta.php?Gcriterio=C".$cod_empleado;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $error=0;
-if (pg_ErrorMessage($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){$error=1; ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{ $sql="Select * FROM NOM035  where (cod_empleado='$cod_empleado')";  $res=pg_query($sql); $filas=pg_num_rows($res); 
-  if($filas==0){$error=0; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO TIENE CALCULO DE LIQUIDACION');</script><? }
+  if($filas==0){$error=0; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO TIENE CALCULO DE LIQUIDACION');</script><?php }
   if($error==0){ $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res); 
     if($filas>=1){ $registro=pg_fetch_array($res); $error=0;  $cod_cargo=$registro["cod_cargo"]; $cod_departamento=$registro["cod_departam"];	
-    }else{ $error=1; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO EXISTE');</script><? }	
-	if($error==0){$sSQL="Select * from NOM004 WHERE codigo_cargo='$cod_cargo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CARGO NO EXISTE');</script><?} else{$registro=pg_fetch_array($resultado); $des_cargo=$registro["denominacion"];}}
-    if($error==0){$sSQL="Select * from NOM005 WHERE codigo_departamento='$cod_departamento'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);if($filas==0){$error=1;  ?> <script language="JavaScript"> muestra('CODIGO DE DEPARTAMENTO NO EXISTE');</script><?}else{$registro=pg_fetch_array($resultado); $des_departamento=$registro["descripcion_dep"];} }
+    }else{ $error=1; ?> <script language="JavaScript"> muestra('CODIGO DE TRABAJADOR NO EXISTE');</script><?php }	
+	if($error==0){$sSQL="Select * from NOM004 WHERE codigo_cargo='$cod_cargo'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado); if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CODIGO DE CARGO NO EXISTE');</script><?php } else{$registro=pg_fetch_array($resultado); $des_cargo=$registro["denominacion"];}}
+    if($error==0){$sSQL="Select * from NOM005 WHERE codigo_departamento='$cod_departamento'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);if($filas==0){$error=1;  ?> <script language="JavaScript"> muestra('CODIGO DE DEPARTAMENTO NO EXISTE');</script><?php }else{$registro=pg_fetch_array($resultado); $des_departamento=$registro["descripcion_dep"];} }
     if($error==0){ $sql="Select * from NOM076 where (codigo_mov='$codigo_mov') order by cod_concepto,fecha_hasta"; $res=pg_query($sql);
       while($registro=pg_fetch_array($res)) { $cantidad=$registro["cantidad"]; $monto=$registro["monto_orig"]; $total=$registro["valor"]; 
       if($registro["oculto"]=="NO"){ if($registro["asig_ded_apo"]=="A"){$total_asignacion=$total_asignacion+$registro["valor"];} if($registro["asig_ded_apo"]=="D"){$total_deduccion=$total_deduccion+$registro["valor"];} } } 
     }	
-	if($error==0){if(checkData($fecha_liquidacion)=='1'){$error=0; $fechal=formato_aaaammdd($fecha_liquidacion);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA DE LIQUIDACION NO ES VALIDA');</script><? }}
-    if($error==0){if(checkData($fecha_ant_depositada)=='1'){$error=0; $fechaa=formato_aaaammdd($fecha_ant_depositada);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA DE ANTIUEDAD DEPOSITADA NO ES VALIDA');</script><? }}
+	if($error==0){if(checkData($fecha_liquidacion)=='1'){$error=0; $fechal=formato_aaaammdd($fecha_liquidacion);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA DE LIQUIDACION NO ES VALIDA');</script><?php } }
+    if($error==0){if(checkData($fecha_ant_depositada)=='1'){$error=0; $fechaa=formato_aaaammdd($fecha_ant_depositada);} else{$error=1; ?> <script language="JavaScript">muestra('FECHA DE ANTIUEDAD DEPOSITADA NO ES VALIDA');</script><?php } }
     if($error==0){$sfecha=formato_aaaammdd($fecha_hoy);	
 	  $sSQL="SELECT ACTUALIZA_NOM035(3,'','$cod_empleado','$fechal',0,0,0,'',0,'',0,'','',0,'',0,'','','','','',0,0,0,0,0,0,0,0,0,0,0,'$fechal',0,0,0,0,0,0,0,0,0,0,0,0,0,'','','','',0,0,'$usuario_sia','$minf_usuario')"; //echo $sSQL;
-      $resultado=pg_exec($conn,$sSQL); $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<? echo $merror; ?>');</script><?}
+      $resultado=pg_exec($conn,$sSQL); $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<?php  echo $merror; ?>');</script><?php }
 	  $sSQL="SELECT ACTUALIZA_NOM035(1,'$codigo_mov','$cod_empleado','$fechal',$ant_ano,$ant_mes,$ant_dia,'$cod_sue_bas',$sueldo_basico,'$con_cal_vac',$monto_cal_vac,'$con_cal_vac','$cod_sue_int',$monto_sue_int,'$cod_sue_int',$monto_sue_int,'$cod_cargo','$des_cargo','$cod_departamento','$des_departamento','$tipo_liquidacion',$tiempo_servicio,$sueldo_liquidacion,$sueldo_vacaciones,$dias_preaviso,$monto_preaviso,$dias_art142,$monto_art142,$dias_art92,$monto_art92,$dias_ant_dep,$monto_ant_depositada,'$fechaa',$total_adelantos,$total_prestamos,$total_intereses,$int_fraccionados,$dias_int_fraccionados,$dias_vacaciones_f,$monto_vacaciones_f,$dias_bono_vac_f,$monto_bono_vac_f,$total_vacaciones_p,$total_bono_vac_p,$total_asignacion,$total_deduccion,'','','$campo_str1','',$monto_banco,0,'$usuario_sia','$minf_usuario')"; // echo $sSQL;
-      $resultado=pg_exec($conn,$sSQL); $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<? echo $merror; ?>');</script><?}else{$error=0;?><script language="JavaScript">muestra('MODIFICO EXITOSAMENTE');</script><?
-	   $desc_doc="CALCULO DE LIQUIDACION, CODIGO TRABAJADOR:".$cod_empleado.", FECHA LIQUIDACION:".$fecha_liquidacion; $resultado=pg_exec($conn,"SELECT INCLUYE_SIA004('04','$usuario_sia','$usuario_sia','$equipo','Modifico','$sfecha','$desc_doc')");    $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<? echo $merror; ?>');</script><?} }
+      $resultado=pg_exec($conn,$sSQL); $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<?php  echo $merror; ?>');</script><?php }else{$error=0;?><script language="JavaScript">muestra('MODIFICO EXITOSAMENTE');</script><?php 
+	   $desc_doc="CALCULO DE LIQUIDACION, CODIGO TRABAJADOR:".$cod_empleado.", FECHA LIQUIDACION:".$fecha_liquidacion; $resultado=pg_exec($conn,"SELECT INCLUYE_SIA004('04','$usuario_sia','$usuario_sia','$equipo','Modifico','$sfecha','$desc_doc')");    $merror=pg_errormessage($conn); $merror="ERROR GRABANDO: ".substr($merror,0,91); if (!$resultado){$error=1; ?><script language="JavaScript">muestra('<?php  echo $merror; ?>');</script><?php } }
 	}
   }
 }
-pg_close(); if($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?}else{?><script language="JavaScript">history.back();</script><?}
+pg_close($conn); if($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php }else{?><script language="JavaScript">history.back();</script><?php }
 ?>

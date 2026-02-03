@@ -1,8 +1,8 @@
-<<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");$codigocuentad=$_GET["codigocuentad"];$codigocuentah=$_GET["codigocuentah"];$periodo=$_GET["periodo"];;$nivel=$_GET["nivel"];;$vimprimir=$_GET["vimprimir"];;$Sql="";
 //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{
     // LLAMAR A PHP_REPORT
       $sSQL = "SELECT CON013.Nro_Linea, CON013.Nombre_Cuenta, CON013.Columna2, CON013.Status, CON013.Codigo_Cuenta,  CON013.Columna3, CON013.Columna4,

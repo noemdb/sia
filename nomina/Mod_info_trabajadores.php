@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  include ("../class/configura.inc"); $equipo=getenv("COMPUTERNAME"); $mcod_m="TRAB".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  include ("../class/configura.inc"); $equipo=getenv("COMPUTERNAME"); $mcod_m="TRAB".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $fecha_hoy=asigna_fecha_hoy();
 if ($gnomina=="00"){ $criterion="";$criterioc="";}else{ $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
-if (!$_GET){$cod_empleado="";$Gcedula="";} else{$cod_empleado=$_GET["Gcod_empleado"];$Gcedula=$_GET["Gcedula"];} $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
+if (!$_GET){$cod_empleado="";$Gcedula="";} else{$cod_empleado=$_GET["Gcod_empleado"];$Gcedula=$_GET["Gcedula"];} $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
 $cod_modulo="04";$campo502="NNNNNNNNNNNNNNNNNNNN";$sql="Select * from SIA005 where campo501='$cod_modulo'";$resultado=pg_query($sql);if($registro=pg_fetch_array($resultado,0)){$cod_modulo=$registro["campo501"]; $campo502=$registro["campo502"];}$p_apellido=substr($campo502,18,1);
 //echo $Cod_Emp;
 ?>
@@ -81,7 +81,7 @@ return true;}
 </script>
 </head>
 <body>
- <?
+ <?php 
 $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $campo_str1="";  $campo_num1=0;
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $tipo_cuenta=""; $cod_banco=""; $nombre_banco=""; $cta_empresa=""; $calculo_grupos=""; $fecha_asigna_cargo=""; $cod_cargo=""; $cod_departam=""; $cod_tipo_personal=""; $paso=""; $grado=""; $sueldo=""; $prima=""; $compensacion=""; $otros=""; $sueldo_integral=""; $tipo_vacaciones="N"; $pago_vaciones="N"; $fecha_pago=""; $tiene_lph=""; $banco_lph=""; $cta_lph=""; $fecha_lph=""; $fecha_des_lph=""; $modif_lph=""; $tiene_dec_jurada=""; $fecha_declaracion=""; $monto_declaracion=""; $fecha_fin_con=""; $fecha_egreso=""; $motivo_egreso=""; $cont_fijo=""; $cod_cont_colec=""; $tipo_nom_ant=""; $cod_emp_ant=""; $fecha_camb_n=""; $motivo_camb_n=""; $tiene_aus_pro=""; $motivo_ausencia=""; $fecha_aus_desde=""; $fecha_aus_hasta="";  $motivo_suplen=""; $cedula_titular="";
 $nombre1=""; $nombre2=""; $apellido1=""; $apellido2=""; $sexo=""; $edo_civil=""; $fecha_nacimiento=""; $edad=""; $lugar_nacimiento=""; $direccion=""; $cod_postal=""; $telefono=""; $tlf_movil=""; $correo=""; $profesion=""; $grado_inst=""; $tiempo_e=""; $poliza=""; $fecha_seguro=""; $estado=""; $ciudad=""; $municipio=""; $parroquia=""; $observacion=""; $talla_camisa=""; $talla_pantalon=""; $talla_calzado=""; $peso=""; $estatura=""; $aptdo_postal=""; $rif_empleado="";
@@ -135,28 +135,28 @@ $sSQL="SELECT ACTUALIZA_NOM071(4,'$codigo_mov','','$sfecha','')"; $resultado=pg_
 $sql="SELECT * FROM NOM013 where cod_empleado='$cod_empleado' order by fecha"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){  $sfecha=$registro["fecha"]; $observacion=$registro["observacion"];
   $sSQL="SELECT ACTUALIZA_NOM071(1,'$codigo_mov','$cod_empleado','$sfecha','$observacion')";
-  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><?}
+  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 }
 $sql="SELECT * FROM ASIG_CARGO  where cod_empleado='$cod_empleado' order by fecha_asigna"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){  $sfecha=$registro["fecha_asigna"]; $cod_cargo=$registro["cod_cargo"];  $cod_departamento=$registro["cod_departamento"];  $des_cargo=$registro["des_cargo"];   $des_departamento=$registro["des_departamento"]; $cod_tipo_personal=$registro["cod_tipo_personal"]; $paso=$registro["paso"]; $grado=$registro["grado"]; $observacion=""; $sueldo=$registro["sueldo"];  $compensacion=$registro["compensacion"]; $prima=$registro["prima"];
  $sSQL="SELECT ACTUALIZA_NOM068(1,'$codigo_mov','$cod_empleado','$sfecha','$cod_cargo','$cod_departamento','$des_cargo','$des_departamento','$cod_tipo_personal','$paso','$grado','$observacion',$sueldo,$prima,$compensacion,0,0)";
- $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+ $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 }
 $sql="SELECT * FROM NOM010  where cod_empleado='$cod_empleado' order by fecha_desde"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){ $fechad=$registro["fecha_desde"]; $fechah=$registro["fecha_hasta"]; $monto_s=$registro["sueldo"]; $empresa=$registro["empresa"]; $depar=$registro["departamento"]; $cargo=$registro["cargo"];
  $sSQL="SELECT ACTUALIZA_NOM070(1,'$codigo_mov','$cod_empleado','$fechad','$fechah','$empresa','$depar','$cargo',$monto_s)";
- $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+ $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 }
 $sql="SELECT * FROM NOM014 where cod_empleado='$cod_empleado' order by fecha"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){$fechac=$registro["fecha"]; $titulo=$registro["titulo"]; $instituto=$registro["instituto"];  $descripcion_c=$registro["descripcion"];
   $sSQL="SELECT ACTUALIZA_NOM067(1,'$codigo_mov','$cod_empleado','$fechac','$titulo','$instituto','$descripcion_c')";
-  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+  $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 }
 $sql="SELECT * FROM NOM009 where cod_empleado='$cod_empleado' order by ci_partida"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){ $sfecha=$registro["fecha_nac"]; $cedulaf=trim($registro["ci_partida"]);$nombref=$registro["nombre"];$sexof=$registro["sexo"];$edadf=$registro["edad"];$parentesco=$registro["parentesco"];
  $status=$registro["status"];
  $sSQL="SELECT ACTUALIZA_NOM069(1,'$codigo_mov','$cod_empleado','$cedulaf','$nombref','$sexof','$sfecha',$edadf,'$parentesco','$status','',0)";
- $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+ $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61); if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
 }
 $Ssql="select * from SIA000"; $resultado=pg_query($Ssql);if ($registro=pg_fetch_array($resultado,0)){$reg_e=$registro["campo041"];$edo_e=$registro["campo010"];$mun_e=$registro["campo011"];$ciu_e=$registro["campo009"];}else{$reg_e="REGION CENTRO-OCCIDENTAL";$edo_e="LARA";$mun_e="IRIBARREN";$ciu_e="BARQUISIMETO";}
 $cod_e="00"; $Ssql="select * FROM pre091 where estado='".$edo_e."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_e=$registro["cod_estado"];}
@@ -165,7 +165,7 @@ $cod_p=$cod_m."00"; $Ssql="select * from PRE096 where substr(cod_parroquia,1,4)=
 $cod_estado=""; $Ssql="SELECT * FROM pre091 where estado='".$estado."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_estado=$registro["cod_estado"];}if($cod_estado==""){ $cod_estado=$cod_e; $estado=$edo_e;}
 $cod_muni=$cod_estado."01"; $Ssql="select * FROM PRE093 where nombre_municipio='".$municipio."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$cod_muni=$registro["cod_municipio"];} else { $cod_muni=$cod_m; } 
 if($municipio==""){ $Ssql="select * FROM PRE093 where cod_municipio='".$cod_muni."'"; $resultado=pg_query($Ssql); if ($registro=pg_fetch_array($resultado,0)){$municipio=$registro["nombre_municipio"];}  };
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -179,8 +179,8 @@ pg_close();
   <tr>
     <td width="92" height="1340"><table width="92" height="1340" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA' "o"];" height="30"  bgcolor=#EAEAEA><a class=menu href="Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>">Atras</a></td>
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA' "o"];" height="30"  bgcolor=#EAEAEA><a class=menu href="Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>">Atras</a></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -200,19 +200,19 @@ pg_close();
              <td><table width="865">
                <tr>
                  <td width="140"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR :</span></td>
-                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                  <td width="150"><span class="Estilo5">C&Eacute;DULA DE IDENTIDAD :</span></td>
-                 <td width="110"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" ></span></td>
-                 <?if($Cod_Emp=="32"){?>
+                 <td width="110"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" ></span></td>
+                 <?php if($Cod_Emp=="32"){?>
                   <td width="55"><input class="Estilo10" name="btcargaced" type="button" id="btcargaced" title="Carga Cedula de Trabajador" onclick="javascript:carga_ced_trab();" value="..."></td>
-                          <?} else {?>
+                          <?php } else {?>
 			     <td width="55">&nbsp;</td>
-			     <?}?>	
+			     <?php }?>	
 				 <td width="100"><span class="Estilo5">NACIONALIDAD : </span></td>
 <script language="JavaScript" type="text/JavaScript"> function asig_nacionalidad(mvalor){var f=document.form1;  if(mvalor=="VENEZOLANO"){document.form1.txtnacionalidad.options[0].selected = true;}else{document.form1.txtnacionalidad.options[1].selected = true;}} </script>
                  <td width="120"><span class="Estilo5"><select class="Estilo10" name="txtnacionalidad" size="1" id="txtnacionalidad" onFocus="encender(this)" onBlur="apagar(this)">
                       <option>VENEZOLANO</option> <option>EXTRANJERO</option> </select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_nacionalidad('<?echo $nacionalidad;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_nacionalidad('<?php echo $nacionalidad;?>');</script>
                </tr>
              </table></td>
            </tr>
@@ -220,7 +220,7 @@ pg_close();
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -228,11 +228,11 @@ pg_close();
              <td><table width="864">
                <tr>
                  <td width="75"><span class="Estilo5">NOMBRES :</span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre1" type="text" id="txtnombre1" size="20" maxlength="20" value="<?echo $nombre1?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"> </span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre2" type="text" id="txtnombre2" size="20" maxlength="20" value="<?echo $nombre2?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"> </span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre1" type="text" id="txtnombre1" size="20" maxlength="20" value="<?php echo $nombre1?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"> </span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtnombre2" type="text" id="txtnombre2" size="20" maxlength="20" value="<?php echo $nombre2?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"> </span></td>
                  <td width="75"><span class="Estilo5">APELLIDOS :</span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido1" type="text" id="txtapellido1" size="20" maxlength="20" value="<?echo $apellido1?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"></span></td>
-                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido2" type="text" id="txtapellido2" size="20" maxlength="20" value="<?echo $apellido2?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"></span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido1" type="text" id="txtapellido1" size="20" maxlength="20" value="<?php echo $apellido1?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"></span></td>
+                 <td width="175"><span class="Estilo5"><input class="Estilo10" name="txtapellido2" type="text" id="txtapellido2" size="20" maxlength="20" value="<?php echo $apellido2?>" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_nombre(this.form);"></span></td>
                  <td width="25"><input class="Estilo10" name="btcambia" type="button" id="btcambia" title="cambia nombres y apellidos" onclick="javascript:camb_nombre();" value="..."></td>
                  
 			  </tr>
@@ -262,11 +262,11 @@ function asig_status(mvalor){var f=document.form1;
              <td><table width="864">
                <tr>
                  <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="110"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="11" maxlength="10"  onFocus="encender(this)" onBlur="apaga_fec_ing(this)" value="<?echo $fecha_ingreso?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
+                 <td width="110"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="11" maxlength="10"  onFocus="encender(this)" onBlur="apaga_fec_ing(this)" value="<?php echo $fecha_ingreso?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
                  <td width="214"><span class="Estilo5">FECHA ING. ADMINIST. PUBLICA :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_ing_adm" type="text" id="txtfecha_ing_adm" size="11" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_ing_adm?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_ing_adm" type="text" id="txtfecha_ing_adm" size="11" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_ing_adm?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
                  <td width="200"><span class="Estilo5">A&Ntilde;OS ANTIGUEDAD ACUMULADO :</span></td>
-				 <td width="50"><span class="Estilo5"> <input class="Estilo10" name="txtcampo_num1" type="text" id="txtcampo_num1" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)"   value="<?echo $campo_num1?>"  > </span></td>
+				 <td width="50"><span class="Estilo5"> <input class="Estilo10" name="txtcampo_num1" type="text" id="txtcampo_num1" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)"   value="<?php echo $campo_num1?>"  > </span></td>
                
                </tr>
              </table></td>
@@ -288,15 +288,15 @@ function asig_status(mvalor){var f=document.form1;
              </table></td>
            </tr>
 		   
-		   <script language="JavaScript" type="text/JavaScript"> asig_status('<?echo $status;?>');</script>
+		   <script language="JavaScript" type="text/JavaScript"> asig_status('<?php echo $status;?>');</script>
 		   
           
            <tr>
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                 <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="2" maxlength="2" value="<?echo $tipo_nomina?>" readonly > </span></td>
-                 <td width="620"><span class="Estilo5"><input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="90" maxlength="100" value="<?echo $descripcion?>" readonly> </span></td>
+                 <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="2" maxlength="2" value="<?php echo $tipo_nomina?>" readonly > </span></td>
+                 <td width="620"><span class="Estilo5"><input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="90" maxlength="100" value="<?php echo $descripcion?>" readonly> </span></td>
                 </tr>
              </table></td>
            </tr>
@@ -304,10 +304,10 @@ function asig_status(mvalor){var f=document.form1;
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">CODIGO CATEGORIA : </span></td>
-                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcod_cat_alter" type="text" id="txtcod_cat_alter" size="16" maxlength="16" value="<?echo $cod_categoria?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcod_cat_alter" type="text" id="txtcod_cat_alter" size="16" maxlength="16" value="<?php echo $cod_categoria?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="60"><input class="Estilo10" name="btcodcat" type="button" id="btcodcat" title="Abrir Catalogo Categorias"  onClick="VentanaCentrada('Cat_codigos_cat.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
                  <td width="175"><span class="Estilo5">FUENTE DE FINANCIAMIENTO :</span></td>
-				 <td width="50"><span class="Estilo5"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $campo_str1?>">  </span></td>
+				 <td width="50"><span class="Estilo5"><span class="Estilo5"><input class="Estilo10" name="txtcod_fuente" type="text" id="txtcod_fuente" size="2" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $campo_str1?>">  </span></td>
 				 <td width="45"><input class="Estilo10" name="btfuente" type="button" id="btfuente" title="Abrir Catalogo Fuentes de Financiamiento" onclick="VentanaCentrada('../presupuesto/Cat_fuentes.php?criterio=','SIA','','750','500','true')" value="..."></td>
                  <td width="250"><span class="Estilo5"> <input class="Estilo10" name="txtdes_fuente" type="text" id="txtdes_fuente" size="35" readonly> </span></td>
 				</tr>
@@ -331,25 +331,25 @@ function asig_tipo_cuenta(mvalor){var f=document.form1;
                  <td width="110"><span class="Estilo5">FORMA DE PAGO  :</span></td>
                  <td width="104"><span class="Estilo5"><select class="Estilo10" name="txttipo_pago" size="1" id="txttipo_pago" onFocus="encender(this)" onBlur="apagar(this)">
                    <option>EFECTIVO</option><option>CHEQUE</option><option>DEPOSITO</option> <option>RECIBO</option></select></span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_forma_pago('<?echo $tipo_pago;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_forma_pago('<?php echo $tipo_pago;?>');</script>
                  <td width="200"><span class="Estilo5">N&Uacute;MERO CUENTA TRABAJADOR : </span></td>
-                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empleado" type="text" id="txtcta_empleado" size="28" maxlength="20" value="<?echo $cta_empleado?>"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtcta_empleado" type="text" id="txtcta_empleado" size="28" maxlength="20" value="<?php echo $cta_empleado?>"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="120"><span class="Estilo5">TIPO DE CUENTA  :</span></td>
                  <td width="110"><span class="Estilo5"><select class="Estilo10" name="txttipo_cuenta" size="1" id="txttipo_cuenta" onFocus="encender(this)" onBlur="apagar(this)">
                    <option>AHORRO</option>  <option>CORRIENTE</option> <option>FAL</option> </select></span></td>
                 </tr>
-<script language="JavaScript" type="text/JavaScript"> asig_tipo_cuenta('<?echo $tipo_cuenta;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tipo_cuenta('<?php echo $tipo_cuenta;?>');</script>
              </table></td>
            </tr>
            <tr>
              <td><table width="864">
                <tr>
                  <td width="130"><span class="Estilo5">CUENTA EMPRESA :</span></td>
-                 <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco" value="<?echo $cod_banco?>" size="4" maxlength="4"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="60"><span class="Estilo5"><input class="Estilo10" name="txtcod_banco" type="text" id="txtcod_banco" value="<?php echo $cod_banco?>" size="4" maxlength="4"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="40"><input class="Estilo10" name="btcod_banco" type="button" id="btcod_banco" title="Abrir Catalogo de Bancos" onclick="VentanaCentrada('Cat_bancos.php?criterio=','SIA','','750','500','true')" value="..."></td>
-                 <td width="360"><span class="Estilo5"><input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" value="<?echo $nombre_banco?>" size="60" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="360"><span class="Estilo5"><input class="Estilo10" name="txtnombre_banco" type="text" id="txtnombre_banco" value="<?php echo $nombre_banco?>" size="60" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="74"><span class="Estilo5">NUMERO : </span></td>
-                 <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtnro_cuenta" type="text" id="txtnro_cuenta" size="24" maxlength="20" value="<?echo $cta_empresa?>"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="200"><span class="Estilo5"> <input class="Estilo10" name="txtnro_cuenta" type="text" id="txtnro_cuenta" size="24" maxlength="20" value="<?php echo $cta_empresa?>"  onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -359,11 +359,11 @@ function asig_tipo_cuenta(mvalor){var f=document.form1;
                <tr>
                  <td width="205"><span class="Estilo5">PRESENTA DECLARACI&Oacute;N JURADA :</span></td>
                  <td width="70"><span class="Estilo5"><select class="Estilo10" name="txttiene_dec_jurada" size="1" id="txttiene_dec_jurada" onFocus="encender(this)" onBlur="apagar(this)"><option>SI</option> <option>NO</option></select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_tiene_dec('<?echo $tiene_dec_jurada;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tiene_dec('<?php echo $tiene_dec_jurada;?>');</script>
                  <td width="194"><span class="Estilo5">FECHA DECLARACI&Oacute;N JURADA :</span></td>
-                 <td width="125"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_declaracion" type="text" id="txtfecha_declaracion" size="11" maxlength="10" value="<?echo $fecha_declaracion?>"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="125"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_declaracion" type="text" id="txtfecha_declaracion" size="11" maxlength="10" value="<?php echo $fecha_declaracion?>"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="140"><span class="Estilo5">MONTO DECLARACI&Oacute;N : </span></td>
-                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtmonto_declaracion" type="text" id="txtmonto_declaracion" size="14" maxlength="14" value="<?echo $monto_declaracion?>"  onFocus="encender(this)" onBlur="apagar(this)"  style="text-align:right"></span></td>
+                 <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtmonto_declaracion" type="text" id="txtmonto_declaracion" size="14" maxlength="14" value="<?php echo $monto_declaracion?>"  onFocus="encender(this)" onBlur="apagar(this)"  style="text-align:right"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -373,11 +373,11 @@ function asig_tipo_cuenta(mvalor){var f=document.form1;
                <tr>
                  <td width="115"><span class="Estilo5">COTIZA L.P.H. :</span></td>
                  <td width="70"><span class="Estilo5"><select class="Estilo10" name="txttiene_lph" size="1" id="txttiene_lph" onFocus="encender(this)" onBlur="apagar(this)"><option>SI</option> <option>NO</option></select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_tiene_dec('<?echo $tiene_lph;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tiene_dec('<?php echo $tiene_lph;?>');</script>
                  <td width="65"><span class="Estilo5">BANCO :</span></td>
-                 <td width="334"><span class="Estilo5"> <input class="Estilo10" name="txtbanco_lph" type="text" id="txtbanco_lph" size="45" maxlength="45" value="<?echo $banco_lph?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="334"><span class="Estilo5"> <input class="Estilo10" name="txtbanco_lph" type="text" id="txtbanco_lph" size="45" maxlength="45" value="<?php echo $banco_lph?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="70"><span class="Estilo5">CUENTA : </span></td>
-                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_lph" type="text" id="txtcta_lph" size="27" maxlength="20" value="<?echo $cta_lph?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="210"><span class="Estilo5"> <input class="Estilo10" name="txtcta_lph" type="text" id="txtcta_lph" size="27" maxlength="20" value="<?php echo $cta_lph?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -385,24 +385,24 @@ function asig_tipo_cuenta(mvalor){var f=document.form1;
              <td><table width="864">
                <tr>
                  <td width="174"><span class="Estilo5">FECHA INSCRIPCI&Oacute;N L.P.H. :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_lph" type="text" id="txtfecha_lph" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_lph?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_lph" type="text" id="txtfecha_lph" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_lph?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="170"><span class="Estilo5">FECHA DESINCORP. L.P.H :</span></td>
-                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_des_lph" type="text" id="txtfecha_des_lph" size="12" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_des_lph?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_des_lph" type="text" id="txtfecha_des_lph" size="12" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_des_lph?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
 <script language="JavaScript" type="text/JavaScript"> function asig_cont_fijo(mvalor){var f=document.form1;  if(mvalor=="FIJO"){document.form1.txtcont_fijo.options[0].selected = true;}        if(mvalor=="CONTRATADO"){document.form1.txtcont_fijo.options[1].selected = true;}   if(mvalor=="SUPLENTE"){document.form1.txtcont_fijo.options[2].selected = true;} }</script>
                  <td width="150"><span class="Estilo5">TIPO DE TRABAJADOR :</span></td>
                  <td width="130"><span class="Estilo5"><select class="Estilo10" name="txtcont_fijo" size="1" id="txtcont_fijo" onFocus="encender(this)" onBlur="apagar(this)">
                      <option>FIJO</option><option>CONTRATADO</option> <option>SUPLENTE</option> </select></span></td>
                </tr>
-<script language="JavaScript" type="text/JavaScript"> asig_cont_fijo('<?echo $cont_fijo;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_cont_fijo('<?php echo $cont_fijo;?>');</script>
              </table></td>
            </tr>
            <tr>
              <td><table width="864">
                <tr>
                  <td width="170"><span class="Estilo5">FECHA PROGRAMADO EGRESO :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_egreso" type="text" id="txtfecha_egreso" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_egreso?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_egreso" type="text" id="txtfecha_egreso" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_egreso?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="124"><span class="Estilo5">MOTIVO DEL EGRESO :</span></td>
-                 <td width="350"><span class="Estilo5"> <input class="Estilo10" name="txtmotivo_egreso" type="text" id="txtmotivo_egreso" size="55" maxlength="55" value="<?echo $motivo_egreso?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="350"><span class="Estilo5"> <input class="Estilo10" name="txtmotivo_egreso" type="text" id="txtmotivo_egreso" size="55" maxlength="55" value="<?php echo $motivo_egreso?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -415,12 +415,12 @@ function asig_jerarquia(mvalor){var f=document.form1; if(mvalor=="ADMINISTRATIVO
              <td><table width="864">
                <tr>
                  <td width="174"><span class="Estilo5">FECHA FIN DEL CONTRATO :</span></td>
-                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_fin_con" type="text" id="txtfecha_fin_con" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_fin_con?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="220"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_fin_con" type="text" id="txtfecha_fin_con" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_fin_con?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="190"><span class="Estilo5">JERARQUIA DEL TRABAJADOR :</span></td>
                  <td width="280"><span class="Estilo5"><select class="Estilo10" name="txtjerarquia" size="1" id="txtjerarquia" onFocus="encender(this)" onBlur="apagar(this)">
                     <option>ADMINISTRATIVO</option> <option>PROFESIONALES Y TECNICOS</option> <option>ALTO NIVEL</option> <option>OPERATIVO</option> <option>OBREROS</option> <option>OTROS</option> </select></span></td>
                 </tr>
-<script language="JavaScript" type="text/JavaScript"> asig_jerarquia('<?echo $jerarquia;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_jerarquia('<?php echo $jerarquia;?>');</script>
              </table></td>
            </tr>
 <script language="JavaScript" type="text/JavaScript"> function asig_pago_vac(mvalor){var f=document.form1;  if(mvalor=="SI"){document.form1.txttipo_vacaciones.options[0].selected = true;}else{document.form1.txttipo_vacaciones.options[1].selected = true;}} </script>
@@ -429,11 +429,11 @@ function asig_jerarquia(mvalor){var f=document.form1; if(mvalor=="ADMINISTRATIVO
                <tr>
                  <td width="204"><span class="Estilo5">PAGO VACACIONES POR N&Oacute;MINA :</span></td>
                  <td width="100"><span class="Estilo5"><select class="Estilo10" name="txttipo_vacaciones" size="1" id="txttipo_vacaciones" onFocus="encender(this)" onBlur="apagar(this)"><option>NO</option> <option>SI</option></select>  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_pago_vac('<?echo $tipo_vacaciones;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_pago_vac('<?php echo $tipo_vacaciones;?>');</script>
                  <td width="190"><span class="Estilo5">FECHA RETORNO VACACIONES  :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="12" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_pago?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtfecha_pago" type="text" id="txtfecha_pago" size="12" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_pago?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="120"><span class="Estilo5">RIF TRABAJADOR :</span></td>
-                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtrif_empleado" type="text" id="txtrif_empleado" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)"  value="<?echo $rif_empleado?>"></span></td>
+                 <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtrif_empleado" type="text" id="txtrif_empleado" size="12" maxlength="12" onFocus="encender(this)" onBlur="apagar(this)"  value="<?php echo $rif_empleado?>"></span></td>
 
                 </tr>
              </table></td>
@@ -442,9 +442,9 @@ function asig_jerarquia(mvalor){var f=document.form1; if(mvalor=="ADMINISTRATIVO
              <td><table width="864">
                <tr>
                  <td width="170"><span class="Estilo5">CODIGO DE UBICACION :</span></td>
-                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="15" maxlength="15" value="<?echo $codigo_ubicacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_ubicacion" type="text" id="txtcodigo_ubicacion" size="15" maxlength="15" value="<?php echo $codigo_ubicacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="40"><input class="Estilo10" name="btcod_ubica" type="button" id="btcod_ubica" title="Abrir Catalogo de Ubicaciones" onclick="VentanaCentrada('Cat_ubicacion.php?criterio=','SIA','','750','500','true')" value="..."></td>
-                 <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ubi" type="text" id="txtdescripcion_ubi" size="80" maxlength="100"  value="<?echo $descripcion_ubi?>" readonly> </span></td>
+                 <td width="534"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion_ubi" type="text" id="txtdescripcion_ubi" size="80" maxlength="100"  value="<?php echo $descripcion_ubi?>" readonly> </span></td>
                  </tr>
              </table></td>
            </tr>		   
@@ -470,9 +470,9 @@ function asig_grado_inst(mvalor){var f=document.form1;
                       <option>UNIVERSITARIO</option>  <option>POSTGRADO</option> <option>MAESTRIA</option> <option>DOCTORADO</option>  <option>NINGUNO</option>
                     </select>
                  </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_grado_inst('<?echo $grado_inst;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_grado_inst('<?php echo $grado_inst;?>');</script>
                  <td width="82"><span class="Estilo5">PROFESI&Oacute;N : </span></td>
-                 <td width="396"><span class="Estilo5"> <input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" size="60" maxlength="55" value="<?echo $profesion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="396"><span class="Estilo5"> <input class="Estilo10" name="txtprofesion" type="text" id="txtprofesion" size="60" maxlength="55" value="<?php echo $profesion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -498,14 +498,14 @@ function asig_sexo(mvalor){var f=document.form1; if(mvalor=="MASCULINO"){documen
                  <td width="100"><span class="Estilo5">ESTADO CIVIL  : </span></td>
                  <td width="139"><span class="Estilo5"> <select class="Estilo10" name="txtedo_civil" size="1" id="txtedo_civil" onFocus="encender(this)" onBlur="apagar(this)">
                     <option>SOLTERO</option> <option>SOLTERA</option>  <option>CASADO</option> <option>CASADA</option> <option>VIUDO</option> <option>VIUDA</option>  <option>DIVORCIADO</option>  <option>DIVORCIADA</option> <option>CONCUBINO</option> <option>CONCUBINA</option>  <option>OTROS</option> </select> </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_edo_civil('<?echo $edo_civil;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_edo_civil('<?php echo $edo_civil;?>');</script>
                  <td width="55"><span class="Estilo5">SEXO : </span></td>
                  <td width="150"><span class="Estilo5"> <select class="Estilo10" name="txtsexo" size="1" id="txtsexo" onFocus="encender(this)" onBlur="apagar(this)"> <option>MASCULINO</option><option>FEMENINO</option> </select> </span></td>
-<script language="JavaScript" type="text/JavaScript"> asig_sexo('<?echo $sexo;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_sexo('<?php echo $sexo;?>');</script>
                  <td width="150"><span class="Estilo5">FECHA DE NACIMIENTO :</span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacimiento?>" onchange="chequea_fecha_nac(this.form)" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacimiento?>" onchange="chequea_fecha_nac(this.form)" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  <td width="50"><span class="Estilo5">EDAD : </span></td>
-                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="4" maxlength="4" value="<?echo $edad?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="4" maxlength="4" value="<?php echo $edad?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -513,7 +513,7 @@ function asig_sexo(mvalor){var f=document.form1; if(mvalor=="MASCULINO"){documen
              <td><table width="864">
                <tr>
                  <td width="154"><span class="Estilo5">LUGAR DE NACIMIENTO : </span></td>
-                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtlugar_nacimiento" type="text" id="txtlugar_nacimiento" size="85" maxlength="85"  value="<?echo $lugar_nacimiento?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtlugar_nacimiento" type="text" id="txtlugar_nacimiento" size="85" maxlength="85"  value="<?php echo $lugar_nacimiento?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -521,7 +521,7 @@ function asig_sexo(mvalor){var f=document.form1; if(mvalor=="MASCULINO"){documen
              <td><table width="860">
                <tr>
                  <td width="85"><span class="Estilo5">DIRECCI&Oacute;N :</span></td>
-                 <td width="745"><textarea name="txtdireccion" cols="84" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" id="txtdireccion"><?echo $direccion?></textarea></td>
+                 <td width="745"><textarea name="txtdireccion" cols="84" class="Estilo10" onFocus="encender(this)" onBlur="apagar(this)" id="txtdireccion"><?php echo $direccion?></textarea></td>
                </tr>
              </table></td>
            </tr>
@@ -529,25 +529,25 @@ function asig_sexo(mvalor){var f=document.form1; if(mvalor=="MASCULINO"){documen
              <td><table width="864">
 <script language="JavaScript" type="text/JavaScript">
 function chequea_estado(mform){ var cod_edo;  var cod_mun; cod_edo=mform.txtestado.value;  cod_mun=cod_edo+'01';
-ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<? echo $municipio;?>&cod_estado='+cod_edo, 'municipio', 'innerHTML');
-ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<? echo $ciudad;?>&cod_estado='+cod_edo, 'ciudad', 'innerHTML');
-ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia;?>&cod_muni='+cod_mun, 'parro', 'innerHTML');
+ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<?php  echo $municipio;?>&cod_estado='+cod_edo, 'municipio', 'innerHTML');
+ajaxSenddoc('GET', 'cargaciudad.php?ciudad=<?php  echo $ciudad;?>&cod_estado='+cod_edo, 'ciudad', 'innerHTML');
+ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia;?>&cod_muni='+cod_mun, 'parro', 'innerHTML');
 return true;}
 function apaga_municipio(mthis){
 var mcod_mun;  apagar(mthis); mcod_mun=mthis.value;}
 function chequea_municipio(mform){ var mcod_mun; mcod_mun=mform.txtmunicipio.value; 
-ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia;?>&cod_muni='+mcod_mun, 'parro', 'innerHTML');
+ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia;?>&cod_muni='+mcod_mun, 'parro', 'innerHTML');
 return true;}
 </script>
                <tr>
                  <td width="73"><span class="Estilo5">ESTADO :</span></td>
                  <td width="323"><span class="Estilo5"> <div id="estado"><select class="Estilo10" name="txtestado" id="txtestado" onFocus="encender(this)" onBlur="apagar(this);" onchange="chequea_estado(this.form)">
-                    <option value="<? echo $cod_estado;?>"><? echo $estado;?></option></div></span></td>
-<script language="JavaScript" type="text/JavaScript"> ajaxSenddoc('GET', 'cargaentidades.php?mestado=<? echo $estado;?>', 'estado', 'innerHTML'); </script>
+                    <option value="<?php  echo $cod_estado;?>"><?php  echo $estado;?></option></div></span></td>
+<script language="JavaScript" type="text/JavaScript"> ajaxSenddoc('GET', 'cargaentidades.php?mestado=<?php  echo $estado;?>', 'estado', 'innerHTML'); </script>
                  <td width="92"><span class="Estilo5">MUNICIPIO  : </span></td>
                  <td width="355"><span class="Estilo5"><div id="municipio"><select class="Estilo10" name="txtmunicipio" id="txtmunicipio" onFocus="encender(this)" onBlur="apagar(this);" onchange="chequea_municipio(this.form)" >
-                     <option value="<? echo $cod_muni;?>"><? echo $municipio;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<? echo $municipio;?>&cod_estado='+cod_e, 'municipio', 'innerHTML'); </script>
+                     <option value="<?php  echo $cod_muni;?>"><?php  echo $municipio;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET', 'cargamunicipio.php?municipio=<?php  echo $municipio;?>&cod_estado='+cod_e, 'municipio', 'innerHTML'); </script>
                </tr>
              </table></td>
            </tr>
@@ -556,12 +556,12 @@ return true;}
                <tr>
                  <td width="73"><span class="Estilo5">CIUDAD  : </span></td>
                  <td width="333"><span class="Estilo5"> <div id="ciudad"><select class="Estilo10" name="txtciudad" id="txtciudad" onFocus="encender(this)" onBlur="apagar(this);">
-                    <option><? echo $ciudad;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET','cargaciudad.php?ciudad=<? echo $ciudad;?>&cod_estado='+cod_e, 'ciudad', 'innerHTML');  </script>
+                    <option><?php  echo $ciudad;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtestado.value; ajaxSenddoc('GET','cargaciudad.php?ciudad=<?php  echo $ciudad;?>&cod_estado='+cod_e, 'ciudad', 'innerHTML');  </script>
                  <td width="92"><span class="Estilo5">PARROQUIA  : </span></td>
                  <td width="355"><span class="Estilo5"><div id="parro"><select class="Estilo10" name="txtparroquia" id="txtparroquia" onFocus="encender(this)" onBlur="apagar(this);">
-                    <option><? echo $parroquia;?></option> </div></span></td>
-<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtmunicipio.value; ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<? echo $parroquia;?>&cod_muni='+cod_e, 'parro', 'innerHTML'); </script>
+                    <option><?php  echo $parroquia;?></option> </div></span></td>
+<script language="JavaScript" type="text/JavaScript">var cod_e='01'; cod_e=document.form1.txtmunicipio.value; ajaxSenddoc('GET', 'cargaparroquia.php?parroquia=<?php  echo $parroquia;?>&cod_muni='+cod_e, 'parro', 'innerHTML'); </script>
                </tr>
              </table></td>
            </tr>
@@ -569,11 +569,11 @@ return true;}
              <td><table width="864">
                <tr>
                  <td width="149"><span class="Estilo5">TELEFONO HABITACI&Oacute;N : </span></td>
-                 <td width="163"><span class="Estilo5"> <input class="Estilo10" name="txttelefono" type="text" id="txttelefono" size="20" maxlength="20" value="<?echo $telefono?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="163"><span class="Estilo5"> <input class="Estilo10" name="txttelefono" type="text" id="txttelefono" size="20" maxlength="20" value="<?php echo $telefono?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="165"><span class="Estilo5">TELEFONO MOVIL/CELULAR : </span></td>
-                 <td width="172"><span class="Estilo5"> <input class="Estilo10" name="txttlf_movil" type="text" id="txttlf_movil" size="20" maxlength="20" value="<?echo $tlf_movil?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
+                 <td width="172"><span class="Estilo5"> <input class="Estilo10" name="txttlf_movil" type="text" id="txttlf_movil" size="20" maxlength="20" value="<?php echo $tlf_movil?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
                  <td width="109"><span class="Estilo5">C&Oacute;DIGO POSTAL : </span></td>
-                 <td width="78"><span class="Estilo5"><input class="Estilo10" name="txtcod_postal" type="text" id="txtcod_postal" size="5" maxlength="5" value="<?echo $cod_postal?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="78"><span class="Estilo5"><input class="Estilo10" name="txtcod_postal" type="text" id="txtcod_postal" size="5" maxlength="5" value="<?php echo $cod_postal?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -581,9 +581,9 @@ return true;}
              <td><table width="864">
                <tr>
                  <td width="149"><span class="Estilo5">CORREO ELECTRONICO  :</span></td>
-                 <td width="308"><span class="Estilo5"> <input class="Estilo10" name="txtcorreo" type="text" id="txtcorreo" size="40" maxlength="40" value="<?echo $correo?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="308"><span class="Estilo5"> <input class="Estilo10" name="txtcorreo" type="text" id="txtcorreo" size="40" maxlength="40" value="<?php echo $correo?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="142"><span class="Estilo5">APARTADO POSTAL  : </span></td>
-                 <td width="241"><span class="Estilo5"> <input class="Estilo10" name="txtaptdo_postal" type="text" id="txtaptdo_postal" size="20" maxlength="20" value="<?echo $aptdo_postal?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="241"><span class="Estilo5"> <input class="Estilo10" name="txtaptdo_postal" type="text" id="txtaptdo_postal" size="20" maxlength="20" value="<?php echo $aptdo_postal?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -591,13 +591,13 @@ return true;}
              <td><table width="864">
                <tr>
                  <td width="144"><span class="Estilo5">NRO. POLIZA SEGURO : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtpoliza" type="text" id="txttalla_camisa" size="15" maxlength="15" value="<?echo $poliza?>"  onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtpoliza" type="text" id="txttalla_camisa" size="15" maxlength="15" value="<?php echo $poliza?>"  onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="100"><span class="Estilo5">TALLA CAMISA  : </span></td>
-                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_camisa" type="text" id="txttalla_camisa" size="3" maxlength="3" value="<?echo $talla_camisa?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_camisa" type="text" id="txttalla_camisa" size="3" maxlength="3" value="<?php echo $talla_camisa?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                  <td width="110"><span class="Estilo5">TALLA PANTALON  : </span></td>
-                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_pantalon" type="text" id="txttalla_pantalon" size="3" maxlength="3" value="<?echo $talla_pantalon?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txttalla_pantalon" type="text" id="txttalla_pantalon" size="3" maxlength="3" value="<?php echo $talla_pantalon?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                  <td width="110"><span class="Estilo5">TALLA CALZADO  : </span></td>
-                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttalla_calzado" type="text" id="txttalla_calzado" size="3" maxlength="3" value="<?echo $talla_calzado?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="70"><span class="Estilo5"><input class="Estilo10" name="txttalla_calzado" type="text" id="txttalla_calzado" size="3" maxlength="3" value="<?php echo $talla_calzado?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -608,18 +608,18 @@ return true;}
                  <td width="200"><span class="Estilo5">TIENE AUSENCIA PROGRAMADA :</span></td>
                  <td width="84"><span class="Estilo5"><select class="Estilo10" name="txttiene_aus_pro" size="1" id="txttiene_aus_pro" onFocus="encender(this)" onBlur="apagar(this)"><option>NO</option> <option>SI</option></select>  </span></td>
                  <td width="250"><span class="Estilo5">FECHA PROGRAMADA AUSENCIA DESDE : </span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_desde" type="text" id="txtfecha_aus_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_aus_desde?>"  onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_desde" type="text" id="txtfecha_aus_desde" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_aus_desde?>"  onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                  <td width="70"><span class="Estilo5">HASTA : </span></td>
-                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_hasta" type="text" id="txtfecha_aus_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_aus_hasta?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
+                 <td width="120"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_aus_hasta" type="text" id="txtfecha_aus_hasta" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_aus_hasta?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"></span></td>
                 </tr>
              </table></td>
            </tr>
-<script language="JavaScript" type="text/JavaScript"> asig_tiene_aus('<?echo $tiene_aus_pro;?>');</script>
+<script language="JavaScript" type="text/JavaScript"> asig_tiene_aus('<?php echo $tiene_aus_pro;?>');</script>
            <tr>
              <td><table width="864">
                <tr>
                  <td width="164" ><span class="Estilo5">MOTIVO DE LA AUSENCIA  :</span></td>
-                 <td width="700" ><span class="Estilo5"><input class="Estilo10" name="txtmotivo_ausencia" type="text" id="txtmotivo_ausencia" size="100" maxlength="100"  value="<?echo $motivo_ausencia?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
+                 <td width="700" ><span class="Estilo5"><input class="Estilo10" name="txtmotivo_ausencia" type="text" id="txtmotivo_ausencia" size="100" maxlength="100"  value="<?php echo $motivo_ausencia?>" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -639,27 +639,27 @@ return true;}
    rows[1][4] = "Experiencia Laboral";        // Requiere: <div id="T13" class="tab-body">  ... </div>
    rows[1][5] = "Informaci&oacute;n Curricular";        // Requiere: <div id="T14" class="tab-body">  ... </div>
               </script>
-                <?include ("../class/class_tab.php");?>
+                <?php include ("../class/class_tab.php");?>
                 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
                  <!--PESTAÑA 1 -->
                 <div id="T11" class="tab-body" >
-                  <iframe src="Det_inc_asig_cargo.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_asig_cargo.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 2 -->
                 <div id="T12" class="tab-body">
-                  <iframe src="Det_inc_hoja_vida.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_hoja_vida.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!--PESTAÑA 3 -->
                 <div id="T13" class="tab-body" >
-                  <iframe src="Det_inc_inf_familiar_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_inf_familiar_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 4 -->
                 <div id="T14" class="tab-body">
-                  <iframe src="Det_inc_exp_laboral_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_exp_laboral_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!-- PESTAÑA 5 -->
                 <div id="T15" class="tab-body">
-                  <iframe src="Det_inc_inf_curricular_e.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_inc_inf_curricular_e.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
                 </div>
               </div>
               </td>
@@ -668,8 +668,8 @@ return true;}
                   <div id="Layer3" style="position:absolute; width:859px; height:37px; z-index:2; left: 0px; top: 1290px;">
           <table width="859">
                 <tr>
-                  <td width="50"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-                  <td width="50"><input class="Estilo10" name="txtp_apellido" type="hidden" id="txtp_apellido" value="<?echo $p_apellido?>"></td>
+                  <td width="50"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+                  <td width="50"><input class="Estilo10" name="txtp_apellido" type="hidden" id="txtp_apellido" value="<?php echo $p_apellido?>"></td>
                   <td width="564">&nbsp;</td>
                   <td width="88"><input name="Grabar" type="submit" id="Grabar"  value="Grabar"></td>
                   <td width="88"><input name="Blanquear" type="reset" value="Blanquear"></td>

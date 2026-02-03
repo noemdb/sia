@@ -1,9 +1,9 @@
-<?include ("../class/seguridad.inc"); include ("../class/ventana.php");?>
+<?php include ("../class/seguridad.inc"); include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL BANCARIO (Tipo de Enriquecimiento)</title>
+<title>SIPAP CONTROL BANCARIO (Tipo de Enriquecimiento)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <SCRIPT language="JavaScript" src="../class/sia.js"  type=text/javascript></SCRIPT>
@@ -24,7 +24,7 @@ var mref;
 return true;}
 function revisar(){
 var f=document.form1;
-  if(f.txtcod_tipo_en.value==""){alert("Código no puede estar Vacio");return false;}else{f.txtcod_tipo_en.value=f.txtcod_tipo_en.value.toUpperCase();}
+  if(f.txtcod_tipo_en.value==""){alert("Cï¿½digo no puede estar Vacio");return false;}else{f.txtcod_tipo_en.value=f.txtcod_tipo_en.value.toUpperCase();}
   if(f.txttipo_en.value==""){alert("Descripci&oacute;n no puede estar Vacia"); return false; } else{f.txttipo_en.value=f.txttipo_en.value.toUpperCase();}
   document.form1.submit;
 return true;}

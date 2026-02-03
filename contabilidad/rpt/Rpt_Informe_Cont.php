@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc");
+<?php include ("../../class/seguridad.inc");include ("../../class/conects.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc");
 $codigo_informe=$_GET["codigo_informe"]; $nombre_archivo=$_GET["nombre_archivo"]; $periodo=$_GET["periodo"]; $seleccion=$_GET["seleccion"];
 echo "ESPERE POR FAVOR CALCULANDO INFORM CONTABLE....","<br>"; $error=0;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
 $sql="Select * from SIA005 where campo501='06'"; $resultado=pg_query($sql);
 if ($registro=pg_fetch_array($resultado,0)){ $Formato_Cuenta=$registro["campo504"]; $Cta_Activo=$registro["campo505"];$Cta_Pasivo=$registro["campo506"];
    $Cta_Ingreso=$registro["campo507"];  $Cta_Egreso=$registro["campo508"];  $Cta_Resultado=$registro["campo509"];$Cta_Capital=$registro["campo510"]; $Cta_Orden=$registro["campo511"];
@@ -461,14 +461,14 @@ while($registro=pg_fetch_array($res)){
  $mhaber09=$mhaber09*$moperador;  $mhaber10=$mhaber10*$moperador;  $mhaber11=$mhaber11*$moperador;  $mhaber12=$mhaber12*$moperador; 
  
  $sqlg="SELECT GUARDA_CALCULO_CON006('$codigo_informe','$linea','$mcta_asociada','$mcargable','$mtsaldo','$mclasificacion',$msaldo_anterior,$mmonto_pp01,$mmonto_pp02,$mmonto_pp03,$mmonto_pp04,$mmonto_pp05,$mmonto_pp06,$mmonto_pp07,$mmonto_pp08,$mmonto_pp09,$mmonto_pp10,$mmonto_pp11,$mmonto_pp12,$mmonto_pa01,$mmonto_pa02,$mmonto_pa03,$mmonto_pa04,$mmonto_pa05,$mmonto_pa06,$mmonto_pa07,$mmonto_pa08,$mmonto_pa09,$mmonto_pa10,$mmonto_pa11,$mmonto_pa12, $msaldo_p01,$msaldo_p02,$msaldo_p03,$msaldo_p04,$msaldo_p05,$msaldo_p06,$msaldo_p07,$msaldo_p08,$msaldo_p09,$msaldo_p10,$msaldo_p11,$msaldo_p12,$macumulado_p01,$macumulado_p02,$macumulado_p03,$macumulado_p04,$macumulado_p05,$macumulado_p06,$macumulado_p07,$macumulado_p08,$macumulado_p09,$macumulado_p10,$macumulado_p11,$macumulado_p12,$mdebe01,$mdebe02,$mdebe03,$mdebe04,$mdebe05,$mdebe06,$mdebe07,$mdebe08,$mdebe09,$mdebe10,$mdebe11,$mdebe12,$mhaber01,$mhaber02,$mhaber03,$mhaber04,$mhaber05,$mhaber06,$mhaber07,$mhaber08,$mhaber09,$mhaber10,$mhaber11,$mhaber12)";
- $resg=pg_exec($conn,$sqlg); $errorg=pg_errormessage($conn);  if (!$resg){ $error=1; echo $sqlg,"<br>";  echo $errorg,"<br>"; $errorg=substr($errorg, 0, 61); ?> <script language="JavaScript"> muestra('<? echo $errorg; ?>'); </script> <? }
+ $resg=pg_exec($conn,$sqlg); $errorg=pg_errormessage($conn);  if (!$resg){ $error=1; echo $sqlg,"<br>";  echo $errorg,"<br>"; $errorg=substr($errorg, 0, 61); ?> <script language="JavaScript"> muestra('<?php  echo $errorg; ?>'); </script> <?php }
  
 }
 $num_per=$periodo*1;
-if(($seleccion=="T")and($num_per>4)){ $error=1; ?> <script language="JavaScript"> muestra('PERIODO INVALIDO'); </script> <? }
+if(($seleccion=="T")and($num_per>4)){ $error=1; ?> <script language="JavaScript"> muestra('PERIODO INVALIDO'); </script> <?php }
 else{$url=$nombre_archivo."?&codigo_informe=".$codigo_informe."&periodo=".$periodo."&seleccion=".$seleccion;  echo $url;}
-pg_close(); //$error=1; 
-if($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script><?}
+pg_close($conn); //$error=1; 
+if($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script><?php }
 ?>
 
 

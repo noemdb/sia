@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
   $equipo = getenv("COMPUTERNAME");  $fecha_hoy=asigna_fecha_hoy();  
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA</title>
+<title>SIPAP CONTABILIDAD FINANCIERA</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel=stylesheet>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -84,7 +84,7 @@ return true;}
           
         <table width="768">
           <tr>
-            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="664"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Buscar"></td>
             <td width="88"><input name="Submit" type="reset" value="Blanquear"></td>
           </tr>

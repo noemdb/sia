@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$cod_municipio='';} else {$cod_municipio=$_GET["Gmunicipio"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,7 +38,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $den_municipio="";$sql="Select cod_municipio,nombre_municipio from PRE093 where cod_municipio='$cod_municipio'";
 $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_municipio=$registro["cod_municipio"];  $den_municipio=$registro["nombre_municipio"];}
@@ -79,7 +79,7 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_municipio=$reg
                   <tr>
                     <td width="96"><span class="Estilo5">C&Oacute;DIGO :</span></td>
                     <td width="720"><span class="Estilo5">
-                      <input name="txtCodigo_Municipio" type="text" id="txtCodigo_Municipio" title="Registre el C&oacute;digo del Municipio" size="10" maxlength="4"  readonly value="<?ECHO $cod_municipio?>">
+                      <input name="txtCodigo_Municipio" type="text" id="txtCodigo_Municipio" title="Registre el C&oacute;digo del Municipio" size="10" maxlength="4"  readonly value="<?php ECHO $cod_municipio?>">
                     </span></td>
                   </tr>
                 </table></td>
@@ -92,7 +92,7 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_municipio=$reg
                   <table width="816" border="0">
                     <tr>
                       <td width="96"><span class="Estilo5">NOMBRE :</span></td>
-                      <td width="720"><input name="txtNombre_Municipio" type="text" id="txtNombre_Municipio" title="Registre el Nombre del Municipio" size="100" maxlength="200"  value="<?ECHO $den_municipio?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="720"><input name="txtNombre_Municipio" type="text" id="txtNombre_Municipio" title="Registre el Nombre del Municipio" size="100" maxlength="200"  value="<?php ECHO $den_municipio?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>
@@ -121,4 +121,4 @@ $res=pg_query($sql); if ($registro=pg_fetch_array($res,0)){  $cod_municipio=$reg
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

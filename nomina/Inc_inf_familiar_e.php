@@ -5,12 +5,12 @@ if (!$_GET){$mcod_m="NOM053".$equipo;$codigo_mov=substr($mcod_m,0,49);}else{$cod
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Informaci&oacute;n Familiar)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Informaci&oacute;n Familiar)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_inf_familiar_e.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_inf_familiar_e.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){
 var f=document.form1;
 var Valido=true;
@@ -80,7 +80,7 @@ return true;}
           <td><table width="660" border="0">
               <tr>
                 <td width="153"><span class="Estilo5">FECHA DE NACIMIENTO : </span></td>
-                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtfecha_nac" type="text" id="txtfecha_nac" size="15" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)"  value="<?echo $fecha_hoy?>" onchange="chequea_fecha_nac(this.form)"></span></td>
+                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtfecha_nac" type="text" id="txtfecha_nac" size="15" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)"  value="<?php echo $fecha_hoy?>" onchange="chequea_fecha_nac(this.form)"></span></td>
                 <td width="97"><span class="Estilo5">EDAD (A&Ntilde;OS) : </span></td>
                 <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtedad" type="text" id="txtedad" size="5" maxlength="4" align="right" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
               </tr>
@@ -99,7 +99,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

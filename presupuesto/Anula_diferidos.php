@@ -5,7 +5,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Anular Diferidos)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Anular Diferidos)</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css"  rel="stylesheet">
 <SCRIPT language="JavaScript" src="../class/sia.js" type="text/javascript">
@@ -17,7 +17,7 @@ function checkrefecha(mform){var mref;var mfec;
 return true;}
 function revisar(){var f=document.form1; var Valido=true;
     if(f.txtfecha_anu.value==""){alert("Fecha no puede estar Vacia");return false;}
-    if(f.txtdescrip_anu.value==""){alert("Descripción de Anulación no puede estar Vacia"); return false; }  else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
+    if(f.txtdescrip_anu.value==""){alert("Descripciï¿½n de Anulaciï¿½n no puede estar Vacia"); return false; }  else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
     if(f.txtfecha_anu.value.length==10){Valido=true;}    else{alert("Longitud de Fecha Invalida");return false;}
 document.form1.submit;
 return true;}
@@ -44,7 +44,7 @@ return true;}
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
-                <td width="270"><span class="Estilo5"><span class="Estilo10"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  > </span> </span></td>
+                <td width="270"><span class="Estilo5"><span class="Estilo10"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  > </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
             </table></td>
@@ -63,8 +63,8 @@ return true;}
           </tr>
           <tr>
             <td><table width="680" border="0" align="center"> <tr>
-				<td width="20"><input name="txttipo_diferido" type="hidden"  id="txttipo_diferido" value="<?echo $tipo_diferido?>"></td>
-				<td width="96"><input name="txtreferencia_dife" type="hidden"  id="txtreferencia_dife" value="<?echo $referencia_dife?>"></td>
+				<td width="20"><input name="txttipo_diferido" type="hidden"  id="txttipo_diferido" value="<?php echo $tipo_diferido?>"></td>
+				<td width="96"><input name="txtreferencia_dife" type="hidden"  id="txtreferencia_dife" value="<?php echo $referencia_dife?>"></td>
             </tr></table></td>
           </tr>
           <tr>

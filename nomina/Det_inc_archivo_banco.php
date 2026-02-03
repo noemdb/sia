@@ -1,7 +1,7 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php"); $tipo_arch_banco='00'; 
+<?php include ("../class/conect.php"); include ("../class/funciones.php"); $tipo_arch_banco='00'; 
 if(!$_GET){$cod_arch_banco='';}else{$criterio=$_GET["criterio"]; $tipo_arch_banco=substr($criterio,0,2); $cod_arch_banco=substr($criterio,2,6); }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -50,44 +50,44 @@ $sql="SELECT * FROM nom052 where (tipo_arch_banco='$tipo_arch_banco') and (cod_a
            <td width="60" align="center" bgcolor="#99CCFF"><strong>Condici&oacute;n</strong></td>
            <td width="80" align="center" bgcolor="#99CCFF"><strong>Cuerpo Arch.</strong></td>
              </tr>
-<? $ult_campo=5;
+<?php  $ult_campo=5;
 while($registro=pg_fetch_array($res)){ $pos_campo=$registro["pos_campo"]; $ult_campo=$pos_campo+5;
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $pos_campo; ?>');">
-           <td width="50" align="left"><? echo $registro["cod_campo"]; ?></td>
-           <? if($registro["car_especial"]==""){?><td width="280" align="left">&nbsp;</td>
-           <?}else{?><td width="280" align="left"><? echo $registro["car_especial"]; ?></td><?}?>
-           <td width="30" align="left"><? echo $registro["tipo_campo"]; ?></td>
-           <td width="55" align="left"><? echo $registro["longitud_campo"]; ?></td>
-           <td width="70" align="left"><? echo $registro["decimales_campo"]; ?></td>
-           <td width="40" align="left"><? echo $registro["pos_comienza"]; ?></td>
-           <td width="30" align="left"><? echo $registro["pos_finaliza"]; ?></td>
-           <td width="110" align="left"><? echo $registro["rellena_ceros_izq"]; ?></td>
-           <td width="110" align="left"><? echo $registro["rellena_ceros_der"]; ?></td>
-           <td width="130" align="left"><? echo $registro["rellena_espacios_i"]; ?></td>
-           <td width="130" align="left"><? echo $registro["rellena_espacios_d"]; ?></td>
-           <td width="110" align="left"><? echo $registro["elimina_ceros_izq"]; ?></td>
-           <td width="110" align="left"><? echo $registro["elimina_ceros_der"]; ?></td>
-           <td width="130" align="left"><? echo $registro["elimina_espacios_i"]; ?></td>
-           <td width="130" align="left"><? echo $registro["elimina_espacios_d"]; ?></td>
-           <td width="80" align="left"><? echo $registro["elimina_comas"]; ?></td>
-           <td width="80" align="left"><? echo $registro["elimina_puntos"]; ?></td>
-           <td width="55" align="left"><? echo $registro["pos_campo"]; ?></td>
-           <td width="60" align="left"><? echo $registro["status1_campo"]; ?></td>
-           <td width="80" align="left"><? echo $registro["status2_campo"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $pos_campo; ?>');">
+           <td width="50" align="left"><?php  echo $registro["cod_campo"]; ?></td>
+           <?php  if($registro["car_especial"]==""){?><td width="280" align="left">&nbsp;</td>
+           <?php }else{?><td width="280" align="left"><?php  echo $registro["car_especial"]; ?></td><?php }?>
+           <td width="30" align="left"><?php  echo $registro["tipo_campo"]; ?></td>
+           <td width="55" align="left"><?php  echo $registro["longitud_campo"]; ?></td>
+           <td width="70" align="left"><?php  echo $registro["decimales_campo"]; ?></td>
+           <td width="40" align="left"><?php  echo $registro["pos_comienza"]; ?></td>
+           <td width="30" align="left"><?php  echo $registro["pos_finaliza"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["rellena_ceros_izq"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["rellena_ceros_der"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["rellena_espacios_i"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["rellena_espacios_d"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["elimina_ceros_izq"]; ?></td>
+           <td width="110" align="left"><?php  echo $registro["elimina_ceros_der"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["elimina_espacios_i"]; ?></td>
+           <td width="130" align="left"><?php  echo $registro["elimina_espacios_d"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["elimina_comas"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["elimina_puntos"]; ?></td>
+           <td width="55" align="left"><?php  echo $registro["pos_campo"]; ?></td>
+           <td width="60" align="left"><?php  echo $registro["status1_campo"]; ?></td>
+           <td width="80" align="left"><?php  echo $registro["status2_campo"]; ?></td>
          </tr>
-  <?} ?>
+  <?php } ?>
        </table></td>
    </tr>
    <tr><td>&nbsp;</td> </tr>
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_agregar(){   var mpos_campo='<?echo $ult_campo; ?>';    mpos_campo=Rellenarizq(mpos_campo,"0",3);
-document.location='Inc_campo_arch_banco.php?cod_arch_banco=<?echo $cod_arch_banco?>'+'&tipo_arch_banco=<?echo $tipo_arch_banco?>'+'&pos_campo='+mpos_campo; }
+function llamar_agregar(){   var mpos_campo='<?php echo $ult_campo; ?>';    mpos_campo=Rellenarizq(mpos_campo,"0",3);
+document.location='Inc_campo_arch_banco.php?cod_arch_banco=<?php echo $cod_arch_banco?>'+'&tipo_arch_banco=<?php echo $tipo_arch_banco?>'+'&pos_campo='+mpos_campo; }
 function Llama_Modificar(mpos_campo){  if(mpos_campo==""){alert("Informacion debe ser Seleccionada");}
- else{document.location='Mod_campo_arch_banco.php?cod_arch_banco=<?echo $cod_arch_banco?>'+'&tipo_arch_banco=<?echo $tipo_arch_banco?>'+'&pos_campo='+mpos_campo;} }
+ else{document.location='Mod_campo_arch_banco.php?cod_arch_banco=<?php echo $cod_arch_banco?>'+'&tipo_arch_banco=<?php echo $tipo_arch_banco?>'+'&pos_campo='+mpos_campo;} }
 </script>

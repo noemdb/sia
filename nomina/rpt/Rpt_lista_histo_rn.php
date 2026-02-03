@@ -1,10 +1,10 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
    $tipo_nomina_d=$_GET["tipo_nomina_d"];   $cod_conceptod=$_GET["cod_conceptod"];   $fecha_d=$_GET["fecha_d"]; $tipo_rpt=$_GET["tipo_rpt"];   $php_os=PHP_OS; 
    $Sql="";   $date = date("d-m-Y");   $hora = date("H:i:s a");
    if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
    if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} $criterio3="";
       $sSQL = "SELECT NOM018.Tipo_Nomina, NOM001.Descripcion, NOM018.Cod_Empleado, NOM018.Cod_Concepto, NOM018.Fecha_Nomina, NOM018.Nombre_Empleado,
                NOM018.Des_Concepto, NOM018.Asig_Ded_Apo, NOM018.Tipo_Asigna, NOM018.Monto, NOM018.Monto_Diario, to_char(nom018.Fecha_Nomina,'DD/MM/YYYY') as fechan
@@ -93,19 +93,19 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LI
 		 </tr>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong>Tipo Nomina: </strong></td>
-		    <td width="400" align="left" ><strong><? echo $tipo_nomina."    ".$descripcion; ?></strong></td>
+		    <td width="400" align="left" ><strong><?php  echo $tipo_nomina."    ".$descripcion; ?></strong></td>
 		 </tr>
 		<tr>
-		  <td width="100" align="left"><strong>'<? echo $cod_concepto; ?></strong></td>
-		  <td width="400" align="left"><strong><? echo $des_concepto; ?></strong></td>
-		  <td width="200" align="right"><strong><? echo 'Periodo  '.$fecha_nomina; ?></strong></td>
+		  <td width="100" align="left"><strong>'<?php  echo $cod_concepto; ?></strong></td>
+		  <td width="400" align="left"><strong><?php  echo $des_concepto; ?></strong></td>
+		  <td width="200" align="right"><strong><?php  echo 'Periodo  '.$fecha_nomina; ?></strong></td>
 		</tr>
 		 <tr height="20">
 		   <td width="100" align="left"><strong>Codigo Trab</strong></td>
 		   <td width="400" align="left"><strong>Nombre</strong></td>
 		   <td width="200" align="right"><strong>Monto</strong></td>
 		 </tr>
-		<?  $i=0; $sub_total_monto=0; $prev_cod_concepto=""; $prev_des_concepto=""; $res=pg_query($sSQL);
+		<?php   $i=0; $sub_total_monto=0; $prev_cod_concepto=""; $prev_des_concepto=""; $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $cod_empleado=$registro["cod_empleado"]; $nombre_empleado=$registro["nombre_empleado"]; $cod_concepto=$registro["cod_concepto"];
 	  	   $des_concepto=$registro["des_concepto"]; $fecha_nomina=$registro["fecha_nomina"];
@@ -113,11 +113,11 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LI
 	  	   $fecha_nomina_grupo=$fecha_nomina; $fecha_nomina=formato_ddmmaaaa($fecha_nomina); $monto=$registro["monto"];
 		   $sub_total_monto=$sub_total_monto+$monto; $monto=formato_monto($monto); ?>	 				 
            <tr>
-			  <td width="100" align="left"><? echo $cod_empleado; ?></td>
-			  <td width="400" align="left"><? echo $nombre_empleado; ?></td>
-			  <td width="200" align="right"><? echo $monto; ?></td>	
+			  <td width="100" align="left"><?php  echo $cod_empleado; ?></td>
+			  <td width="400" align="left"><?php  echo $nombre_empleado; ?></td>
+			  <td width="200" align="right"><?php  echo $monto; ?></td>	
 			</tr>
-		<? }?>	 				 
+		<?php }?>	 				 
 		<tr>
 		  <td width="100" align="left"></td>
 		  <td width="400" align="right"></td>
@@ -125,10 +125,10 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LI
 		</tr>
 		 <tr>
 		  <td width="100" align="left"></td>
-		  <td width="400" align="right"><strong><? echo 'TOTAL:  '?></strong></td>	
-		  <td width="200" align="right"><strong><? echo $sub_total_monto; ?></strong></td>
+		  <td width="400" align="right"><strong><?php  echo 'TOTAL:  '?></strong></td>	
+		  <td width="200" align="right"><strong><?php  echo $sub_total_monto; ?></strong></td>
 		</tr>
-		</table><?
+		</table><?php 
 	}
  }
 ?>

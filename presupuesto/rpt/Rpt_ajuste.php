@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $tipo_ajuste_d=$_GET["tipo_ajuste_d"];$tipo_ajuste_h=$_GET["tipo_ajuste_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"]; $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $tipo_rep=$_GET["tipo_rep"];
 $cod_presupd=$_GET["cod_presupd"]; $cod_presuph=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"]; $cod_fuente_h=$_GET["cod_fuenteh"];$date = date("d-m-Y");$hora = date("H:i:s a");$Sql="";
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';} $fecha_desde=$ano1.$mes1.$dia1;
@@ -14,7 +14,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
    $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";   if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"]; $titulo=$registro["campo525"]; $formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];} 
    $l_c=strlen($formato_presup); $c=strlen($formato_categoria);  $p=strlen($formato_partida); $ini=$c+2;
@@ -175,7 +175,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
@@ -212,7 +212,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong></strong></td>
 			   <td width="400" align="right" bgcolor="#99CCFF"><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0; $total_monto=0; $sub_total_monto=0; $cantidad_ordenes=0; 
+		  <?php   $i=0; $total_monto=0; $sub_total_monto=0; $cantidad_ordenes=0; 
 			 $prev_fecha_ajuste=""; $prev_referencia_ajuste="";  $prev_tipo_ajuste="";   $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha_ajuste=$registro["fecha_ajuste"]; $referencia_ajuste=$registro["referencia_ajuste"]; 
 			$tipo_ajuste=$registro["tipo_ajuste"]; $nombre_abrev_ajuste=$registro["nombre_abrev_ajuste"]; $anulado=$registro["anulado"]; $referencia_comp=$registro["referencia_comp"];
@@ -254,30 +254,30 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
-			           <td width="400" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="400" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>	
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			      ?>	   
 			      <tr>
-				   <td width="100" align="left">'<? echo $referencia_ajuste_grupo; ?></td>
-				   <td width="400" align="left"><? echo $fecha_ajuste_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $tipo_ajuste_grupo."   ".$nombre_abrev_ajuste; ?></td>
-				   <td width="100" align="left"><? echo $anulado_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $referencia_comp_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $tipo_compromiso_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $referencia_caus_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $tipo_causado_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $referencia_pago_grupo; ?></td>
-				   <td width="100" align="left">'<? echo $tipo_pago_grupo; ?></td>
-				   <td width="400" align="left"><? echo $descripcion_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_ajuste_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $fecha_ajuste_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $tipo_ajuste_grupo."   ".$nombre_abrev_ajuste; ?></td>
+				   <td width="100" align="left"><?php  echo $anulado_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_comp_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $tipo_compromiso_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_caus_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $tipo_causado_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia_pago_grupo; ?></td>
+				   <td width="100" align="left">'<?php  echo $tipo_pago_grupo; ?></td>
+				   <td width="400" align="left"><?php  echo $descripcion_grupo; ?></td>
 			      </tr>
 			      <tr>
 				  <td width="90" align="left"></td>
 			      </tr>	
-			     <? 					 
+			     <?php  					 
 			    $prev_fecha_ajuste=$fecha_ajuste_grupo; $prev_referencia_ajuste=$referencia_ajuste_grupo; $prev_tipo_ajuste=$tipo_ajuste_grupo; $sub_total_monto=0; }
 
 		           $fecha_ajuste=$registro["fecha_ajuste"]; $referencia_ajuste=$registro["referencia_ajuste"]; $tipo_ajuste=$registro["tipo_ajuste"]; 
@@ -289,8 +289,8 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			   $descripcion=conv_cadenas($descripcion,0);$denominacion=conv_cadenas($denominacion,0); 
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_presup."   ".$fuente_financ; ?></td>
-				   <td width="400" align="justify"><? echo $denominacion; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_presup."   ".$fuente_financ; ?></td>
+				   <td width="400" align="justify"><?php  echo $denominacion; ?></td>
 				   <td width="100" align="right"></td>
 				   <td width="100" align="right"></td>
 				   <td width="100" align="right"></td>
@@ -299,9 +299,9 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 				   <td width="100" align="right"></td>
 				   <td width="100" align="right"></td>
 				   <td width="100" align="right"></td>
-				   <td width="400" align="right"><? echo $montod; ?></td>
+				   <td width="400" align="right"><?php  echo $montod; ?></td>
 				 </tr>
-			   <? 	
+			   <?php  	
 
 		  }$total_monto=formato_monto($total_monto);  
 		     if($sub_total_monto>0){ $sub_total_monto=formato_monto($sub_total_monto);  		
@@ -330,12 +330,12 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
 			           <td width="100" align="right"></td>
-			           <td width="400" align="right"><? echo $sub_total_monto; ?></td>
+			           <td width="400" align="right"><?php  echo $sub_total_monto; ?></td>
 			        </tr>			
 			        <tr>
 				  <td width="90" align="left"></td>
 			        </tr>	
-                              <?}
+                              <?php }
 			?>	 				 
 			<tr>
 			    <td width="100" align="left"></td>
@@ -351,7 +351,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WI
 			    <td width="400" align="right">---------------</td>
 			</tr>	
 			<tr>
-			    <td width="100" align="left">Cantidad Ajustes: <strong><? echo $cantidad_ordenes; ?></strong></td>
+			    <td width="100" align="left">Cantidad Ajustes: <strong><?php  echo $cantidad_ordenes; ?></strong></td>
 			    <td width="400" align="right"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
@@ -361,10 +361,10 @@ v			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="right"><strong>TOTAL GENERAL : </strong></td>
-			    <td width="400" align="right"><strong><? echo $total_monto; ?></strong></td>
+			    <td width="400" align="right"><strong><?php  echo $total_monto; ?></strong></td>
 			</tr>	
-		       <? 				  
-		  ?></table><?
+		       <?php  				  
+		  ?></table><?php 
         }
 }
 ?>

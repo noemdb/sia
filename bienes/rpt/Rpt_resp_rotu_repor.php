@@ -1,7 +1,7 @@
-<? include ("../../class/conect.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $tipo_rpt="PDF"; //$tipo_rpt="HTML";
+<?php  include ("../../class/conect.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); $tipo_rpt="PDF"; //$tipo_rpt="HTML";
 $ced_res_rotud=$_GET["ced_res_rotud"];$ced_res_rotuh=$_GET["ced_res_rotuh"];$ordenado=$_GET["ordenado"]; $date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); 
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
          $sSQL = "SELECT BIEN032.ced_res_rotu, BIEN032.nombre_res_rotu, BIEN032.observaciones_rotu  FROM BIEN032 WHERE ced_res_rotu>='".$ced_res_rotud."' AND 
                   ced_res_rotu<='".$ced_res_rotuh."'ORDER BY $ordenado";

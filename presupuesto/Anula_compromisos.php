@@ -6,7 +6,7 @@ if(FDate($fecha_hoy)>FDate($fecha_fin)){$fecha_hoy=$fecha_fin;}
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Anular Compromiso)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Anular Compromiso)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"   rel="stylesheet">
 <SCRIPT language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -47,7 +47,7 @@ return true;}
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
-                <td width="270"><span class="Estilo5"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >   </span> </td>
+                <td width="270"><span class="Estilo5"><input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >   </span> </td>
                 <td width="227"><span class="Estilo5"> </span></td>
               </tr>
             </table></td>
@@ -66,9 +66,9 @@ return true;}
           </tr>
           <tr>
             <td><table width="680" border="0" align="center"> <tr>
-            <td width="20"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?echo $tipo_compromiso?>"></td>
-            <td width="96"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?echo $referencia_comp?>"></td>
-            <td width="20"><input name="txtcod_comp" type="hidden" id="txtcodigo_mov" value="<?echo $cod_comp?>"></td></tr></table></td>
+            <td width="20"><input name="txttipo_compromiso" type="hidden"  id="txttipo_compromiso" value="<?php echo $tipo_compromiso?>"></td>
+            <td width="96"><input name="txtreferencia_comp" type="hidden"  id="txtreferencia_comp" value="<?php echo $referencia_comp?>"></td>
+            <td width="20"><input name="txtcod_comp" type="hidden" id="txtcodigo_mov" value="<?php echo $cod_comp?>"></td></tr></table></td>
           </tr>
           <tr> <td><span class="Estilo5"> </span>  </td>  </tr>
           <tr>

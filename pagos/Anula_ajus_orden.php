@@ -6,7 +6,7 @@ $fecha_hoy=asigna_fecha_hoy();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (ANULAR AJUSTE ORDENES DE PAGO)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (ANULAR AJUSTE ORDENES DE PAGO)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
@@ -16,7 +16,7 @@ function checkrefecha(mform){var mref;var mfec;
 return true;}
 function revisar(){var f=document.form1;var r;var Valido=true;
     if(f.txtfecha_anu.value==""){alert("Fecha no puede estar Vacia");return false;}
-    if(f.txtdescrip_anu.value==""){alert("Descripción de Anulación no puede estar Vacia"); return false; }
+    if(f.txtdescrip_anu.value==""){alert("Descripciï¿½n de Anulaciï¿½n no puede estar Vacia"); return false; }
       else{f.txtdescrip_anu.value=f.txtdescrip_anu.value.toUpperCase();}
     if(f.txtfecha_anu.value.length==10){Valido=true;}  else{alert("Longitud de Fecha Invalida");return false;}
     r=confirm("Esta seguro en Anular el Ajuste de Orden ?");
@@ -50,7 +50,7 @@ return true;}
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
                 <td width="270"><span class="Estilo5"><span class="Estilo10">
-                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
+                  <input name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)"  >
                 </span> </span></td>
                 <td width="227"><span class="Estilo5">                </span></td>
               </tr>
@@ -72,8 +72,8 @@ return true;}
           </tr>
           <tr>
           <td><table width="680" border="0" align="center"> <tr>
-            <td width="40"><input name="txtreferencia_aju" type="hidden" id="txtreferencia_aju" value="<?echo $referencia_aju?>"></td>
-            <td width="40"><input name="txttipo_ajuste" type="hidden" id="txttipo_ajuste" value="<?echo $tipo_ajuste?>"></td>
+            <td width="40"><input name="txtreferencia_aju" type="hidden" id="txtreferencia_aju" value="<?php echo $referencia_aju?>"></td>
+            <td width="40"><input name="txttipo_ajuste" type="hidden" id="txttipo_ajuste" value="<?php echo $tipo_ajuste?>"></td>
           </tr></table></td>
           </tr>
           <tr>

@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $date = date("d-m-Y");  $hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 $sSQL = "select * from con098 order by Codigo_Cuenta";
 
@@ -79,19 +79,19 @@ $sSQL = "select * from con098 order by Codigo_Cuenta";
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>TP SALDO</strong></font></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>CLASIFICACION</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $cantidad=0; $res=pg_query($sSQL);
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		$codigo_cuenta=$registro["codigo_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; $clasificacion=$registro["clasificacion"]; $tsaldo=$registro["tsaldo"];  
 		$nombre_cuenta=conv_cadenas($nombre_cuenta,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<? echo $codigo_cuenta; ?></td>
-           <td width="400" align="left"><? echo $nombre_cuenta; ?></td>
-           <td width="100" align="center"><? echo $tsaldo; ?></td>
-           <td width="100" align="center"><? echo $clasificacion; ?></td>
+           <td width="100" align="left">'<?php  echo $codigo_cuenta; ?></td>
+           <td width="400" align="left"><?php  echo $nombre_cuenta; ?></td>
+           <td width="100" align="center"><?php  echo $tsaldo; ?></td>
+           <td width="100" align="center"><?php  echo $clasificacion; ?></td>
          </tr>
-	<? }  
+	<?php }  
         ?>
 	   <tr>
             <td>&nbsp;</td>
@@ -100,7 +100,7 @@ $sSQL = "select * from con098 order by Codigo_Cuenta";
                 <td width="100" align="center"></td>
 		<td width="400" align="left"><strong></strong></td>	
             </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

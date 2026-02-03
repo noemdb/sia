@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $fecha_exp="31/12/9999";
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy(); $fecha_exp="31/12/9999";
 $tipo_nomina=$_POST["txttipo_nomina"]; $des_nomina=$_POST["txtdes_nomina"]; $cantidad=0;$monto=0;$acumulado=0;$saldo=0; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Asignaci&oacute;n de Conceptos)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Asignaci&oacute;n de Conceptos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -90,9 +90,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="130"><span class="Estilo5">TIPO DE N&Oacute;MINA :</span></td>
-                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?echo $tipo_nomina?>"> </span></td>
+                   <td width="60"><span class="Estilo5"> <input class="Estilo10" name="txttipo_nomina" type="text" id="txttipo_nomina" size="4" maxlength="2" onFocus="encender(this)" onBlur="apagar(this)" onchange="chequea_tipo(this.form);" value="<?php echo $tipo_nomina?>"> </span></td>
                    <td width="50"><input class="Estilo10" name="bttiponom" type="button" id="bttiponom" title="Abrir Catalogo Tipos de Nomina"  onClick="VentanaCentrada('Cat_tipo_nomina.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?echo $des_nomina?>" > </span></td>
+                   <td width="645"><span class="Estilo5"> <input class="Estilo10" name="txtdes_nomina" type="text" id="txtdes_nomina" size="100" maxlength="100" readonly value="<?php echo $des_nomina?>" > </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -102,7 +102,7 @@ return true;}
                    <td width="156"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR  : </span></td>
                    <td width="110"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)"> </span></td>
                    <td width="50"><input class="Estilo10" name="bttrabajador" type="button" id="bttrabajador" title="Abrir Catalogo Trabajadores"  onClick="VentanaCentrada('Cat_trabajadores.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?echo $nombre?>"> </span></td>
+                   <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?php echo $nombre?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -121,9 +121,9 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="100"><span class="Estilo5">FECHA INICIO : </span></td>
-                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ini" type="text" id="txtfecha_ini" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="130"><span class="Estilo5">FECHA EXPIRACI&Oacute;N : </span></td>
-                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_exp" type="text" id="txtfecha_exp" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_exp?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="136"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_exp" type="text" id="txtfecha_exp" size="10" maxlength="10" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_exp?>"  onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="75"><span class="Estilo5">ACTIVO : </span></td>
                    <td width="95"><span class="Estilo5"><select class="Estilo10" name="txtactivo" size="1" id="txtactivo" onFocus="encender(this)" onBlur="apagar(this)"><option>SI</option> <option>NO</option></select>  </span></td>
                    <td width="95"><span class="Estilo5">CALCULABLE : </span></td>
@@ -135,13 +135,13 @@ return true;}
              <td><table width="866">
                  <tr>
                    <td width="80"><span class="Estilo5">CANTIDAD : </span></td>
-                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcantidad" type="text" id="txtcantidad" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $cantidad?>" onKeypress="return validarNum(event)"> </span></td>
+                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtcantidad" type="text" id="txtcantidad" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $cantidad?>" onKeypress="return validarNum(event)"> </span></td>
                    <td width="70"><span class="Estilo5">MONTO : </span></td>
-                   <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $monto?>" onKeypress="return validarNum(event)"> </span></td>
+                   <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $monto?>" onKeypress="return validarNum(event)"> </span></td>
                    <td width="95"><span class="Estilo5">ACUMULADO : </span></td>
-                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtacumulado" type="text" id="txtacumulado" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $acumulado?>" onKeypress="return validarNum(event)"></span></td>
+                   <td width="140"><span class="Estilo5"><input class="Estilo10" name="txtacumulado" type="text" id="txtacumulado" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $acumulado?>" onKeypress="return validarNum(event)"></span></td>
                    <td width="65"><span class="Estilo5">SALDO : </span></td>
-                   <td width="130"><span class="Estilo5"><input class="Estilo10" name="txtsaldo" type="text" id="txtsaldo" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $saldo?>" onKeypress="return validarNum(event)"></span></td>
+                   <td width="130"><span class="Estilo5"><input class="Estilo10" name="txtsaldo" type="text" id="txtsaldo" style="text-align:right" size="14" maxlength="14" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $saldo?>" onKeypress="return validarNum(event)"></span></td>
                  </tr>
              </table></td>
            </tr>

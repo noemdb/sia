@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG001".$usuario_sia.$equipo;
@@ -70,9 +70,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 else
 {
 }
@@ -148,7 +148,7 @@ $rif_empresa="G-20000164-0";
           <tr>
             <td width="187" height="20"><div align="left"><span class="Estilo12">0.-Nº DE COMPROBANTE</span> </div>               
 				<p align="center" class="Estilo14">
-                  <? echo $ano_fiscal; ?><? echo $mes_fiscal; ?><? echo $nro_comprobante; ?>
+                  <?php  echo $ano_fiscal; ?><?php  echo $mes_fiscal; ?><?php  echo $nro_comprobante; ?>
                 </p>
             </td>
           </tr>
@@ -159,7 +159,7 @@ $rif_empresa="G-20000164-0";
           <tr>
             <td width="76" height="53"><div align="left"><span class="Estilo12">1.-FECHA</span></div>
             <p align="center" class="Estilo14">
-            <? echo $fecha_emision; ?>              </p></td>
+            <?php  echo $fecha_emision; ?>              </p></td>
           </tr>
        </table>
     </td>
@@ -185,7 +185,7 @@ $rif_empresa="G-20000164-0";
           	    <tr>
                  <td width="418" height="57"><div align="left"><span class="Estilo12">2.-NOMBRE O RAZON SOCIAL DEL AGENTE DE RETENCION </span> </div>              
                    <p align="center" class="Estilo14">
-                  <? echo $nombre_empresa; ?>
+                  <?php  echo $nombre_empresa; ?>
                   </p></td>
                </tr>
               </table></td>
@@ -193,16 +193,16 @@ $rif_empresa="G-20000164-0";
           	    <tr>
                  <td width="369" height="57"><div align="left"><span class="Estilo12">3.-REGISTRO DE INFORMACION FISCAL DE AGENTE DE RETENCION </span></div>              
                    <p align="center" class="Estilo14">
-				 	<? echo $rif_empresa; ?><input name="txtano_fiscal" type="text" id="txtano_fiscal" value="<?echo $ano_fiscal?>" style="visibility:hidden;" size="1" readonly>
-									<input name="txtmes_fiscal" type="text" id="txtmes_fiscal" value="<?echo $mes_fiscal?>" style="visibility:hidden;" size="1" readonly>
-									<input name="txtnro_comprobante" type="text" id="txtnro_comprobante" value="<?echo $nro_comprobante?>" style="visibility:hidden;" size="1" readonly>
+				 	<?php  echo $rif_empresa; ?><input name="txtano_fiscal" type="text" id="txtano_fiscal" value="<?php echo $ano_fiscal?>" style="visibility:hidden;" size="1" readonly>
+									<input name="txtmes_fiscal" type="text" id="txtmes_fiscal" value="<?php echo $mes_fiscal?>" style="visibility:hidden;" size="1" readonly>
+									<input name="txtnro_comprobante" type="text" id="txtnro_comprobante" value="<?php echo $nro_comprobante?>" style="visibility:hidden;" size="1" readonly>
                   </p></td>
                </tr>
               </table></td>
                <td width="161"><table width="159" border="1">
           	    <tr>
                  <td width="149" height="57"><div align="left"><span class="Estilo12">4.-PERIODO FISCAL </span></div>              
-                 <p align="center" class="Estilo14"><strong>A&Ntilde;O:</strong><? echo $ano_fiscal; ?> <strong>MES:</strong> <? echo $mes_fiscal; ?>
+                 <p align="center" class="Estilo14"><strong>A&Ntilde;O:</strong><?php  echo $ano_fiscal; ?> <strong>MES:</strong> <?php  echo $mes_fiscal; ?>
                   </p></td>
                </tr>
               </table></td>
@@ -212,7 +212,7 @@ $rif_empresa="G-20000164-0";
           	    <tr>
                  <td width="999" height="57"><div align="left"><span class="Estilo12">5.-DIRECCION FISCAL DEL AGENTE DE RETENCION </span> </div>              
                    <p align="left" class="Estilo14">
-                  <? echo $direccion; ?>
+                  <?php  echo $direccion; ?>
                   </p></td>
                </tr>
               </table></td>
@@ -222,7 +222,7 @@ $rif_empresa="G-20000164-0";
           	    <tr>
                  <td width="418" height="57"><div align="left"><span class="Estilo12">6.-NOMBRE O RAZON SOCIAL DEL SUJETO RETENIDO</span> </div>              
                    <p align="center" class="Estilo14">
-                  <? echo $nombre; ?>
+                  <?php  echo $nombre; ?>
                   </p></td>
                </tr>
               </table></td>
@@ -230,7 +230,7 @@ $rif_empresa="G-20000164-0";
           	    <tr>
                  <td width="369" height="57"><div align="left"><span class="Estilo12">7.-REGISTRO DE INFORMACION FISCAL DEL SUJETO RETENIDO </span></div>              
                    <p align="center" class="Estilo14">
-				 	<? echo $ced_rif; ?>
+				 	<?php  echo $ced_rif; ?>
                   </p></td>
                </tr>
               </table></td>
@@ -259,19 +259,19 @@ $rif_empresa="G-20000164-0";
                    <td width="68"><div align="center"><span class="Estilo12"><b>IMPUESTO IVA</b></span></div></td>
                  </tr>
                  <tr>
-                   <td><p align="center" class="Estilo14"><? echo $nro_operacion ?></p></td>
-                   <td><p align="center" class="Estilo14"><? echo $fecha_documento ?></p></td>
-                   <td><p align="center" class="Estilo14"><? echo $nro_factura ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $nro_con_documento ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $nro_nota_debito ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $nro_nota_credito ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $tipo_transaccion ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $nro_doc_afectado ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $monto_documento ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $monto_exento_iva ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $base_imponible ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $tasa_iva ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $monto_iva ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_operacion ?></p></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $fecha_documento ?></p></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_factura ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_con_documento ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_nota_debito ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_nota_credito ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $tipo_transaccion ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $nro_doc_afectado ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto_documento ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto_exento_iva ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $base_imponible ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $tasa_iva ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto_iva ?></td>
                  </tr>
                  <tr>
                    <td height="23">&nbsp;</td>
@@ -282,11 +282,11 @@ $rif_empresa="G-20000164-0";
                    <td>&nbsp;</td>
                    <td>&nbsp;</td>
                    <td>&nbsp;</td>
-                   <td><p align="center" class="Estilo14"><? echo $monto_doc?></td>
-                   <td><p align="center" class="Estilo14"><? echo $monto_exento ?></td>
-                   <td><p align="center" class="Estilo14"><? echo $base ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto_doc?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto_exento ?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $base ?></td>
                    <td>&nbsp;</td>
-                   <td><p align="center" class="Estilo14"><? echo $monto?></td>
+                   <td><p align="center" class="Estilo14"><?php  echo $monto?></td>
                  </tr>
                </table></td>
 			   <td width="97"><table width="97" border="1">
@@ -300,10 +300,10 @@ $rif_empresa="G-20000164-0";
                    <td height="19" bgcolor="#999999"><p align="center" class="Estilo14"></td>
                  </tr>
                  <tr>
-                   <td height="22"><p align="center" class="Estilo14"><? echo $monto_iva_retenido ?></td>
+                   <td height="22"><p align="center" class="Estilo14"><?php  echo $monto_iva_retenido ?></td>
                  </tr>
 				 <tr>
-                   <td height="22"><p align="center" class="Estilo14"><? echo $total ?></td>
+                   <td height="22"><p align="center" class="Estilo14"><?php  echo $total ?></td>
                  </tr>
                </table></td>
 
@@ -341,4 +341,4 @@ $rif_empresa="G-20000164-0";
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

@@ -1,13 +1,13 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="ENOM017".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $tipo_nomina="01"; $cod_concepto="001"; $criterio=""; $fecha_hoy=asigna_fecha_hoy();  $sfecha=formato_aaaammdd($fecha_hoy);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");  
-if(pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if(pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000030"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if ($gnomina=="00"){ $criterion=""; $criterioc=""; $temp_nomina="00";}else{$temp_nomina=$gnomina; $tipo_nomina=$gnomina; $criterion=" where tipo_nomina='$gnomina' ";  $criterioc=" and tipo_nomina='$gnomina' ";}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -78,11 +78,11 @@ function Cat_Calcula_nom(){var url;var r;
 </script>
 
 </head>
-<? 
+<?php  
 $resultado=pg_exec($conn,"SELECT ELIMINA_NOM066('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
 $resultado=pg_exec($conn,"SELECT ACTUALIZA_NOM071(4,'$codigo_mov','','$sfecha','')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
 $resultado=pg_exec($conn,"SELECT ACTUALIZA_NOM072(4,'$codigo_mov','','','','','','','$sfecha')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
-pg_close();?>
+pg_close($conn);?>
 <body>
 <table width="977" height="38" border="0" bgcolor="#000066">
   <tr>
@@ -151,19 +151,19 @@ pg_close();?>
    rows[1][2] = "Conceptos";
    rows[1][3] = "Trabajadores";
                </script>
-                <?include ("../class/class_tab_cal.php");?>
+                <?php include ("../class/class_tab_cal.php");?>
                 <script type="text/javascript" language="javascript"> DrawTabs(); </script>
                  <!--PESTAÑA 1 -->
                 <div id="T11" class="tab-body">
-                 <iframe src="Det_cal_nomina.php?criterio=<?echo $criterio?>" width="925" height="350" scrolling="auto" frameborder="0"></iframe>
+                 <iframe src="Det_cal_nomina.php?criterio=<?php echo $criterio?>" width="925" height="350" scrolling="auto" frameborder="0"></iframe>
                 </div>
                 <!-- PESTAÑA 2 -->
                 <div id="T12" class="tab-body" >
-                  <iframe src="Det_conc_nom_ext.php?codigo_mov=<?echo $codigo_mov?>"  width="925" height="350" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_conc_nom_ext.php?codigo_mov=<?php echo $codigo_mov?>"  width="925" height="350" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                 <!--PESTAÑA 3 -->
                 <div id="T13" class="tab-body" >
-                  <iframe src="Det_trab_nom_ext.php?codigo_mov=<?echo $codigo_mov?>"  width="925" height="350" scrolling="auto" frameborder="0"> </iframe>
+                  <iframe src="Det_trab_nom_ext.php?codigo_mov=<?php echo $codigo_mov?>"  width="925" height="350" scrolling="auto" frameborder="0"> </iframe>
                 </div>
                     </div>
               </td>
@@ -174,7 +174,7 @@ pg_close();?>
         <table width="940">
           <tr> <td>&nbsp;</td> </tr>
           <tr>
-            <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="200" align="center"><input name="btcatalogo" type="button" id="btcatalogo" title="Catalogo Nominas calculadas" onclick="javascript:Cat_Calcula_nom()" value="Catalogo Nominas calculadas"></td>
             
 			<td width="150" align="center"><input name="btcalcular" type="button" id="btcalcular" title="Calcular N&oacute;mina" onclick="javascript:Calcula_nom()" value="Calcular N&oacute;mina"></td>

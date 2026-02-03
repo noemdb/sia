@@ -1,10 +1,10 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$tipo_mov_d=$_GET["tipo_mov_d"];$tipo_mov_h=$_GET["tipo_mov_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"]; $tipo_rep=$_GET["tipo_rep"]; $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $criterio1=""; $criterio2=""; $mcod_m="BAN08B".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}$fecha_d=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';}$fecha_h=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
  $Sql="delete from ban038 where codigo_mov='".$codigo_mov."'";   $resultado=pg_exec($conn,$Sql);
  $Sql="insert into ban038 select '".$codigo_mov."',ban008.cod_banco,ban008.referencia,ban008.tipo_trans_banco,ban008.fecha_trans_banco,ban008.monto_trans_banco,ban008.mes_conciliacion,ban008.bene_mov_trans_banco,ban008.inf_usuario,ban008.monto_trans_banco,0,0,0,0,'','',ban008.des_mov_trans_banco FROM ban008,ban003 where ban008.tipo_trans_banco=ban003.tipo_movimiento AND ban003.Tipo='D'"; $resultado=pg_exec($conn,$Sql);
@@ -127,7 +127,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <strong><?	$criterio1?></strong></td>
+				<td width="400" align="center" > <strong><?php 	$criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Tipo</strong></td>
@@ -137,7 +137,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Debitos</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>Creditos</strong></td>
 			 </tr>
-		  <?  $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cod_banco=""; $res=pg_query($sSQL);
+		  <?php   $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cod_banco=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $cod_banco=$registro["cod_banco"];  $nombre_banco=$registro["nombre_banco"]; $nro_cuenta=$registro["nro_cuenta"];
 		       $cod_banco_grupo=$cod_banco; $nombre_banco_grupo=$nombre_banco; $nro_cuenta_grupo=$nro_cuenta; $mes_mov_grupo=$mes_mov; 
 
@@ -156,22 +156,22 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			          <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
 			          <td width="100" align="left"></td>
-			          <td width="400" align="left"><? echo "Total: ".$prev_cod_banco; ?></td>
-				      <td width="100" align="right"><? echo $totald; ?></td>
-				      <td width="100" align="right"><? echo $totalh; ?></td>
+			          <td width="400" align="left"><?php  echo "Total: ".$prev_cod_banco; ?></td>
+				      <td width="100" align="right"><?php  echo $totald; ?></td>
+				      <td width="100" align="right"><?php  echo $totalh; ?></td>
 			      </tr>	
 			      <tr>
 				  <td width="90" align="left"></td>
 			      </tr>	
-                <?}
+                <?php }
 			      ?>	   
 			      <tr>
-				    <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
+				    <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
 				    <td width="100" align="left"></td>
 			        <td width="100" align="left"></td>
-				    <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nombre_banco."    ".$nro_cuenta; ?></td>
+				    <td width="400" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nombre_banco."    ".$nro_cuenta; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_cod_banco=$cod_banco_grupo; $totald=0; $totalh=0;}
 
 		       $tipo_trans_banco=$registro["tipo_trans_banco"]; $referencia=$registro["referencia"]; $desc_trans_libro=$registro["desc_trans_libro"]; $fecham=$registro["fecham"]; 
@@ -183,14 +183,14 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $tipo_trans_banco; ?></td>
-				   <td width="100" align="left">'<? echo $referencia; ?></td>
-				   <td width="100" align="center"><? echo $fecham; ?></td>
-				   <td width="400" align="justify"><? echo $bene_mov_trans_banco; ?></td>
-				   <td width="100" align="right"><? echo $columna1; ?></td>
-				   <td width="100" align="right"><? echo $columna2; ?></td>
+				   <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $tipo_trans_banco; ?></td>
+				   <td width="100" align="left">'<?php  echo $referencia; ?></td>
+				   <td width="100" align="center"><?php  echo $fecham; ?></td>
+				   <td width="400" align="justify"><?php  echo $bene_mov_trans_banco; ?></td>
+				   <td width="100" align="right"><?php  echo $columna1; ?></td>
+				   <td width="100" align="right"><?php  echo $columna2; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 
 		  if(($totald>0)or($totalh>0)){ $totald=formato_monto($totald); $totalh=formato_monto($totalh); 
@@ -207,12 +207,12 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
 			    <td width="100" align="left"></td>
-			    <td width="400" align="left"><? echo "Total: ".$cod_banco; ?></td>
-			    <td width="100" align="right"><? echo $totald; ?></td>
-			    <td width="100" align="right"><? echo $totalh; ?></td>
+			    <td width="400" align="left"><?php  echo "Total: ".$cod_banco; ?></td>
+			    <td width="100" align="right"><?php  echo $totald; ?></td>
+			    <td width="100" align="right"><?php  echo $totalh; ?></td>
 			</tr>	
-		  <? }	  
-		  ?></table><?
+		  <?php }	  
+		  ?></table><?php 
     }
 	$Sql="delete from ban038 where codigo_mov='".$codigo_mov."'";   $resultado=pg_exec($conn,$Sql);
 }

@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");?>
-<?$equipo=getenv("COMPUTERNAME");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");?>
+<?php $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$codigo_mov="";$fecha="";} else{$fecha=$_GET["fecha"];$codigo_mov=$_GET["codigo_mov"];}
 ?>
 
@@ -16,10 +16,10 @@ function llamar_eliminar(){
 var murl; var r;
   murl="Esta seguro en Eliminar la Informaci&oacute;n Curricular ?"; r=confirm(murl);
   if(r==true){r=confirm("Esta Realmente seguro en Eliminar la Informaci&oacute;n Curricular ?");
-    if(r==true){murl="Delete_inf_curr_e.php?codigo_mov=<?echo $codigo_mov?>&fecha=<?echo $fecha?>"; document.location=murl;}}
+    if(r==true){murl="Delete_inf_curr_e.php?codigo_mov=<?php echo $codigo_mov?>&fecha=<?php echo $fecha?>"; document.location=murl;}}
    else{url="Cancelado, no elimino";}
 }
-function llamar_anterior(){ document.location ='Det_inc_inf_curricular_e.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_inf_curricular_e.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function revisar(){
 var f=document.form1;
 var Valido=true;
@@ -35,14 +35,14 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $titulo="";$instituto=""; $descripcion="";
 $sql="SELECT * FROM NOM067  where codigo_mov='$codigo_mov' and fecha='$fecha'";
 $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){
   $titulo=$registro["titulo"]; $instituto=$registro["instituto"];  $descripcion=$registro["descripcion"];
-}pg_close(); $fechac=formato_ddmmaaaa($fecha);
+}pg_close($conn); $fechac=formato_ddmmaaaa($fecha);
 ?>
 <body>
 <form name="form1" method="post" action="Update_inf_curr_e.php" onSubmit="return revisar()">
@@ -59,7 +59,7 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="660" border="0">
               <tr>
                 <td width="133"><span class="Estilo5"> FECHA  DEL TITULO :</span> </td>
-                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?echo $fechac?>" readonly ></span></td>
+                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txtfecha" type="text" id="txtfecha" size="15" maxlength="15"  value="<?php echo $fechac?>" readonly ></span></td>
                </tr>
           </table></td>
         </tr>
@@ -67,7 +67,7 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="660" border="0">
               <tr>
                 <td width="133"><span class="Estilo5">TITULO OBTENIDO : </span></td>
-                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txttitulo" type="text" id="txttitulo" size="75" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $titulo ?>" ></span></td>
+                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txttitulo" type="text" id="txttitulo" size="75" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $titulo ?>" ></span></td>
               </tr>
            </table></td>
         </tr>
@@ -75,7 +75,7 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="660" border="0">
               <tr>
                 <td width="163"><span class="Estilo5">NOMBRE DEL INSTITUTO : </span></td>
-                <td width="497"><span class="Estilo5"><input class="Estilo10" name="txtinstituto" type="text" id="txtinstituto" size="70" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $instituto ?>" ></span></td>
+                <td width="497"><span class="Estilo5"><input class="Estilo10" name="txtinstituto" type="text" id="txtinstituto" size="70" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $instituto ?>" ></span></td>
               </tr>
            </table></td>
         </tr>
@@ -83,7 +83,7 @@ if ($registro=pg_fetch_array($res,0)){
           <td><table width="660" border="0">
               <tr>
                 <td width="133"><span class="Estilo5">DESCRIPCION : </span></td>
-                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion" type="text" id="txtdescripcion" size="75" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<? echo $descripcion ?>" ></span></td>
+                <td width="527"><span class="Estilo5"><input class="Estilo10" name="txtdescripcion" type="text" id="txtdescripcion" size="75" maxlength="100" onFocus="encender(this)" onBlur="apagar(this)" value="<?php  echo $descripcion ?>" ></span></td>
               </tr>
            </table></td>
         </tr>
@@ -92,7 +92,7 @@ if ($registro=pg_fetch_array($res,0)){
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

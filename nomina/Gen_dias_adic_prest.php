@@ -1,4 +1,4 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); $fecha_hoy=asigna_fecha_hoy();  
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME"); $fecha_hoy=asigna_fecha_hoy();  
 $cod_rem="408"; 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -40,7 +40,7 @@ function revisa(){var f=document.form1; var Valido=true; var mes1; var mes2; var
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 
 $cod_emp="00000000";  $fecha_dep=$fecha_hoy; $fecha_desde=colocar_pdiames($fecha_hoy); $fecha_hasta=colocar_udiames($fecha_hoy); 
@@ -52,7 +52,7 @@ $tipo_nomina_h="03";
 $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina_d'"; $res=pg_query($sql); if($registro=pg_fetch_array($res,0)){$descripcion_d=$registro["descripcion"];}
 $sql="SELECT tipo_nomina,descripcion FROM nom001 where tipo_nomina='$tipo_nomina_h'"; $res=pg_query($sql); if($registro=pg_fetch_array($res,0)){$descripcion_h=$registro["descripcion"];}
 $sql="SELECT cod_concepto,denominacion FROM nom002 where cod_concepto='$cod_concepto'"; $res=pg_query($sql); if($registro=pg_fetch_array($res,0)){$denominacion_concep=$registro["denominacion"];}
-pg_close();?>
+pg_close($conn);?>
 <body>
 <table width="977" height="38" border="0" bgcolor="#000066">
   <tr>
@@ -72,9 +72,9 @@ pg_close();?>
              <td><table width="946">
                  <tr>
                    <td width="206"><span class="Estilo5">FECHA ANIVERSARIO DESDE  :</span></td>
-				   <td width="120"><span class="Estilo5"><input name="txtfecha_desde" type="text" id="txtfecha_desde" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" onchange="checkrefecha(this.form)" value="<?echo $fecha_desde?>"> </span></td>
+				   <td width="120"><span class="Estilo5"><input name="txtfecha_desde" type="text" id="txtfecha_desde" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" onchange="checkrefecha(this.form)" value="<?php echo $fecha_desde?>"> </span></td>
                    <td width="100"><span class="Estilo5">HASTA :</span></td>
-                   <td width="520"><span class="Estilo5"><input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)"  value="<?echo $fecha_hasta?>"> </span></td>
+                   <td width="520"><span class="Estilo5"><input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)"  value="<?php echo $fecha_hasta?>"> </span></td>
                   </tr>
              </table></td>
            </tr>
@@ -82,9 +82,9 @@ pg_close();?>
              <td><table width="946" border="0" align="center" cellpadding="0" cellspacing="0">
                <tr>
                  <td width="200" align="left" class="Estilo5">CONCEPTO DIAS ADICIONALES :</td>
-                 <td width="50" align="left"><span class="Estilo5"><input name="txtcod_concepto" type="text" id="txtcod_concepto" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?echo $cod_concepto?>"> </span></td>
+                 <td width="50" align="left"><span class="Estilo5"><input name="txtcod_concepto" type="text" id="txtcod_concepto" onFocus="encender(this)" onBlur="apagar(this)" size="3" maxlength="3" value="<?php echo $cod_concepto?>"> </span></td>
                  <td width="43" align="left"><span class="Estilo5"><input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo de Conceptos" onClick="VentanaCentrada('Cat_conceptos.php?criterio=','SIA','','650','500','true')" value="..."></span></td>
-                <td width="600" align="left"><span class="Estilo5"><input name="txtdenominacion" type="text" id="txtdenominacion" size="60" maxlength="100" readonly value="<?echo $denominacion_concep?>"> </span></td>
+                <td width="600" align="left"><span class="Estilo5"><input name="txtdenominacion" type="text" id="txtdenominacion" size="60" maxlength="100" readonly value="<?php echo $denominacion_concep?>"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -93,9 +93,9 @@ pg_close();?>
 			 <td><table width="946" border="0" align="center" cellpadding="0" cellspacing="0">
 			   <tr>
 				 <td width="200" align="left" class="Estilo5">TIPO N&Oacute;MINA DESDE :</td>
-				 <td width="50" align="left"><span class="Estilo5"><input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2"  value="<?echo $tipo_nomina_d?>"> </span></td>
+				 <td width="50" align="left"><span class="Estilo5"><input name="txttipo_nomina_d" type="text" id="txttipo_nomina_d" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2"  value="<?php echo $tipo_nomina_d?>"> </span></td>
 				 <td width="43" align="left"><span class="Estilo5"><input name="cat_tipod" type="button" id="cat_tipod" title="Abrir Catalogo Tipos de nominas" onClick="VentanaCentrada('Cat_tipo_nominad.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
-				 <td width="600" align="left"><span class="Estilo5"><input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="60" maxlength="60" readonly value="<?echo $descripcion_d?>">  </span></td>
+				 <td width="600" align="left"><span class="Estilo5"><input name="txtdescripcion_d" type="text" id="txtdescripcion_d" size="60" maxlength="60" readonly value="<?php echo $descripcion_d?>">  </span></td>
 			   </tr>
 			 </table></td>
 		   </tr>
@@ -103,9 +103,9 @@ pg_close();?>
 			 <td><table width="946" border="0" align="center" cellpadding="0" cellspacing="0">
 			   <tr>
 				 <td width="200" align="left" class="Estilo5">TIPO N&Oacute;MINA HASTA :</td>
-				 <td width="50" align="left"><span class="Estilo5"><input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?echo $tipo_nomina_h?>">  </span></td>
+				 <td width="50" align="left"><span class="Estilo5"><input name="txttipo_nomina_h" type="text" id="txttipo_nomina_h" onFocus="encender(this)" onBlur="apagar(this)" size="2" maxlength="2" value="<?php echo $tipo_nomina_h?>">  </span></td>
 				 <td width="43" align="left"><span class="Estilo5"><input name="cat_tipoh" type="button" id="cat_tipoh" title="Abrir Catalogo Tipos de nominas" onClick="VentanaCentrada('Cat_tipo_nominah.php?criterio=','SIA','','650','500','true')" value="..."> </span></td>
-				 <td width="600" align="left"><span class="Estilo5"><input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="60" maxlength="60" readonly value="<?echo $descripcion_h?>">  </span></td>
+				 <td width="600" align="left"><span class="Estilo5"><input name="txtdescripcion_h" type="text" id="txtdescripcion_h" size="60" maxlength="60" readonly value="<?php echo $descripcion_h?>">  </span></td>
 			   </tr>
 			 </table></td>
 		   </tr>

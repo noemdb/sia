@@ -1,10 +1,10 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (Incluir Tipos de Orden)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (Incluir Tipos de Orden)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language=JavaScript src="../class/sia.js" type=text/javascript></script>
@@ -20,11 +20,11 @@ MM_reloadPage(true);
 function revisar(){
 var f=document.form1;
     if(f.txttipo_orden.value==""){alert("Tipo de Orden no puede estar Vacio");return false;}
-    if(f.txtdes_tipo_orden.value==""){alert("Descripción Tipo de Orden no puede estar Vacia");return false; }
+    if(f.txtdes_tipo_orden.value==""){alert("Descripciï¿½n Tipo de Orden no puede estar Vacia");return false; }
        else{f.txtdes_tipo_orden.value=f.txtdes_tipo_orden.value.toUpperCase();}
     if(f.txttipo_orden.value.length==4){f.txttipo_orden.value=f.txttipo_orden.value.toUpperCase();}
        else{alert("Longitud Tipo de Orden Invalida");return false;}
-    if(f.txtcod_contable.value==""){alert("Código Contable no puede estar Vacio");return false;}
+    if(f.txtcod_contable.value==""){alert("Cï¿½digo Contable no puede estar Vacio");return false;}
 document.form1.submit;
 return true;}
 </script>

@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if (!$_GET){$Gcodigo_c='';}else {$Gcodigo_c=$_GET["Gcodigo_c"];}
 $num_descrip=substr($Gcodigo_c,0,8); $codigo_c=substr($Gcodigo_c,8,10); $clave=$codigo_c.$num_descrip;
 ?>
@@ -34,7 +34,7 @@ return true;}
 <style type="text/css">
 </style>
 </head>
-<?
+<?php 
 $sql="SELECT * From BIEN033 where codigo_c='$codigo_c' and num_descrip='$num_descrip'"; {$res=pg_query($sql);$filas=pg_num_rows($res);}
 if($filas>=1){$registro=pg_fetch_array($res,0); $descripcion_b="";
 $codigo_c=$registro["codigo_c"];$num_descrip=$registro["num_descrip"];$descripcion_b=$registro["descripcion_b"]; }
@@ -69,7 +69,7 @@ $codigo_c=$registro["codigo_c"];$num_descrip=$registro["num_descrip"];$descripci
              <td><table width="820">
                <tr>
                  <td width="120" scope="col"><div align="left"><span class="Estilo5">CODIGO:</span></div></td>
-                 <td width="700" scope="col"><div align="left"><span class="Estilo5"><input name="txtcodigo_c" type="text" class="Estilo5" readonly id="txtcodigo_c" size="10" maxlength="10"  value="<?echo $codigo_c?>"> </span></div></td>
+                 <td width="700" scope="col"><div align="left"><span class="Estilo5"><input name="txtcodigo_c" type="text" class="Estilo5" readonly id="txtcodigo_c" size="10" maxlength="10"  value="<?php echo $codigo_c?>"> </span></div></td>
                </tr>
              </table></td>
            </tr>
@@ -77,7 +77,7 @@ $codigo_c=$registro["codigo_c"];$num_descrip=$registro["num_descrip"];$descripci
              <td><table width="820">
                <tr>
                  <td width="120" scope="col"><div align="left"><span class="Estilo5">N&Uacute;MERO :</span></div></td>
-                 <td width="700" scope="col"><div align="left"><span class="Estilo5"> <input name="txtnum_descrip" type="text" class="Estilo10" id="txtnum_descrip" size="10" maxlength="8" readonly value="<?echo $num_descrip?>"> </span></div></td>
+                 <td width="700" scope="col"><div align="left"><span class="Estilo5"> <input name="txtnum_descrip" type="text" class="Estilo10" id="txtnum_descrip" size="10" maxlength="8" readonly value="<?php echo $num_descrip?>"> </span></div></td>
                </tr>
              </table></td>
            </tr>
@@ -85,7 +85,7 @@ $codigo_c=$registro["codigo_c"];$num_descrip=$registro["num_descrip"];$descripci
              <td><table width="820">
                <tr>
                  <td width="120" scope="col"><div align="left"><span class="Estilo5">DENOMINACION :</span></div></td>
-                 <td width="700" scope="col"><div align="left"><textarea name="txtdescripcion_b" cols="70" class="headers"  onFocus="encender(this)" onBlur="apagar(this)" id="txtdescripcion_b"><?echo $descripcion_b?></textarea>  </div></td>
+                 <td width="700" scope="col"><div align="left"><textarea name="txtdescripcion_b" cols="70" class="headers"  onFocus="encender(this)" onBlur="apagar(this)" id="txtdescripcion_b"><?php echo $descripcion_b?></textarea>  </div></td>
                </tr>
              </table></td>
 			</tr>
@@ -108,4 +108,4 @@ $codigo_c=$registro["codigo_c"];$num_descrip=$registro["num_descrip"];$descripci
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

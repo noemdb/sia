@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_planilla_d=$_GET["tipo_planilla_d"];$tipo_planilla_h=$_GET["tipo_planilla_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$clasificacion_d=$_GET["clasificacion_d"];$clasificacion_h=$_GET["clasificacion_h"];$tipo_bene_d=$_GET["tipo_bene_d"];$tipo_bene_h=$_GET["tipo_bene_h"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}
@@ -15,7 +15,7 @@ if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_
     //echo "ESPERE GENERANDO REPORTE MAYOR GENERAL....","<br>";
 
    $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else
    {
        // LLAMAR A PHP_REPORT

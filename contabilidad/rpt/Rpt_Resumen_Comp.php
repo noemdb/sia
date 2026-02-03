@@ -1,14 +1,14 @@
-<?include ("../../class/fun_fechas.php");include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/fun_fechas.php");include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE);
 $fecha_d=$_GET["fecha_d"]; $fecha_h=$_GET["fecha_h"];$referencia_d=$_GET["referencia_d"]; $referencia_h=$_GET["referencia_h"]; $vstatus=$_GET["vstatus"]; $tipo_rpt=$_GET["tipo_rpt"];  // NUEVO
 $criterio1="Desde ".$fecha_d." Al ".$fecha_h;$date = date("d-m-Y");$hora = date("H:i:s a");
 if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
  else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','4')"; $resultado=pg_exec($conn,$Sql); $error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
     $Sql="SELECT RPT_RES_COMP_CON013('".$usuario_sia."','4','".$sfecha_d."','".$sfecha_h."','".$referencia_d."','".$referencia_h."','".$vstatus."')";
     $resultado=pg_exec($conn,$Sql); $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error, 0, 61);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     else{ $Sql= "select * from RPT_RES_COMP WHERE nombre_usuario='".$usuario_sia."' AND tipo_registro='4' ORDER BY fecha, referencia"; $sSQL = $Sql;
              
 		if($tipo_rpt=="HTML"){	 include ("../../class/phpreports/PHPReportMaker.php");
@@ -116,7 +116,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			 <tr height="20">
 				<td width="80" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	$criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	$criterio1?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Referencia</strong></td>
@@ -124,7 +124,7 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   <td width="400" align="left" bgcolor="#99CCFF"><strong>Descripcion</strong></td>
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Monto</strong></td>
 			 </tr>
-		  <?  $i=0;  $total=0; $sub_total=0; $prev_fecha="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $total=0; $sub_total=0; $prev_fecha="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $fecha=$registro["fecha"];       $fechaf=formato_ddmmaaaa($fecha);		       
 			   if($prev_fecha<>$fechaf){ 			   
 			     if($sub_total>0){ $sub_total=formato_monto($sub_total); 
@@ -138,20 +138,20 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 					<tr>
 				      <td width="80" align="left"></td>
 				      <td width="80" align="left"></td>
-					  <td width="400" align="right"><? echo "Total Fecha ".$prev_fecha." : "; ?></td>
-					  <td width="120" align="right"><? echo $sub_total; ?></td>
+					  <td width="400" align="right"><?php  echo "Total Fecha ".$prev_fecha." : "; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_total; ?></td>
 				    </tr>	
 					<tr>
 				      <td width="80" align="left"></td>
 				    </tr>	
-                  <? 		
+                  <?php  		
 				 }	
 				 ?>	   
 				<tr>
 				   <td width="80" align="left">FECHA:</td>
-				   <td width="80" align="left"><? echo $fechaf; ?></td>
+				   <td width="80" align="left"><?php  echo $fechaf; ?></td>
 				 </tr>
-			     <? 				 
+			     <?php  				 
 				 $prev_fecha=$fechaf; $sub_total=0;
 			   }
 		       $referencia=$registro["referencia"];  $tipo_asiento=$registro["tipo_asiento"];  $descripcion=$registro["descripcion"];   
@@ -159,12 +159,12 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 			   $descripcion=conv_cadenas($descripcion,0);
 			   ?>	   
 				<tr>
-				   <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $referencia; ?></td>
-				   <td width="80" align="left"><? echo $tipo_asiento; ?></td>
-				   <td width="400" align="justify"><? echo $descripcion; ?></td>
-				   <td width="120" align="right"><? echo $monto; ?></td>
+				   <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $referencia; ?></td>
+				   <td width="80" align="left"><?php  echo $tipo_asiento; ?></td>
+				   <td width="400" align="justify"><?php  echo $descripcion; ?></td>
+				   <td width="120" align="right"><?php  echo $monto; ?></td>
 				 </tr>
-			   <? 
+			   <?php  
  			   
 		  } $total=formato_monto($total);
           if($sub_total>0){ $sub_total=formato_monto($sub_total);		  
@@ -178,12 +178,12 @@ if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO
 				<tr>
 				  <td width="80" align="left"></td>
 				  <td width="80" align="left"></td>
-				  <td width="400" align="right"><? echo "Total Fecha ".$prev_fecha." : "; ?></td>
-				  <td width="120" align="right"><? echo $sub_total; ?></td>
+				  <td width="400" align="right"><?php  echo "Total Fecha ".$prev_fecha." : "; ?></td>
+				  <td width="120" align="right"><?php  echo $sub_total; ?></td>
 				</tr>				
-			  <? 
+			  <?php  
 		  }	  
-		  ?></table><?
+		  ?></table><?php 
         }		  
     }
 }?>

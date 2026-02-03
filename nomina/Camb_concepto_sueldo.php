@@ -1,11 +1,11 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 if (!$_GET){$tipo_nomina="";$cod_sueldo=""; $cod_ret="";} else{$tipo_nomina=$_GET["Gtipo_nomina"];$cod_sueldo=$_GET["Gcod_sueldo"]; $cod_ret=$_GET["Gcod_ret"]; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Trabjadores)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Trabjadores)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -31,7 +31,7 @@ return true;}
 -->
 </style>
 </head>
-<? $cod_desde="000000000000000"; $cod_hasta="999999999999999";
+<?php  $cod_desde="000000000000000"; $cod_hasta="999999999999999";
 ?>
 <body>
 <form name="form1" method="post" action="Update_conc_sueldo.php" onSubmit="return revisar()">
@@ -46,7 +46,7 @@ return true;}
              <td align="center"><table width="550" border="0">
                <tr>
                  <td width="200"><span class="Estilo5">TIPO DE NOMINA :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txttipo_desde" type="text" id="txttipo_desde" size="3" maxlength="2"  value="<?php echo $tipo_nomina?>" onFocus="encender(this)" onBlur="apagar(this)" ></span></td>
                  <td width="200"><span class="Estilo5"></span></td>
 
                </tr>

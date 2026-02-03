@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");?>
-<?include ("Ver_dispon.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");?>
+<?php include ("Ver_dispon.php");
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
 $codigo_mov=$_POST["txtcodigo_mov"];
 $cod_presup=$_POST["txtcod_presup"];
@@ -21,7 +21,7 @@ $MInf_Usuario = $equipo." ".date("d/m/y H:i a");
 echo "ESPERE POR FAVOR MODIFICANDO....","<br>";
 $url="Det_inc_causados.php?codigo_mov=".$codigo_mov;
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{
   $sql="Select * from SIA005 where campo501='05'";
   $resultado=pg_query($sql);
@@ -30,31 +30,31 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
   $sSQL="Select * from PRE026 WHERE codigo_mov='$codigo_mov' and cod_presup='$cod_presup' and fuente_financ='$fuente_financ' and ref_imput_presu='$ref_imput_presu'";
   $resultado=pg_query($sSQL);
   $filas=pg_num_rows($resultado);
-  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO PRESUPUESTARIO NO EXISTE EN EL CAUSADO');</script><? }
+  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO PRESUPUESTARIO NO EXISTE EN EL CAUSADO');</script><?php }
    else{
     if(strlen($cod_presup)==strlen($formato_presup)){
       if (verifica_disponibilidad($conn,$cod_presup,$fuente_financ,$fecha,$monto_c)==0){$error=0;}else{$error=1;}}
-    else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD DE CÓDIGO PRESUPUESTARIO INVALIDA');</script><? }
+    else{$error=1; ?> <script language="JavaScript"> muestra('LONGITUD DE CÓDIGO PRESUPUESTARIO INVALIDA');</script><?php }
     if($error==0){
       $sSQL="Select * from PRE095 WHERE cod_fuente_financ='$fuente_financ'";
       $resultado=pg_query($sSQL);
       $filas=pg_num_rows($resultado);
-      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO DE FUENTE NO EXISTE');</script><? }
+      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO DE FUENTE NO EXISTE');</script><?php }
     }
-    if(($error==0)and($monto_c==0)){$error=1; ?> <script language="JavaScript"> muestra('MONTO CODIGO INVALIDO');</script><? }
+    if(($error==0)and($monto_c==0)){$error=1; ?> <script language="JavaScript"> muestra('MONTO CODIGO INVALIDO');</script><?php }
     $monto_credito=0;
     if(($error==0)and($tipo_imput_presu=="C")){ $monto_credito=$monto;
-      if($monto_credito>$monto_c){ $error=1; ?> <script language="JavaScript"> muestra('MONTO CREDITO INVALIDO');</script><? }
+      if($monto_credito>$monto_c){ $error=1; ?> <script language="JavaScript"> muestra('MONTO CREDITO INVALIDO');</script><?php }
     }
     else{$monto_credito=0;$ref_imput_presu="00000000";$tipo_imput_presu="P";}
     if(($error==0)and($tipo_imput_presu=="C")){
       $sSQL="Select * from PRE010 WHERE (referencia_adicion='$ref_imput_presu') and (cod_presup='$cod_presup') and (fuente_financ='$fuente_financ')";
       $resultado=pg_query($sSQL);
       $filas=pg_num_rows($resultado);
-      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><? }
+      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÓDIGO NO EXISTE EN LA EJECUCIÓN DEL CREDITO ADICIONAL');</script><?php }
        else{
          $registro=pg_fetch_array($resultado);
-         if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <? echo $dispon; ?> ');</script><? }
+         if($registro["disponible"]<$monto_credito) {$error=1; $dispon=$registro["disponible"]; $dispon=formato_monto($dispon); ?> <script language="JavaScript"> muestra('Monto Mayor que Disponibilidad del Crédito Adicional, Disponibilidad: <?php  echo $dispon; ?> ');</script><?php }
        }
     }
     if($error==0){
@@ -62,10 +62,10 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
       $resultado=pg_exec($conn,"SELECT MODIFICA_PRE026('$codigo_mov','$cod_presup','$fuente_financ','','0000','','0000','','0000','','0000','','','','$cod_contable','','','$sfecha','C','$tipo_imput_presu','$ref_imput_presu','$sfecha',$monto,0,$monto_credito,0)");
       $error=pg_errormessage($conn);
       $error="ERROR GRABANDO: ".substr($error, 0, 61);
-      if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+      if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     }
   }
 }
-pg_close();
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? }
-else {?>  <script language="JavaScript">history.back();</script> <? }?>
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php }
+else {?>  <script language="JavaScript">history.back();</script> <?php }?>

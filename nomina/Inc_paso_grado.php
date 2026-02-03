@@ -6,7 +6,7 @@ if (!$_GET){$cod_tipo_personal='';}else{$cod_tipo_personal=$_GET["cod_tipo_perso
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Grado y Paso)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Grado y Paso)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -28,7 +28,7 @@ function apaga_monto(mthis){var mmonto;  apagar(mthis);
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value;  mmonto=eliminapunto(mmonto);  mthis.value=mmonto;  }
   
-function llamar_anterior(){ document.location ='Det_pasos_grado.php?Gcodigo=<?echo $cod_tipo_personal?>'; }
+function llamar_anterior(){ document.location ='Det_pasos_grado.php?Gcodigo=<?php echo $cod_tipo_personal?>'; }
 function chequea_paso(mform){ var mref;
  mref=mform.txtpaso.value; mref = Rellenarizq(mref,"0",3); mform.txtpaso.value=mref;  mform.txtpaso.value=mref;
 }
@@ -79,7 +79,7 @@ return true;}
           <td><table width="760" border="0">
               <tr>
                 <td width="130"><span class="Estilo5">FECHA APROBACION :</span> </td>
-                <td width="660"><span class="Estilo5"><input class="Estilo10" name="txtfecha_aprobacion" type="text" id="txtfecha_aprobacion" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
+                <td width="660"><span class="Estilo5"><input class="Estilo10" name="txtfecha_aprobacion" type="text" id="txtfecha_aprobacion" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_hoy?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
               </tr>
           </table></td>
         </tr>
@@ -97,7 +97,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcod_tipo_personal" type="hidden" id="txtcod_tipo_personal" value="<?echo $cod_tipo_personal?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcod_tipo_personal" type="hidden" id="txtcod_tipo_personal" value="<?php echo $cod_tipo_personal?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

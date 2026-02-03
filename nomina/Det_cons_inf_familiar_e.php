@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -24,17 +24,17 @@ $sql="SELECT * FROM NOM054  where cedula='$cedula' order by ci_partida_fe"; $res
            <td width="90" align="center" bgcolor="#99CCFF" ><strong>Fecha Nacimiento </strong></td>
            <td width="90" align="center" bgcolor="#99CCFF" ><strong>Edad (A&ntilde;os) </strong></td>
            </tr>
-<? while($registro=pg_fetch_array($res)){ $sfecha=$registro["fecha_nac_fe"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
+<?php  while($registro=pg_fetch_array($res)){ $sfecha=$registro["fecha_nac_fe"];  $fecha = substr($sfecha,8,2)."/".substr($sfecha,5,2)."/".substr($sfecha,0,4);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="90" align="left"><? echo $registro["ci_partida_fe"]; ?></td>
-           <td width="340" align="left"><? echo $registro["nombre_fe"]; ?></td>
-           <td width="90" align="center"><? echo $registro["parentesco_fe"]; ?></td>
-           <td width="90" align="center"><? echo $registro["sexo_fe"]; ?></td>
-           <td width="90" align="center"><? echo $fecha; ?></td>
-           <td width="90" align="center"><? echo $registro["edad_fe"]; ?></td>
+           <td width="90" align="left"><?php  echo $registro["ci_partida_fe"]; ?></td>
+           <td width="340" align="left"><?php  echo $registro["nombre_fe"]; ?></td>
+           <td width="90" align="center"><?php  echo $registro["parentesco_fe"]; ?></td>
+           <td width="90" align="center"><?php  echo $registro["sexo_fe"]; ?></td>
+           <td width="90" align="center"><?php  echo $fecha; ?></td>
+           <td width="90" align="center"><?php  echo $registro["edad_fe"]; ?></td>
            </tr>
-         <?}
+         <?php }
 ?>
        </table></td>
    </tr>
@@ -43,4 +43,4 @@ $sql="SELECT * FROM NOM054  where cedula='$cedula' order by ci_partida_fe"; $res
  <p>&nbsp;</p>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

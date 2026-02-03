@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;   error_reporting(E_ALL ^ E_NOTICE);
    $tipo_nomina_d=$_GET["tipo_nomina_d"]; $tipo_nomina_h=$_GET["tipo_nomina_h"]; $act_hist=$_GET["act_hist"]; $fecha_nom=$_GET["fecha_nom"];
    $cod_conceptod=$_GET["cod_conceptod"]; $cod_conceptoh=$_GET["cod_conceptoh"]; $tipo_concepto=$_GET["tipo_concepto"]; $tipo_rpt=$_GET["tipo_rpt"]; $salto_conc=$_GET["salto_conc"];
    $cod_departd=$_GET["cod_departd"];  $cod_departh=$_GET["cod_departh"]; $estatus_trab_d=$_GET["estatus_trab_d"]; $tipo_calculo=$_GET["tipo_calculo"]; $tipo_monto=$_GET["tipo_monto"];
@@ -14,7 +14,7 @@
    if($tipo_monto=="PRI"){ $criterio1=$criterio1." PRIMERA QUINCENA";} if($tipo_monto=="SEG"){ $criterio1=$criterio1." SEGUNDA QUINCENA";}
    
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
   $sSQL = "SELECT *  FROM ".$criterio." and (tp_calculo='".$tipo_calculo."') and (tipo_nomina>='".$tipo_nomina_d."' and tipo_nomina<='".$tipo_nomina_h."') and
 	  (cod_departam>='".$cod_departd."' and cod_departam<='".$cod_departh."') and (cod_concepto>='".$cod_conceptod."' AND cod_concepto<='".$cod_conceptoh."')  ORDER BY tipo_nomina, cod_concepto, cod_empleado";
@@ -181,11 +181,11 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		 </tr>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong>Nomina: </strong></td>
-		    <td width="400" align="left" ><strong><? echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
+		    <td width="400" align="left" ><strong><?php  echo $tipo_nomina."    ".$des_nomina; ?></strong></td>
 		 </tr>
 		 <tr height="20">
 		    <td width="100" align="left" ><strong>Fecha: </strong></td>
-		    <td width="400" align="left" ><strong><? echo $fechad."  "." Al   ".$fechah; ?></strong></td>
+		    <td width="400" align="left" ><strong><?php  echo $fechad."  "." Al   ".$fechah; ?></strong></td>
 		 </tr>
 		 <tr height="20">
 		   <td width="100" align="left"><strong>Codigo</strong></td>
@@ -197,10 +197,10 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		 <tr height="20">
 		 </tr>
 		 <tr height="20">
-		   <td width="100" align="left"><strong><? echo $cod_concepto; ?></strong></td>
-		   <td width="400" align="left"><strong><? echo $denominacion; ?></strong></td>
+		   <td width="100" align="left"><strong><?php  echo $cod_concepto; ?></strong></td>
+		   <td width="400" align="left"><strong><?php  echo $denominacion; ?></strong></td>
 		 </tr>
-		<?  $can_conc=0; $totala_nom=0; $totald_nom=0; $cant_nom=0;	$totala_emp=0; $totald_emp=0; $cant_emp=0;  $totala_conc=0; $totald_conc=0;   $res=pg_query($sSQL);
+		<?php   $can_conc=0; $totala_nom=0; $totald_nom=0; $cant_nom=0;	$totala_emp=0; $totald_emp=0; $cant_emp=0;  $totala_conc=0; $totald_conc=0;   $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		   $tipo_nomina=$registro["tipo_nomina"]; $des_nomina=$registro["des_nomina"];
 	      $fechad=$registro["fechapd"]; $fechah=$registro["fechaph"]; $cod_departam=$registro["cod_departam"]; $des_departam=$registro["des_departam"]; 
@@ -212,17 +212,17 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 			if($totald_emp==0){$totald_emp="";}else{$totald_emp=formato_monto($totald_emp);}			
 				?>
 		 		    <tr height="20">
-		   			   <td width="100" align="left"><strong><? echo $cod_concepto; ?></strong></td>
-		   			   <td width="400" align="left"><strong><? echo $denominacion; ?></strong></td>
+		   			   <td width="100" align="left"><strong><?php  echo $cod_concepto; ?></strong></td>
+		   			   <td width="400" align="left"><strong><?php  echo $denominacion; ?></strong></td>
 		 		    </tr>				 
                     <tr>
-					  <td width="100" align="left"><? echo $prev_emp; ?></td>
-					  <td width="400" align="left"><? echo $prev_nombre; ?></td>				 
-					  <td width="100" align="center"><? echo $can_conc; ?></td>
-					  <td width="100" align="right"><? echo $totala_emp; ?></td>
-					  <td width="100" align="right"><? echo $totald_emp; ?></td>
+					  <td width="100" align="left"><?php  echo $prev_emp; ?></td>
+					  <td width="400" align="left"><?php  echo $prev_nombre; ?></td>				 
+					  <td width="100" align="center"><?php  echo $can_conc; ?></td>
+					  <td width="100" align="right"><?php  echo $totala_emp; ?></td>
+					  <td width="100" align="right"><?php  echo $totald_emp; ?></td>
 				    </tr>
-                <?			
+                <?php 			
 		    $can_conc=0;  $totala_emp=0; $totald_emp=0;  $prev_emp=$cod_empleado; $prev_nombre=$nombre;  $cant_emp=$cant_emp+1; 
 		    $totala_conc=formato_monto($totala_conc); $totald_conc=formato_monto($totald_conc); ?>
                    <tr>
@@ -233,29 +233,29 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 					  <td width="100" align="right">-----------------</td>
 				    </tr>	
 				    <tr>
-				      <td width="100" align="left"><? echo "Nro. Trabjadores : ".$cant_emp; ?></td>
-					  <td width="400" align="right"><? echo "TOTAL  : ".$den_conc; ?></td>
+				      <td width="100" align="left"><?php  echo "Nro. Trabjadores : ".$cant_emp; ?></td>
+					  <td width="400" align="right"><?php  echo "TOTAL  : ".$den_conc; ?></td>
 					  <td width="100" align="left"></td>
-					  <td width="100" align="right"><? echo $totala_conc; ?></td>
-					  <td width="100" align="right"><? echo $totald_conc; ?></td> 
+					  <td width="100" align="right"><?php  echo $totala_conc; ?></td>
+					  <td width="100" align="right"><?php  echo $totald_conc; ?></td> 
 				    </tr>	
 				    <tr>
 				      <td width="90" align="left"></td>
 				    </tr>
-				<?		
+				<?php 		
 			$prev_conc=$cod_concepto; $den_conc=$denominacion;	$totala_conc=0; $totald_conc=0;  $cant_emp=0;$prev_tipo=$tipo_nomina;
 		} 
 		if($prev_emp<>$cod_empleado){		
 		    if($totala_emp==0){$totala_emp="";}else{$totala_emp=formato_monto($totala_emp);} 
 			if($totald_emp==0){$totald_emp="";}else{$totald_emp=formato_monto($totald_emp);}?>	 				 
 			<tr>
-			  <td width="100" align="left"><? echo $prev_emp; ?></td>
-			  <td width="400" align="left"><? echo $prev_nombre; ?></td>				 
-			  <td width="100" align="center"><? echo $can_conc; ?></td>
-			  <td width="100" align="right"><? echo $totala_emp; ?></td>
-			  <td width="100" align="right"><? echo $totald_emp; ?></td>
+			  <td width="100" align="left"><?php  echo $prev_emp; ?></td>
+			  <td width="400" align="left"><?php  echo $prev_nombre; ?></td>				 
+			  <td width="100" align="center"><?php  echo $can_conc; ?></td>
+			  <td width="100" align="right"><?php  echo $totala_emp; ?></td>
+			  <td width="100" align="right"><?php  echo $totald_emp; ?></td>
 			</tr>
-           <?$can_conc=0;  $totala_emp=0; $totald_emp=0;  $prev_emp=$cod_empleado;  $prev_nombre=$nombre; $cant_emp=$cant_emp+1; 
+           <?php $can_conc=0;  $totala_emp=0; $totald_emp=0;  $prev_emp=$cod_empleado;  $prev_nombre=$nombre; $cant_emp=$cant_emp+1; 
 		}	
 		$can_conc=$can_conc+$cantidad; $totala_emp=$totala_emp+$monto_asignacion; $totald_emp=$totald_emp+$monto_deduccion;		
 		$totala_conc=$totala_conc+$monto_asignacion; $totald_conc=$totald_conc+$monto_deduccion;
@@ -264,13 +264,13 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		if($totald_emp==0){$totald_emp="";}else{$totald_emp=formato_monto($totald_emp);}			
 		?>	 				 
          <tr>
-		  <td width="100" align="left"><? echo $prev_emp; ?></td>
-		  <td width="400" align="left"><? echo $prev_nombre; ?></td>				 
-		  <td width="100" align="center"><? echo $can_conc; ?></td>
-		  <td width="100" align="right"><? echo $totala_emp; ?></td>
-		  <td width="100" align="right"><? echo $totald_emp; ?></td>
+		  <td width="100" align="left"><?php  echo $prev_emp; ?></td>
+		  <td width="400" align="left"><?php  echo $prev_nombre; ?></td>				 
+		  <td width="100" align="center"><?php  echo $can_conc; ?></td>
+		  <td width="100" align="right"><?php  echo $totala_emp; ?></td>
+		  <td width="100" align="right"><?php  echo $totald_emp; ?></td>
 		</tr>
-		<?				
+		<?php 				
 		$can_conc=0;  $totala_emp=0; $totald_emp=0;  $prev_emp=$cod_empleado; $prev_nombre=$nombre;  $cant_emp=$cant_emp+1; 		
 		$totala_conc=formato_monto($totala_conc); $totald_conc=formato_monto($totald_conc);
         ?>
@@ -282,16 +282,16 @@ else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}
 		  <td width="100" align="right">-----------------</td>
 		</tr>	
 		<tr>
-			 <td width="100" align="left"><? echo "Nro. Trabjadores : ".$cant_emp; ?></td>
-		  <td width="400" align="right"><? echo "TOTAL  : ".$den_conc; ?></td>
+			 <td width="100" align="left"><?php  echo "Nro. Trabjadores : ".$cant_emp; ?></td>
+		  <td width="400" align="right"><?php  echo "TOTAL  : ".$den_conc; ?></td>
 		  <td width="100" align="left"></td>
-		  <td width="100" align="right"><? echo $totala_conc; ?></td>
-		  <td width="100" align="right"><? echo $totald_conc; ?></td> 
+		  <td width="100" align="right"><?php  echo $totala_conc; ?></td>
+		  <td width="100" align="right"><?php  echo $totald_conc; ?></td> 
 		</tr>	
 		<tr>
 		  <td width="90" align="left"></td>
 		</tr>
-		</table><?
+		</table><?php 
 	}
 }
 ?>

@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
 
 $nomb_firma="LIC. NORMA GARCIA DE GUZMAN"; $cargo_firma="GERENTE DE CAPITAL HUMANO"; $ciudade="Caracas"; $mesd="Enero"; $diad="01"; $anod="2015";
 $tipo_rpt=$_GET["tipo_rpt"]; $cod_empleado=$_GET["cod_empleado"]; $tipo_sueldo=$_GET["tipo_sueldo"]; $fecha_emi=$_GET["fecha_emi"];   $fecha_desde=$_GET["fecha_desde"];    $fecha_hasta=$_GET["fecha_hasta"]; $observacion=$_GET["observacion"]; $fecha_ing=$_GET["fecha_ing"];
@@ -6,7 +6,7 @@ $diad=substr($fecha_emi,0,2); $mes_emi=substr($fecha_emi,3,2); $anod=substr($fec
 if ($mes_emi=='01'){$mesd="Enero";}elseif ($mes_emi=='02'){$mesd="Febrero";}elseif ($mes_emi=='03'){$mesd="Marzo";}elseif ($mes_emi=='04'){$mesd="Abril";}elseif ($mes_emi=='05'){$mesd="Mayo";}elseif ($mes_emi=='06'){$mesd="Junio";}elseif ($mes_emi=='07'){$mesd="Julio";}elseif ($mes_emi=='08'){$mesd="Agosto";}elseif ($mes_emi=='09'){$mesd="Septiembre";}elseif ($mes_emi=='10'){$mesd="Octubre";}elseif ($mes_emi=='11'){$mesd="Noviembre";}elseif ($mes_emi=='12'){$mesd="Diciembre";}
 $dfechan=formato_aaaammdd($fecha_desde); $hfechan=formato_aaaammdd($fecha_hasta);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  alert('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  alert('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS;  $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 $nombre=""; $nacionalidad=""; $descripcion=""; $cod_jerarquia=""; $codigo_ubicacion=""; $descripcion_ubi=""; $cedula=""; $rif_empleado=""; $descripcion_dep=""; $des_cargo="";
 $tipo_nomina=""; $nacionalidad=""; $status=""; $fecha_ingreso=""; $fecha_ing_adm=""; $cod_categoria=""; $tipo_pago=""; $cta_empleado=""; $tipo_cuenta=""; $cod_banco=""; $nombre_banco=""; $cta_empresa=""; $calculo_grupos=""; $fecha_asigna_cargo=""; $cod_cargo=""; $cod_departam=""; $cod_tipo_personal=""; $paso=""; $grado=""; $sueldo=0; $prima=""; $compensacion=""; $otros=""; $sueldo_integral=""; $tipo_vacaciones="N"; $pago_vaciones="N"; $fecha_pago=""; $tiene_lph=""; $banco_lph=""; $cta_lph=""; $fecha_lph=""; $fecha_des_lph=""; $modif_lph=""; $tiene_dec_jurada=""; $fecha_declaracion=""; $monto_declaracion=""; $fecha_fin_con=""; $fecha_egreso=""; $motivo_egreso=""; $cont_fijo=""; $cod_cont_colec=""; $tipo_nom_ant=""; $cod_emp_ant=""; $fecha_camb_n=""; $motivo_camb_n=""; $tiene_aus_pro=""; $motivo_ausencia=""; $fecha_aus_desde=""; $fecha_aus_hasta="";  $motivo_suplen=""; $cedula_titular="";
@@ -30,7 +30,7 @@ if($filas>=1){ $registro=pg_fetch_array($res,0); $cod_empleado=$registro["cod_em
   $tiene_aus_pro=$registro["tiene_aus_pro"]; $motivo_ausencia=$registro["motivo_ausencia"];  $fecha_aus_desde=$registro["fecha_aus_desde"]; $fecha_aus_hasta=$registro["fecha_aus_hasta"];  $fecha_aus_desde=formato_ddmmaaaa($fecha_aus_desde); $fecha_aus_hasta=formato_ddmmaaaa($fecha_aus_hasta);
   $inf_usuario=$registro["inf_usuario"]; $monto_declaracion=formato_monto($monto_declaracion); $edad=round($edad);
   $sueldo=$registro["sueldo"]; $prima=$registro["prima"]; $compensacion=$registro["compensacion"]; $otros=$registro["otros"]; $sueldo_integral=$registro["sueldo_integral"];
-} else { $error=1; ?> <script language="JavaScript">  alert('CODIGO DE TRABAJADOR NO LOCALIZADO'); </script>   <?}
+} else { $error=1; ?> <script language="JavaScript">  alert('CODIGO DE TRABAJADOR NO LOCALIZADO'); </script>   <?php }
 
 
 $fecha_ingreso=$fecha_ing;
@@ -145,18 +145,18 @@ if($tipo_rpt=="WORD"){
 		
 		<tr> <td>&nbsp;</td></tr>
 		<tr>
-           <td width="600" align="justify"><? echo $texto1; ?></td>
+           <td width="600" align="justify"><?php  echo $texto1; ?></td>
         </tr>
 		<tr> <td>&nbsp;</td></tr>
 		<tr>
-           <td width="600" align="justify"><? echo $texto2; ?></td>
+           <td width="600" align="justify"><?php  echo $texto2; ?></td>
         </tr> 
 		<tr> <td>&nbsp;</td></tr> 
-<?	if($observacion<>""){	?>
+<?php 	if($observacion<>""){	?>
         <tr>
-           <td width="600" align="justify"><? echo $observacion; ?></td>
+           <td width="600" align="justify"><?php  echo $observacion; ?></td>
         </tr> 
-<? }?>
+<?php }?>
 		<tr> <td>&nbsp;</td></tr>
 		<tr> <td>&nbsp;</td></tr>
 		<tr>
@@ -165,14 +165,14 @@ if($tipo_rpt=="WORD"){
 		<tr> <td>&nbsp;</td></tr>
 		<tr> <td>&nbsp;</td></tr>
 		<tr>
-           <td width="600" align="center"><? echo $nomb_firma; ?></td>
+           <td width="600" align="center"><?php  echo $nomb_firma; ?></td>
         </tr>
 		<tr>
-           <td width="600" align="center"><? echo $cargo_firma; ?></td>
+           <td width="600" align="center"><?php  echo $cargo_firma; ?></td>
         </tr>
 
 	  </table>
-<?
+<?php 
 
 }	
 }

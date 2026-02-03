@@ -2,5 +2,5 @@
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $ult_ref="00000000";
 $StrSQL="select descripcion from ban011 where codigo='$codigo'"; $resultado=pg_query($StrSQL);$filas=pg_num_rows($resultado);
 if($filas>0){$registro=pg_fetch_array($resultado); $descripcion=$registro["descripcion"];}
-pg_close();?>
-<input name="txtdescripcion" type="text" id="txtdescripcion" size="50" value="<? echo $descripcion ?>" readonly>
+pg_close($conn);?>
+<input name="txtdescripcion" type="text" id="txtdescripcion" size="50" value="<?php  echo $descripcion ?>" readonly>

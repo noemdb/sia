@@ -7,7 +7,7 @@ if(FDate($fecha_hoy)>FDate($fecha_fin)){$fecha_hoy=$fecha_fin;}
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Anular Modificacion)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Anular Modificacion)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
 <SCRIPT language="JavaScript" src="../class/sia.js" type="text/javascript">
@@ -47,7 +47,7 @@ return true;}
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">FECHA DE ANULACI&Oacute;N: </span></td>
-                <td width="270"><span class="Estilo5"><input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >   </span> </td>
+                <td width="270"><span class="Estilo5"><input class="Estilo10" name="txtfecha_anu" type="text" id="txtfecha_anu" size="15" value="<?php echo $fecha_hoy?>"  onchange="checkrefecha(this.form)" onFocus="encender(this)" onBlur="apagar(this)" >   </span> </td>
                 <td width="227"><span class="Estilo5"> </span></td>
               </tr>
             </table></td>
@@ -57,8 +57,8 @@ return true;}
           </tr>          
           <tr>
             <td width="600" > </td>
-            <td width="20"><input class="Estilo10" name="txttipo_modif" type="hidden"  id="txttipo_modif" value="<?echo $tipo_modif?>"></td>
-            <td width="96"><input class="Estilo10" name="txtreferencia_modif" type="hidden"  id="txtreferencia_modif" value="<?echo $referencia_modif?>"></td>            
+            <td width="20"><input class="Estilo10" name="txttipo_modif" type="hidden"  id="txttipo_modif" value="<?php echo $tipo_modif?>"></td>
+            <td width="96"><input class="Estilo10" name="txtreferencia_modif" type="hidden"  id="txtreferencia_modif" value="<?php echo $referencia_modif?>"></td>            
           </tr>
           <tr> <td><span class="Estilo5"> </span>  </td>  </tr>
           <tr>

@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 
 $cod_bien_inmd=$_GET["cod_bien_inmd"];$cod_bien_inmh=$_GET["cod_bien_inmh"];$cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"]; $observacion=$_GET["observacion"]; $agrup_dep=$_GET["agrup_dep"];
 $cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"];
@@ -18,7 +18,7 @@ if($denominacion<>""){  $criterio=$criterio." and (bien014.denominacion Like '%"
 $mordenado=" bien014.cod_dependencia,bien014.cod_bien_inm"; if($ordenado=="N"){$mordenado=" bien014.cod_dependencia,bien014.num_bien"; }
 IF($agrup_dep=="SI"){ $mordenado=" bien014.cod_dependencia,bien014.cod_departamento,bien014.cod_bien_inm"; if($ordenado=="N"){$mordenado=" bien014.cod_dependencia,bien014.cod_departamento,bien014.num_bien"; }}
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){ $php_os="WINNT";}     
          
 		$sSQL = "SELECT bien014.cod_bien_inm, bien014.cod_clasificacion, bien014.num_bien, bien014.denominacion, bien014.cod_dependencia,bien014.cod_direccion,bien014.cod_departamento,bien001.denominacion_dep, bien001.direccion_dep, bien014.valor_incorporacion, bien014.fecha_incorporacion, substr(bien014.cod_clasificacion,1,1) as grupo, substr(bien014.cod_clasificacion,3,2) as subgrupo, substr(bien014.cod_clasificacion,6,1) as seccion, bien005.denominacion_dir, bien006.denominacion_dep as denom_departamento, bien004.edo_bien  

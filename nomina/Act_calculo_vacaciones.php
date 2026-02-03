@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php");
 $equipo=getenv("COMPUTERNAME"); $mcod_m="VAC".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000065"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if (!$_GET){$cod_empleado=''; $p_letra='';  $criterio='';  $cod_empleado='';  $clave=''; $sql="SELECT * FROM CALCULO_VACACIONES ORDER BY cod_empleado";
 } else {$criterio=$_GET["Gcriterio"];$p_letra=substr($criterio, 0, 1);
   if(($p_letra=="P")||($p_letra=="U")||($p_letra=="S")||($p_letra=="A")||($p_letra=="C")){$cod_empleado=substr($criterio,1,15);} else{ $cod_empleado=substr($criterio,0,15);}
@@ -62,7 +62,7 @@ MM_reloadPage(true);
 </script>
 
 </head>
-<?
+<?php 
 $res=pg_query($sql);$filas=pg_num_rows($res);
 if ($filas==0){if ($p_letra=="S"){$sql="SELECT * FROM CALCULO_VACACIONES  Where Order by cod_empleado";}if ($p_letra=="A"){$sql="SELECT * FROM CALCULO_VACACIONES  Where Order by cod_empleado desc";}  $res=pg_query($sql);$filas=pg_num_rows($res);}
 $nombre=""; $cedula=""; $fecha_ingreso=""; $fecha_caus_hasta=""; $fecha_caus_desde=""; $denominacion=""; $cod_concepto_v=""; $fecha_d_desde=""; $fecha_d_hasta="";
@@ -89,17 +89,17 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
 <table width="978" height="374" border="1" id="tablacuerpo">
   <tr>
     <td width="92"><table width="92" height="373" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
-      <?if ($Mcamino{0}=="S"){?>
+      <?php if ($Mcamino{0}=="S"){?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cargar_trab_vac.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="Cargar_trab_vac.php">Incluir</A></td>
       </tr>
-	  <?} if ($Mcamino{1}=="S"){?>
+	  <?php } if ($Mcamino{1}=="S"){?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Llamar_Ventana('carga_mod_vac.php?Gcodigo=')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Llamar_Ventana('carga_mod_vac.php?Gcodigo=');">Modificar</A></td>
       </tr>
-	  <?} if ($Mcamino{2}=="S"){?>
+	  <?php } if ($Mcamino{2}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript: Mover_Registro('P')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><A class=menu href="javascript:Mover_Registro('P');">Primero</A></td>
@@ -112,24 +112,24 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Mover_Registro('S');" class="menu">Siguiente</a></td>
       </tr>
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('U',<?echo $criterio?>)";
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('U',<?php echo $criterio?>)";
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Mover_Registro('U');" class="menu">Ultimo</a></td>
       </tr>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('Cat_calculo_vacaciones.php')";
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="Cat_calculo_vacaciones.php" class="menu">Catalogo</a></td>
       </tr>
-	  <?} if ($Mcamino{6}=="S"){?>
+	  <?php } if ($Mcamino{6}=="S"){?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llama_Eliminar();" class="menu">Eliminar</a></td>
       </tr>
-	  <?} if ($Mcamino{3}=="S"){?>
+	  <?php } if ($Mcamino{3}=="S"){?>
 	  <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';"
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Llamar_Formato();" class="menu">Formato</a></td>
       </tr>
-	   <?} ?>
+	   <?php } ?>
       <tr>
         <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
           onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="menu.php" class="menu">Menu </a></td>
@@ -144,12 +144,12 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="876">
                <tr>
                  <td width="146"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?echo $cod_empleado?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15"  value="<?php echo $cod_empleado?>" readonly></span></td>
                  <td width="100"><span class="Estilo5">C&Eacute;DULA :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
-                 <td width="40"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
+                 <td width="160"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="40"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
                </tr>
              </table></td>
            </tr>
@@ -157,7 +157,7 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -165,8 +165,8 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="186"><span class="Estilo5">C&Oacute;DIGO CONCEPTO CALCULO  :</span></td>
-                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto_v" type="text" id="txtcod_concepto_v" size="3" maxlength="3"  value="<?echo $cod_concepto_v?>" readonly> </span></td>
-                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80"  value="<?echo $denominacion?>" readonly> </span></td>
+                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto_v" type="text" id="txtcod_concepto_v" size="3" maxlength="3"  value="<?php echo $cod_concepto_v?>" readonly> </span></td>
+                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80"  value="<?php echo $denominacion?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -174,9 +174,9 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">PERIODO DE CAUSACION DESDE : </span></td>
-                 <td width="300" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_desde" type="text" id="txtfecha_caus_desde" size="10" maxlength="10" readonly value="<?echo $fecha_caus_desde?>"></span></td>
+                 <td width="300" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_desde" type="text" id="txtfecha_caus_desde" size="10" maxlength="10" readonly value="<?php echo $fecha_caus_desde?>"></span></td>
                  <td width="100" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_hasta" type="text" id="txtfecha_caus_hasta" size="10" maxlength="10"  readonly value="<?echo $fecha_caus_hasta?>"></span></td>
+                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_hasta" type="text" id="txtfecha_caus_hasta" size="10" maxlength="10"  readonly value="<?php echo $fecha_caus_hasta?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -184,9 +184,9 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="256" ><span class="Estilo5">CANTIDAD DIAS DE VACACIONES HABILES : </span></td>
-                 <td width="290" ><span class="Estilo5"><input class="Estilo10" name="txtdias_habiles" type="text" id="txtdias_habiles" size="10" maxlength="10" readonly style="text-align:right" value="<?echo $dias_habiles?>"></span></td>
+                 <td width="290" ><span class="Estilo5"><input class="Estilo10" name="txtdias_habiles" type="text" id="txtdias_habiles" size="10" maxlength="10" readonly style="text-align:right" value="<?php echo $dias_habiles?>"></span></td>
                  <td width="100" ><span class="Estilo5">NO HABILES : </span></td>
-                 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtdias_no_habiles" type="text" id="txtdias_no_habiles" size="10" maxlength="10" style="text-align:right" readonly value="<?echo $dias_no_habiles?>"></span></td>
+                 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtdias_no_habiles" type="text" id="txtdias_no_habiles" size="10" maxlength="10" style="text-align:right" readonly value="<?php echo $dias_no_habiles?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -194,11 +194,11 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="200" ><span class="Estilo5">FECHA DE DISFRUTE DESDE : </span></td>
-                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" readonly value="<?echo $fecha_d_desde?>"></span></td>
+                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" readonly value="<?php echo $fecha_d_desde?>"></span></td>
                  <td width="70" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  readonly value="<?echo $fecha_d_hasta?>"></span></td>
+                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  readonly value="<?php echo $fecha_d_hasta?>"></span></td>
                  <td width="180" ><span class="Estilo5">FECHA A REINCORPORASE : </span></td>
-                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" readonly value="<?echo $fecha_reincorp?>"></span></td>
+                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" readonly value="<?php echo $fecha_reincorp?>"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -206,9 +206,9 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="246" ><span class="Estilo5">CANTIDAD DIAS BONO VACACIONAL : </span></td>
-                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtdias_bono_vac" type="text" id="txtdias_bono_vac" size="10" maxlength="10" readonly  style="text-align:right" value="<?echo $dias_bono_vac?>"></span></td>
+                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtdias_bono_vac" type="text" id="txtdias_bono_vac" size="10" maxlength="10" readonly  style="text-align:right" value="<?php echo $dias_bono_vac?>"></span></td>
                  <td width="170" ><span class="Estilo5">MONTO BONO VACACIONAL: </span></td>
-                 <td width="200" ><span class="Estilo5"><input class="Estilo10" name="txtmonto_bono_vac" type="text" id="txtmonto_bono_vac" size="17" maxlength="17" style="text-align:right" readonly value="<?echo $monto_bono_vac?>"></span></td>
+                 <td width="200" ><span class="Estilo5"><input class="Estilo10" name="txtmonto_bono_vac" type="text" id="txtmonto_bono_vac" size="17" maxlength="17" style="text-align:right" readonly value="<?php echo $monto_bono_vac?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -216,11 +216,11 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
              <td><table width="866">
                <tr>
                  <td width="170"><span class="Estilo5">CALCULO DE NOMINA :</span></td>
-				 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtcalcula_nomina" type="text" id="txtcalcula_nomina" size="3" maxlength="3" readonly value="<?echo $calcula_nomina?>"></span></td>                 
+				 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtcalcula_nomina" type="text" id="txtcalcula_nomina" size="3" maxlength="3" readonly value="<?php echo $calcula_nomina?>"></span></td>                 
                  <td width="220"><span class="Estilo5">FECHA CALCULO DESDE : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_d" type="text" id="txtfecha_calculo_d" size="10" maxlength="10" readonly value="<?echo $fecha_cal_d?>" ></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_d" type="text" id="txtfecha_calculo_d" size="10" maxlength="10" readonly value="<?php echo $fecha_cal_d?>" ></span></td>
                  <td width="65"><span class="Estilo5">HASTA : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_h" type="text" id="txtfecha_calculo_h" size="10" maxlength="10" readonly value="<?echo $fecha_cal_h?>" ></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_h" type="text" id="txtfecha_calculo_h" size="10" maxlength="10" readonly value="<?php echo $fecha_cal_h?>" ></span></td>
                </tr>
              </table></td>
            </tr>
@@ -232,4 +232,4 @@ $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_que
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

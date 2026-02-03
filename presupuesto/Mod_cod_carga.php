@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $cod_presup=$_GET["cod_presup"];$codigo=$_GET["codigo"];$SIA_Definicion=substr($codigo,0,1);$cod_fuente=substr($codigo,1,2);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Cargar Partidas)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Cargar Partidas)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -22,13 +22,13 @@ function encender_monto(mthis){var mmonto; encender(mthis);
 }
 function llamar_eliminar(){
 var r=confirm("Esta seguro en Eliminar el Codigo Presupuestario de la Carga ?");
-  if (r==true) { document.location ='Delete_cod_carga.php?codigo=<?echo $codigo?>&cod_presup=<?echo $cod_presup?>'; }
+  if (r==true) { document.location ='Delete_cod_carga.php?codigo=<?php echo $codigo?>&cod_presup=<?php echo $cod_presup?>'; }
 }
-function llamar_modificar(){ document.location ='Update_cod_carga.php?codigo=<?echo $codigo?>&cod_presup=<?echo $cod_presup?>&monto='+document.form1.txtmonto.value; }
-function llamar_anterior(){ document.location ='Part_det_carga.php?Gcodigo=<?echo $codigo?>'; }
+function llamar_modificar(){ document.location ='Update_cod_carga.php?codigo=<?php echo $codigo?>&cod_presup=<?php echo $cod_presup?>&monto='+document.form1.txtmonto.value; }
+function llamar_anterior(){ document.location ='Part_det_carga.php?Gcodigo=<?php echo $codigo?>'; }
 </script>
 
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $denominacion=""; $monto=0;
 $sSQL="SELECT * FROM PRE032 where cod_presup='$cod_presup' and cod_fuente='$cod_fuente'";$res=pg_query($sSQL);
@@ -48,7 +48,7 @@ $monto=formato_monto($monto);
           <td><table width="599" border="0">
               <tr>
                 <td width="181"><span class="Estilo5">C&Oacute;DIGO PRESUPUESTARIO :</span></td>
-                <td width="408"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup"   value="<?echo $cod_presup?>" readonly size="32" maxlength="32" >
+                <td width="408"><span class="Estilo5"><input class="Estilo10" name="txtcod_presup" type="text" id="txtcod_presup"   value="<?php echo $cod_presup?>" readonly size="32" maxlength="32" >
                 </span></td>
               </tr>
           </table></td>
@@ -58,7 +58,7 @@ $monto=formato_monto($monto);
             <table width="599" border="0">
               <tr>
                 <td width="122"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                <td width="482"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="74" maxlength="250" value="<?echo $denominacion?>" readonly>
+                <td width="482"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="74" maxlength="250" value="<?php echo $denominacion?>" readonly>
                 </span></td>
               </tr>
             </table>            </td>
@@ -69,11 +69,11 @@ $monto=formato_monto($monto);
                 <tr>
                   <td width="115"><span class="Estilo5">ASIGNACI&Oacute;N : </span></td>
                   <td width="474"><span class="Estilo5">
-                    <? IF($SIA_Definicion=="N"){?>
-                       <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" title="Registre el Monto de Asignacion" value="<?echo $monto?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">
-                    <?} else { ?>
-                       <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" readonly value="<?echo $monto?>">
-                     <?}?>
+                    <?php  IF($SIA_Definicion=="N"){?>
+                       <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" title="Registre el Monto de Asignacion" value="<?php echo $monto?>" onFocus="encender_monto(this)" onBlur="apagar(this)" onKeypress="return validarNum(event)">
+                    <?php } else { ?>
+                       <input class="Estilo10" name="txtmonto" type="text" id="txtmonto" size="25" style="text-align:right" maxlength="22" readonly value="<?php echo $monto?>">
+                     <?php }?>
                   </span></td>
                 </tr>
             </table></td>

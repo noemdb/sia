@@ -1,10 +1,10 @@
-<? include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc"); $php_os=PHP_OS;  error_reporting(E_ALL ^ E_NOTICE);
 $nro_orden_d=$_GET["nro_orden_d"];$nro_orden_h=$_GET["nro_orden_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"];$cod_cuenta_d=$_GET["cod_cuenta_d"];$cod_cuenta_h=$_GET["cod_cuenta_h"];$tipo_rpt=$_GET["tipo_rpt"]; $agrupa_cuenta=$_GET["agrupa_cuenta"];
 $criterio1="FECHA DESDE: ".$fecha_d." HASTA: ".$fecha_h;   $Sql=""; $date = date("d-m-Y");$hora = date("H:i:s a");
     if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);}else{$fecha_d='';}$fecha_desde=$ano1.$mes1.$dia1;
     if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}else{$fecha_h='';}$fecha_hasta=$ano1.$mes1.$dia1;
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{$php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     // LLAMAR A PHP_REPORT
 	$status_pag="((substring(pag001.tipo_causado,1,1)<>'A') and ";
@@ -209,7 +209,7 @@ else{$php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="W
 		   <td width="80" align="left" ><strong></strong></td>
 		   <td width="100" align="left" ><strong></strong></td>
 		   <td width="200" align="left" ><strong></strong></td>
-		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><? echo $criterio1; ?></strong></font></td>
+		   <td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php  echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="80" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -218,7 +218,7 @@ else{$php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="W
            <td width="400" align="left" bgcolor="#99CCFF"><strong>CONCEPTO</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></font></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0;  $total=0;   $res=pg_query($sSQL); $cantidad=0;
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $nro_orden=$registro["nro_orden"];$fecha=$registro["fecha"]; $nombre=$registro["nombre"]; $concepto=$registro["concepto"]; 
@@ -226,14 +226,14 @@ else{$php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="W
 		   $total=$total+$registro["monto_orden"];    $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	?>	   
 		   <tr>
-           <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $nro_orden; ?></td>
-           <td width="100" align="left"><? echo $fecha; ?></td>
-           <td width="200" align="left"><? echo $nombre; ?></td>
-           <td width="400" align="justify"><? echo $concepto; ?></td>
-           <td width="100" align="right"><? echo $monto_orden; ?></td>
+           <td width="80" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $nro_orden; ?></td>
+           <td width="100" align="left"><?php  echo $fecha; ?></td>
+           <td width="200" align="left"><?php  echo $nombre; ?></td>
+           <td width="400" align="justify"><?php  echo $concepto; ?></td>
+           <td width="100" align="right"><?php  echo $monto_orden; ?></td>
 
          </tr>
-	<? }  $total=formato_monto($total);
+	<?php }  $total=formato_monto($total);
         ?>
       <tr>
         <td>&nbsp;</td>
@@ -241,11 +241,11 @@ else{$php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="W
       <tr>
         <td width="80"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong></strong></td>
 		<td width="100"><strong></strong></td>
-		<td width="200"><strong>CANTIDAD ORDENES : <? echo $cantidad; ?></strong></td>	
+		<td width="200"><strong>CANTIDAD ORDENES : <?php  echo $cantidad; ?></strong></td>	
 		<td width="400" align="right"><strong>TOTAL ORDENES:</strong></td>
-		<td width="100" align="right"><strong><? echo $total; ?></strong></font></td>
+		<td width="100" align="right"><strong><?php  echo $total; ?></strong></font></td>
       </tr>
-	  </table><?
+	  </table><?php 
 	}
 }
 ?>

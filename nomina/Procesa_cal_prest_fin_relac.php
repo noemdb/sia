@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");  $cod_empleado=$_GET["cod_empleado"]; $fecha_cal_fin=$_GET["fecha_cal"]; ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");  $cod_empleado=$_GET["cod_empleado"]; $fecha_cal_fin=$_GET["fecha_cal"]; ?>
 <html>
 <head>  <title>PROCESAR CALCULO DE PRESTACIONES</title>
 <script language="JavaScript" type="text/JavaScript">
@@ -6,8 +6,8 @@ function Llamar_Inc_Calculo(mop){  document.form2.submit(); }
 </script>
 </head>
 <body>
-<?$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
+<?php $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; } else{ $Nom_Emp=busca_conf(); }
  echo "ESPERE POR FAVOR PROCESANDO CALCULO.... ","<br>";  $fecha_hoy=asigna_fecha_hoy();
  $nombre="";$cedula=""; $fecha_ingreso="";  $ant_ano="";$ant_mes="";$ant_dia="";$cod_sue_int="";$monto_sue_int=0;$sueldo_basico=0;$tiempo_servicio=0;$monto_garantia=0;$monto_art142=0;$fecha_cal_garantia="";
  $sql="Select * from TRABAJADORES where cod_empleado='$cod_empleado'"; $res=pg_query($sql); $filas=pg_num_rows($res);  
@@ -18,7 +18,7 @@ if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base 
    $fecha_ing=$registro["fecha_ingreso"]; $fecha_ingreso=formato_ddmmaaaa($fecha_ing); 
  }
  $sql="Select * from NOM001 where tipo_nomina='$tipo_nomina'"; $res=pg_query($sql); $filas=pg_num_rows($res); 
-if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO EXISTE');</script><?} 
+if($filas==0){$error=1; ?> <script language="JavaScript"> muestra('TIPO DE NOMINA NO EXISTE');</script><?php } 
 else{ $registro=pg_fetch_array($res); $cod_sue_int=$registro["con_cal_liqui"]; }
 
 $periodof=Calcula_dif_fechas($fecha_ingreso,$fecha_cal_fin);
@@ -42,33 +42,33 @@ $sueldo_basico=formato_monto($sueldo_basico);  $monto_sue_int=formato_monto($mon
 <form name="form2" method="post" action="Inc_cal_prest_fin_relac.php">
 <table width="10">
   <tr>
-     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?echo $user?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?echo $password?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?echo $dbname?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?echo $port?>" ></td>	 
-	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?echo $host?>" ></td>	
-     <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtcedula" type="hidden" id="txtcedula" value="<?echo $cedula?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?echo $fecha_ingreso?>" ></td>
-	 <td width="5"><input class="Estilo10" name="txtnombre" type="hidden" id="txtnombre" value="<?echo $nombre?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtfecha_cal_fin" type="hidden" id="txtfecha_cal_fin" value="<?echo $fecha_cal_fin?>" ></td>
-     <td width="5"><input class="Estilo10" name="txtant_ano" type="hidden" id="txtant_ano" value="<?echo $ant_ano?>"></td>
-     <td width="5"><input class="Estilo10" name="txtant_mes" type="hidden" id="txtant_mes" value="<?echo $ant_mes?>"></td>
-     <td width="5"><input class="Estilo10" name="txtant_dia" type="hidden" id="txtant_dia" value="<?echo $ant_dia?>"></td>	 
-     <td width="5"><input class="Estilo10" name="txtcod_sue_int" type="hidden" id="txtcod_sue_int" value="<?echo $cod_sue_int?>"></td>
-     <td width="5"><input class="Estilo10" name="txtmonto_sue_int" type="hidden" id="txtmonto_sue_int" value="<?echo $monto_sue_int?>"></td>
-     <td width="5"><input class="Estilo10" name="txtsueldo_basico" type="hidden" id="txtsueldo_basico" value="<?echo $sueldo_basico?>"></td>
-     <td width="5"><input class="Estilo10" name="txttiempo_servicio" type="hidden" id="txttiempo_servicio" value="<?echo $tiempo_servicio?>"></td>
-     <td width="5"><input class="Estilo10" name="txtmonto_garantia" type="hidden" id="txtmonto_garantia" value="<?echo $monto_garantia?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtmonto_art142" type="hidden" id="txtmonto_art142" value="<?echo $monto_art142?>"></td>	
-	 <td width="5"><input class="Estilo10" name="txtfecha_cal_garantia" type="hidden" id="txtfecha_cal_garantia" value="<?echo $fecha_cal_garantia?>"></td>	 
-	 <td width="5"><input class="Estilo10" name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?echo $Fec_Fin_Ejer?>"></td>
-	 <td width="5"><input class="Estilo10" name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?echo $Cod_Emp?>" ></td> 
+     <td width="5"><input class="Estilo10" name="txtuser" type="hidden" id="txtuser" value="<?php echo $user?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtpassword" type="hidden" id="txtpassword" value="<?php echo $password?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtdbname" type="hidden" id="txtdbname" value="<?php echo $dbname?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtport" type="hidden" id="txtport" value="<?php echo $port?>" ></td>	 
+	 <td width="5"><input class="Estilo10" name="txthost" type="hidden" id="txthost" value="<?php echo $host?>" ></td>	
+     <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtcedula" type="hidden" id="txtcedula" value="<?php echo $cedula?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtfecha_ingreso" type="hidden" id="txtfecha_ingreso" value="<?php echo $fecha_ingreso?>" ></td>
+	 <td width="5"><input class="Estilo10" name="txtnombre" type="hidden" id="txtnombre" value="<?php echo $nombre?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtfecha_cal_fin" type="hidden" id="txtfecha_cal_fin" value="<?php echo $fecha_cal_fin?>" ></td>
+     <td width="5"><input class="Estilo10" name="txtant_ano" type="hidden" id="txtant_ano" value="<?php echo $ant_ano?>"></td>
+     <td width="5"><input class="Estilo10" name="txtant_mes" type="hidden" id="txtant_mes" value="<?php echo $ant_mes?>"></td>
+     <td width="5"><input class="Estilo10" name="txtant_dia" type="hidden" id="txtant_dia" value="<?php echo $ant_dia?>"></td>	 
+     <td width="5"><input class="Estilo10" name="txtcod_sue_int" type="hidden" id="txtcod_sue_int" value="<?php echo $cod_sue_int?>"></td>
+     <td width="5"><input class="Estilo10" name="txtmonto_sue_int" type="hidden" id="txtmonto_sue_int" value="<?php echo $monto_sue_int?>"></td>
+     <td width="5"><input class="Estilo10" name="txtsueldo_basico" type="hidden" id="txtsueldo_basico" value="<?php echo $sueldo_basico?>"></td>
+     <td width="5"><input class="Estilo10" name="txttiempo_servicio" type="hidden" id="txttiempo_servicio" value="<?php echo $tiempo_servicio?>"></td>
+     <td width="5"><input class="Estilo10" name="txtmonto_garantia" type="hidden" id="txtmonto_garantia" value="<?php echo $monto_garantia?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtmonto_art142" type="hidden" id="txtmonto_art142" value="<?php echo $monto_art142?>"></td>	
+	 <td width="5"><input class="Estilo10" name="txtfecha_cal_garantia" type="hidden" id="txtfecha_cal_garantia" value="<?php echo $fecha_cal_garantia?>"></td>	 
+	 <td width="5"><input class="Estilo10" name="txtfecha_fin" type="hidden" id="txtfecha_fin" value="<?php echo $Fec_Fin_Ejer?>"></td>
+	 <td width="5"><input class="Estilo10" name="txtcod_emp" type="hidden" id="txtcod_emp" value="<?php echo $Cod_Emp?>" ></td> 
   </tr>
 </table>
 </form>
-<?   
-pg_close();
-if ($error==0){?><script language="JavaScript"> Llamar_Inc_Calculo('I');</script> <? }
-else {?>  <script language="JavaScript">history.back();</script> <? }
+<?php    
+pg_close($conn);
+if ($error==0){?><script language="JavaScript"> Llamar_Inc_Calculo('I');</script> <?php }
+else {?>  <script language="JavaScript">history.back();</script> <?php }
 ?>

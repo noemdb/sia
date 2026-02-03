@@ -154,7 +154,7 @@ if ($mes_hasta == '01') {
 $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $password . " user=" . $user . " dbname=" . $dbname . "");
 $date = date("d-m-Y");
 $hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)) {
+if (pg_last_error($conn)) {
     $error = 1;
 ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php
 } else {

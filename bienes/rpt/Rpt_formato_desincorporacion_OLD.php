@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $php_os="WINNT";
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $php_os="WINNT";
 if (!$_GET){ $referencia_desin=""; } else{$referencia_desin=$_GET["Greferencia_desin"];}
 
 $sql="Select * from BIEN045 where referencia_desin='$referencia_desin' ";
 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $rif_emp=""; $nom_completo=""; $direccion="";
 $sqle="Select * from SIA000 order by campo001"; $resultado=pg_query($sqle);
 if ($registro=pg_fetch_array($resultado,0)){$cod_emp=$registro["campo001"];
@@ -132,5 +132,5 @@ class PDF extends FPDF{
   $pdf->Cell(70);
   $pdf->Cell(60,3,'COORDINADOR DE BIENES','T',0,'C');
   $pdf->Output();
-pg_close();
+pg_close($conn);
 ?>

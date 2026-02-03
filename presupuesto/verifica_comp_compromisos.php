@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("Ver_dispon.php"); include ("../class/configura.inc");
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("Ver_dispon.php"); include ("../class/configura.inc");
   $dbnombre=$dbname;
   $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
   //$dbnombre="CPDVSA";
@@ -37,16 +37,16 @@
 			   $monto_c=$monto_asiento+$reg["monto_asiento"];  $monto_c=cambia_coma_numero($monto_c);
 			   $sql8="SELECT MODIFICA_CUENTA_CON008('$codigo_mov','$tipodc','$codigo_cuenta',$monto_c,'$descripcion')";
 			   $resg=pg_exec($conn, $sql8);
-			   $mvalor=pg_errormessage($conn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resg){echo $sql8,"<br>"; ?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? } }
+			   $mvalor=pg_errormessage($conn);  $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61); if (!$resg){echo $sql8,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
 			 else{ 
 			   $sql8="SELECT INCLUYE_CON008('$codigo_mov','$referencia','$tipodc','$codigo_cuenta','$tipo_comp','',$monto_asiento,'D','C','N','01','0','$descripcion')";
 			   $resg=pg_exec($conn,$sql8);
-			  $mvalor=pg_errormessage($conn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resg){echo $sql8,"<br>"; ?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }}
+			  $mvalor=pg_errormessage($conn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resg){echo $sql8,"<br>"; ?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php } }
 		 
 		 }
 		 $tipodc="C"; $tipo_asiento="COM"; if($letra=="A"){ $tipodc="D"; $tipo_asiento="ANU"; }
 		 $resultado=pg_exec($conn,"SELECT INCLUYE_CON008('$codigo_mov','$referencia','$tipodc','$cod_con_g_pagar','$tipo_comp','',$total,'D','C','N','01','0','$descripcion')");
-         $mvalor=pg_errormessage($conn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<? echo $mvalor; ?>');</script><? }   
+         $mvalor=pg_errormessage($conn); $mvalor="ERROR GRABANDO: ".substr($mvalor, 0, 61);   if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $mvalor; ?>');</script><?php }   
 	   
 	    $sqlg="INSERT INTO CON002 (referencia,fecha,tipo_comp,tipo_asiento,status,modulo,aoperacion,doperacion,nro_comprobante,ced_rif,nro_expediente,inf_usuario,descripcion) 
             VALUES ('$referencia','$fecha','$tipo_comp','$tipo_asiento','D','P','01','0','$referencia','$ced_rif','','$inf_usuario','$descripcion')";

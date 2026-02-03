@@ -1,7 +1,7 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$metodo_conci=$_GET["metodo_conci"];$periodod=$_GET["periodod"]; $tipo_rep=$_GET["tipo_rep"];  $Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }  $mcod_m="BAN023".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49); $cfecha=formato_ddmmaaaa($Fec_Ini_Ejer);
 $criterio1=""; $dperiodod='Enero'; $cfecha="01/01/".substr($cfecha,6,4); 
 $des_encab="SALDO SEGUN BANCO :"; $des_pie1="SALDO EN LIBROS SEGUN CONCILIACION :"; $des_pie2="SALDO ACTUAL EN LIBROS :";

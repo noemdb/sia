@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){$cod_entidad='';} else {$cod_entidad=$_GET["Gentidad"];}?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,7 +38,7 @@ return true;}
 .Estilo5 {font-size: 12px}
 -->
 </style>
-<?
+<?php 
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $den_estado="";
 $sql="Select cod_estado,estado from pre091 where cod_estado='$cod_entidad'";$res=pg_query($sql);
@@ -80,7 +80,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_estado=$registro["cod_estado"];   $
                   <tr>
                     <td width="96"><span class="Estilo5">C&Oacute;DIGO :</span></td>
                     <td width="720"><span class="Estilo5">
-                      <input name="txtCodigo_Entidad" type="text" id="txtCodigo_Entidad" title="Registre el C&oacute;digo de la Entidad" size="10" maxlength="2"  readonly value="<?ECHO $cod_entidad?>">
+                      <input name="txtCodigo_Entidad" type="text" id="txtCodigo_Entidad" title="Registre el C&oacute;digo de la Entidad" size="10" maxlength="2"  readonly value="<?php ECHO $cod_entidad?>">
                     </span></td>
                   </tr>
                 </table></td>
@@ -91,7 +91,7 @@ if ($registro=pg_fetch_array($res,0)){  $cod_estado=$registro["cod_estado"];   $
                   <table width="816" border="0">
                     <tr>
                       <td width="96"><span class="Estilo5">NOMBRE :</span></td>
-                      <td width="720"><input name="txtNombre_Entidad" type="text" id="txtNombre_Entidad" title="Registre el Nombre de la Entidad" size="100" maxlength="200"  value="<?ECHO $den_estado?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
+                      <td width="720"><input name="txtNombre_Entidad" type="text" id="txtNombre_Entidad" title="Registre el Nombre de la Entidad" size="100" maxlength="200"  value="<?php ECHO $den_estado?>" onFocus="encender(this)" onBlur="apagar(this)"></td>
                     </tr>
                   </table>                  </td>
               </tr>
@@ -120,4 +120,4 @@ if ($registro=pg_fetch_array($res,0)){  $cod_estado=$registro["cod_estado"];   $
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

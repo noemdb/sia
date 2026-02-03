@@ -1,9 +1,9 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 if ($_GET){$doc_comp_d=$_GET["doc_comp_d"]; $doc_comp_h=$_GET["doc_comp_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$tipo_comp_d=$_GET["tipo_comp_d"]; $tipo_comp_h=$_GET["tipo_comp_h"]; $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];  $tipo_rep=$_GET["tipo_rep"];}
 else{$fecha="";$tipo_rep="HTML";} $php_os=PHP_OS;  $equipo=getenv("COMPUTERNAME"); $cod_mov="pre021m".$usuario_sia;
 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} }
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
   if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"]; $titulo=$registro["campo525"]; $formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];} 
   $l_c=strlen($formato_presup); $c=strlen($formato_categoria);  $p=strlen($formato_partida); $ini=$c+2;
@@ -200,7 +200,7 @@ FROM  pre012  where (pre012.Tipo_Rep='C') and (nombre_usuario='$cod_mov') ORDER 
 				<td width="90" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
 				<td width="80" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1;?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1;?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="90" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Fecha</strong></td>
@@ -212,7 +212,7 @@ FROM  pre012  where (pre012.Tipo_Rep='C') and (nombre_usuario='$cod_mov') ORDER 
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Causado</strong></td>
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Pagado</strong></td>		 
 			 </tr>
-		  <?  $i=0;  $totalm=0; $totalc=0; $totala=0; $totalp=0; $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $prev_clave="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $totalm=0; $totalc=0; $totala=0; $totalp=0; $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $prev_clave="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $asignado=$registro["asignado"];		$asignado=formato_monto($asignado);  
 		       $cod_presup=$registro["cod_presup"]; $fuente_financ=$registro["fuente_financ"]; $denominacion=$registro["denom_cort"]; 
 			   $cod_presup_cat=$registro["cod_presup_cat"]; $denominacion_cat=$registro["denominacion_cat"];   $cod_part=$registro["cod_part"];			   
@@ -237,15 +237,15 @@ FROM  pre012  where (pre012.Tipo_Rep='C') and (nombre_usuario='$cod_mov') ORDER 
 				      <td width="80" align="left"></td>
 					  <td width="80" align="left"></td>
 					  <td width="400" align="left"></td>
-					  <td width="200" align="right"><? echo "Totales : "; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalc; ?></td>
-					  <td width="120" align="right"><? echo $sub_totala; ?></td>
-					  <td width="120" align="right"><? echo $sub_totalp; ?></td>
+					  <td width="200" align="right"><?php  echo "Totales : "; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalc; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totala; ?></td>
+					  <td width="120" align="right"><?php  echo $sub_totalp; ?></td>
 				    </tr>	
 					<tr>
 				      <td width="90" align="left"></td>
 				    </tr>	
-                  <? 					
+                  <?php  					
 				 }
 						 
 			    $prev_clave=$clave;  $sub_totalm=0; $sub_totalc=0; $sub_totala=0; $sub_totalp=0; $i=0;
@@ -260,29 +260,29 @@ FROM  pre012  where (pre012.Tipo_Rep='C') and (nombre_usuario='$cod_mov') ORDER 
 			   if($clave_doc<>$prev_doc){ 
 			   ?>	   
 				<tr>
-				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $fechaf; ?></td>
-				   <td width="80" align="left"><? echo $tipo; ?></td>
-				   <td width="80" align="left">'<? echo $referencia; ?></td>				  
-				   <td width="400" align="justify"><? echo $descripcion; ?></td>
-				   <td width="200" align="justify"><? echo $nombre; ?></td>		
+				   <td width="90" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $fechaf; ?></td>
+				   <td width="80" align="left"><?php  echo $tipo; ?></td>
+				   <td width="80" align="left">'<?php  echo $referencia; ?></td>				  
+				   <td width="400" align="justify"><?php  echo $descripcion; ?></td>
+				   <td width="200" align="justify"><?php  echo $nombre; ?></td>		
 				   <td width="120" align="right"></td>
 				   <td width="120" align="right"></td>
 				   <td width="120" align="right"></td>
 				 </tr>
-			   <?  $prev_doc=$clave_doc; }	
+			   <?php   $prev_doc=$clave_doc; }	
 
                ?>	   
 				<tr>
 				   <td width="90" align="left"></td>
 				   <td width="80" align="left"></td>
 				   <td width="80" align="left"></td>				  
-				   <td width="400" align="justify"><? echo $cod_presup."   ".$fuente_financ; ?></td>
-				   <td width="200" align="justify"><? echo $denominacion; ?></td>		
-				   <td width="120" align="right"><? echo $comprometido; ?></td>
-				   <td width="120" align="right"><? echo $causado; ?></td>
-				   <td width="120" align="right"><? echo $pagado; ?></td>
+				   <td width="400" align="justify"><?php  echo $cod_presup."   ".$fuente_financ; ?></td>
+				   <td width="200" align="justify"><?php  echo $denominacion; ?></td>		
+				   <td width="120" align="right"><?php  echo $comprometido; ?></td>
+				   <td width="120" align="right"><?php  echo $causado; ?></td>
+				   <td width="120" align="right"><?php  echo $pagado; ?></td>
 				 </tr>
-			   <?	$i=$i+1;		   
+			   <?php 	$i=$i+1;		   
 		  }
 		  if(($sub_totalc>0)or($sub_totalm>0)or($sub_totala>0)or($sub_totalp>0)){ $sub_totalc=formato_monto($sub_totalc);$sub_totala=formato_monto($sub_totala);  $sub_totalp=formato_monto($sub_totalp);  $sub_totalm=formato_monto($sub_totalm); 
 		  ?>	 				 
@@ -301,15 +301,15 @@ FROM  pre012  where (pre012.Tipo_Rep='C') and (nombre_usuario='$cod_mov') ORDER 
 			  <td width="80" align="left"></td>
 			  <td width="80" align="left"></td>
 			  <td width="400" align="left"></td>
-			  <td width="200" align="right"><? echo "Totales : "; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalc; ?></td>
-			  <td width="120" align="right"><? echo $sub_totala; ?></td>
-			  <td width="120" align="right"><? echo $sub_totalp; ?></td>
+			  <td width="200" align="right"><?php  echo "Totales : "; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalc; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totala; ?></td>
+			  <td width="120" align="right"><?php  echo $sub_totalp; ?></td>
 			</tr>	
 			
-		  <? 					
+		  <?php  					
 		  }		  
-		  ?></table><?
+		  ?></table><?php 
     }	
     $StrSQL="DELETE FROM pre012 where (tipo_rep='C') and (nombre_usuario='".$cod_mov."')"; $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error,0,91); 
 

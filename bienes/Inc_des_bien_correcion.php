@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); include ("../class/fun_fechas.php");
+<?php include ("../class/ventana.php"); include ("../class/fun_fechas.php");
 $fecha_hoy=asigna_fecha_hoy();  $num="01"; $user=$_POST["txtuser"]; $password=$_POST["txtpassword"]; $dbname=$_POST["txtdbname"]; $fec_fin_e=$_POST["txtfecha_fin"];
 $fecha_fin=formato_ddmmaaaa($fec_fin_e);  if(FDate($fecha_hoy)>FDate($fecha_fin)){$fecha_hoy=$fecha_fin;}
 $ano=substr($fecha_hoy,6,4); $antiguedad=0; $tasa_deprec=0; $vida_util=0; $valor_residual=0; $monto_depreciado=0;
@@ -14,7 +14,7 @@ $valor_incorporacion=$_POST["txtvalor_incorporacion"];$fecha_incorporacion=$_POS
 ?>  
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Ficha de Bienes Muebles)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Ficha de Bienes Muebles)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
@@ -98,8 +98,8 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="180"><span class="Estilo5">C&Oacute;DIGO DE CLASIFICACI&Oacute;N :</span></td>
-                 <td width="145"><span class="Estilo5"><input name="txtcod_clasificacion" type="text" id="txtcod_clasificacion"  size="10" maxlength="10" value="<?echo $cod_clasificacion?>"  readonly class="Estilo5"> </span></td>
-                 <td width="520"><span class="Estilo5"><input name="txtnom_clasificacion" type="text" id="txtnom_clasificacion" size="100" maxlength="250" value="<?echo $nom_clasificacion?>"  readonly class="Estilo5"></span></td>
+                 <td width="145"><span class="Estilo5"><input name="txtcod_clasificacion" type="text" id="txtcod_clasificacion"  size="10" maxlength="10" value="<?php echo $cod_clasificacion?>"  readonly class="Estilo5"> </span></td>
+                 <td width="520"><span class="Estilo5"><input name="txtnom_clasificacion" type="text" id="txtnom_clasificacion" size="100" maxlength="250" value="<?php echo $nom_clasificacion?>"  readonly class="Estilo5"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -107,9 +107,9 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="125"><span class="Estilo5">N&Uacute;MERO DEL BIEN:</span></td>
-                 <td width="250"><span class="Estilo5"><div id="numbien"> <input name="txtnum_bien" type="text" id="txtnum_bien" size="20" maxlength="20" value="<?echo $num_bien?>"  readonly class="Estilo5"></div></td>
+                 <td width="250"><span class="Estilo5"><div id="numbien"> <input name="txtnum_bien" type="text" id="txtnum_bien" size="20" maxlength="20" value="<?php echo $num_bien?>"  readonly class="Estilo5"></div></td>
                  <td width="220"><span class="Estilo5">C&Oacute;DIGO DEL BIEN INMUEBLE :</span></td>
-                 <td width="250"><span class="Estilo5"><input name="txtcod_bien_mue" type="text" id="txtcod_bien_mue"  size="40" maxlength="40" value="<?echo $cod_bien_mue?>" readonly class="Estilo5"> </span></td>
+                 <td width="250"><span class="Estilo5"><input name="txtcod_bien_mue" type="text" id="txtcod_bien_mue"  size="40" maxlength="40" value="<?php echo $cod_bien_mue?>" readonly class="Estilo5"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -117,7 +117,7 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="165"><span class="Estilo5">DENOMINACI&Oacute;N DEL BIEN :</span></td>
-                 <td width="680"><span class="Estilo5"><input name="txtdenominacion" type="text" id="txtdenominacion" size="120" maxlength="250" value="<?echo $denominacion?>"  readonly  class="Estilo5"></div></td>
+                 <td width="680"><span class="Estilo5"><input name="txtdenominacion" type="text" id="txtdenominacion" size="120" maxlength="250" value="<?php echo $denominacion?>"  readonly  class="Estilo5"></div></td>
                </tr>
              </table></td>
            </tr>          
@@ -125,8 +125,8 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="140"><span class="Estilo5">C&Oacute;DIGO DEPENDENCIA :</span></td>
-                 <td width="135"><span class="Estilo5"><input name="txtcod_dependencia" type="text" id="txtcod_dependencia" size="5" maxlength="4" value="<?echo $cod_dependencia?>" readonly class="Estilo5">    </span></td>
-                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_dep" type="text" id="txtdenominacion_dep" size="100" maxlength="250" value="<?echo $denominacion_dep?>" readonly class="Estilo5">    </span></td>
+                 <td width="135"><span class="Estilo5"><input name="txtcod_dependencia" type="text" id="txtcod_dependencia" size="5" maxlength="4" value="<?php echo $cod_dependencia?>" readonly class="Estilo5">    </span></td>
+                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_dep" type="text" id="txtdenominacion_dep" size="100" maxlength="250" value="<?php echo $denominacion_dep?>" readonly class="Estilo5">    </span></td>
                </tr>
              </table></td>
            </tr>		   
@@ -134,8 +134,8 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="140"><span class="Estilo5">C&Oacute;DIGO DIRECCI&Oacute;N :</span></td>
-                 <td width="135"><span class="Estilo5"> <input name="txtcod_direccion" type="text" id="txtcod_direccion" size="5" maxlength="4" readonly value="<?echo $cod_direccion?>"  class="Estilo5">   </span></td>
-                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_dir" type="text" id="txtdenominacion_dir" size="100" maxlength="100" value="<?echo $denominacion_dir?>" readonly class="Estilo5">   </span></td>
+                 <td width="135"><span class="Estilo5"> <input name="txtcod_direccion" type="text" id="txtcod_direccion" size="5" maxlength="4" readonly value="<?php echo $cod_direccion?>"  class="Estilo5">   </span></td>
+                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_dir" type="text" id="txtdenominacion_dir" size="100" maxlength="100" value="<?php echo $denominacion_dir?>" readonly class="Estilo5">   </span></td>
                </tr>
              </table></td>
            </tr>
@@ -143,8 +143,8 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="155"><span class="Estilo5">C&Oacute;DIGO DEPARTAMENTO :</span></td>
-                 <td width="120"><span class="Estilo5"><input name="txtcod_departamento" type="text" id="txtcod_departamento" size="10" maxlength="8" readonly value="<?echo $cod_departamento ?>" class="Estilo5">   </span></td>
-                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_depart" type="text" id="txtdenominacion_depart" size="100" maxlength="100"  value="<?echo $denominacion_depart ?>" readonly class="Estilo5">   </span></td>
+                 <td width="120"><span class="Estilo5"><input name="txtcod_departamento" type="text" id="txtcod_departamento" size="10" maxlength="8" readonly value="<?php echo $cod_departamento ?>" class="Estilo5">   </span></td>
+                 <td width="570"><span class="Estilo5"><input name="txtdenominacion_depart" type="text" id="txtdenominacion_depart" size="100" maxlength="100"  value="<?php echo $denominacion_depart ?>" readonly class="Estilo5">   </span></td>
                </tr>
              </table></td>
            </tr> 
@@ -152,8 +152,8 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="245"><span class="Estilo5">C&Oacute;DIGO MOVIMIENTO INCORPORACI&Oacute;N:</span></td>
-                 <td width="100"><span class="Estilo5"><input name="txcodigo_tipo_incorp" type="text" id="txtcodigo_tipo_incorp" size="5" maxlength="5" value="<?echo $codigo_tipo_incorp ?>" readonly class="Estilo5">  </span></td>
-                 <td width="500"><span class="Estilo5"><input name="txtdenomina_tipo" type="text" id="txtdenomina_tipo" size="100" maxlength="150" value="<?echo $denomina_tipo?>" readonly class="Estilo5"> </span></td>
+                 <td width="100"><span class="Estilo5"><input name="txcodigo_tipo_incorp" type="text" id="txtcodigo_tipo_incorp" size="5" maxlength="5" value="<?php echo $codigo_tipo_incorp ?>" readonly class="Estilo5">  </span></td>
+                 <td width="500"><span class="Estilo5"><input name="txtdenomina_tipo" type="text" id="txtdenomina_tipo" size="100" maxlength="150" value="<?php echo $denomina_tipo?>" readonly class="Estilo5"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -161,7 +161,7 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="195"><span class="Estilo5">TIPO DE INCORPORACI&Oacute;N :</span></td>
-                 <td width="650"><span class="Estilo5"><input name="txttipo_incorporacion" type="text" id="txttipo_incorporacion" size="30" maxlength="30" value="<?echo $tipo_incorporacion ?>" readonly class="Estilo5"></span></td>
+                 <td width="650"><span class="Estilo5"><input name="txttipo_incorporacion" type="text" id="txttipo_incorporacion" size="30" maxlength="30" value="<?php echo $tipo_incorporacion ?>" readonly class="Estilo5"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -169,7 +169,7 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="245"><span class="Estilo5">C&Oacute;D. IMPUTACI&Oacute;N PRESUPUESTARIA :</span></td>
-                 <td width="600"><span class="Estilo5"><input name="txtcod_imp_presup" type="text" id="txtcod_imp_presup" size="35" maxlength="32"  value="<?echo $cod_imp_presup?>" readonly class="Estilo5"> </span></td>
+                 <td width="600"><span class="Estilo5"><input name="txtcod_imp_presup" type="text" id="txtcod_imp_presup" size="35" maxlength="32"  value="<?php echo $cod_imp_presup?>" readonly class="Estilo5"> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -177,7 +177,7 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="245"><span class="Estilo5">NOMBRE IMPUTACI&Oacute;N PRESUPUESTARIA :</span></td>
-                 <td width="600"><span class="Estilo5"><input name="txtnom_imp_presup" type="text" id="txtnom_imp_presup" size="130" maxlength="150" value="<?echo $nom_imp_presup?>" readonly class="Estilo5">  </span></td>
+                 <td width="600"><span class="Estilo5"><input name="txtnom_imp_presup" type="text" id="txtnom_imp_presup" size="130" maxlength="150" value="<?php echo $nom_imp_presup?>" readonly class="Estilo5">  </span></td>
                </tr>
              </table></td>
            </tr>           
@@ -185,11 +185,11 @@ return true;}
              <td><table width="845">
                <tr>
                  <td width="165"><span class="Estilo5">VALOR INCORPORACI&Oacute;N :</span></td>
-                 <td width="150"><span class="Estilo5"><input name="txtvalor_incorporacion" type="text" id="txtvalor_incorporacion" size="20" maxlength="15" value="<?echo $valor_incorporacion?>" readonly class="Estilo5">   </span></td>
+                 <td width="150"><span class="Estilo5"><input name="txtvalor_incorporacion" type="text" id="txtvalor_incorporacion" size="20" maxlength="15" value="<?php echo $valor_incorporacion?>" readonly class="Estilo5">   </span></td>
                  <td width="150"><span class="Estilo5">FECHA INCORPORACI&Oacute;N :</span></td>
-                 <td width="150"><span class="Estilo5"><input name="txtfecha_incorporacion" type="text" id="txtfecha_incorporacion" size="15" maxlength="15"  value="<?echo $fecha_incorporacion?>" readonly class="Estilo5">   </span></td>
+                 <td width="150"><span class="Estilo5"><input name="txtfecha_incorporacion" type="text" id="txtfecha_incorporacion" size="15" maxlength="15"  value="<?php echo $fecha_incorporacion?>" readonly class="Estilo5">   </span></td>
                  <td width="90"><span class="Estilo5">GARANTIA :</span></td>
-                 <td width="140"><span class="Estilo5"><input name="txtgarantia" type="text" id="txtgarantia" size="10" maxlength="15" value="<?echo $garantia?>" readonly class="Estilo5">   </span></td>
+                 <td width="140"><span class="Estilo5"><input name="txtgarantia" type="text" id="txtgarantia" size="10" maxlength="15" value="<?php echo $garantia?>" readonly class="Estilo5">   </span></td>
                </tr>
              </table></td>
            </tr>
@@ -202,7 +202,7 @@ return true;}
                  <td width="125"><span class="Estilo5">DESINCORPORADO :</span></td>
 				 <td width="300"><span class="Estilo5"><input name="txtdesincorporado" type="text" id="txtdesincorporado" size="4" maxlength="2" value="SI" readonly class="Estilo5">   </span></td>                 
                  <td width="200"><span class="Estilo5">FECHA DESINCORPORACI&Oacute;N :</span></td>
-				 <td width="200"><span class="Estilo5"><input name="txtfecha_desincorporado" type="text" id="txtfecha_desincorporado" size="20" maxlength="10" value="<?echo $fecha_hoy?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" onchange="chequea_fecha(this)" onkeyup="mascara(this,'/',patronfecha,true)">  </span></td>
+				 <td width="200"><span class="Estilo5"><input name="txtfecha_desincorporado" type="text" id="txtfecha_desincorporado" size="20" maxlength="10" value="<?php echo $fecha_hoy?>" onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" onchange="chequea_fecha(this)" onkeyup="mascara(this,'/',patronfecha,true)">  </span></td>
                </tr>
              </table></td>
            </tr>

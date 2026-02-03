@@ -1,8 +1,8 @@
-<? date_default_timezone_set("America/Caracas"); set_time_limit(0); $tipo_resp=$_POST["txttipo_resp"]; $modulos=$_POST["txtmodulos"]; 
+<?php  date_default_timezone_set("America/Caracas"); set_time_limit(0); $tipo_resp=$_POST["txttipo_resp"]; $modulos=$_POST["txtmodulos"]; 
 $host=$_POST["txthost"]; $port=$_POST["txtport"]; $password=$_POST["txtpassword"]; $user=$_POST["txtuser"]; $dbname=$_POST["txtdbname"]; 
 $presup=substr($modulos,0,1); $contab=substr($modulos,1,1); $bancos=substr($modulos,2,1); $pagos=substr($modulos,3,1);
 $compras=substr($modulos,4,1); $ingresos=substr($modulos,5,1); $bienes=substr($modulos,6,1); $nomina=substr($modulos,7,1); $empresa=substr($modulos,8,1);
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $dfecha=date("Y-m-d"); $nombre_arh="datos".$dfecha.".sql";  $nombre_arh=$dbname."_".$dfecha.".sql";
 $mencoding = pg_client_encoding($conn);
 header('Content-type: application/txt');
@@ -46,5 +46,5 @@ while($regt=pg_fetch_array($rest)){ $nombre_tabla=$regt["tablename"]; $resp=0;
   }  
 }
 pg_free_result($rest);
-pg_close();
+pg_close($conn);
 ?>

@@ -1,14 +1,14 @@
-<? if (!$_GET){  $equipo = getenv("COMPUTERNAME"); $mcod_m = "CON02".$equipo; $codigo_mov=substr($mcod_m,0,49);}  else{  $codigo_mov=$_GET["codigo_mov"];}
+<?php  if (!$_GET){  $equipo = getenv("COMPUTERNAME"); $mcod_m = "CON02".$equipo; $codigo_mov=substr($mcod_m,0,49);}  else{  $codigo_mov=$_GET["codigo_mov"];}
 include ("../class/conect.php");  include ("../class/funciones.php");?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <SCRIPT language="JavaScript" src="../class/sia.js"  type=text/javascript></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_mov_comp.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_mov_comp.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_banco(mform){
 var mref; var mcedrif;
    mref=mform.txtcod_banco.value;  mref=Rellenarizq(mref,"0",4);  mform.txtcod_banco.value=mref; 
@@ -21,10 +21,10 @@ function apaga_monto(mthis){var mref; var mmonto;
    apagar(mthis);    mmonto=document.form1.txtmonto.value;  mmonto=camb_punto_coma(mmonto);document.form1.txtmonto.value=mmonto;
  return true;}
 function revisar(){var f=document.form1; var Valido=true;
-   if(f.txtcod_banco.value==""){alert("Código de Banco no puede estar Vacio");return false;}
+   if(f.txtcod_banco.value==""){alert("Cï¿½digo de Banco no puede estar Vacio");return false;}
     if(f.txtreferencia.value==""){alert("Referencia no puede estar Vacio");return false;}
     if(f.txtnombre_banco.value==""){alert("Nombre de Banco no puede estar Vacio");return false;} else{f.txtnombre_banco.value=f.txtnombre_banco.value.toUpperCase();}
-    if(f.txtcod_banco.value.length==4){f.txtcod_banco.value=f.txtcod_banco.value.toUpperCase();} else{alert("Longitud Código de Banco Invalida");return false;}
+    if(f.txtcod_banco.value.length==4){f.txtcod_banco.value=f.txtcod_banco.value.toUpperCase();} else{alert("Longitud Cï¿½digo de Banco Invalida");return false;}
     if((f.txttipo_movimiento.value=="")||(f.txttipo_movimiento.value=="TRC")||(f.txttipo_movimiento.value=="TRD")||(f.txttipo_movimiento.value=="CHQ")||(f.txttipo_movimiento.value=="ANU")||(f.txttipo_movimiento.value=="ANC")||(f.txttipo_movimiento.value=="AND")){alert("Tipo de Movimiento Inavlido");return false;} else{f.txttipo_movimiento.value=f.txttipo_movimiento.value.toUpperCase();}
     if(f.txtDes_A.value==""){alert("Descripcion de Asiento no puede estar Vacio"); return false; } else{f.txtDes_A.value=f.txtDes_A.value.toUpperCase();}
    if((f.txttipo_movimiento.value=="")||(f.txttipo_movimiento.value=="TRC")||(f.txttipo_movimiento.value=="TRD")||(f.txttipo_movimiento.value=="CHQ")||(f.txttipo_movimiento.value=="ANU")||(f.txttipo_movimiento.value=="ANC")||(f.txttipo_movimiento.value=="AND")){alert("Tipo de Movimiento Inavlido");return false;} else{f.txttipo_movimiento.value=f.txttipo_movimiento.value.toUpperCase();}
@@ -98,7 +98,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
 			
 			
             <td width="100">&nbsp;</td>

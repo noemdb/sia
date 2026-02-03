@@ -1,11 +1,11 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 if (!$_GET){ $Tipo_Asiento='';} else { $Tipo_Asiento = $_GET["GTipo_Asiento"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Modificar Tipos de Asientos)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Modificar Tipos de Asientos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -39,7 +39,7 @@ var f=document.form1;
 document.form1.submit;
 return true;}
 </script>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $Des_Asiento="";$sql="Select * from con009 where tipo_asiento='$Tipo_Asiento'";$res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){$Tipo_Asiento=$registro["tipo_asiento"]; $Des_Asiento=$registro["descrip_tipo_asiento"];}
@@ -76,7 +76,7 @@ if ($registro=pg_fetch_array($res,0)){$Tipo_Asiento=$registro["tipo_asiento"]; $
             <td> <blockquote>
                           </p>
                           <p class="Estilo5">TIPO DE ASIENTO :
-                            <input readOnly size="10" value="<?ECHO $Tipo_Asiento?>" name="txtTipo_Asiento">
+                            <input readOnly size="10" value="<?php ECHO $Tipo_Asiento?>" name="txtTipo_Asiento">
                   </p>
                           <p>&nbsp;                          </p>
             </blockquote></td>
@@ -84,7 +84,7 @@ if ($registro=pg_fetch_array($res,0)){$Tipo_Asiento=$registro["tipo_asiento"]; $
           <tr>
             <td><blockquote>
               <p align="left"><span class="Estilo5">DESCRIPCI&Oacute;N TIPO DE ASIENTO :</span>
-                <input name="txtDes_Tipo_Asi" type="text" value="<?ECHO $Des_Asiento?>" id="txtDes_Tipo_Asi" title="Registre descripci&oacute;n del tipo de asiento" size="80" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)">
+                <input name="txtDes_Tipo_Asi" type="text" value="<?php ECHO $Des_Asiento?>" id="txtDes_Tipo_Asi" title="Registre descripci&oacute;n del tipo de asiento" size="80" maxlength="200"  onFocus="encender(this)" onBlur="apagar(this)">
               </p>
             </blockquote></td>
           </tr>

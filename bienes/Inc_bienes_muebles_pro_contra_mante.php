@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php");?>
+<?php include ("../class/ventana.php");?>
 <?php include ("../class/fun_fechas.php");
   $fecha_hoy=asigna_fecha_hoy();
 ?>
@@ -6,7 +6,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Bienes Muebles)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Bienes Muebles)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK
 href="../class/sia.css" type=text/css
@@ -172,7 +172,7 @@ return true;}
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="115" scope="col"><div align="left"><span class="Estilo5">FECHA CONTRATO :</span></div></td>
                 <td width="611" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_contrato" type="text" id="txtfecha_contrato" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?echo $fecha_hoy?>">
+                    <input name="txtfecha_contrato" type="text" id="txtfecha_contrato" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?php echo $fecha_hoy?>">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
               </tr>
             </table></td>
@@ -182,11 +182,11 @@ return true;}
               <tr>
                 <td width="170" scope="col"><div align="left"><span class="Estilo5">PERIODO CONTRATO DESDE :</span></div></td>
                 <td width="122" scope="col"><div align="left"><span class="Estilo5"><span class="Estilo10">
-                    <input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?echo $fecha_hoy?>">
+                    <input name="txtfecha_desde" type="text" id="txtfecha_desde" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?php echo $fecha_hoy?>">
                     <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span> <span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="51" scope="col"><div align="left"><span class="Estilo5">HASTA :</span></div></td>
                 <td width="119" scope="col"><div align="left"><span class="Estilo5">
-                    <input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?echo $fecha_hoy?>">
+                    <input name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="15" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" class="Estilo5" value="<?php echo $fecha_hoy?>">
                     <span class="Estilo10"><span class="menu"><strong><strong> </strong></strong></span></span> </span></div></td>
                 <td width="145" scope="col"><span class="Estilo5">MONTO DEL CONTRATO :</span></td>
                 <td width="379" scope="col"><span class="Estilo5">

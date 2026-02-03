@@ -1,7 +1,7 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $codigo_departamento_d=$_GET["codigo_departamento_d"];   $codigo_departamento_h=$_GET["codigo_departamento_h"]; $codigo_cargo_d=$_GET["codigo_cargo_d"];   $codigo_cargo_h=$_GET["codigo_cargo_h"]; $tipo_rpt=$_GET["tipo_rpt"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{ $php_os=PHP_OS;   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
 
    $sSQL = "SELECT NOM005.Codigo_Departamento, NOM005.Descripcion_Dep, NOM043.Codigo_Cargo, NOM043.Cod_Tipo_Personal, NOM043.Nro_Cargos, NOM043.Asignados,NOM004.Denominacion
@@ -91,7 +91,7 @@ else{ $php_os=PHP_OS;   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
            	<td width="100" align="center" bgcolor="#99CCFF" ><strong>NRO. CARGO</strong></font></td>
            	<td width="100" align="center" bgcolor="#99CCFF" ><strong>ASIGNADO</strong></font></td>
             </tr>
-     <?	  
+     <?php 	  
 	    $i=0; $cantidad=0;  $total_cantidad=0; $prev_descripcion_dep=""; $prev_descripcion=""; $prev_cod_concepto="";
 	    while($registro=pg_fetch_array($res)){ $i=$i+1;
 		    $descripcion_dep=$registro["descripcion_dep"]; $codigo_cargo=$registro["codigo_cargo"]; 
@@ -102,41 +102,41 @@ else{ $php_os=PHP_OS;   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="W
 				?>	   
 				   <tr>
 				        <td width="100" align="left"><strong></strong></td>
-           				<td width="400" align="left"><strong><? echo 'CANTIDAD CARGOS:'.$cantidad; ?></strong></td>
+           				<td width="400" align="left"><strong><?php  echo 'CANTIDAD CARGOS:'.$cantidad; ?></strong></td>
          			</tr>
 			        <tr>
 				      <td width="100" align="left"></td>
 			        </tr>
-				<?}
+				<?php }
 				?>	   
 				<tr>
-           			<td width="100" align="left"><strong>'<? echo $descripcion_dep_grupo; ?></strong></td>
+           			<td width="100" align="left"><strong>'<?php  echo $descripcion_dep_grupo; ?></strong></td>
          		</tr>
-				<?
+				<?php 
 				$prev_descripcion_dep=$descripcion_dep_grupo; $cantidad=0; } 
 		    $descripcion_dep=$registro["descripcion_dep"]; $codigo_cargo=$registro["codigo_cargo"]; $denominacion=$registro["denominacion"]; $nro_cargos=$registro["nro_cargos"]; 
             $asignados=$registro["asignados"]; $cantidad=$cantidad+1; $total_cantidad=$total_cantidad+1;$denominacion=conv_cadenas($denominacion,0);  
 		?>	 
 			<tr>
-           			<td width="100" align="left">'<? echo $codigo_cargo; ?></td>
-           			<td width="400" align="left"><? echo $denominacion; ?></td>
-           			<td width="100" align="center"><? echo $nro_cargos; ?></td>
-           			<td width="100" align="center"><? echo $asignados; ?></td>
+           			<td width="100" align="left">'<?php  echo $codigo_cargo; ?></td>
+           			<td width="400" align="left"><?php  echo $denominacion; ?></td>
+           			<td width="100" align="center"><?php  echo $nro_cargos; ?></td>
+           			<td width="100" align="center"><?php  echo $asignados; ?></td>
          		</tr>
-		<? }
+		<?php }
                if($cantidad>0){ 
 				?>	   
 				    <tr>
 					    <td width="100" align="left"><strong></strong></td>
-           				<td width="400" align="left"><strong><? echo 'CANTIDAD CARGOS:'.$cantidad; ?></strong></td>
+           				<td width="400" align="left"><strong><?php  echo 'CANTIDAD CARGOS:'.$cantidad; ?></strong></td>
            				
          			</tr>
-				<?} 
+				<?php } 
          ?>
 	   <tr>
             <td>&nbsp;</td>
            </tr>      
-	  </table><?
+	  </table><?php 
 	}
 
    }

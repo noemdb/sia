@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $equipo = getenv("COMPUTERNAME"); $mcod_m = "PAG001".$usuario_sia.$equipo;
 if (!$_GET){ $p_letra='';$criterio=''; $tipo_nomina=''; $cod_empleado='';$sql="SELECT *  FROM NOM017 WHERE ((NOM017.Oculto='NO') AND (NOM017.Status_Emp='ACTIVO')) ORDER BY Tipo_Nomina, Cod_Empleado";}
@@ -57,9 +57,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 else
 {
 }
@@ -123,16 +123,16 @@ print_r($monto);
                         <tr>
                           <td colspan="3" height="35"><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
-                                        <td width="786" height="24"><strong>Tipo Nomina:</strong> <? echo $tipo_nomina; ?> <? echo $des_nomina; ?></td>
-										<td width="174" height="24"><input name="texttipo_nomina" style="visibility:hidden;"  type="text" id="texttipo_nomina" value="<?echo $tipo_nomina?>" size="1" readonly>
-                                  <input name="textcod_empleado" style="visibility:hidden;"  type="text" id="textcod_empleado" value="<?echo $cod_empleado?>" size="1" readonly></td>
+                                        <td width="786" height="24"><strong>Tipo Nomina:</strong> <?php  echo $tipo_nomina; ?> <?php  echo $des_nomina; ?></td>
+										<td width="174" height="24"><input name="texttipo_nomina" style="visibility:hidden;"  type="text" id="texttipo_nomina" value="<?php echo $tipo_nomina?>" size="1" readonly>
+                                  <input name="textcod_empleado" style="visibility:hidden;"  type="text" id="textcod_empleado" value="<?php echo $cod_empleado?>" size="1" readonly></td>
                                 </tr>
                           </table></td>
                         </tr>
 						<tr>
                           <td colspan="3" height="35"><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
-                                        <td width="786" height="24"><strong>Fecha:</strong> <? echo $fecha_desde; ?> <strong> al </strong><? echo $fecha_hasta; ?></td>
+                                        <td width="786" height="24"><strong>Fecha:</strong> <?php  echo $fecha_desde; ?> <strong> al </strong><?php  echo $fecha_hasta; ?></td>
                                 </tr>
                           </table></td>
                         </tr>
@@ -174,10 +174,10 @@ print_r($monto);
 						<tr>
                 			<td height="32" colspan="3"><table width="971" border="0" align="left" bordercolor="#000000" >
                                 <tr>
-                                  <td width="87"><div align="left"><? echo $cod_empleado; ?></div></td>
-                                  <td width="93"><div align="left"><? echo $asignacion; ?></div></td>
-								  <td width="88"><div align="left"><? echo $deduccion; ?></div></td>
-                                  <td width="45"><div align="left"><? echo $neto; ?></div></td>
+                                  <td width="87"><div align="left"><?php  echo $cod_empleado; ?></div></td>
+                                  <td width="93"><div align="left"><?php  echo $asignacion; ?></div></td>
+								  <td width="88"><div align="left"><?php  echo $deduccion; ?></div></td>
+                                  <td width="45"><div align="left"><?php  echo $neto; ?></div></td>
 								  <td width="43"><div align="center"><strong>50000</strong></div></td>
                                   <td width="44"><div align="center"><strong>20000</strong></div></td>
 								  <td width="40"><div align="center"><strong>10000</strong></div></td>
@@ -209,7 +209,7 @@ print_r($monto);
                         <tr>
                 <td height="29" ><table width="970" border="0" align="left" bordercolor="#000000" >
                                 <tr>
-                                        <td width="175" height="23"><div align="left"><? echo $nombre; ?></div></td>
+                                        <td width="175" height="23"><div align="left"><?php  echo $nombre; ?></div></td>
                                 </tr>
                           </table></td>
                         </tr>
@@ -287,4 +287,4 @@ print_r($monto);
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

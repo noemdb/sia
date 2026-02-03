@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Ajustes)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Documentos Ajustes)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -17,7 +17,7 @@ MM_reloadPage(true);
 <script language="JavaScript" type="text/JavaScript">
 function revisar(){
 var f=document.form1;
-    if(f.txtdoc_ajuste.value==""){alert("Código de Documento Pago no puede estar Vacio");return false;}
+    if(f.txtdoc_ajuste.value==""){alert("Cï¿½digo de Documento Pago no puede estar Vacio");return false;}
         if(f.txtdoc_ajuste.value.charAt(0)=='A'){alert("Documento de Pago no valido");return false;}
     if(f.txtnombre_doc_ajuste.value==""){alert("Nombre del Documento Pago no puede estar Vacio");return false; }
        else{f.txtnombre_doc_ajuste.value=f.txtnombre_doc_ajuste.value.toUpperCase();}
@@ -26,7 +26,7 @@ var f=document.form1;
         if(f.txtRefierea.value=="COMPROMISO" || f.txtRefierea.value=="CAUSADO" || f.txtRefierea.value=="PAGO") {Valido=true;}
         else{alert("Valor de Refiere a no valido");return false; }
     if(f.txtdoc_ajuste.value.length==4){f.txtdoc_ajuste.value=f.txtdoc_ajuste.value.toUpperCase();}
-       else{alert("Longitud Código de Documento Pago Invalida");return false;}
+       else{alert("Longitud Cï¿½digo de Documento Pago Invalida");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -69,7 +69,7 @@ return true;}
         <table width="859" height="111" border="0" id="tabcampos">
           <tr>
             <td height="45" colspan="3" valign="middle"><blockquote class="Estilo5">C&Oacute;DIGO :
-                            <input name="txtdoc_ajuste" type="text" id="txtdoc_ajuste" title="Registre el código del documento Ajuste" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
+                            <input name="txtdoc_ajuste" type="text" id="txtdoc_ajuste" title="Registre el cï¿½digo del documento Ajuste" onchange="chequea_tipo(this.form);" size="10" maxlength="4" onFocus="encender(this); " onBlur="apagar(this);">
 </blockquote></td>
           </tr>
           <tr>

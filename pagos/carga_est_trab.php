@@ -1,15 +1,15 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $codigo_mov=$_POST["txtcodigo_mov"];
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $codigo_mov=$_POST["txtcodigo_mov"];
 $desest=$_POST["txtdescripcion_est"]; $codest=$_POST["txtcod_est"]; $cedula=$_POST["txtcedula"]; $cod_pre_ret=""; $fuente_ret="";  
 ?>
 <html>
 <head>  <title>CARGAR ESTRUCTURA DE ORDEN</title>
 </head>
 <body>
-<?$conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 if ($codigo_mov==""){$codigo_mov="";}
-else{$res=pg_exec($conn,"SELECT BORRAR_PAG028('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
- $resultado=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+else{$res=pg_exec($conn,"SELECT BORRAR_PAG028('$codigo_mov')");  $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
+ $resultado=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61); if (!$resultado){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
  $sql="SELECT * FROM PAG034 where cod_estructura='$codest' and ced_rif_est='$cedula' order by cod_presup_est"; $res=pg_query($sql);
  while($registro=pg_fetch_array($res)){ 
     $monto_cod=$registro["monto_cod"]; $cod_presup=$registro["cod_presup_est"];$fuente_financ=$registro["fuente_est"]; $referencia_comp=$registro["ref_comp_est"]; $tipo_compromiso=$registro["tipo_comp_est"]; $ref_imput_presu="00000000";$monto_credito=0;  
@@ -31,7 +31,7 @@ else{$res=pg_exec($conn,"SELECT BORRAR_PAG028('$codigo_mov')");  $error=pg_error
  }
 }
 
-pg_close();?> <script language="JavaScript">document.location ='Det_inc_comp_ord.php?codigo_mov=<?echo $codigo_mov?>&bloqueada=N';</script> 
+pg_close($conn);?> <script language="JavaScript">document.location ='Det_inc_comp_ord.php?codigo_mov=<?php echo $codigo_mov?>&bloqueada=N';</script> 
 
 
 

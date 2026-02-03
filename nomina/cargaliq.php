@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy();  
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc"); $fecha_hoy=asigna_fecha_hoy();  
 $codigo_mov=$_GET["codigo_mov"]; $cod_empleado=$_GET["cod_empleado"]; $sueldob=$_GET["sueldob"]; $tipo_liquidacion=$_GET["tipol"]; 
 $montoart42=$_GET["montoart42"]; $diasart42=$_GET["diasart42"]; $montoantd=$_GET["montoantd"]; $diasantd=$_GET["diasantd"]; $totalade=$_GET["totalade"];
 $totalint=$_GET["totalint"]; $int_frac=$_GET["int_frac"]; $monto_vacf=$_GET["monto_vacf"]; $dias_vacf=$_GET["dias_vacf"]; $monto_pre=$_GET["monto_pre"]; 
@@ -61,5 +61,5 @@ if($totalade>0){ $den_concepto="Anticipo de Prestaciones Sociales Art. 144  "; $
 $sSQL="SELECT ACTUALIZA_NOM076(1,'$codigo_mov','$cod_concepto','$den_concepto','NO','NO','NO','NO','A','D','0','N','N','N',0,0,0,0,0,0,0,0,0,0,$cantidad,$valor,$monto_orig,'$cod_presup','$cod_contable','$afecta_presup','$cod_retencion','$sfechai','$sfecha','$sfechad',1,'000')"; $resultado=pg_exec($conn,$sSQL);$error=pg_errormessage($conn); }
 ?>
 <!--  -->
-<iframe src="Det_inc_cal_liq.php?codigo_mov=<?echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1"></iframe>
+<iframe src="Det_inc_cal_liq.php?codigo_mov=<?php echo $codigo_mov?>" width="850" height="300" scrolling="auto" frameborder="1"></iframe>
 

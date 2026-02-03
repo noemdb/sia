@@ -1,15 +1,15 @@
-<? include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy(); $tipo_asiento="";
+<?php  include ("../../class/conect.php");  include ("../../class/funciones.php"); $fecha_hoy=asigna_fecha_hoy(); $tipo_asiento="";
 if (!$_GET){  $equipo = getenv("COMPUTERNAME"); $mcod_m = "CON02".$equipo; $codigo_mov=substr($mcod_m,0,49);}  else{  $codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
+<title>SIPAP CONTABILIDAD FINANCIERA (Incluir Cuentas en el Comprobante)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <SCRIPT language="JavaScript" src="../../class/sia.js"  type=text/javascript></SCRIPT>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_comp_rpt.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_comp_rpt.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function chequea_banco(mform){
 var mref; var mcedrif;
    mref=mform.txtcod_banco.value;  mref=Rellenarizq(mref,"0",4);  mform.txtcod_banco.value=mref; 
@@ -48,7 +48,7 @@ return true;}
           <td><table width="400" border="0">
               <tr>
 			    <td width="130"><span class="Estilo5">FECHA:</span></td>
-				<td width="270"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?echo $fecha_hoy?>" onchange="checkrefecha(this.form)">   </span></td>
+				<td width="270"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10" onFocus="encender(this); " onBlur="apagar(this);"  value="<?php echo $fecha_hoy?>" onchange="checkrefecha(this.form)">   </span></td>
              </tr>
           </table></td>
         </tr>		
@@ -65,7 +65,7 @@ return true;}
           <td><table width="400" border="0">
             <tr>
              <td width="130"><span class="Estilo5">TIPO ASIENTO:</span></td>
-             <td width="270"><input name="txttipo_asiento" id="txttipo_asiento" size="5" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)"   value="<?echo $tipo_asiento?>" ></td>
+             <td width="270"><input name="txttipo_asiento" id="txttipo_asiento" size="5" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)"   value="<?php echo $tipo_asiento?>" ></td>
             </tr>
           </table></td>
         </tr>
@@ -75,7 +75,7 @@ return true;}
       </table>
         <table width="400" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

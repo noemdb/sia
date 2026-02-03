@@ -1,4 +1,4 @@
-<?  error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); 
+<?php   error_reporting(E_ALL ^ E_NOTICE); include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); 
 $partida_d=$_GET["partida_d"];   $partida_h=$_GET["partida_h"];   $fuente_d=$_GET["fuente_d"];  $fuente_h=$_GET["fuente_h"]; $tipo_rep=$_GET["tipo_rep"]; $det_modif=$_GET["det_modif"]; $php_os=PHP_OS;
 $sSQL1="(traslados01+traslados02+traslados03+traslados04+traslados05+traslados06+traslados07+traslados08+traslados09+traslados10+traslados11+traslados12)";
 $sSQL2="(trasladon01+trasladon02+trasladon03+trasladon04+trasladon05+trasladon06+trasladon07+trasladon08+trasladon09+trasladon10+trasladon11+trasladon12)";
@@ -13,7 +13,7 @@ function buscar_control($clave, $formato){  global $mcontrol;  $j=0;
   return $actual;
 }
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
    else{ $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } } 
    
    $formato_presup="XX-XX-XX-XXX-XX-XX-XX";  $formato_categoria="XX-XX-XX";  $formato_partida="XXX-XX-XX-XX";
@@ -187,7 +187,7 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
             <td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ASIGNACION PRESUPUESTARIA ACTUALIZADA</strong></font></td>
 		 </tr>
 		 <tr height="20">
-		    <td width="220" align="left" ><strong><? echo $criterio1; ?></strong></td>
+		    <td width="220" align="left" ><strong><?php  echo $criterio1; ?></strong></td>
             <td width="400" align="center" > <strong></font></td>
 		 </tr>
          <tr height="20">
@@ -198,7 +198,7 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
            <td width="120" align="center" bgcolor="#99CCFF"><strong>MODIFICACIONES</strong></td>
            <td width="120" align="center" bgcolor="#99CCFF"><strong>ASIGNACION ACTUALIZADA</strong></td>
          </tr>
-     <?	  
+     <?php 	  
 	  $i=0; $total=0; $total_modif=0; $total_actua=0; $total_aum=0; $total_dism=0;$res=pg_query($sSQL); 
 	  while($registro=pg_fetch_array($res)){ $i=$i+1;
 		   $cod_presup=$registro["cod_presup"];  $cod_fuente=$registro["cod_fuente"];   $denominacion=$registro["denominacion"];  $disminuciones=$registro["disminuciones"]; $aumentos=$registro["aumentos"];
@@ -209,14 +209,14 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
 		   $denominacion=conv_cadenas($denominacion,0);  
 	?>	   
 		   <tr>
-           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? echo $cod_presup; ?></td>
-           <td width="400" align="justify"><? echo $denominacion; ?></td>
-           <td width="50" align="center">'<? echo $cod_fuente; ?></td>
-           <td width="120" align="right"><? echo $asignado; ?></td>
-           <td width="120" align="right"><? echo $modificacion; ?></td>
-           <td width="120" align="right"><? echo $actualizada; ?></td>
+           <td width="220" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><?php  echo $cod_presup; ?></td>
+           <td width="400" align="justify"><?php  echo $denominacion; ?></td>
+           <td width="50" align="center">'<?php  echo $cod_fuente; ?></td>
+           <td width="120" align="right"><?php  echo $asignado; ?></td>
+           <td width="120" align="right"><?php  echo $modificacion; ?></td>
+           <td width="120" align="right"><?php  echo $actualizada; ?></td>
          </tr>
-	<? } $total=formato_monto($total);  ?>
+	<?php } $total=formato_monto($total);  ?>
        <tr>
 			  <td width="220" align="left"></td>
 			  <td width="400" align="left"></td>
@@ -227,15 +227,15 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
 			</tr>	
 			<tr>
 			  <td width="220" align="left"></td>
-			  <td width="400" align="right"><? echo "Totales : "; ?></td>
+			  <td width="400" align="right"><?php  echo "Totales : "; ?></td>
 			  <td width="50" align="left"></td>
-			  <td width="120" align="right"><? echo $total; ?></td>
-			  <td width="120" align="right"><? echo $total_modif; ?></td>
-			  <td width="120" align="right"><? echo $total_actua; ?></td>
+			  <td width="120" align="right"><?php  echo $total; ?></td>
+			  <td width="120" align="right"><?php  echo $total_modif; ?></td>
+			  <td width="120" align="right"><?php  echo $total_actua; ?></td>
 			</tr>	
 	
-	  </table><?	  
+	  </table><?php 	  
 	}	
- pg_close();
+ pg_close($conn);
 ?>
 

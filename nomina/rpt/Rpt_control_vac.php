@@ -1,7 +1,7 @@
-<? include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
+<?php  include ("../../class/conect.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE);
    $cod_empleado_d=$_GET["cod_empleado_d"];   $cod_empleado_h=$_GET["cod_empleado_h"]; $tipo_rpt=$_GET["tipo_rpt"];   
    $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-   if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+   if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
    else{ $php_os=PHP_OS; $nom_emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}}
         $sSQL = "SELECT cod_empleado,nombre,cedula,fecha_ingreso,fecha_Causa_Desde,fecha_Causa_Hasta,fecha_D_Desde,fecha_D_Hasta,fecha_Reincorp,fecha_Calculo_D,fecha_Calculo_H,Calcula_Nomina,
 		         Dias_Habiles,Dias_No_Habiles,Dias_Bono_Vac,Monto_Bono_Vac,Dias_Disfrutados, (Dias_Habiles+Dias_No_Habiles) as dias_vac,
@@ -99,7 +99,7 @@
 		 </tr>
 		 <tr height="20">
 		 </tr>
-		<?  $i=0; $prev_cod_empleado="";  $res=pg_query($sSQL);
+		<?php   $i=0; $prev_cod_empleado="";  $res=pg_query($sSQL);
 		while($registro=pg_fetch_array($res)){ $i=$i+1; $cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $fechai=$registro["fechai"]; 
 	       $fechacd=$registro["fechacd"]; $fechach=$registro["fechach"]; $fechadd=$registro["fechadd"];$fechadh=$registro["fechadh"]; $fechar=$registro["fechar"]; 
 	       $dias_disfrutados=$registro["dias_disfrutados"]; $dias_vac=$registro["dias_vac"]; $dias_bono_vac=$registro["dias_bono_vac"]; 
@@ -110,13 +110,13 @@
 				    </tr> 
                     <tr>
 					  <td width="100" align="left"><strong>Trabajador: </strong></td>
-					  <td width="100" align="left"><strong>'<? echo $cod_empleado_grupo; ?></strong></td>	
-					  <td width="400" align="left"><strong><? echo $nombre_grupo; ?></strong></td>
+					  <td width="100" align="left"><strong>'<?php  echo $cod_empleado_grupo; ?></strong></td>	
+					  <td width="400" align="left"><strong><?php  echo $nombre_grupo; ?></strong></td>
 				    </tr>
                     <tr>
 					  <td width="100" align="left"><strong>Cedula: </strong></td>
-					  <td width="100" align="left"><strong>'<? echo $cedula_grupo; ?></strong></td>	
-					  <td width="400" align="left"><strong><? echo "Fecha Ingreso : ".$fechai_grupo; ?></strong></td>
+					  <td width="100" align="left"><strong>'<?php  echo $cedula_grupo; ?></strong></td>	
+					  <td width="400" align="left"><strong><?php  echo "Fecha Ingreso : ".$fechai_grupo; ?></strong></td>
 				    </tr>  
                      <tr>
 					  <td width="100" align="right">Fecha </td>
@@ -138,27 +138,27 @@
 					  <td width="100" align="center">Vacaciones</td>
 					  <td width="100" align="center">Vacacional</td>	
 				    </tr> 				 
-                <? 
+                <?php  
 				$prev_cod_empleado=$cod_empleado_grupo; } 
 		    $cod_empleado=$registro["cod_empleado"]; $nombre=$registro["nombre"]; $cedula=$registro["cedula"]; $fechai=$registro["fechai"]; $fechacd=$registro["fechacd"]; 
 		    $fechach=$registro["fechach"]; $fechadd=$registro["fechadd"];$fechadh=$registro["fechadh"]; $fechar=$registro["fechar"]; $dias_disfrutados=$registro["dias_disfrutados"]; 
 		    $dias_vac=$registro["dias_vac"]; $dias_bono_vac=$registro["dias_bono_vac"]; 
 		    ?> 
              <tr>
-			    <td width="100" align="right">'<? echo $fechacd; ?></td>
-			    <td width="100" align="left"><? echo $fechach; ?></td>	
-			    <td width="100" align="right"><? echo $fechadd; ?></td>
-			    <td width="100" align="left"><? echo $fechadh; ?></td>
-			    <td width="100" align="center"><? echo $fechar; ?></td>
-			    <td width="100" align="center"><? echo $dias_disfrutados; ?></td>
-			    <td width="100" align="center"><? echo $dias_vac; ?></td>
-			    <td width="100" align="center"><? echo $dias_bono_vac; ?></td>
+			    <td width="100" align="right">'<?php  echo $fechacd; ?></td>
+			    <td width="100" align="left"><?php  echo $fechach; ?></td>	
+			    <td width="100" align="right"><?php  echo $fechadd; ?></td>
+			    <td width="100" align="left"><?php  echo $fechadh; ?></td>
+			    <td width="100" align="center"><?php  echo $fechar; ?></td>
+			    <td width="100" align="center"><?php  echo $dias_disfrutados; ?></td>
+			    <td width="100" align="center"><?php  echo $dias_vac; ?></td>
+			    <td width="100" align="center"><?php  echo $dias_bono_vac; ?></td>
 			</tr>
 			<tr>
 			</tr> 
-            <?			
+            <?php 			
 		  } 
-		  ?></table><?	
+		  ?></table><?php 	
     }
     
   }

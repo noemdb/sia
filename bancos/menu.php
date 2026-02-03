@@ -1,6 +1,6 @@
-<?include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");include ("../class/configura.inc");
+<?php include ("../class/seguridad.inc");include ("../class/conects.php"); include ("../class/funciones.php");include ("../class/configura.inc");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }else{ $Nom_Emp=busca_conf(); }
 if($dbname<>"DATOS"){ $Nom_Emp=$Nom_Emp." (".$dbname.")"; } $nombre_menu="stmenu.js"; if($Cod_Emp=="58"){$nombre_menu="stmenu_gby.js";}; if($Cod_Emp=="71"){$nombre_menu="stmenu_yac.js";};
 if($Cod_Emp=="32"){$nombre_menu="stmenu_cs.js";}; 
 ?>
@@ -26,7 +26,7 @@ function Llamar_comp(def,url){
  if (def=="N"){ alert('ETAPA DE DEFINICION INICIAL ABIERTA'); }  else {document.location = url;}
 }
 
-var mcod_emp='<? echo $Cod_Emp ?>';
+var mcod_emp='<?php  echo $Cod_Emp ?>';
 </script>
 <style type="text/css">
 <!--
@@ -40,11 +40,11 @@ var mcod_emp='<? echo $Cod_Emp ?>';
 <script type="text/javascript" language="JavaScript1.2" src="../class/tree-menu/dtree1.js"></script>
   <script type="text/javascript" language="JavaScript1.2" src="<?php echo $nombre_menu ?>"></script>
 </head>
-<?
+<?php 
 $sql="SELECT campo103, campo104 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U"; $modulo="02";   
 if ($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $Nom_usuario=$registro["campo104"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSS";}  else{$sql="select campo601 from sia006 where campo601='$usuario_sia' and campo602='$modulo'";$res=pg_exec($conn,$sql);$filas=pg_numrows($res);
-if ($filas==0){ ?><script language="JavaScript"> alert("NO TIENE DEERECHOS PARA ESTE MODULO"); document.location='index.php';</script><?}
+if ($filas==0){ ?><script language="JavaScript"> alert("NO TIENE DEERECHOS PARA ESTE MODULO"); document.location='index.php';</script><?php }
 }$Nom_usuario="USUARIO: ".$Nom_usuario; $ip="";
 error_reporting(E_ALL ^ E_NOTICE); 
 if($_SERVER["HTTP_X_FORWARDED_FOR"]){$ip=$_SERVER["HTTP_X_FORWARDED_FOR"];}else{$ip=$_SERVER["REMOTE_ADDR"];} 
@@ -80,8 +80,8 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
         </tr>
         </table></td>
         <td width="637" align="center" valign="middle"><div id="Layer3" style="position:absolute; width:689px; height:65px; z-index:3; left: 190px; top: 103px;">
-              <div align="center" class="Estilo4"> <? echo $Nom_Emp ?></div>
-			  <div id="Layer4" style="position:absolute; width:229px; height:33px; z-index:4; left: 550px; top: 600px;" class="Estilo9  Estilo14 Estilo15"><? echo $Nom_usuario ?></div>
+              <div align="center" class="Estilo4"> <?php  echo $Nom_Emp ?></div>
+			  <div id="Layer4" style="position:absolute; width:229px; height:33px; z-index:4; left: 550px; top: 600px;" class="Estilo9  Estilo14 Estilo15"><?php  echo $Nom_usuario ?></div>
             </div>
 			<div id="Layer5" style="position:absolute; width:83px; height:294px; z-index:4; left: 861px; top: 95px;">
               <table width="140" height="146" border="0" cellpadding="0" cellspacing="0">
@@ -133,7 +133,7 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
             <div align="left"></div>
             <div align="center"></div>
             <div id="Layer2" style="position:absolute; width:230px; height:226px; z-index:2; left: 360px; top: 270px;"><img src="../imagenes/Logo_empresa.gif" width="204" height="221" border="0"></div></td>
-            <div id="Layer6" style="position:absolute; width:300px; height:33px; z-index:4; left: 26px; top: 695px;" class="Estilo9  Estilo14 Estilo15"><? echo $var_so ?></div>
+            <div id="Layer6" style="position:absolute; width:300px; height:33px; z-index:4; left: 26px; top: 695px;" class="Estilo9  Estilo14 Estilo15"><?php  echo $var_so ?></div>
 
 	  </tr>
     </table></td>
@@ -142,4 +142,4 @@ $var_so=$var_so." Sistema Operativo Servidor : ". $PHP_OS." ".$nombre_serv;
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

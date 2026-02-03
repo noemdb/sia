@@ -1,8 +1,8 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 echo "ESPERE POR FAVOR REVISANDO CANCELACIONES....","<br>";$error=0;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?}
+if (pg_last_error($conn)) { ?> <script language="JavaScript">   muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');  </script> <?php }
 else{
   $sqlb="select pag004.nro_cheque_r,pag004.nro_orden_ret,pag004.tipo_caus_ret,pag004.tipo_caus_ret,pag004.ref_comp_ret,pag004.tipo_comp_ret,pag004.cod_presup_ret,pag004.fuente_fin_ret,sum(pag004.monto_retencion) as monto_retencion from pag004 where (status_r='I') and  (tipo_pago_r='O/P')   group by pag004.nro_cheque_r,pag004.nro_orden_ret,pag004.tipo_caus_ret,pag004.tipo_caus_ret,pag004.ref_comp_ret,pag004.tipo_comp_ret,pag004.cod_presup_ret,pag004.fuente_fin_ret order by pag004.nro_cheque_r,pag004.nro_orden_ret,pag004.tipo_caus_ret,pag004.ref_comp_ret,pag004.tipo_comp_ret,pag004.cod_presup_ret,pag004.fuente_fin_ret"; $res=pg_query($sqlb);
   while($reg=pg_fetch_array($res)){ $monto_c=$reg["monto_retencion"]; $cod_presup=$reg["cod_presup_ret"]; $fuente_financ=$reg["fuente_fin_ret"]; $nro_orden_r=$reg["nro_orden_ret"]; $tipo_causado_r=$reg["tipo_caus_ret"]; $referencia_comp=$reg["ref_comp_ret"]; $tipo_compromiso=$reg["tipo_comp_ret"]; $nro_cheque_r=$reg["nro_cheque_r"];
@@ -43,4 +43,4 @@ else{
 	}
   }
 }
-pg_close(); ?> <script language="JavaScript"> muestra('PROCESO TERMINADO'); window.close(); window.opener.location.reload();  </script>
+pg_close($conn); ?> <script language="JavaScript"> muestra('PROCESO TERMINADO'); window.close(); window.opener.location.reload();  </script>

@@ -1,7 +1,7 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 echo "ESPERE POR FAVOR MODIFICANDO....","<br>";  
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if(pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } 
+if(pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } 
 else{  
   $sql="SELECT cod_presup,cod_fuente,denominacion,cod_contable,status_dist,asignado,disponible,diferido,disp_diferida,func_inv,ord_cord,
        aplicacion,cod_unidad_ejec,fecha_creado,asignado01,asignado02,asignado03,asignado04,asignado05,asignado06,asignado07,asignado08,
@@ -23,10 +23,10 @@ else{
 	$sqlg="update pre001 set asignado01=$asignado01,asignado02=$asignado02,asignado03=$asignado03,asignado04=$asignado04,asignado05=$asignado05,asignado06=$asignado06,asignado07=$asignado07,asignado08=$asignado08,asignado09=$asignado09,asignado10=$asignado10,asignado11=$asignado11,asignado12=$asignado12 WHERE cod_presup='$cod_presup' and cod_fuente='$cod_fuente'"; 	
 	$resultado=pg_exec($conn,$sqlg);   $error=pg_errormessage($conn);$error=substr($error, 0, 91); 
   }
-  ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><? 
+  ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?php  
   echo " ","<br>";  
 }
 
 echo "FINALIZO la actualizacion....","<br>";  
-pg_close();
+pg_close($conn);
 ?>

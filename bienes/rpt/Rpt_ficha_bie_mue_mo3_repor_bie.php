@@ -1,4 +1,4 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_bien_mued=$_GET["cod_bien_mued"];$cod_bien_mueh=$_GET["cod_bien_mueh"];$cod_empresad=$_GET["cod_empresad"];$cod_empresah=$_GET["cod_empresah"]; $agrup_dep=$_GET["agrup_dep"];  //$observacion=$_GET["observacion"];
 $cod_dependenciad=$_GET["cod_dependenciad"]; $cod_dependenciah=$_GET["cod_dependenciah"]; $cod_direcciond=$_GET["cod_direcciond"]; $cod_direccionh=$_GET["cod_direccionh"];
 $cod_departamentod=$_GET["cod_departamentod"]; $cod_departamentoh=$_GET["cod_departamentoh"]; $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$tipo_rep=$_GET["tipo_rep"]; $denominacion=$_GET["denominacion"];
@@ -11,7 +11,7 @@ $criterio=" (bien015.cod_bien_mue>='$cod_bien_mued' and bien015.cod_bien_mue<='$
 if($denominacion<>""){  $criterio=$criterio." and (bien015.denominacion Like '%".$denominacion."%')"; } 
 $mordenado=" bien015.cod_dependencia,bien015.cod_bien_mue";
 IF($agrup_dep=="SI"){ $mordenado=" bien015.cod_dependencia,bien015.cod_direccion,bien015.cod_departamento,bien015.cod_bien_mue";}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }          
 		
     $sSQL = "SELECT bien015.cod_bien_mue, bien015.cod_clasificacion, bien015.num_bien, bien015.denominacion, bien015.cod_dependencia,bien015.cod_direccion,bien015.cod_departamento,bien001.Denominacion_Dep, bien001.Direccion_Dep, bien015.Valor_Incorporacion, bien015.Fecha_Incorporacion, bien015.Caracteristicas, bien015.Marca, bien015.Modelo, bien015.Color, bien015.Matricula, bien015.serial1, bien015.Tipo_Clase, bien015.Dimension_Tam, bien015.accesorios, bien015.serial2, bien015.material, substr(bien015.cod_clasificacion,1,1) as grupo, substr(bien015.cod_clasificacion,3,2) as subgrupo, substr(bien015.cod_clasificacion,6,1) as seccion, bien005.denominacion_dir, bien006.denominacion_dep as denom_departamento, bien004.edo_bien  

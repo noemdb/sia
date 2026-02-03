@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Regiones)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Regiones)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type=text/css rel=stylesheet>
 <SCRIPT language=JavaScript src="../class/sia.js" type=text/javascript></SCRIPT>
@@ -19,11 +19,11 @@ function LlamarURL(url){  document.location = url; }
 function revisar(){
 var f=document.form1;
 var Valido;
-    if(f.txtCodigo_Region.value==""){alert("Código de la Region no puede estar Vacio");return false;}
+    if(f.txtCodigo_Region.value==""){alert("Cï¿½digo de la Region no puede estar Vacio");return false;}
     if(f.txtNombre_Region.value==""){alert("Nombre de la Region no puede estar Vacia"); return false; }
        else{f.txtNombre_Region.value=f.txtNombre_Region.value.toUpperCase();}
     if(f.txtCodigo_Region.value.length==2){f.txtCodigo_Region.value=f.txtCodigo_Region.value.toUpperCase();}
-       else{alert("Longitud Código de Region Invalido");return false;}
+       else{alert("Longitud Cï¿½digo de Region Invalido");return false;}
 document.form1.submit;
 return true;}
 function chequea_codigo(mform){
@@ -40,7 +40,7 @@ return true;}
 <table width="977" height="38" border="0" bgcolor="#000066" id="tablaencabezado">
   <tr>
     <td width="73"><div align="center" class="Estilo2 Estilo4"><img src="../imagenes/Logo_sia.gif" width="72" height="42"></div></td>
-    <td width="836"><div align="center" class="Estilo2 Estilo6">INCLUIR REGIÓN </div></td>
+    <td width="836"><div align="center" class="Estilo2 Estilo6">INCLUIR REGIï¿½N </div></td>
     <td width="55" class="Estilo2"><strong class="Estilo2 Estilo9"> </strong></td>
   </tr>
 </table>
@@ -70,7 +70,7 @@ return true;}
                   <tr>
                     <td width="96"><span class="Estilo5">C&Oacute;DIGO :</span></td>
                     <td width="720"><span class="Estilo5">
-                      <input name="txtCodigo_Region" type="text" id="txtCodigo_Region" title="Registre el C&oacute;digo de la Región" size="4" maxlength="2"  onchange="chequea_codigo(this.form);" onFocus="encender(this); " onBlur="apagar(this);">
+                      <input name="txtCodigo_Region" type="text" id="txtCodigo_Region" title="Registre el C&oacute;digo de la Regiï¿½n" size="4" maxlength="2"  onchange="chequea_codigo(this.form);" onFocus="encender(this); " onBlur="apagar(this);">
                     </span></td>
                   </tr>
                 </table></td>

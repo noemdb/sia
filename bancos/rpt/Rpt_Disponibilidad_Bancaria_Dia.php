@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_banco_d=$_GET["cod_banco_d"];$cod_banco_h=$_GET["cod_banco_h"];$fecha_d=$_GET["fecha_d"];$imprimir=$_GET["imprimir"];$criterio1=$fecha_d;$Sql="";$date = date("d-m-Y"); $tipo_rep=$_GET["tipo_rep"];$hora = date("H:i:s a"); 
 if($fecha_d==""){$sfecha_d="2010-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);} $mcod_m="BAN023".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } 
     $Sql="SELECT RPT_DISP_BAN023('".$codigo_mov."','".$sfecha_d."','".$cod_banco_d."','".$cod_banco_h."','".$imprimir."')";
     $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);  $error="ERROR GRABANDO: ".substr($error,0,91); if (!$resultado){ echo $error,"<br>"; }     
@@ -96,7 +96,7 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
 		</tr>
 		<tr height="20">
 		    <td width="100" align="left" ><strong></strong></td>
-            <td width="400" align="center" > <strong><? echo $criterio1; ?></strong></td>
+            <td width="400" align="center" > <strong><?php  echo $criterio1; ?></strong></td>
 			<td width="300" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
 			<td width="100" align="left" ><strong></strong></td>
@@ -112,7 +112,7 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
            <td width="100" align="center" bgcolor="#99CCFF"><strong>HEBER</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>DISPONIBILIDAD</strong></font></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; 
 	  $res=pg_query($sSQL);
@@ -123,16 +123,16 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
            $nombre_banco=conv_cadenas($nombre_banco,0);  
 	?>	   
 	<tr>
-           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
-           <td width="400" align="justify"><? echo $nombre_banco; ?></td>
-           <td width="300" align="left">'<? echo $nro_cuenta; ?></td>
-           <td width="100" align="right"><? echo $saldo_ini; ?></td>
-           <td width="100" align="right"><? echo $monto4; ?></td>
-           <td width="100" align="right"><? echo $monto5; ?></td>
-           <td width="100" align="right"><? echo $saldo_act; ?></td>
+           <td width="100" align="left">'<font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
+           <td width="400" align="justify"><?php  echo $nombre_banco; ?></td>
+           <td width="300" align="left">'<?php  echo $nro_cuenta; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_ini; ?></td>
+           <td width="100" align="right"><?php  echo $monto4; ?></td>
+           <td width="100" align="right"><?php  echo $monto5; ?></td>
+           <td width="100" align="right"><?php  echo $saldo_act; ?></td>
 
          </tr>
-	<? }   
+	<?php }   
          $total=formato_monto($total);
         ?>   
    <tr>
@@ -144,11 +144,11 @@ else{   $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=
          <td width="100"><span class="Estilo5"><strong>TOTAL :</strong></span></td>
          <td width="100"><table width="150" border="1" cellspacing="0" cellpadding="0">
            <tr>
-             <td align="right" class="Estilo5"><strong><? echo $total; ?></strong></td>
+             <td align="right" class="Estilo5"><strong><?php  echo $total; ?></strong></td>
            </tr>
          </table></td> 
     </tr>
-	  </table><?
+	  </table><?php 
 	}
 	 $Sql="Delete from ban023 Where (codigo_mov='".$codigo_mov."')"; $resultado=pg_exec($conn,$Sql);  $error=pg_errormessage($conn);
 }

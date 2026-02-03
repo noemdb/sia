@@ -1,7 +1,7 @@
-<?include ("../../class/phpreports/PHPReportMaker.php");?>
-<?include ("../../class/conect.php");
+<?php include ("../../class/phpreports/PHPReportMaker.php");?>
+<?php include ("../../class/conect.php");
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{ $sSQL="";
    $cedrifd=$_GET["cedrifd"]; $cedrifh=$_GET["cedrifh"];  $clasificad=$_GET["clasificad"];$clasificah=$_GET["clasificah"]; $detallado=$_GET["detallado"];
    $oRpt = new PHPReportMaker();

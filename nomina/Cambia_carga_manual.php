@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");$equipo=getenv("COMPUTERNAME");  $codigo_mov="";
 if (!$_GET){$criterio='';}else{$criterio=$_GET["criterio"];}  $tipo_nomina=substr($criterio,0,2);$cod_concepto=substr($criterio,2,3);  $tipof=substr($criterio,5,1);
 $codigo_cargo_d="";$codigo_cargo_h="zzzzzzzzzzz";
 ?>
@@ -7,7 +7,7 @@ $codigo_cargo_d="";$codigo_cargo_h="zzzzzzzzzzz";
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Cambiar Carga Manual)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Cambiar Carga Manual)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -17,7 +17,7 @@ function validarNum(e,obj){tecla=(document.all) ? e.keyCode : e.which;  if(tecla
     if((tecla<48||tecla>57)&&(tecla!=46&&tecla!= 44&&tecla!= 45)){alert('Por Favor Ingrese Solo Numeros ') };
     patron=/[0-9\,\-\.]/;  te=String.fromCharCode(tecla); return patron.test(te);
 }
-function llamar_anterior(){ document.location ='Det_carga_manual.php?criterio=<?echo $criterio?>'; }
+function llamar_anterior(){ document.location ='Det_carga_manual.php?criterio=<?php echo $criterio?>'; }
 function revisar(){var f=document.form1; var Valido=true; var r;
    if(f.txtval_actual.value==""){alert("Valor Actual no puede estar Vacio");return false;}
    if(f.txtval_nuevo.value==""){alert("Valor Nuevo no puede estar Vacio");return false;}
@@ -44,11 +44,11 @@ return true;}
              <td><table width="760">
                  <tr>
                    <td width="200"><span class="Estilo5">CAMBIAR CATIDAD O MONTO : </span></td>
-				   <?if (($cod_concepto=="001")){?>
+				   <?php if (($cod_concepto=="001")){?>
                    <td width="560"><span class="Estilo5"><select class="Estilo10" name="txtcan_monto" size="1" id="txtcan_monto" onFocus="encender(this)" onBlur="apagar(this)"> <option>CANTIDAD</option></select>  </span></td>
-				   <?} else{?>
+				   <?php } else{?>
 				   <td width="560"><span class="Estilo5"><select class="Estilo10" name="txtcan_monto" size="1" id="txtcan_monto" onFocus="encender(this)" onBlur="apagar(this)"><option>MONTO</option> <option>CANTIDAD</option></select>  </span></td>
-				   <?}?>
+				   <?php }?>
                   </tr>
              </table></td>
            </tr>
@@ -77,12 +77,12 @@ return true;}
              <td><table width="760">
                  <tr>
                    <td width="120"><span class="Estilo5">CARGO DESDE : </span></td>
-				   <td width="150" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?echo $codigo_cargo_d?>">  </span></td>
+				   <td width="150" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?php echo $codigo_cargo_d?>">  </span></td>
                    <td width="50" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargod" type="button" id="cat_cargod" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosd.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="40"><input name="txtdenominacion_d" type="hidden" id="txtdenominacion_d" ></td>
 				   
                    <td width="120"><span class="Estilo5">HASTA : </span></td>
-				   <td width="150" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?echo $codigo_cargo_h?>"> </span></td>
+				   <td width="150" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?php echo $codigo_cargo_h?>"> </span></td>
                    <td width="50" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargoh" type="button" id="cat_cargoh" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosh.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="80"><input name="txtdenominacion_h" type="hidden" id="txtdenominacion_h" ></td>
 				  </tr>
@@ -92,9 +92,9 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?echo $criterio?>"></td>
-            <td width="20"><input name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?echo $tipo_nomina?>"></td>
-            <td width="20"><input name="txtcod_concepto" type="hidden" id="txtcod_concepto" value="<?echo $cod_concepto?>"></td>
+            <td width="20"><input name="txtcriterio" type="hidden" id="txtcriterio" value="<?php echo $criterio?>"></td>
+            <td width="20"><input name="txttipo_nomina" type="hidden" id="txttipo_nomina" value="<?php echo $tipo_nomina?>"></td>
+            <td width="20"><input name="txtcod_concepto" type="hidden" id="txtcod_concepto" value="<?php echo $cod_concepto?>"></td>
             <td width="60">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

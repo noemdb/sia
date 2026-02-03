@@ -1,8 +1,8 @@
-<?include ("../class/seguridad.inc");?>
-<?include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");?>
+<?php include ("../class/funciones.php");
 include ("../class/configura.inc");
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $Nom_Emp=busca_conf(); }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -67,7 +67,7 @@ ExpandAndDraw(tree1);
         </tr>
         </table></td>
         <td width="364" align="center" valign="middle"><div id="Layer3" style="position:absolute; width:573px; height:65px; z-index:3; left: 190px; top: 83px;">
-              <div align="center" class="Estilo5"> <? echo $Nom_Emp ?></div>
+              <div align="center" class="Estilo5"> <?php  echo $Nom_Emp ?></div>
             </div>
             <div id="Layer1" style="position:absolute; width:264px; height:127px; z-index:1; left: 687px; top: 532px;">
               <div align="center">
@@ -95,4 +95,4 @@ ExpandAndDraw(tree1);
 <p>&nbsp;</p>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

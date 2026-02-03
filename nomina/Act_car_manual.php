@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php");
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php");
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000005"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 $equipo=getenv("COMPUTERNAME"); $mcod_m = "NOM011".$usuario_sia.$equipo; $codigo_mov=substr($mcod_m,0,49);
 $tipo_nomina="01"; $cod_concepto="001"; $criterio=""; ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -104,12 +104,12 @@ return true;}
            <tr> <td>&nbsp;</td> </tr>
          </table>
          <div id="T11" class="tab-body">
-         <iframe src="Det_carga_manual.php?criterio=<?echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe>
+         <iframe src="Det_carga_manual.php?criterio=<?php echo $criterio?>" width="950" height="350" scrolling="auto" frameborder="1"></iframe>
          </div>
          <table width="940">
           <tr> <td>&nbsp;</td> </tr>
           <tr>
-            <td width="30"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="30"><input class="Estilo10" name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="130"><input name="btcambia" type="button" id="btcambia" title="Cambiar Valores" onclick="javascript:Carga_cambiar()" value="Cambiar"></td>
             <td width="130"><input name="btcopia" type="button" id="btcopia" title="Copiar Valores" onclick="javascript:Carga_copiar()"  value="Copiar"></td>
             <td width="130"><input name="btfiltra" type="button" id="btfiltra" title="Filtrar Trabajadores" onclick="javascript:Carga_filtrar()" value="Filtrar"></td>			
@@ -128,4 +128,4 @@ return true;}
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

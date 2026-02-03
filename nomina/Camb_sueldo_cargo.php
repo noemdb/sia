@@ -1,4 +1,4 @@
-<?include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
+<?php include ("../class/conect.php"); include ("../class/funciones.php");  $fecha_hoy=asigna_fecha_hoy();  $cod_concepto="001";
 $codigo_cargo_d="";$codigo_cargo_h="zzzzzzzzzzz";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@ $codigo_cargo_d="";$codigo_cargo_h="zzzzzzzzzzz";
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Cargos)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Cambiar Sueldo de Cargos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -37,7 +37,7 @@ return true;}
 -->
 </style>
 </head>
-<? $cod_desde="000000000000000"; $cod_hasta="999999999999999";
+<?php  $cod_desde="000000000000000"; $cod_hasta="999999999999999";
 ?>
 <body>
 <form name="form1" method="post" action="Update_sueldos_cargo.php" onSubmit="return revisar()">
@@ -54,12 +54,12 @@ return true;}
               <td align="center"><table width="550" border="0">
                  <tr>
                    <td width="150"><span class="Estilo5">CARGO DESDE : </span></td>
-				   <td width="100" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?echo $codigo_cargo_d?>">  </span></td>
+				   <td width="100" align="left"><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_cargo_d" type="text" id="txtcodigo_cargo_d" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="15" value="<?php echo $codigo_cargo_d?>">  </span></td>
                    <td width="40" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargod" type="button" id="cat_cargod" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosd.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="10"><input name="txtdenominacion_d" type="hidden" id="txtdenominacion_d" ></td>
 				 
                    <td width="50"><span class="Estilo5">HASTA : </span></td>
-				   <td width="100" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?echo $codigo_cargo_h?>"> </span></td>
+				   <td width="100" align="left"><span class="Estilo5"><input class="Estilo10" name="txtcodigo_cargo_h" type="text" id="txtcodigo_cargo_h" onFocus="encender(this)" onBlur="apagar(this)" size="15" maxlength="20" value="<?php echo $codigo_cargo_h?>"> </span></td>
                    <td width="40" align="left"><span class="Estilo5"><input class="Estilo10" name="cat_cargoh" type="button" id="cat_cargoh" title="Abrir Catalogo de Cargos" onClick="VentanaCentrada('Cat_cargosh.php?criterio=','SIA','','650','500','true')" value="...">  </span></td>
                    <td width="10"><input name="txtdenominacion_h" type="hidden" id="txtdenominacion_h" ></td>
 				  </tr>

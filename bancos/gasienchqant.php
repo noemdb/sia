@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");  $cod_banco=$_GET["cod_banco"];$codigo_mov=$_GET["codigo_mov"];  $orden=$_GET["orden"]; $_GET["monto"];  $monto=formato_numero($monto); if(is_numeric($monto)){$monto=$monto;} else{$monto=0;}
+<?php include ("../class/conect.php");  include ("../class/funciones.php");  $cod_banco=$_GET["cod_banco"];$codigo_mov=$_GET["codigo_mov"];  $orden=$_GET["orden"]; $_GET["monto"];  $monto=formato_numero($monto); if(is_numeric($monto)){$monto=$monto;} else{$monto=0;}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 
 $resultado=pg_exec($conn,"SELECT ELIMINA_CON010('$codigo_mov')");
@@ -12,4 +12,4 @@ if ($filas>0){ $registro=pg_fetch_array($resultado,0); $codc_orden=$registro["co
 $resultado=pg_exec($conn,"SELECT INCLUYE_CON010('$codigo_mov','00000000','D','$codc_orden','00000','',$monto,'D','B','N','01','0','')"); }
 
 
- ?><iframe src="Det_inc_comp_chq_fin.php?codigo_mov=<?echo $codigo_mov?>" width="940" height="300" scrolling="auto" frameborder="1"></iframe>
+ ?><iframe src="Det_inc_comp_chq_fin.php?codigo_mov=<?php echo $codigo_mov?>" width="940" height="300" scrolling="auto" frameborder="1"></iframe>

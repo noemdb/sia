@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME"); if (!$_GET){$codigo_departamento="";} else{$codigo_departamento=$_GET["codigo"];} ?>
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME"); if (!$_GET){$codigo_departamento="";} else{$codigo_departamento=$_GET["codigo"];} ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
@@ -26,12 +26,12 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="Select * FROM NOM005 where codigo_departamento='$codigo_departamento'"; $res=pg_query($sql);$filas=pg_num_rows($res);
 $descripcion_dep="";If($registro=pg_fetch_array($res,0)){$codigo_departamento=$registro["codigo_departamento"]; $descripcion_dep=$registro["descripcion_dep"]; }
-pg_close();
+pg_close($conn);
 ?>
 <body>
 <table width="978" height="52" border="0" bgcolor="#000066">
@@ -63,7 +63,7 @@ pg_close();
             <td><table width="866">
                 <tr>
                   <td width="216" ><span class="Estilo5">C&Oacute;DIGO DEL DEPARTAMENTO : </span></td>
-                  <td width="650" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_departamento" type="text" id="txtcodigo_departamento" size="15" maxlength="15" readonly value="<?echo $codigo_departamento?>" > </span></td>
+                  <td width="650" ><span class="Estilo5"> <input class="Estilo10" name="txtcodigo_departamento" type="text" id="txtcodigo_departamento" size="15" maxlength="15" readonly value="<?php echo $codigo_departamento?>" > </span></td>
                 </tr>
             </table></td>
           </tr>
@@ -72,7 +72,7 @@ pg_close();
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">DESCRIPCI&Oacute;N DEL DEPARTAMENTO : </span></td>
-                 <td width="650" ><span class="Estilo5"><textarea name="txtdescripcion_dep" cols="65" maxlength="100" class="Estilo10" id="txtdescripcion_dep" onFocus="encender(this)" onBlur="apagar(this)" ><?echo $descripcion_dep?></textarea></span></td>
+                 <td width="650" ><span class="Estilo5"><textarea name="txtdescripcion_dep" cols="65" maxlength="100" class="Estilo10" id="txtdescripcion_dep" onFocus="encender(this)" onBlur="apagar(this)" ><?php echo $descripcion_dep?></textarea></span></td>
                </tr>
              </table></td>
            </tr>

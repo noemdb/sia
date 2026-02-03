@@ -5,14 +5,14 @@ if (!$_GET){$cod_arch_banco="";$pos_campo="001";}else{$cod_arch_banco=$_GET["cod
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (Incluir Detalle Archivo)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (Incluir Detalle Archivo)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
 <script language="javascript" src="ajax_nom.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_inc_archivo_banco.php?criterio=<?echo $tipo_arch_banco.$cod_arch_banco?>'; }
-function apaga_cod_campo(mthis){var mcodigo=document.form1.txtcod_campo.value; var mcod_arch='<?echo $tipo_arch_banco?>';
+function llamar_anterior(){ document.location ='Det_inc_archivo_banco.php?criterio=<?php echo $tipo_arch_banco.$cod_arch_banco?>'; }
+function apaga_cod_campo(mthis){var mcodigo=document.form1.txtcod_campo.value; var mcod_arch='<?php echo $tipo_arch_banco?>';
    mcodigo = Rellenarizq(mcodigo,"0",3); document.form1.txtcod_campo.value=mcodigo;
    apagar(mthis); ajaxSenddoc('GET', 'asigdescampo.php?cod_campo='+mcodigo+'&cod_arch='+mcod_arch, 'dcampo', 'innerHTML');
    ajaxSenddoc('GET', 'asigcarcampo.php?cod_campo='+mcodigo+'&cod_arch='+mcod_arch, 'dcarcampo', 'innerHTML');
@@ -47,7 +47,7 @@ return true;}
               <tr>
                 <td width="80"><span class="Estilo5">C&Oacute;DIGO:</span> </td>
                 <td width="50"><span class="Estilo5"><input class="Estilo10" name="txtcod_campo" type="text" id="txtcod_campo" size="3" maxlength="3" onFocus="encender(this)" onBlur="apaga_cod_campo(this)" > </span></td>
-                <td width="50"><input class="Estilo10" name="btconcepto" type="button" id="btcampos" title="Abrir Catalogo Campos"  onClick="VentanaCentrada('Cat_campo_archivos.php?criterio=<?echo $tipo_arch_banco?>','SIA','','750','500','true')" value="..."> </span></td>
+                <td width="50"><input class="Estilo10" name="btconcepto" type="button" id="btcampos" title="Abrir Catalogo Campos"  onClick="VentanaCentrada('Cat_campo_archivos.php?criterio=<?php echo $tipo_arch_banco?>','SIA','','750','500','true')" value="..."> </span></td>
                 <td width="100"><span class="Estilo5">DESCRIPCION:</span> </td>
                 <td width="550"><span class="Estilo5"><div id="dcampo"> <input class="Estilo10" name="txtcar_especial" type="text" id="txtcar_especial" size="90" maxlength="80" readonly> </div></span></td>
               </tr>
@@ -109,7 +109,7 @@ return true;}
                 <td width="120"><span class="Estilo5">ELIMINA PUNTO: </span></td>
                 <td width="80"><span class="Estilo5"><select class="Estilo10" name="txtelimina_puntos" size="1" id="txtelimina_puntos" onFocus="encender(this)" onBlur="apagar(this)"><option>NO</option> <option>SI</option></select> </span></td>
                 <td width="80"><span class="Estilo5">POSICION: </span></td>
-                <td width="70"><span class="Estilo5"><input class="Estilo10" name="txtpos_campo" type="text" id="txtpos_campo" size="3" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $pos_campo?>" > </span></td>
+                <td width="70"><span class="Estilo5"><input class="Estilo10" name="txtpos_campo" type="text" id="txtpos_campo" size="3" maxlength="3" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $pos_campo?>" > </span></td>
                 <td width="150"><span class="Estilo5">CUERPO DEL ARCHIVO: </span></td>
                 <td width="150"><span class="Estilo5"><select class="Estilo10" name="txtstatus2_campo" size="1" id="txtstatus2_campo" onFocus="encender(this)" onBlur="apagar(this)"><option>DETALLE</option> <option>ENCABEZADO</option> <option>PIE PAGINA</option></select> </span></td>
               </tr>
@@ -130,8 +130,8 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="20"><input name="txtcod_arch_banco" type="hidden" id="txtcod_arch_banco" value="<?echo $cod_arch_banco?>"></td>
-            <td width="20"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?echo $tipo_arch_banco?>"></td>
+            <td width="20"><input name="txtcod_arch_banco" type="hidden" id="txtcod_arch_banco" value="<?php echo $cod_arch_banco?>"></td>
+            <td width="20"><input name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?php echo $tipo_arch_banco?>"></td>
             <td width="80">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

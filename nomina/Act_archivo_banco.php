@@ -1,10 +1,10 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php"); $tipo_arch_banco='96';
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php"); include ("../class/funciones.php"); $tipo_arch_banco='96';
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="04-0000010"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 if (!$_GET){$cod_arch_banco=''; $p_letra='';  $criterio='';  $clave=''; $sql="SELECT * FROM NOM045 where tipo_arch_banco='96' ORDER BY cod_arch_banco";
 } else {$criterio=$_GET["Gcriterio"];$p_letra=substr($criterio, 0, 1);
   if(($p_letra=="P")||($p_letra=="U")||($p_letra=="S")||($p_letra=="A")||($p_letra=="C")){ $cod_arch_banco=substr($criterio,1,6);} else{$cod_arch_banco=substr($criterio,0,6);}
@@ -56,7 +56,7 @@ MM_reloadPage(true);
 //-->
 </script>
 </head>
-<?
+<?php 
 $res=pg_query($sql);$filas=pg_num_rows($res);  $den_arch_banco=""; $cod_cta_emp=""; $inf_usuario="";
 if ($filas==0){if ($p_letra=="S"){$sql="SELECT * FROM NOM045 Where (tipo_arch_banco='$tipo_arch_banco') Order by cod_arch_banco";}if ($p_letra=="A"){$sql="SELECT * FROM NOM045  Where (tipo_arch_banco='$tipo_arch_banco') Order by cod_arch_banco desc";}  $res=pg_query($sql);$filas=pg_num_rows($res);}
 if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_arch_banco"]; $den_arch_banco=$registro["den_arch_banco"]; $cod_cta_emp=$registro["cod_cta_emp"]; $inf_usuario=$registro["inf_usuario"];} $criterio=$cod_arch_banco;
@@ -100,7 +100,7 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Mover_Registro('S');" class="menu">Siguiente</a></td>
       </tr>
       <tr>
-        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('U',<?echo $criterio?>)";
+        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:Mover_Registro('U',<?php echo $criterio?>)";
              onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgColor=#EAEAEA><a href="javascript:Mover_Registro('U');" class="menu">Ultimo</a></td>
       </tr>
       <tr>
@@ -125,10 +125,10 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
              <td><table width="876">
                <tr>
                  <td width="76"><span class="Estilo5">C&Oacute;DIGO :</span></td>
-                 <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_arch_banco" type="text" id="txtcod_arch_banco" size="6" maxlength="6"  value="<?echo $cod_arch_banco?>" readonly></span></td>
+                 <td width="100"><span class="Estilo5"><input class="Estilo10" name="txtcod_arch_banco" type="text" id="txtcod_arch_banco" size="6" maxlength="6"  value="<?php echo $cod_arch_banco?>" readonly></span></td>
                  <td width="100"><span class="Estilo5">DENOMINACI&Oacute;N :</span></td>
-                 <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtden_arch_banco" type="text" id="txtden_arch_banco" size="70" maxlength="70"  value="<?echo $den_arch_banco?>" readonly></span></td>
-                 <td width="50"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?echo $inf_usuario?>');"></td>
+                 <td width="550"><span class="Estilo5"> <input class="Estilo10" name="txtden_arch_banco" type="text" id="txtden_arch_banco" size="70" maxlength="70"  value="<?php echo $den_arch_banco?>" readonly></span></td>
+                 <td width="50"><img src="../imagenes/b_info.png" onclick="javascript:alert('<?php echo $inf_usuario?>');"></td>
                </tr>
              </table></td>
            </tr>
@@ -136,13 +136,13 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
              <td><table width="876">
                <tr>
                  <td width="176"><span class="Estilo5">N&Uacute;MERO CUENTA EMPRESA  :</span></td>
-                 <td width="680"><span class="Estilo5"><input class="Estilo10" name="txtcod_cta_emp" type="text" id="txtcod_cta_emp" size="30" maxlength="30"  value="<?echo $cod_cta_emp?>" readonly> </span></td>
-                 <td width="20"><input class="Estilo10" name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?echo $tipo_arch_banco?>"></td>
+                 <td width="680"><span class="Estilo5"><input class="Estilo10" name="txtcod_cta_emp" type="text" id="txtcod_cta_emp" size="30" maxlength="30"  value="<?php echo $cod_cta_emp?>" readonly> </span></td>
+                 <td width="20"><input class="Estilo10" name="txttipo_arch_banco" type="hidden" id="txttipo_arch_banco" value="<?php echo $tipo_arch_banco?>"></td>
                </tr>
              </table></td>
            </tr>
           </table>
-          <iframe src="Det_archivo_banco_usuario.php?criterio=<?echo $tipo_arch_banco.$criterio?>"  width="850" height="420" scrolling="auto" frameborder="1">
+          <iframe src="Det_archivo_banco_usuario.php?criterio=<?php echo $tipo_arch_banco.$criterio?>"  width="850" height="420" scrolling="auto" frameborder="1">
           </iframe>
          </div>
          </form>
@@ -151,4 +151,4 @@ if($filas>=1){$registro=pg_fetch_array($res,0); $cod_arch_banco=$registro["cod_a
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

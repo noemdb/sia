@@ -1,11 +1,11 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");  $fecha_hoy=asigna_fecha_hoy();
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");  $fecha_hoy=asigna_fecha_hoy();
 if (!$_GET){$cod_empleado='';}else {$cod_empleado=$_GET["Gcodigo"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_exec($conn,$sql);$filas=pg_numrows($resultado);  $tipo_u="U";
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="02-0000070"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -50,7 +50,7 @@ var f=document.form1; var r;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $sql="Select * FROM CALCULO_VACACIONES where (cod_empleado='$cod_empleado')";  $res=pg_query($sql);$filas=pg_num_rows($res);
 $nombre=""; $cedula=""; $fecha_ingreso=""; $fecha_caus_hasta=""; $fecha_caus_desde=""; $denominacion=""; $cod_concepto_v=""; $fecha_d_desde=""; $fecha_d_hasta="";
 $dias_habiles=0; $dias_no_habiles=0; $fecha_d_desde=""; $fecha_d_hasta=""; $fecha_reincorp=""; $dias_bono_vac=0; $monto_bono_vac=0; $dias_disfrutados=0; $inf_usuario="";
@@ -65,7 +65,7 @@ if($filas>=1){  $registro=pg_fetch_array($res,0);  $nombre=$registro["nombre"]; 
 } $criterio=$cod_empleado; $monto_bono_vac=formato_monto($monto_bono_vac); $monto_concepto=formato_monto($monto_concepto);
  $dias_bono_vac=formato_monto($dias_bono_vac); $dias_habiles=formato_monto($dias_habiles); $dias_no_habiles=formato_monto($dias_no_habiles);
 $sql="Select * from conceptos where cod_concepto='$cod_concepto_v'"; $res=pg_query($sql);$filas=pg_num_rows($res);if($filas>=1){  $registro=pg_fetch_array($res,0); $denominacion=$registro["denominacion"]; }
-pg_close();?>
+pg_close($conn);?>
 <body>
 <table width="977" height="38" border="0" bgcolor="#000066">
   <tr>
@@ -84,9 +84,9 @@ pg_close();?>
              <td><table width="946">
                  <tr>
                    <td width="176"><span class="Estilo5">C&Oacute;DIGO TRABAJADOR  : </span></td>
-                   <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_empleado?>" > </span></td>
+                   <td width="120"><span class="Estilo5"><input class="Estilo10" name="txtcod_empleado" type="text" id="txtcod_empleado" size="15" maxlength="15" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_empleado?>" > </span></td>
                    <td width="50"><input class="Estilo10" name="btconcepto" type="button" id="bttrabajador" title="Abrir Catalogo Trabajadores con Calculo Vacaciones"  onClick="VentanaCentrada('Cat_trab_cal_vac.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
-                   <td width="600"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?echo $nombre?>"> </span></td>
+                   <td width="600"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="80" maxlength="80" readonly value="<?php echo $nombre?>"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -94,8 +94,8 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="186"><span class="Estilo5">C&Oacute;DIGO CONCEPTO C&Aacute;LCULO  :</span></td>
-                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto_v" type="text" id="txtcod_concepto_v" size="3" maxlength="3"  value="<?echo $cod_concepto_v?>" readonly> </span></td>
-                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80"  value="<?echo $denominacion?>" readonly> </span></td>
+                 <td width="80"><span class="Estilo5"><input class="Estilo10" name="txtcod_concepto_v" type="text" id="txtcod_concepto_v" size="3" maxlength="3"  value="<?php echo $cod_concepto_v?>" readonly> </span></td>
+                 <td width="600"><span class="Estilo5"><input class="Estilo10" name="txtdenominacion" type="text" id="txtdenominacion" size="80" maxlength="80"  value="<?php echo $denominacion?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -103,9 +103,9 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="216" ><span class="Estilo5">PERIODO DE CAUSACION DESDE : </span></td>
-                 <td width="300" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_desde" type="text" id="txtfecha_caus_desde" size="10" maxlength="10" readonly value="<?echo $fecha_caus_desde?>"></span></td>
+                 <td width="300" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_desde" type="text" id="txtfecha_caus_desde" size="10" maxlength="10" readonly value="<?php echo $fecha_caus_desde?>"></span></td>
                  <td width="100" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_hasta" type="text" id="txtfecha_caus_hasta" size="10" maxlength="10"  readonly value="<?echo $fecha_caus_hasta?>"></span></td>
+                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_caus_hasta" type="text" id="txtfecha_caus_hasta" size="10" maxlength="10"  readonly value="<?php echo $fecha_caus_hasta?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -113,9 +113,9 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="250" ><span class="Estilo5">CANTIDAD DIAS DE VACACIONES HABILES : </span></td>
-                 <td width="296" ><span class="Estilo5"><input class="Estilo10" name="txtdias_habiles" type="text" id="txtdias_habiles" size="10" maxlength="10" style="text-align:right" readonly value="<?echo $dias_habiles?>"></span></td>
+                 <td width="296" ><span class="Estilo5"><input class="Estilo10" name="txtdias_habiles" type="text" id="txtdias_habiles" size="10" maxlength="10" style="text-align:right" readonly value="<?php echo $dias_habiles?>"></span></td>
                  <td width="100" ><span class="Estilo5">NO HABILES : </span></td>
-                 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtdias_no_habiles" type="text" id="txtdias_no_habiles" size="10" maxlength="10"  style="text-align:right" readonly value="<?echo $dias_no_habiles?>"></span></td>
+                 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtdias_no_habiles" type="text" id="txtdias_no_habiles" size="10" maxlength="10"  style="text-align:right" readonly value="<?php echo $dias_no_habiles?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -123,11 +123,11 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="200" ><span class="Estilo5">FECHA DE DISFRUTE DESDE : </span></td>
-                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" readonly value="<?echo $fecha_d_desde?>"></span></td>
+                 <td width="120" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_desde" type="text" id="txtfecha_d_desde" size="10" maxlength="10" readonly value="<?php echo $fecha_d_desde?>"></span></td>
                  <td width="70" ><span class="Estilo5">HASTA : </span></td>
-                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  readonly value="<?echo $fecha_d_hasta?>"></span></td>
+                 <td width="156" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_d_hasta" type="text" id="txtfecha_d_hasta" size="10" maxlength="10"  readonly value="<?php echo $fecha_d_hasta?>"></span></td>
                  <td width="180" ><span class="Estilo5">FECHA A REINCORPORASE : </span></td>
-                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" readonly value="<?echo $fecha_reincorp?>"></span></td>
+                 <td width="140" ><span class="Estilo5"><input class="Estilo10" name="txtfecha_reincorp" type="text" id="txtfecha_reincorp" size="10" maxlength="10" readonly value="<?php echo $fecha_reincorp?>"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -135,9 +135,9 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="246" ><span class="Estilo5">CANTIDAD DIAS BONO VACACIONAL : </span></td>
-                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtdias_bono_vac" type="text" id="txtdias_bono_vac" size="10" maxlength="10" style="text-align:right" readonly value="<?echo $dias_bono_vac?>"></span></td>
+                 <td width="250" ><span class="Estilo5"><input class="Estilo10" name="txtdias_bono_vac" type="text" id="txtdias_bono_vac" size="10" maxlength="10" style="text-align:right" readonly value="<?php echo $dias_bono_vac?>"></span></td>
                  <td width="170" ><span class="Estilo5">MONTO BONO VACACIONAL: </span></td>
-                 <td width="200" ><span class="Estilo5"><input class="Estilo10" name="txtmonto_bono_vac" type="text" id="txtmonto_bono_vac" size="17" maxlength="17" style="text-align:right" readonly value="<?echo $monto_bono_vac?>"></span></td>
+                 <td width="200" ><span class="Estilo5"><input class="Estilo10" name="txtmonto_bono_vac" type="text" id="txtmonto_bono_vac" size="17" maxlength="17" style="text-align:right" readonly value="<?php echo $monto_bono_vac?>"></span></td>
                  </tr>
              </table></td>
            </tr>
@@ -145,11 +145,11 @@ pg_close();?>
              <td><table width="866">
                <tr>
                  <td width="170"><span class="Estilo5">CALCULO DE NOMINA :</span></td>
-				 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtcalcula_nomina" type="text" id="txtcalcula_nomina" size="3" maxlength="3" readonly value="<?echo $calcula_nomina?>"></span></td>                 
+				 <td width="220" ><span class="Estilo5"><input class="Estilo10" name="txtcalcula_nomina" type="text" id="txtcalcula_nomina" size="3" maxlength="3" readonly value="<?php echo $calcula_nomina?>"></span></td>                 
                  <td width="220"><span class="Estilo5">FECHA CALCULO DESDE : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_d" type="text" id="txtfecha_calculo_d" size="10" maxlength="10" readonly value="<?echo $fecha_cal_d?>" ></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_d" type="text" id="txtfecha_calculo_d" size="10" maxlength="10" readonly value="<?php echo $fecha_cal_d?>" ></span></td>
                  <td width="65"><span class="Estilo5">HASTA : </span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_h" type="text" id="txtfecha_calculo_h" size="10" maxlength="10" readonly value="<?echo $fecha_cal_h?>" ></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_calculo_h" type="text" id="txtfecha_calculo_h" size="10" maxlength="10" readonly value="<?php echo $fecha_cal_h?>" ></span></td>
                </tr>
              </table></td>
            </tr>
@@ -159,12 +159,12 @@ pg_close();?>
         <table width="940">
           <tr> <td>&nbsp;</td> </tr>
           <tr>
-            <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-			<td width="70"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?echo $monto_concepto?>"></td>
+            <td width="100"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+			<td width="70"><input name="txtmonto_base" type="hidden" id="txtmonto_base" value="<?php echo $monto_concepto?>"></td>
 			<td width="200" align="center"><input name="btcargar" type="button" id="btcargar" title="Cargar calculo de Vacaciones" onclick="javascript:carga_vac()" value="Cargar"></td>
             <td width="200"><input name="Grabar" type="submit" id="Procesar Salida"  value="Procesar Salida"></td>
 			<td width="200" align="center"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>
-            <td width="170"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="170"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
           </tr>
         </table>
          </div>

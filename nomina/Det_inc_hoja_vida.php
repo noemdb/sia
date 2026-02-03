@@ -1,5 +1,5 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$codigo_mov='';} else{$codigo_mov=$_GET["codigo_mov"];}
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); if (!$_GET){$codigo_mov='';} else{$codigo_mov=$_GET["codigo_mov"];}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -18,7 +18,7 @@ function Llama_Modificar(codigo_mov,fecha){var murl;
    <tr>
       <td align="left"><table width="840" border="0" align="left" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Hoja de Vida" onclick="javascript:LlamarURL('Inc_hoja_vida.php?codigo_mov=<?echo $codigo_mov?>')"></td>
+            <td width="222" align="center" valign="middle"><input name="btAgregar" type="button" id="btAgregar" value="Agregar" title="Agregar Hoja de Vida" onclick="javascript:LlamarURL('Inc_hoja_vida.php?codigo_mov=<?php echo $codigo_mov?>')"></td>
             <td width="255" align="center">&nbsp;</td>
             <td width="215" align="center">&nbsp;</td>
             <td width="215" align="center"><input name="btRefrescar" type="button" id="btRefrescar" onClick="JavaScript:self.location.reload();" value="Refrescar" title="Refrescar Hoja de Vida"></td>
@@ -35,16 +35,16 @@ function Llama_Modificar(codigo_mov,fecha){var murl;
            <td width="100" align="center" bgcolor="#99CCFF"><strong>Fecha </strong></td>
            <td width="700" align="center" bgcolor="#99CCFF"><strong>Observaci&oacute;n</strong></td>
          </tr>
-<? while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha"]; $fechac=formato_ddmmaaaa($sfecha);
+<?php  while($registro=pg_fetch_array($res)){$sfecha=$registro["fecha"]; $fechac=formato_ddmmaaaa($sfecha);
 ?>
-         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<? echo $codigo_mov; ?>','<? echo $sfecha; ?>');">
-           <td width="100" align="left"><? echo $fechac; ?></td>
-           <td width="700" align="left"><? echo $registro["observacion"]; ?></td>
+         <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" onDblClick="javascript:Llama_Modificar('<?php  echo $codigo_mov; ?>','<?php  echo $sfecha; ?>');">
+           <td width="100" align="left"><?php  echo $fechac; ?></td>
+           <td width="700" align="left"><?php  echo $registro["observacion"]; ?></td>
          </tr>
-         <?}?>
+         <?php }?>
        </table></td>
    </tr>
  </table>
 </body>
 </html>
-<?  pg_close();?>
+<?php   pg_close($conn);?>

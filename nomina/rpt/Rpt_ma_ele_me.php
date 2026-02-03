@@ -1,4 +1,4 @@
-<?include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
+<?php include ("../../class/phpreports/PHPReportMaker.php"); error_reporting(E_ALL ^ E_NOTICE);
 include ("../../class/conect.php");
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$sexo=$_GET["sexo"];$estado_civil=$_GET["estado_civil"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$edad_d=$_GET["edad_d"];$edad_h=$_GET["edad_h"];$profesion=$_GET["profesion"];$Sql="";$date = date("d-m-Y");$hora = date("h:i:s a");
 $date = date("d-m-Y");
@@ -15,7 +15,7 @@ $hora = date("H:i:s a");
 if ($sexo<>'TODOS' &&  $estado_civil<>'TODOS' &&  $profesion<>'TODAS')
 {
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT
@@ -51,7 +51,7 @@ else
 if ($sexo<>'TODOS')
 {
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT
@@ -85,7 +85,7 @@ else
 if ($estado_civil<>'TODOS')
 {
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT
@@ -119,7 +119,7 @@ else
 if ($profesion<>'TODAS')
 {
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT
@@ -153,7 +153,7 @@ else
 if ($sexo=='TODOS' OR $estado_civil=='TODOS' OR $profesion=='TODAS')
 {
         $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-        if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+        if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
         else
         {
          // LLAMAR A PHP_REPORT

@@ -1,8 +1,8 @@
-<?include ("../../class/seguridad.inc");
+<?php include ("../../class/seguridad.inc");
 include ("../../class/conects.php");  include ("../../class/funciones.php");
 include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){ ?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
  $periodod='01';
  $periodoh='01';
  $fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer);
@@ -113,14 +113,14 @@ var url;
             <tr>
               <td width="209"><div align="right">                 CUENTA DESDE: </div></td>
               <td width="212"><span class="Estilo5">
-                <input name="txtCodigo_Cuenta_D" type="text" id="txtCodigo_Cuenta_D" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_cuenta_d?>" size="32" maxlength="32">
+                <input name="txtCodigo_Cuenta_D" type="text" id="txtCodigo_Cuenta_D" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_cuenta_d?>" size="32" maxlength="32">
               </span></td>
               <td width="34"><span class="Estilo5">
                 <input name="Catalogo3" type="button" id="Catalogo32" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_cuentas_cargablesd.php?criterio=','SIA','','750','500','true')" value="...">
               </span></td>
               <td width="63">HASTA:</td>
               <td width="199"><span class="Estilo5">
-                <input name="txtCodigo_Cuenta_H" type="text" id="txtCodigo_Cuenta_H" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_cuenta_h?>" size="32" maxlength="32">
+                <input name="txtCodigo_Cuenta_H" type="text" id="txtCodigo_Cuenta_H" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_cuenta_h?>" size="32" maxlength="32">
               </span></td>
               <td width="40"><span class="Estilo5">
               <input name="Catalogo4" type="button" id="Catalogo43" title="Abrir Catalogo de Cuentas" onClick="VentanaCentrada('../Cat_cuentas_cargablesh.php?criterio=','SIA','','750','500','true')" value="...">
@@ -135,13 +135,13 @@ var url;
                   <td width="191" align="center"><div align="right">TIPO ASIENTO DESDE: </div></td>
                   <td width="261" align="center">
                     <div align="left"><span class="Estilo5">
-                      <input name="txtTipo_Asientod" type="text" id="txttipo_asientod" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_asiento_d?>" size="12" maxlength="3">
+                      <input name="txtTipo_Asientod" type="text" id="txttipo_asientod" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_asiento_d?>" size="12" maxlength="3">
                       <input name="Catalogo1" type="button" id="Catalogo1" title="Abrir Catalogo Tipos de Asientos" onclick="VentanaCentrada('../Cat_tipo_asientod.php?criterio=','SIA','','650','500','true')" value="...">
                   </span></div></td>
                   <td width="67" align="center"><div align="left">HASTA:</div></td>
                   <td width="264" align="center">
                     <div align="left"><span class="Estilo5">
-                      <input name="txtTipo_Asientoh" type="text" id="txttipo_asientoh" onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $tipo_asiento_h?>" size="12" maxlength="3">
+                      <input name="txtTipo_Asientoh" type="text" id="txttipo_asientoh" onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $tipo_asiento_h?>" size="12" maxlength="3">
                       <input name="Catalogo2" type="button" id="Catalogo2" title="Abrir Catalogo Tipos de Asientos" onclick="VentanaCentrada('../Cat_tipo_asientoh.php?criterio=','SIA','','650','500','true')" value="...">
                   </span></div></td>
                 </tr>
@@ -181,4 +181,4 @@ var url;
 </body>
 </html>
 
-<? pg_close();?>
+<?php  pg_close($conn);?>

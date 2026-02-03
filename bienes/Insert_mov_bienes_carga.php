@@ -1,9 +1,9 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc");error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php");include ("../class/configura.inc");error_reporting(E_ALL);
 $codigo_mov=$_POST["txtcodigo_mov"]; $tipo=$_POST["txttipo"]; $fecha=$_POST["txtfecha"]; $fechah=$_POST["txtfechah"]; $cod_dependencia=$_POST["txtcod_dependencia"];
 $equipo = getenv("COMPUTERNAME");$MInf_Usuario = $equipo." ".date("d/m/y H:i a"); $url="Det_inc_bienes_mue_movimientos.php?codigo_mov=".$codigo_mov;
 echo "ESPERE POR FAVOR CARGANDO....","<br>";
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");$error=0;
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else { $resultado=pg_exec($conn,"SELECT ELIMINA_BIEN050('$codigo_mov')"); $resultado=pg_exec($conn,"SELECT ELIMINA_CON010('$codigo_mov')");
     $sfecha=formato_aaaammdd($fecha); $sfechah=formato_aaaammdd($fechah); 
     if($tipo=="INCORPORACION"){ $codigo="001"; $tipo="I"; $sSQL="Select * from BIEN015 where cod_dependencia='$cod_dependencia' and fecha_incorporacion>='$sfecha' and fecha_incorporacion<='$sfechah'"; }
@@ -14,6 +14,6 @@ if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN
 	  $resultado=pg_exec($conn,"SELECT ACTUALIZA_BIEN050(1,'$codigo_mov','','$sfecha','$cod_bien_mue','$codigo','$tipo','',1,$monto_c,'','$codigo_cuenta',0,0)");
      }	
  }
-pg_close();
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? }else {?>  <script language="JavaScript">history.back();</script> <? } 
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php }else {?>  <script language="JavaScript">history.back();</script> <?php } 
 ?>

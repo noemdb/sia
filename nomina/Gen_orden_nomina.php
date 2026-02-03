@@ -1,4 +1,4 @@
-<?include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc"); include ("../class/conects.php");  include ("../class/funciones.php");
 $equipo=getenv("COMPUTERNAME"); $codigo_mov="PAG066".$usuario_sia.$equipo;   $fecha_hoy=asigna_fecha_hoy();
 if (!$_GET){$criterio="N";}else{$criterio=$_GET["criterio"];}   $tp_calculo=substr($criterio,0,1); $cod_estructura=substr($criterio,1,8);
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
@@ -6,7 +6,7 @@ $sql="SELECT campo103 FROM sia001 where campo101='$usuario_sia'"; $resultado=pg_
 if($filas>0){$registro=pg_fetch_array($resultado); $tipo_u=$registro["campo103"]; $tiene_acceso="S";} $Mcamino="NNNNNNNNNNNNNNNNNNNNN";
 if($tipo_u=="A"){$Mcamino="SSSSSSSSSSSSSSSSSSSSS";}  else{$modulo="04"; $opcion="04-0000020"; $sql="select * from sia006 where campo601='$usuario_sia' and campo602='$modulo' and campo603='$opcion'"; $res=pg_exec($conn,$sql);$filas=pg_numrows($res);
  if ($filas>0){$reg=pg_fetch_array($res); $Mcamino=$reg["campo607"].$reg["campo608"].$reg["campo609"].$reg["campo610"].$reg["campo611"].$reg["campo612"].$reg["campo613"].$reg["campo614"].$reg["campo615"].$reg["campo616"].$reg["campo617"].$reg["campo618"].$reg["campo619"].$reg["campo620"].$reg["campo621"].$reg["campo622"].$reg["campo623"].$reg["campo624"].$reg["campo625"].$reg["campo626"]; }
-}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?}
+}$posicion=strpos($Mcamino,'S');if(is_numeric($posicion)){$Mcamino=$Mcamino;}else{?><script language="JavaScript"> document.location='menu.php';</script><?php }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -46,7 +46,7 @@ function stabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;   if(tecla
 </script>
 
 </head>
-<?
+<?php 
 $des_estructura=""; $fecha_hasta=$fecha_hoy; $tipo_pago="DEPOSITO"; $status=""; $tipo_comp_est=""; $ref_comp_est=""; $num_periodos="1";
 $sql="SELECT descripcion_est,nro_documento,status FROM PAG006 Where (cod_estructura='$cod_estructura')"; $res=pg_query($sql);
 if($registro=pg_fetch_array($res,0)){ $des_estructura=$registro["descripcion_est"]; $tipo_pago=$registro["nro_documento"]; $status=$registro["status"]; }
@@ -59,7 +59,7 @@ if($registro=pg_fetch_array($res,0)){ $ref_comp_est=$registro["ref_comp_est"]; $
 } 
 
 $status="N";
- pg_close(); $criterio=$tp_calculo.$cod_estructura;
+ pg_close($conn); $criterio=$tp_calculo.$cod_estructura;
 ?>
 <body>
 <table width="977" height="38" border="0" bgcolor="#000066">
@@ -79,7 +79,7 @@ $status="N";
              <td><table width="946">
                  <tr>
                    <td width="226"><span class="Estilo5">C&Oacute;DIGO ESTRUCTURA DE ORDEN:</span></td>
-                   <td width="100" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_estructura" type="text" id="txtcod_estructura" size="10" maxlength="8"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cod_estructura?>" > </span></td>
+                   <td width="100" ><span class="Estilo5"> <input class="Estilo10" name="txtcod_estructura" type="text" id="txtcod_estructura" size="10" maxlength="8"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cod_estructura?>" > </span></td>
                    <td width="320"><input class="Estilo10" name="bttiponom" type="button" id="btcodarch" title="Abrir Catalogo Estructura de Orden"  onClick="VentanaCentrada('Cat_estructura_nom.php?criterio=','SIA','','750','500','true')" value="..."> </span></td>
                    <td width="300" align="center"><input class="Estilo10" name="btcargar" type="button" id="btcargar" title="Cargar" onclick="javascript:Carga_Nom()" value="Cargar Nominas"></td>
                   </tr>
@@ -89,7 +89,7 @@ $status="N";
              <td><table width="946">
                  <tr>
                    <td width="96"><span class="Estilo5">DESCRIPCI&Oacute;N:</span></td>
-                   <td width="650"><span class="Estilo5"> <input class="Estilo10" name="txtdes_estructura" type="text" id="txtdes_estructura" size="120" maxlength="120" readonly value="<?echo $des_estructura?>" > </span></td>
+                   <td width="650"><span class="Estilo5"> <input class="Estilo10" name="txtdes_estructura" type="text" id="txtdes_estructura" size="120" maxlength="120" readonly value="<?php echo $des_estructura?>" > </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -103,13 +103,13 @@ function asig_ref_comp(mvalor){var f=document.form1;  if(mvalor=="S"){document.f
                  <tr>
                    <td width="130"><span class="Estilo5">TIPO DE CALCULO  :</span></td>
                    <td width="160"><span class="Estilo5"><select class="Estilo10" name="txttipo_calculo" size="1" id="txttipo_calculo"><option value='N' selected>NORMAL</option>  <option value='E'>EXTRAORDINARIA</option> </select> </span></td>
-                   <td width="50"><span class="Estilo5"><input name="txtnum_periodos" type="text" id="txtnum_periodos" size="1" maxlength="1" value="<?echo $num_periodos?>" onFocus="encender(this)" onBlur="apagar(this)" title="Num. Calculo para Nominas Extrordinaria" onKeypress="return validarNum(event)"> </span></td>
+                   <td width="50"><span class="Estilo5"><input name="txtnum_periodos" type="text" id="txtnum_periodos" size="1" maxlength="1" value="<?php echo $num_periodos?>" onFocus="encender(this)" onBlur="apagar(this)" title="Num. Calculo para Nominas Extrordinaria" onKeypress="return validarNum(event)"> </span></td>
 		
 				   <td width="100"><span class="Estilo5">NOMINA :</span></td>
                    <td width="150"><span class="Estilo5"><select class="Estilo10" name="txttipo_nom" size="1" id="txttipo_nom"><option selected>ACTUAL</option>  <option>HISTORICO</option> </select> </span></td>
                    
 				   <td width="200"><span class="Estilo5">FECHA PROCESO NOMINA HASTA  :</span></td>
-                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)"  value="<?echo $fecha_hasta?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="150"><span class="Estilo5"><input class="Estilo10" name="txtfecha_hasta" type="text" id="txtfecha_hasta" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)"  value="<?php echo $fecha_hasta?>" onchange="chequea_fecha(this);" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -134,24 +134,24 @@ function asig_ref_comp(mvalor){var f=document.form1;  if(mvalor=="S"){document.f
                    <td width="156"><span class="Estilo5">REFIERE A COMPROMISO :</span></td>
                    <td width="100"><span class="Estilo5"><select class="Estilo10" name="txtref_comp" size="1" id="txtref_comp"><option selected>NO</option>  <option >SI</option> </select> </span></td>
                    <td width="160"><span class="Estilo5">DOCUMENTO COMPROMISO:</span></td>
-				   <td width="45"><input name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apagar(this)"  value="<?echo $tipo_comp_est?>" onkeypress="return stabular(event,this)"></td>
+				   <td width="45"><input name="txttipo_compromiso" type="text"  id="txttipo_compromiso" size="6" maxlength="4" onFocus="encender(this);" onBlur="apagar(this)"  value="<?php echo $tipo_comp_est?>" onkeypress="return stabular(event,this)"></td>
 				   <td width="45"><span class="Estilo5"><input name="btdoc_comp" type="button" id="btdoc_comp" title="Abrir Catalogo Documentos Compromiso" onClick="VentanaCentrada('../presupuesto/Cat_doc_comp.php?criterio=','SIA','','750','500','true')" value="..." onkeypress="return stabular(event,this)">   </span></td>
 				   <td width="100"><span class="Estilo5"><input name="txtnombre_abrev_comp" type="text" id="txtnombre_abrev_comp" size="6" readonly onkeypress="return stabular(event,this)">   </span></td>
 				   <td width="90"><span class="Estilo5">REFERENCIA :</span> </td>
-				   <td width="100"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" onFocus="encender(this);" onBlur="apagar(this);" value="<?echo $ref_comp_est?>" onkeypress="return stabular(event,this)"></div></td>
+				   <td width="100"><div id="refer"><input name="txtreferencia_comp" type="text" id="txtreferencia_comp" size="12" maxlength="8" onFocus="encender(this);" onBlur="apagar(this);" value="<?php echo $ref_comp_est?>" onkeypress="return stabular(event,this)"></div></td>
  				</tr>
              </table></td>
            </tr>
-<script language="JavaScript" type="text/JavaScript"> asig_tipo_calculo('<?echo $tp_calculo;?>'); asig_tipo_pago('<?echo $tipo_pago;?>');  asig_ref_comp('<?echo $status;?>');  </script>
+<script language="JavaScript" type="text/JavaScript"> asig_tipo_calculo('<?php echo $tp_calculo;?>'); asig_tipo_pago('<?php echo $tipo_pago;?>');  asig_ref_comp('<?php echo $status;?>');  </script>
            <tr> <td>&nbsp;</td> </tr>
          </table>
          <div id="T11" align="center" class="tab-body">
-         <iframe src="Det_nomina_est_orden.php?criterio=<?echo $criterio?>" width="770" height="300" scrolling="auto" frameborder="1"></iframe>
+         <iframe src="Det_nomina_est_orden.php?criterio=<?php echo $criterio?>" width="770" height="300" scrolling="auto" frameborder="1"></iframe>
          </div>
          <table width="940">
           <tr> <td>&nbsp;</td> </tr>
           <tr>
-            <td width="20"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="20"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="200">&nbsp;</td>
             <td width="250" align="center" valign="middle"><input name="Procesar" type="submit" id="Procesar"  value="Procesar Inf. Orden" title="Procesar Orden" ></td>
             <td width="250" align="center"><input name="button" type="button" id="button" title="Retornar al menu principal" onclick="javascript:LlamarURL('menu.php')" value="Menu Principal"></td>

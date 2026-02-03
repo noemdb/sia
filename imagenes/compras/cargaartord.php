@@ -10,6 +10,6 @@ while($registro=pg_fetch_array($res)){
  $marca=$registro["marca"]; $modelo=$registro["modelo"]; $unidad_medida=$registro["unidad_medida"]; $costo=$registro["costo"]; $impuesto=$registro["tasa_impuesto"];
  if($por_recibir>0){ $ssql="SELECT ACTUALIZA_COMP042(1,'$codigo_mov','$cod_articulo','00000000','0000000000','$nro_linea','','$sfecha','$marca','$modelo','$unidad_medida','','00',$costo,$impuesto,0,0,0,$por_recibir,0,0,0,0,0,0,'000','','$sfecha','','S','$nro_ord','',0,0,'','$sfecha','','','$des_articulo','')";
  $resultado=pg_exec($conn,$ssql);     $error=pg_errormessage($conn); }
-}pg_close();?>
-<iframe src="Det_inc_rec_orden.php?codigo_mov=<?echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0">
+}pg_close($conn);?>
+<iframe src="Det_inc_rec_orden.php?codigo_mov=<?php echo $codigo_mov?>" width="846" height="290" scrolling="auto" frameborder="0">
 </iframe>

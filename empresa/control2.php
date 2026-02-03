@@ -39,11 +39,11 @@ if (!$conn) {
         $key     = $registro["campo039"];
         $existdb = "S";
     }
-    pg_close();
+    pg_close($conn);
 }
 if ($existdb == "S") {
     $conn = pg_connect("host=" . $host . " port=" . $port . " password=" . $key . " user=" . $user . " dbname=" . $tempresa . "");
-    if (pg_ErrorMessage($conn)) {
+    if (pg_last_error($conn)) {
         echo "OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS 2", "<br>";
     } else {
         $tgnomina = "";
@@ -76,5 +76,5 @@ if ($existdb == "S") {
             header("Location: index.php?errorusuario=si");
         }
     }
-    pg_close();
+    pg_close($conn);
 } 

@@ -1,5 +1,5 @@
-<?include ("../class/seguridad.inc");?>
-<? include ("../class/funciones.php");
+<?php include ("../class/seguridad.inc");?>
+<?php  include ("../class/funciones.php");
 if (!$_GET){
   $codigo_cuenta='';
   $p_letra='';
@@ -91,9 +91,9 @@ MM_reloadPage(true);
 -->
 </style>
 </head>
-<?
+<?php 
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $nombre_cuenta="";
 $cargable="";
 $clasificacion="";
@@ -332,4 +332,4 @@ $saldo12=formato_monto($saldo12);
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

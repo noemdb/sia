@@ -1,10 +1,10 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$comprobante_d=$_GET["comprobante_d"];$comprobante_h=$_GET["comprobante_h"];$Sql="";$date = date("d-m-Y");$hora = date("H:i:s a");$tipo_rpt=$_GET["tipo_rpt"];
 $criterio1="Fecha Desde: ".$fecha_d." Al: ".$fecha_h; $criterio2="";     $php_os=PHP_OS;    
 if (!(empty($fecha_d))){$ano1=substr($fecha_d,6,9);$mes1=substr($fecha_d,3,2);$dia1=substr($fecha_d,0,2);} else{$fecha_d='';}  $fecha_desde=$ano1.$mes1.$dia1;
 if (!(empty($fecha_h))){$ano1=substr($fecha_h,6,9);$mes1=substr($fecha_h,3,2);$dia1=substr($fecha_h,0,2);}  else{$fecha_h='';}$fecha_hasta=$ano1.$mes1.$dia1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");     
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINNT";}
     $sSQL = "SELECT BAN027.Ano_Fiscal, BAN027.Mes_Fiscal, BAN027.Nro_Comprobante, BAN027.Nro_Operacion, BAN027.Ced_Rif, BAN027.Fecha_Emision, BAN027.Tipo_Operacion, BAN027.Tipo_Documento,
                 BAN027.Fecha_Documento, BAN027.Nro_Documento, BAN027.Nro_Con_Documento, BAN027.Nro_Doc_Afectado, BAN027.Tipo_Transaccion, BAN027.Monto_Documento,
@@ -233,7 +233,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 		   <td width="50" align="left"><strong></strong></td>
 		   <td width="100" align="left"><strong></strong></td>
 		   <td width="50" align="left"><strong></strong></td>
-		   <td width="200" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+		   <td width="200" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>NRO OP</strong></td>
@@ -251,7 +251,7 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>IMPUESTO IVA</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>IVA RETENIDO</strong></font></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $totalg1=0; $totalg2=0; $totalg3=0; $totalg4=0; $totalg5=0; $sub_totalb1=""; $sub_totalb2=""; $sub_totalb3=""; $sub_totalb4=""; $sub_totalb5=""; $sub_total1=""; $sub_total2=""; $sub_total3=""; $sub_total4=""; $sub_total5=""; $cantidad=0; 
 		$prev_ced_rif=""; $prev_nro_comprobante="";
@@ -289,17 +289,17 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			          <td width="50" align="left"></td>
 				      <td width="200" align="left"></td>
 			          <td width="200" align="left">SUB- TOTAL</td>
-					  <td width="100" align="right"><? echo $sub_total1; ?></td>
-					  <td width="100" align="right"><? echo $sub_total2; ?></td>
-					  <td width="100" align="right"><? echo $sub_total3; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total3; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_total4; ?></td>
-					  <td width="100" align="right"><? echo $sub_total5; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total4; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total5; ?></td>
 			      </tr>	
 			      <tr>
 				  <td width="90" align="left"></td>
 			      </tr>	
-               <? $prev_nro_comprobante=$nro_comprobante_grupo; $sub_total1=0; $sub_total2=0; $sub_total3=0; $sub_total4=0; $sub_total5=0;
+               <?php  $prev_nro_comprobante=$nro_comprobante_grupo; $sub_total1=0; $sub_total2=0; $sub_total3=0; $sub_total4=0; $sub_total5=0;
 			   }  
 			   if(($sub_totalb1>0)or($sub_totalb2>0)or($sub_totalb3>0)or($sub_totalb4>0)or($sub_totalb5>0)){ $sub_totalb1=formato_monto($sub_totalb1); $sub_totalb2=formato_monto($sub_totalb2); $sub_totalb3=formato_monto($sub_totalb3); $sub_totalb4=formato_monto($sub_totalb4); $sub_totalb5=formato_monto($sub_totalb5);	
 			     ?>	 				 
@@ -328,35 +328,35 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			          <td width="50" align="left"></td>
 				      <td width="200" align="left"></td>
 			          <td width="200" align="left">TOTAL BENEFICIARIO</td>
-					  <td width="100" align="right"><? echo $sub_totalb1; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb2; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb3; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb3; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_totalb4; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb5; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb4; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb5; ?></td>
 			      </tr>	
 			      <tr>
 				  <td width="90" align="left"></td>
 			      </tr>	
-              <?}
+              <?php }
 			      ?>	   
 			      <tr>
 					  <td width="100" align="left">Ced/Rif :</td>
-					  <td width="100" align="left"><? echo $ced_rif; ?></td>
+					  <td width="100" align="left"><?php  echo $ced_rif; ?></td>
 					  <td width="100" align="left"></td>
 					  <td width="50" align="left"></td>
 					  <td width="100" align="left">Nombre:</td>
 					  <td width="50" align="left"></td>
-					  <td width="200" align="left"><? echo $nombre; ?></td>
+					  <td width="200" align="left"><?php  echo $nombre; ?></td>
 			      </tr>
 				  <tr>
 					  <td width="100" align="left">Comprobante:</td>
-					  <td width="100" align="left">'<? echo $ano_fiscal.$mes_fiscal.$nro_comprobante; ?></td>
+					  <td width="100" align="left">'<?php  echo $ano_fiscal.$mes_fiscal.$nro_comprobante; ?></td>
 					  <td width="100" align="left">Fecha Emision :</td>
 					  <td width="50" align="left"></td>
-					  <td width="100" align="left"><? echo $fecha_emision; ?></td>
+					  <td width="100" align="left"><?php  echo $fecha_emision; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_totalb1=0; $sub_totalb2=0; $sub_totalb3=0; $sub_totalb4=0; $sub_totalb5=0;
             }
 			if(($prev_nro_comprobante<>$nro_comprobante_grupo)or($prev_ced_rif<>$ced_rif_grupo)){ 
@@ -387,25 +387,25 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			          <td width="50" align="left"></td>
 				      <td width="200" align="left"></td>
 			          <td width="200" align="left">SUB- TOTAL</td>
-					  <td width="100" align="right"><? echo $sub_total1; ?></td>
-					  <td width="100" align="right"><? echo $sub_total2; ?></td>
-					  <td width="100" align="right"><? echo $sub_total3; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total3; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_total4; ?></td>
-					  <td width="100" align="right"><? echo $sub_total5; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total4; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total5; ?></td>
 			      </tr>	
 			      <tr>
 					<td width="90" align="left"></td>
 			      </tr>	
-                  <?}?>	   
+                  <?php }?>	   
 			      <tr>
 					  <td width="100" align="left">Comprobante:</td>
-					  <td width="100" align="left">'<? echo $ano_fiscal.$mes_fiscal.$nro_comprobante; ?></td>
+					  <td width="100" align="left">'<?php  echo $ano_fiscal.$mes_fiscal.$nro_comprobante; ?></td>
 					  <td width="100" align="left">Fecha Emision :</td>
 					  <td width="50" align="left"></td>
-					  <td width="100" align="left"><? echo $fecha_emision; ?></td>
+					  <td width="100" align="left"><?php  echo $fecha_emision; ?></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_nro_comprobante=$nro_comprobante_grupo; $sub_total1=0; $sub_total2=0; $sub_total3=0; $sub_total4=0; $sub_total5=0;
 			}
 
@@ -422,22 +422,22 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
            $fecha_documento=formato_ddmmaaaa($fecha_documento);$nombre=conv_cadenas($nombre,0);  
 	?>	   
 		   <tr>
-                <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_operacion; ?></td>
-           		<td width="100" align="center"><? echo $fecha_documento; ?></td>
-           		<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $cod_banco; ?></td>
-           		<td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $tipo_mov; ?></td>
-           		<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $referencia; ?></td>
-           		<td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $tipo_documento; ?></td>
-           		<td width="200" align="center">'<? echo $nro_documento; ?></td>
-           		<td width="200" align="center">'<? echo $nro_doc_afectado; ?></td>
-           		<td width="100" align="right"><? echo $monto_documento; ?></td>
-           		<td width="100" align="right"><? echo $monto_exento_iva; ?></td>
-           		<td width="100" align="right"><? echo $base_imponible; ?></td>
-           		<td width="50" align="right"><? echo $tasa_iva; ?></td>
-           		<td width="100" align="right"><? echo $monto_iva; ?></td>
-           		<td width="100" align="right"><? echo $monto_iva_retenido; ?></td>
+                <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_operacion; ?></td>
+           		<td width="100" align="center"><?php  echo $fecha_documento; ?></td>
+           		<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $cod_banco; ?></td>
+           		<td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $tipo_mov; ?></td>
+           		<td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $referencia; ?></td>
+           		<td width="50" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $tipo_documento; ?></td>
+           		<td width="200" align="center">'<?php  echo $nro_documento; ?></td>
+           		<td width="200" align="center">'<?php  echo $nro_doc_afectado; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_documento; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_exento_iva; ?></td>
+           		<td width="100" align="right"><?php  echo $base_imponible; ?></td>
+           		<td width="50" align="right"><?php  echo $tasa_iva; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_iva; ?></td>
+           		<td width="100" align="right"><?php  echo $monto_iva_retenido; ?></td>
             </tr>
-	 <? }  
+	 <?php }  
 
         $totalg1=formato_monto($totalg1); $totalg2=formato_monto($totalg2); $totalg3=formato_monto($totalg3); $totalg4=formato_monto($totalg4); $totalg5=formato_monto($totalg5);
         if(($sub_totalb1>0)or($sub_totalb2>0)or($sub_totalb3>0)or($sub_totalb4>0)or($sub_totalb5>0)){ $sub_totalb1=formato_monto($sub_totalb1); $sub_totalb2=formato_monto($sub_totalb2); $sub_totalb3=formato_monto($sub_totalb3); $sub_totalb4=formato_monto($sub_totalb4); $sub_totalb5=formato_monto($sub_totalb5);	
@@ -467,16 +467,16 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			          <td width="50" align="left"></td>
 				      <td width="200" align="left"></td>
 			          <td width="200" align="left">TOTAL BENEFICIARIO</td>
-					  <td width="100" align="right"><? echo $sub_totalb1; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb2; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb3; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb3; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_totalb4; ?></td>
-					  <td width="100" align="right"><? echo $sub_totalb5; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb4; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_totalb5; ?></td>
 			      </tr>	
 				  
 			
-		      <?
+		      <?php 
 		}
         if(($sub_total1>0)or($sub_total2>0)or($sub_total3>0)or($sub_total4>0)or($sub_total5>0)){ $sub_total1=formato_monto($sub_total1); $sub_total2=formato_monto($sub_total2); $sub_total3=formato_monto($sub_total3); $sub_total4=formato_monto($sub_total4); $sub_totalb5=formato_monto($sub_total5);	
 			?>	 				 
@@ -505,15 +505,15 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			          <td width="50" align="left"></td>
 				      <td width="200" align="left"></td>
 			          <td width="200" align="left">SUB-TOTAL</td>
-					  <td width="100" align="right"><? echo $sub_total1; ?></td>
-					  <td width="100" align="right"><? echo $sub_total2; ?></td>
-					  <td width="100" align="right"><? echo $sub_total3; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total1; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total2; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total3; ?></td>
 					  <td width="100" align="right"></td>
-					  <td width="100" align="right"><? echo $sub_total4; ?></td>
-					  <td width="100" align="right"><? echo $sub_total5; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total4; ?></td>
+					  <td width="100" align="right"><?php  echo $sub_total5; ?></td>
 			      </tr>	
 			
-		      <?
+		      <?php 
 		}
 		      ?>			 
    		<tr>
@@ -528,14 +528,14 @@ else { $php_os=PHP_OS; $Nom_Emp=busca_conf();  if($utf_rpt=="SI"){ $php_os="WINN
 			<td width="50" align="left"></td>
 			<td width="200" align="left"></td>
             <td width="200"><strong>TOTAL ORDENES:</td>
-			<td width="100" align="right"><strong><? echo $totalg1; ?></strong></td>
-		    <td width="100" align="right"><strong><? echo $totalg2; ?></strong></td>
-		    <td width="100" align="right"><strong><? echo $totalg3; ?></strong></td>
+			<td width="100" align="right"><strong><?php  echo $totalg1; ?></strong></td>
+		    <td width="100" align="right"><strong><?php  echo $totalg2; ?></strong></td>
+		    <td width="100" align="right"><strong><?php  echo $totalg3; ?></strong></td>
 		    <td width="100" align="right"></td>
-		    <td width="100" align="right"><strong><? echo $totalg4; ?></strong></td>
-		    <td width="100" align="right"><strong><? echo $totalg5; ?></strong></font></td>
+		    <td width="100" align="right"><strong><?php  echo $totalg4; ?></strong></td>
+		    <td width="100" align="right"><strong><?php  echo $totalg5; ?></strong></font></td>
         </tr>
-		</table><?
+		</table><?php 
     }		  
   }
 ?>

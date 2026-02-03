@@ -1,8 +1,8 @@
-<?include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
 $fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"];$tipo_asiento_d=$_GET["tipo_asiento_d"];$tipo_asiento_h=$_GET["tipo_asiento_h"];  $tipo_rep=$_GET["tipo_rep"]; $Sql="";
 if($fecha_d==""){$sfecha_d="2010-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);}if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','3')"; $resultado=pg_exec($conn,$Sql); $error=pg_errormessage($conn);   $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
     $Sql="SELECT RPT_FORMATO_COMP_CON013('".$usuario_sia."','3','".$sfecha_d."','".$sfecha_h."','".$referencia_d."','".$referencia_h."','".$tipo_asiento_d."','".$tipo_asiento_h."')";
@@ -136,10 +136,10 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 			 </tr>
 			 <tr height="20">
 				<td width="150" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 			 </tr>
 			 
-		  <?  $i=0; $total_columna1=0; $total_columna2=0; $sub_total_columna1=0; $sub_total_columna2=0; $prev_referencia=""; $res=pg_query($sSQL);
+		  <?php   $i=0; $total_columna1=0; $total_columna2=0; $sub_total_columna1=0; $sub_total_columna2=0; $prev_referencia=""; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; $tipo_comp=$registro["tipo_comp"]; $fechaf=$registro["fechaf"]; $referencia=$registro["referencia"]; 
 		  $tipo_asiento=$registro["tipo_asiento"];  $descripcion=$registro["descripcion"]; $codigo_cuenta2=$registro["codigo_cuenta2"]; $nombre=$registro["nombre"];             
                   $tipo_comp_grupo=$tipo_comp; $fechaf_grupo=$fechaf; $referencia_grupo=$referencia; $tipo_asiento_grupo=$tipo_asiento; $descripcion_grupo=$descripcion;  
@@ -158,14 +158,14 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				    </tr>	
 				    <tr>
 				          <td width="100" align="left"></td>
-					  <td width="400" align="right"><strong><? echo "TOTALES: " ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $sub_total_columna1; ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $sub_total_columna2; ?></strong></td>
+					  <td width="400" align="right"><strong><?php  echo "TOTALES: " ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $sub_total_columna1; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $sub_total_columna2; ?></strong></td>
 				    </tr>	
 				    <tr>
 				      <td width="150" align="left"></td>
 				    </tr>	
-                                <? }
+                                <?php }
 				 ?>
 				   <tr>
 				     <td width="100" align="left"><strong>FECHA</strong></td>
@@ -174,18 +174,18 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				     <td width="100" align="center"><strong>TIPO ASIENTO</strong></td>					 
 				   </tr>
 				   <tr>
-				     <td width="100" align="left"><? echo $fechaf_grupo; ?></td>
-				     <td width="400" align="center">'<? echo $referencia_grupo; ?></td>
+				     <td width="100" align="left"><?php  echo $fechaf_grupo; ?></td>
+				     <td width="400" align="center">'<?php  echo $referencia_grupo; ?></td>
 				     <td width="100" align="left"></td>
-				     <td width="100" align="center">'<? echo $tipo_asiento_grupo; ?></td>					 
+				     <td width="100" align="center">'<?php  echo $tipo_asiento_grupo; ?></td>					 
 				   </tr>
 				   <tr>
 				       <td width="100" align="left"><strong>CONCEPTO :</strong></td>
-				       <td width="400" align="left"><? echo $descripcion_grupo; ?></td>					 
+				       <td width="400" align="left"><?php  echo $descripcion_grupo; ?></td>					 
 				   </tr>	   
 				   <tr>
 				       <td width="100" align="left"><strong>BENEFICIARIO:</strong></td>
-				       <td width="400" align="left"><? echo $codigo_cuenta2_grupo.'   '.$nombre_grupo; ?></td>					 
+				       <td width="400" align="left"><?php  echo $codigo_cuenta2_grupo.'   '.$nombre_grupo; ?></td>					 
 				   </tr>
 				   <tr>
 				       <td width="100" align="left" bgcolor="#99CCFF"><strong>Codigo</strong></td>
@@ -193,7 +193,7 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				       <td width="100" align="right" bgcolor="#99CCFF" ><strong>Debe</strong></td>
 				       <td width="100" align="right" bgcolor="#99CCFF" ><strong>Haber</strong></td>
 				   </tr>	
-			     <? 
+			     <?php  
 				 $prev_referencia=$referencia_grupo; $sub_total_columna1=0; $sub_total_columna2=0;}
 
 		           $codigo_cuenta=$registro["cod_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"];$debe=$registro["columna1"]; $haber=$registro["columna2"]; 
@@ -205,12 +205,12 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
                            
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><? echo $codigo_cuenta; ?></td>
-				   <td width="400" align="justify"><? echo $nombre_cuenta; ?></td>
-				   <td width="100" align="right"><? echo $debe; ?></td>
-				   <td width="100" align="right"><? echo $haber; ?></td>
+				   <td width="100" align="left"><?php  echo $codigo_cuenta; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre_cuenta; ?></td>
+				   <td width="100" align="right"><?php  echo $debe; ?></td>
+				   <td width="100" align="right"><?php  echo $haber; ?></td>
 				 </tr>
-			   <? 		  
+			   <?php  		  
 		  }
 			    if(($sub_total_columna1>0)or($sub_total_columna2>0)){ $sub_total_columna1=formato_monto($sub_total_columna1); $sub_total_columna2=formato_monto($sub_total_columna2); 
 				?>	 				 
@@ -222,18 +222,18 @@ else{   $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os==
 				    </tr>	
 				    <tr>
 				          <td width="100" align="left"></td>
-					  <td width="400" align="right"><strong><? echo "TOTALES: " ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $sub_total_columna1; ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $sub_total_columna2; ?></strong></td>
+					  <td width="400" align="right"><strong><?php  echo "TOTALES: " ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $sub_total_columna1; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $sub_total_columna2; ?></strong></td>
 				    </tr>	
 				    <tr>
 				      <td width="150" align="left"></td>
 				    </tr>	
-                                <? }	
+                                <?php }	
 
 
 	  
-		  ?></table><?
+		  ?></table><?php 
         }		  
 }
 ?> 

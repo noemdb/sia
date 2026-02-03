@@ -1,11 +1,11 @@
-<?include ("../class/ventana.php");  $equipo=getenv("COMPUTERNAME");
+<?php include ("../class/ventana.php");  $equipo=getenv("COMPUTERNAME");
 if (!$_GET){$mcod_m="PRE009".$equipo;$codigo_mov=substr($mcod_m,0,49);}else{$codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA CONTABILIDAD PRESUPUESTARIA (Incluir Códigos en la Adición)</title>
+<title>SIPAP CONTABILIDAD PRESUPUESTARIA (Incluir Cï¿½digos en la Adiciï¿½n)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css"  rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -24,14 +24,14 @@ return str2;}
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value; mmonto=eliminapunto(mmonto);  mthis.value=mmonto; 
 }
-function llamar_anterior(){ document.location ='Det_inc_adiciones.php?codigo_mov=<?echo $codigo_mov?>'; }
+function llamar_anterior(){ document.location ='Det_inc_adiciones.php?codigo_mov=<?php echo $codigo_mov?>'; }
 function apaga_monto(mthis){var mmonto;
  apagar(mthis); mmonto=document.form1.txtmonto.value;  mmonto=camb_punto_coma(mmonto);document.form1.txtmonto.value=mmonto;}
 function revisar(){var f=document.form1; var Valido=true;
-   if(f.txtcod_presup.value==""){alert("Código Presupuestario no puede estar Vacio");return false;}
-   if(f.txtcod_fuente.value==""){alert("Código de Fuente no puede estar Vacio"); return false; }
+   if(f.txtcod_presup.value==""){alert("Cï¿½digo Presupuestario no puede estar Vacio");return false;}
+   if(f.txtcod_fuente.value==""){alert("Cï¿½digo de Fuente no puede estar Vacio"); return false; }
    if(f.txtmonto.value==""){alert("Monto no puede estar Vacio");return false;}
-   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numéricos.");return false;}
+   if(MontoValido(f.txtmonto.value)) {Valido=true;}  else{alert("monto debe tener valores numï¿½ricos.");return false;}
 document.form1.submit;
 return true;}
 </script>
@@ -94,7 +94,7 @@ return true;}
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="17"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100">&nbsp;</td>
             <td width="90" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="110" align="center"><input name="Blanquear" type="reset" value="Blanquear"></td>

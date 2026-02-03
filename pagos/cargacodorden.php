@@ -12,5 +12,5 @@ while($registro=pg_fetch_array($res)){ $monto=$registro["monto"]-$registro["paga
     $resultado=pg_exec($conn,$ssql); $error=pg_errormessage($conn);
   }
 }
-?><iframe src="Det_inc_ajustes_orden.php?codigo_mov=<?echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
-<?pg_close();?>
+?><iframe src="Det_inc_ajustes_orden.php?codigo_mov=<?php echo $codigo_mov?>"  width="846" height="290" scrolling="auto" frameborder="0"> </iframe>
+<?php pg_close($conn);?>

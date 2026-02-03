@@ -1,6 +1,6 @@
-<? include ("../../class/conect.php"); include ("../../class/configura.inc");   error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $tipo_rpt="PDF"; //$tipo_rpt="HTML";
+<?php  include ("../../class/conect.php"); include ("../../class/configura.inc");   error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS; $tipo_rpt="PDF"; //$tipo_rpt="HTML";
 $cod_dependenciad=$_GET["cod_dependenciad"];$cod_dependenciah=$_GET["cod_dependenciah"]; $date = date("d-m-Y");$hora = date("H:i:s a"); $php_os=PHP_OS;
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
 else{   $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
 
     $sSQL = "SELECT bien001.cod_dependencia, bien001.denominacion_dep, bien001.cod_region, pre092.nombre_region, bien001.cod_entidad, pre091.cod_estado, pre091.estado, bien001.cod_municipio,bien001.ci_contacto,pre093.nombre_municipio, bien001.cod_ciudad,bien001.cod_parroquia, pre094.nombre_ciudad, bien001.direccion_dep, bien001.cod_postal_dep, bien001.telefonos_dep, bien001.nombre_contacto  

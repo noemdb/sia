@@ -28,11 +28,11 @@ function apaga_monto(mthis){var mmonto;  apagar(mthis);
 function encender_monto(mthis){var mmonto; encender(mthis); 
   mmonto=mthis.value;  mmonto=eliminapunto(mmonto);  mthis.value=mmonto;  }
   
-function llamar_anterior(){ document.location ='Det_pasos_grado.php?Gcodigo=<?echo $cod_tipo_personal?>'; }
+function llamar_anterior(){ document.location ='Det_pasos_grado.php?Gcodigo=<?php echo $cod_tipo_personal?>'; }
 function llamar_eliminar(){var murl; var r;
   murl="Esta seguro en Eliminar el Grado y Paso de la Tabla ?"; r=confirm(murl);
   if(r==true){r=confirm("Esta Realmente seguro en Eliminar el Grado y Paso ?");
-    if(r==true){murl="Delete_paso_grado.php?cod_tipo_personal=<?echo $cod_tipo_personal?>&grado=<?echo $grado?>&paso=<?echo $paso?>"; document.location=murl;}}
+    if(r==true){murl="Delete_paso_grado.php?cod_tipo_personal=<?php echo $cod_tipo_personal?>&grado=<?php echo $grado?>&paso=<?php echo $paso?>"; document.location=murl;}}
    else{url="Cancelado, no elimino";}
 }
 function tabular(e,obj) {tecla=(document.all) ? e.keyCode : e.which;
@@ -52,11 +52,11 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");   $sueldo=0; $compensacion=0; $fechac="";
 $sql="SELECT * FROM nom040 where cod_tipo_personal='$cod_tipo_personal' and grado='$grado' and paso='$paso'";$res=pg_query($sql); 
 if($registro=pg_fetch_array($res,0)){ $fecha=$registro["fecha_aprobacion"];  $fechac=formato_ddmmaaaa($fecha); $grado=$registro["grado"]; $paso=$registro["paso"];  $sueldo=$registro["monto"]; $sueldo=formato_monto($sueldo); 
-}pg_close();     
+}pg_close($conn);     
 ?>
 <body>
 <form name="form1" method="post" action="Update_paso_grado.php" onSubmit="return revisar()">
@@ -72,9 +72,9 @@ if($registro=pg_fetch_array($res,0)){ $fecha=$registro["fecha_aprobacion"];  $fe
           <td><table width="760" border="0">
               <tr>
                 <td width="70"><span class="Estilo5">GRADO : </span></td>
-                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtgrado" type="text" id="txtgrado" size="4" maxlength="3"  readonly value="<?echo $grado?>" onkeypress="return tabular(event,this)"></span></td>
+                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtgrado" type="text" id="txtgrado" size="4" maxlength="3"  readonly value="<?php echo $grado?>" onkeypress="return tabular(event,this)"></span></td>
                 <td width="70"><span class="Estilo5">PASO : </span></td>
-                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtpaso" type="text" id="txtpaso" size="4" maxlength="3"  readonly value="<?echo $paso?>" onkeypress="return tabular(event,this)"></span></td>
+                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtpaso" type="text" id="txtpaso" size="4" maxlength="3"  readonly value="<?php echo $paso?>" onkeypress="return tabular(event,this)"></span></td>
                
 			  </tr>
            </table></td>
@@ -84,7 +84,7 @@ if($registro=pg_fetch_array($res,0)){ $fecha=$registro["fecha_aprobacion"];  $fe
           <td><table width="760" border="0">
               <tr>
                 <td width="130"><span class="Estilo5">FECHA APROBACION :</span> </td>
-                <td width="660"><span class="Estilo5"><input class="Estilo10" name="txtfecha_aprobacion" type="text" id="txtfecha_aprobacion" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fechac?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
+                <td width="660"><span class="Estilo5"><input class="Estilo10" name="txtfecha_aprobacion" type="text" id="txtfecha_aprobacion" size="12" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fechac?>" onkeyup="mascara(this,'/',patronfecha,true)" onkeypress="return tabular(event,this)"></span></td>
               </tr>
           </table></td>
         </tr>
@@ -94,7 +94,7 @@ if($registro=pg_fetch_array($res,0)){ $fecha=$registro["fecha_aprobacion"];  $fe
           <td><table width="760" border="0">
               <tr>
                 <td width="130"><span class="Estilo5">MONTO :</span> </td>
-                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtsueldo" type="text" id="txtsueldo" size="16" maxlength="16" style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?echo $sueldo?>" onKeypress="return validarNum(event,this)"></span></td>
+                <td width="250"><span class="Estilo5"><input class="Estilo10" name="txtsueldo" type="text" id="txtsueldo" size="16" maxlength="16" style="text-align:right" onFocus="encender_monto(this)" onBlur="apaga_monto(this)" value="<?php echo $sueldo?>" onKeypress="return validarNum(event,this)"></span></td>
                 <td width="380"><span class="Estilo5"></span> </td>              </tr>
           </table></td>
         </tr>
@@ -102,7 +102,7 @@ if($registro=pg_fetch_array($res,0)){ $fecha=$registro["fecha_aprobacion"];  $fe
       </table>
         <table width="540" align="center">
           <tr>
-            <td width="17"><input class="Estilo10" name="txtcod_tipo_personal" type="hidden" id="txtcod_tipo_personal" value="<?echo $cod_tipo_personal?>"></td>
+            <td width="17"><input class="Estilo10" name="txtcod_tipo_personal" type="hidden" id="txtcod_tipo_personal" value="<?php echo $cod_tipo_personal?>"></td>
             <td width="100">&nbsp;</td>
             <td width="100" align="center" valign="middle"><input name="Aceptar" type="submit" id="Aceptar"  value="Aceptar"></td>
             <td width="100" align="center"><input name="Atras" type="button" id="Atras" value="Atras" onClick="JavaScript:llamar_anterior()"></td>

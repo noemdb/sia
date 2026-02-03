@@ -1,7 +1,7 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 echo "ESPERE POR FAVOR MODIFICANDO....","<br>";  
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if(pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } 
+if(pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } 
 else{  
   $sql="SELECT referencia_caus, tipo_causado, referencia_comp, tipo_compromiso,  fecha_causado, cod_presup, fuente_financ, tipo_imput_presu, ref_imput_presu, 
        monto, pagado, ajustado, amort_anticipo, monto_credito FROM pre037 where pagado<>0 and pagado<monto order by referencia_caus"; $res=pg_query($sql);$numeroRegistros=pg_num_rows($res);
@@ -47,10 +47,10 @@ else{
 		//if($total_retencion>0){ echo $referencia_caus." ".$total_retencion." ".$diferencia." ".$balance,"<br>"; }
 	}	
   }
-  ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><? 
+  ?> <script language="JavaScript"> muestra('MODIFICO EXITOSAMENTE'); </script><?php  
   echo " ","<br>";  
 }
 
 echo "FINALIZO LA ACTUALIZACION....","<br>";  
-pg_close();
+pg_close($conn);
 ?>

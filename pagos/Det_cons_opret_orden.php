@@ -1,6 +1,6 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -30,7 +30,7 @@ $res=pg_query($sql);
            <td width="300" align="left" bgcolor="#99CCFF"><strong>Descripcion</strong></td>
            <td width="170" align="left" bgcolor="#99CCFF" ><strong>Codigo Cont.</strong></td>
          </tr>
-         <? $total=0; $monto=0;
+         <?php  $total=0; $monto=0;
 while($registro=pg_fetch_array($res)){
 if($total==0){$monto=0;
 $prev_orden = $registro["nro_orden_ret"];$prev_tipo = $registro["tipo_retencion"];
@@ -40,14 +40,14 @@ if (($prev_orden!=$registro["nro_orden_ret"]) or ($prev_tipo!=$registro["tipo_re
 $monto=formato_monto($monto);$prev_concepto=substr($prev_concepto,0,140);$prev_des_ret=substr($prev_des_ret,0,100);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="80" align="left"><? echo $prev_orden; ?></td>
-           <td width="500" align="left"><? echo $prev_concepto; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-           <td width="30" align="left"><? echo $prev_tipo; ?></td>
-           <td width="300" align="left"><? echo $prev_des_ret; ?></td>
-           <td width="170" align="left"><? echo $prev_con_cont; ?></td>
+           <td width="80" align="left"><?php  echo $prev_orden; ?></td>
+           <td width="500" align="left"><?php  echo $prev_concepto; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+           <td width="30" align="left"><?php  echo $prev_tipo; ?></td>
+           <td width="300" align="left"><?php  echo $prev_des_ret; ?></td>
+           <td width="170" align="left"><?php  echo $prev_con_cont; ?></td>
          </tr>
-<?
+<?php 
 $monto=0;
 $prev_orden = $registro["nro_orden_ret"];$prev_tipo = $registro["tipo_retencion"];
 $prev_concepto = $registro["des_orden_ret"]; $prev_des_ret = $registro["descripcion_ret"];
@@ -57,14 +57,14 @@ if ($monto>0) {
 $monto=formato_monto($monto);$prev_concepto=substr($prev_concepto,0,140);$prev_des_ret=substr($prev_des_ret,0,100);
 ?>
          <tr bgcolor='#FFFFFF' bordercolor='#000000' height="20" class="Estilo5" onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onMouseOut="this.style.backgroundColor='#FFFFFF'"o"];" >
-           <td width="80" align="left"><? echo $prev_orden; ?></td>
-           <td width="500" align="left"><? echo $prev_concepto; ?></td>
-           <td width="100" align="right"><? echo $monto; ?></td>
-           <td width="30" align="left"><? echo $prev_tipo; ?></td>
-           <td width="300" align="left"><? echo $prev_des_ret; ?></td>
-           <td width="170" align="left"><? echo $prev_con_cont; ?></td>
+           <td width="80" align="left"><?php  echo $prev_orden; ?></td>
+           <td width="500" align="left"><?php  echo $prev_concepto; ?></td>
+           <td width="100" align="right"><?php  echo $monto; ?></td>
+           <td width="30" align="left"><?php  echo $prev_tipo; ?></td>
+           <td width="300" align="left"><?php  echo $prev_des_ret; ?></td>
+           <td width="170" align="left"><?php  echo $prev_con_cont; ?></td>
          </tr>
-<?}?>
+<?php }?>
        </table></td>
    </tr>
    <tr>
@@ -77,7 +77,7 @@ $monto=formato_monto($monto);$prev_concepto=substr($prev_concepto,0,140);$prev_d
          <td width="100"><span class="Estilo5">TOTAL PASIVOS :</span></td>
          <td width="160"><table width="151" border="1" cellspacing="0" cellpadding="0">
              <tr>
-               <td align="right" class="Estilo5"><? echo $total; ?></td>
+               <td align="right" class="Estilo5"><?php  echo $total; ?></td>
              </tr>
          </table></td>
        </tr>
@@ -87,6 +87,6 @@ $monto=formato_monto($monto);$prev_concepto=substr($prev_concepto,0,140);$prev_d
  <p>&nbsp;</p>
 </body>
 </html>
-<?
-  pg_close();
+<?php 
+  pg_close($conn);
 ?>

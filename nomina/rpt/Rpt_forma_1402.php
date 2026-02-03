@@ -1,4 +1,4 @@
-<? include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/seguridad.inc"); include ("../../class/conects.php"); include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php");   include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); 
 $cod_empleado=$_POST["txtcod_empleado"];$cedula=$_POST["txtcedula"];$nacionalidad=$_POST["txtnacionalidad"];$fecha_ingreso=$_POST["txtfecha_ingreso"];
 $nombre=$_POST["txtnombre"];$tp_planilla=$_POST["txttp_planilla"]; $var_patrones=$_POST["txtvar_patrones"]; $tnom_emp=$_POST["txtnom_emp"]; $nro_empresa=$_POST["txtnro_empresa"];
 $num_aseg=$_POST["txtnum_aseg"]; $cod_suc=$_POST["txtcod_suc"]; $cond_trab=$_POST["txtcond_trab"];$fecha_nac=$_POST["txtfecha_nacimiento"]; $direccion=$_POST["txtdireccion"];
@@ -10,7 +10,7 @@ $parentescof3=$_POST["txtparentescof3"]; $cedulaf3=$_POST["txtcedulaf3"]; $sexof
 $parentescof4=$_POST["txtparentescof4"]; $cedulaf4=$_POST["txtcedulaf4"]; $sexof4=$_POST["txtsexof4"]; $nombref4=$_POST["txtnombref4"]; $fecha_nacf4=$_POST["txtfecha_nacf4"];
 $parentescof5=$_POST["txtparentescof5"]; $cedulaf5=$_POST["txtcedulaf5"]; $sexof5=$_POST["txtsexof5"]; $nombref5=$_POST["txtnombref5"]; $fecha_nacf5=$_POST["txtfecha_nacf5"];
 $parentescof6=$_POST["txtparentescof6"]; $cedulaf6=$_POST["txtcedulaf6"]; $sexof6=$_POST["txtsexof6"]; $nombref6=$_POST["txtnombref6"]; $fecha_nacf6=$_POST["txtfecha_nacf6"];
-$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?}
+$conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){if($php_os=="WINNT"){$php_os="LINUX";}else{$php_os="WINNT";}} 
   if($php_os=="WINNT"){$Nom_Emp=$Nom_Emp; }else{$Nom_Emp=utf8_decode($Nom_Emp);  }
   

@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
  if (!$_GET){$fecha="";     $referencia="";    $tipo_comp="";}
  else{ $fecha=$_GET["txtFecha"];    $referencia=$_GET["txtReferencia"];   $tipo_comp=$_GET["txttipo_Comp"];  }
  $equipo = getenv("COMPUTERNAME");  $mcod_m = "CON02".$equipo;  $codigo_mov=substr($mcod_m,0,49);
@@ -50,10 +50,10 @@ return true;}
 -->
 </style>
 </head>
-<?
+<?php 
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
-$res=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+$res=pg_exec($conn,"SELECT ELIMINA_CON008('$codigo_mov')");$error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 $descripcion="";$tipo_asiento=""; $ced_rif="";  $nombre="";
 $sql="Select * from COMPROBANTES where text(fecha)='$sfecha' and referencia='$referencia' and tipo_comp='$tipo_comp'"; $res=pg_query($sql);
 if ($registro=pg_fetch_array($res,0)){  $referencia=$registro["referencia"];  $fecha=$registro["fecha"];
@@ -66,7 +66,7 @@ if($fecha==""){$sfecha="";}else{$sfecha=formato_aaaammdd($fecha);}
 $clave=$sfecha.$referencia.$tipo_comp;
 $sql="insert into con008 select '$codigo_mov',referencia,debito_credito,cod_cuenta,tipo_comp,'$tipo_asiento',monto_asiento,'$status','$modulo',modificable,'$aoperacion','$doperacion',descripcion_a FROM con003 where text(fecha)='$sfecha' and referencia='$referencia' and tipo_comp='$tipo_comp'";
 $res=pg_exec($conn,$sql);$error=pg_errormessage($conn); $error=substr($error, 0, 61);
-if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 ?>
 <body>
 <table width="978" height="38" border="0" bgcolor="#000066">
@@ -96,15 +96,15 @@ if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </
           <tr>
             <td width="157">
               <p><span class="Estilo5">FECHA :
-                    <input name="txtFecha" type="text" id="txtFecha"  value="<?echo $fecha?>" size="12" maxlength="10" readonly>
+                    <input name="txtFecha" type="text" id="txtFecha"  value="<?php echo $fecha?>" size="12" maxlength="10" readonly>
                     </span></p>
 
                         </td>
                         <td width="125">&nbsp;</td>
             <td width="274"><span class="Estilo5">REFERENCIA :</span>
-              <input name="txtReferencia" type="text"  id="txtReferencia"  value="<?echo $referencia?>" size="12" maxlength="8" readonly></td>
+              <input name="txtReferencia" type="text"  id="txtReferencia"  value="<?php echo $referencia?>" size="12" maxlength="8" readonly></td>
             <td width="170"><span class="Estilo5">TIPO ASIENTO:</span>
-              <input name="txttipo_asiento" id="txttipo_asiento" value="<?echo $tipo_asiento?>" size="5" maxlength="3" readonly></td>
+              <input name="txttipo_asiento" id="txttipo_asiento" value="<?php echo $tipo_asiento?>" size="5" maxlength="3" readonly></td>
           </tr>
         </table>
         <table width="200" border="0" cellspacing="0" cellpadding="0">
@@ -115,7 +115,7 @@ if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </
         <table width="861" border="0">
           <tr>
             <td width="141"><span class="Estilo5">DESCRIPCION :</span></td>
-            <td width="710"><textarea name="txtDescripcion" cols="80"  maxlength="500" onFocus="encender(this)" onBlur="apagar(this)" id="txtDescripcion"><?echo $descripcion?></textarea></td>
+            <td width="710"><textarea name="txtDescripcion" cols="80"  maxlength="500" onFocus="encender(this)" onBlur="apagar(this)" id="txtDescripcion"><?php echo $descripcion?></textarea></td>
           </tr>
         </table>
         <table width="863" border="0">
@@ -123,7 +123,7 @@ if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </
             <td height="10">&nbsp;</td>
             </tr>
         </table>
-        <iframe src="Det_inc_comprobantes.php?codigo_mov=<?echo $codigo_mov?>"  width="850" height="300" scrolling="auto" frameborder="1">
+        <iframe src="Det_inc_comprobantes.php?codigo_mov=<?php echo $codigo_mov?>"  width="850" height="300" scrolling="auto" frameborder="1">
         </iframe>
         <table width="863" border="0">
           <tr>
@@ -132,11 +132,11 @@ if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </
         </table>
         <table width="785">
           <tr>
-            <td width="103"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
-            <td width="103"><input name="txtstatus" type="hidden" id="txtstatus" value="<?echo $status?>"></td>
-            <td width="70"><input name="txtnro_comprobante" type="hidden" id="txtnro_comprobante" value="<?echo $nro_comprobante?>"></td>
-            <td width="159"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?echo $ced_rif?>"></td>
-            <td width="159"><input name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?echo $tipo_comp?>"></td>
+            <td width="103"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
+            <td width="103"><input name="txtstatus" type="hidden" id="txtstatus" value="<?php echo $status?>"></td>
+            <td width="70"><input name="txtnro_comprobante" type="hidden" id="txtnro_comprobante" value="<?php echo $nro_comprobante?>"></td>
+            <td width="159"><input name="txtced_rif" type="hidden" id="txtced_rif" value="<?php echo $ced_rif?>"></td>
+            <td width="159"><input name="txttipo_comp" type="hidden" id="txttipo_comp" value="<?php echo $tipo_comp?>"></td>
             <td width="64" valign="middle"><input name="button" type="submit" id="button"  value="Grabar"></td>
             <td width="80">&nbsp;</td>
           </tr>

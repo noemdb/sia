@@ -1,4 +1,4 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");$equipo=getenv("COMPUTERNAME");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");$equipo=getenv("COMPUTERNAME");
 $fecha_hoy=asigna_fecha_hoy(); $codigo_mov=$_POST["txtcodigo_mov"]; $nacionalidad=$_POST["txtnacionalidad"]; $nro_asegurado=$_POST["txtnro_asegurado"];
 $cod_empleado=$_POST["txtcod_empleado"];$nombre=$_POST["txtnombre"]; $cedula=$_POST["txtcedula"]; $fecha_ingreso=$_POST["txtfecha_ingreso"]; 
 $cod_suc=$_POST["txtcod_suc"]; $fecha_nacimiento=$_POST["txtfecha_nacimiento"]; $cond_trab=$_POST["txtcond_trab"]; $direccion=$_POST["txtdireccion"];
@@ -18,7 +18,7 @@ $cod_cent="";
 <LINK REL="SHORTCUT ICON" HREF="../../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA N&Oacute;MINA Y PERSONAL (CARGAR FORMA 1402)</title>
+<title>SIPAP N&Oacute;MINA Y PERSONAL (CARGAR FORMA 1402)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../../class/sia.js" type="text/javascript"></script>
@@ -54,8 +54,8 @@ return true;}
   <tr>
     <td width="92" height="703"><table width="92" height="703" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF" id="tablamenu">
      <tr>
-       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('../Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>')";
-          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="../Act_info_trabajadores.php?Gcod_empleado=C<?echo $cod_empleado?>">Atras</a></td>
+       <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('../Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>')";
+          onMouseOut="this.style.backgroundColor='#EAEAEA'"o"];" height="35"  bgcolor=#EAEAEA><a class=menu href="../Act_info_trabajadores.php?Gcod_empleado=C<?php echo $cod_empleado?>">Atras</a></td>
      </tr>
      <tr>
        <td onMouseOver="this.style.backgroundColor='#CCCCCC';this.style.cursor='hand';" onClick="javascript:LlamarURL('menu.php')";
@@ -73,12 +73,12 @@ return true;}
              <td><table width="876">
                <tr>
                  <td width="176"><span class="Estilo5">C&Eacute;DULA TRABAJADOR :</span></td>
-                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?echo $cedula?>" readonly></span></td>
+                 <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtcedula" type="text" id="txtcedula" size="12" maxlength="10"  value="<?php echo $cedula?>" readonly></span></td>
                  <td width="110"><span class="Estilo5">NACIONALIDAD : </span></td>
-                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?echo $nacionalidad?>" readonly></span></td>
+                 <td width="140"><span class="Estilo5"> <input class="Estilo10" name="txtnacionalidad" type="text" id="txtnacionalidad" size="15" maxlength="15"   value="<?php echo $nacionalidad?>" readonly></span></td>
                 
 				 <td width="120"><span class="Estilo5">FECHA INGRESO  :</span></td>
-                 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?echo $fecha_ingreso?>" readonly></span></td>
+                 <td width="180"><span class="Estilo5"><input class="Estilo10" name="txtfecha_ingreso" type="text" id="txtfecha_ingreso" size="12" maxlength="10"  value="<?php echo $fecha_ingreso?>" readonly></span></td>
                </tr>
              </table></td>
            </tr>
@@ -86,7 +86,7 @@ return true;}
              <td><table width="866">
                <tr>
                  <td width="146"><span class="Estilo5">NOMBRE TRABAJADOR  :</span></td>
-                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?echo $nombre?>" readonly> </span></td>
+                 <td width="720"><span class="Estilo5"><input class="Estilo10" name="txtnombre" type="text" id="txtnombre" size="100" maxlength="100"  value="<?php echo $nombre?>" readonly> </span></td>
                </tr>
              </table></td>
            </tr>
@@ -106,9 +106,9 @@ return true;}
              <td><table width="866">
                <tr>
                    <td width="130"><span class="Estilo5">NOMBRE PATRONO : </span></td>
-                   <td width="500"><span class="Estilo5"> <input class="Estilo10" name="txtnom_emp" type="text" id="txtnom_emp" size="70" maxlength="100"   value="<?echo $nom_emp?>" readonly></span></td>
+                   <td width="500"><span class="Estilo5"> <input class="Estilo10" name="txtnom_emp" type="text" id="txtnom_emp" size="70" maxlength="100"   value="<?php echo $nom_emp?>" readonly></span></td>
                    <td width="110"><span class="Estilo5">NRO EMPRESA : </span></td>
-				   <td width="126"><span class="Estilo5"> <input class="Estilo10" name="txtnro_empresa" type="text" id="txtnro_empresa" size="10" maxlength="10"   value="<?echo $nro_empresa?>" readonly></span></td>
+				   <td width="126"><span class="Estilo5"> <input class="Estilo10" name="txtnro_empresa" type="text" id="txtnro_empresa" size="10" maxlength="10"   value="<?php echo $nro_empresa?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -118,9 +118,9 @@ return true;}
              <td><table width="866">
                <tr>
                    <td width="170"><span class="Estilo5">NUMERO DE ASEGURADO : </span></td>
-                   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtnum_aseg" type="text" id="txtnum_aseg" size="15" maxlength="15"   value="<?echo $num_asegurado?>" readonly></span></td>
+                   <td width="300"><span class="Estilo5"> <input class="Estilo10" name="txtnum_aseg" type="text" id="txtnum_aseg" size="15" maxlength="15"   value="<?php echo $num_asegurado?>" readonly></span></td>
                    <td width="170"><span class="Estilo5">SUC. DPTO. DPCIA. : </span></td>
-				   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtcod_suc" type="text" id="txtcod_suc" size="15" maxlength="15"   value="<?echo $cod_suc?>" readonly></span></td>
+				   <td width="226"><span class="Estilo5"> <input class="Estilo10" name="txtcod_suc" type="text" id="txtcod_suc" size="15" maxlength="15"   value="<?php echo $cod_suc?>" readonly></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -129,7 +129,7 @@ return true;}
              <td><table width="866">
                <tr>
                    <td width="150"><span class="Estilo5">FECHA DE NACIMIENTO : </span></td>
-				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacimiento?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacimiento" type="text" id="txtfecha_nacimiento" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacimiento?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="170"><span class="Estilo5">CONDICION TRABAJADOR : </span></td>
 				   <td width="100"><span class="Estilo5"><select name="txtcond_trab" size="1" id="txtcond_trab" onFocus="encender(this)" onBlur="apagar(this)" onkeypress="return tabular(event,this)"><option>NINGUNO</option> <option>PENSIONADO</option> <option>JUBILADO</option></select>  </span></td>
                    <td width="66"><span class="Estilo5">SEXO : </span></td>
@@ -146,16 +146,16 @@ return true;}
              <td><table width="866">
                <tr>
 			       <td width="170"><span class="Estilo5">INGRESO A LA EMPRESA : </span></td>
-				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txting_empresa" type="text" id="txting_empresa" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_ingreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txting_empresa" type="text" id="txting_empresa" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_ingreso?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                    <td width="150"><span class="Estilo5">SALARIO SEMANAL : </span></td>
-                   <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtsalario_sem" type="text" id="txtsalario_sem" size="15" maxlength="15"   value="<?echo $salario_sem?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                   <td width="150"><span class="Estilo5"> <input class="Estilo10" name="txtsalario_sem" type="text" id="txtsalario_sem" size="15" maxlength="15"   value="<?php echo $salario_sem?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                    <td width="150"><span class="Estilo5">COD. OCUPACION  : </span></td>
-				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtcod_ocupacion" type="text" id="txtcod_ocupacion" size="10" maxlength="10"   value="<?echo $cod_ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+				   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtcod_ocupacion" type="text" id="txtcod_ocupacion" size="10" maxlength="10"   value="<?php echo $cod_ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
 <script language="JavaScript" type="text/JavaScript">
-var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
+var mvalor='<?php echo $cond_trab?>'; var mvalors='<?php echo $sexo?>';
     if(mvalor=="JUBILADO"){document.form1.txtcond_trab.options[2].selected = true;}     if(mvalor=="PENSIONADO"){document.form1.txtcond_trab.options[1].selected = true;}
 	if(mvalors=="MASCULINO"){document.form1.txtsexo.options[0].selected = true;}else{document.form1.txtsexo.options[1].selected = true;}	
 </script>		
@@ -164,7 +164,7 @@ var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
              <td><table width="864">
                <tr>
                  <td width="154"><span class="Estilo5"> OCUPACION U OFICIO  : </span></td>
-                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtocupacion" type="text" id="txtocupacion" size="85" maxlength="85"  value="<?echo $ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+                 <td width="695"><span class="Estilo5"><input class="Estilo10" name="txtocupacion" type="text" id="txtocupacion" size="85" maxlength="85"  value="<?php echo $ocupacion?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                </tr>
              </table></td>
            </tr>
@@ -173,7 +173,7 @@ var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
              <td><table width="860">
                <tr>
                  <td width="85"><span class="Estilo5">DIRECCI&Oacute;N :</span></td>
-                 <td width="745"><textarea name="txtdireccion" cols="84" readonly="readonly" class="Estilo10" id="txtdireccion"><?echo $direccion?></textarea></td>
+                 <td width="745"><textarea name="txtdireccion" cols="84" readonly="readonly" class="Estilo10" id="txtdireccion"><?php echo $direccion?></textarea></td>
                </tr>
              </table></td>
            </tr>
@@ -183,7 +183,7 @@ var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
              <td><table width="866">
                <tr>
 			        <td width="186"><span class="Estilo5">COD. CENTRO ASISTENCIAL  : </span></td>
-				   <td width="680"><span class="Estilo5"> <input class="Estilo10" name="txtcod_cent" type="text" id="txtcod_cent" size="10" maxlength="10"   value="<?echo $cod_cent?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
+				   <td width="680"><span class="Estilo5"> <input class="Estilo10" name="txtcod_cent" type="text" id="txtcod_cent" size="10" maxlength="10"   value="<?php echo $cod_cent?>" onFocus="encender(this)" onBlur="apagar(this)"></span></td>
                 </tr>
              </table></td>
            </tr>
@@ -199,51 +199,51 @@ var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
                    <td width="100" bgcolor="#BDBDBD"><span class="Estilo5">F.NACIMIENTO </span></td>
              	</tr>
 				<tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof1" type="text" id="txtparentescof1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof1?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf1" type="text" id="txtcedulaf1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf1?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof1" type="text" id="txtsexof1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof1?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref1" type="text" id="txtnombref1" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref1?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf1" type="text" id="txtfecha_nacf1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf1?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof1" type="text" id="txtparentescof1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof1?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf1" type="text" id="txtcedulaf1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf1?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof1" type="text" id="txtsexof1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof1?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref1" type="text" id="txtnombref1" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref1?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf1" type="text" id="txtfecha_nacf1" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf1?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
 				 
 				 <tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof2" type="text" id="txtparentescof2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof2?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf2" type="text" id="txtcedulaf2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf2?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof2" type="text" id="txtsexof2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof2?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref2" type="text" id="txtnombref2" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref2?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf2" type="text" id="txtfecha_nacf2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf2?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof2" type="text" id="txtparentescof2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof2?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf2" type="text" id="txtcedulaf2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf2?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof2" type="text" id="txtsexof2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof2?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref2" type="text" id="txtnombref2" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref2?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf2" type="text" id="txtfecha_nacf2" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf2?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
 				 
 				 <tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof3" type="text" id="txtparentescof3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof3?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf3" type="text" id="txtcedulaf3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf3?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof3" type="text" id="txtsexof3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof3?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref3" type="text" id="txtnombref3" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref3?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf3" type="text" id="txtfecha_nacf3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf3?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof3" type="text" id="txtparentescof3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof3?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf3" type="text" id="txtcedulaf3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf3?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof3" type="text" id="txtsexof3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof3?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref3" type="text" id="txtnombref3" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref3?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf3" type="text" id="txtfecha_nacf3" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf3?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
 				 
 				 <tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof4" type="text" id="txtparentescof4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof4?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf4" type="text" id="txtcedulaf4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf4?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof4" type="text" id="txtsexof4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof4?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref4" type="text" id="txtnombref4" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref4?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf4" type="text" id="txtfecha_nacf4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf4?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof4" type="text" id="txtparentescof4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof4?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf4" type="text" id="txtcedulaf4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf4?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof4" type="text" id="txtsexof4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof4?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref4" type="text" id="txtnombref4" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref4?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf4" type="text" id="txtfecha_nacf4" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf4?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
 				 
 				 <tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof5" type="text" id="txtparentescof5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof5?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf5" type="text" id="txtcedulaf5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf5?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof5" type="text" id="txtsexof5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof5?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref5" type="text" id="txtnombref5" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref5?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf5" type="text" id="txtfecha_nacf5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf5?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof5" type="text" id="txtparentescof5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof5?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf5" type="text" id="txtcedulaf5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf5?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof5" type="text" id="txtsexof5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof5?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref5" type="text" id="txtnombref5" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref5?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf5" type="text" id="txtfecha_nacf5" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf5?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
 				 
 				 <tr>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof6" type="text" id="txtparentescof6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $parentescof6?>" > </span></td>
-                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf6" type="text" id="txtcedulaf6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $cedulaf6?>" > </span></td>
-                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof6" type="text" id="txtsexof6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $sexof6?>"> </span></td>
-                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref6" type="text" id="txtnombref6" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $nombref6?>" > </span></td>
-                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf6" type="text" id="txtfecha_nacf6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?echo $fecha_nacf6?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtparentescof6" type="text" id="txtparentescof6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $parentescof6?>" > </span></td>
+                   <td width="130"><span class="Estilo5"> <input class="Estilo10" name="txtcedulaf6" type="text" id="txtcedulaf6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $cedulaf6?>" > </span></td>
+                   <td width="90"><span class="Estilo5"> <input class="Estilo10" name="txtsexof6" type="text" id="txtsexof6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $sexof6?>"> </span></td>
+                   <td width="400"><span class="Estilo5"> <input class="Estilo10" name="txtnombref6" type="text" id="txtnombref6" size="40" maxlength="100"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $nombref6?>" > </span></td>
+                   <td width="100"><span class="Estilo5"> <input class="Estilo10" name="txtfecha_nacf6" type="text" id="txtfecha_nacf6" size="10" maxlength="10"  onFocus="encender(this)" onBlur="apagar(this)" value="<?php echo $fecha_nacf6?>" onkeyup="mascara(this,'/',patronfecha,true)"> </span></td>
                  </tr>
              </table></td>
            </tr>
@@ -256,7 +256,7 @@ var mvalor='<?echo $cond_trab?>'; var mvalors='<?echo $sexo?>';
          <p>&nbsp;</p>
          <table width="859">
                 <tr>
-				  <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?echo $cod_empleado?>" ></td>
+				  <td width="5"><input class="Estilo10" name="txtcod_empleado" type="hidden" id="txtcod_empleado" value="<?php echo $cod_empleado?>" ></td>
                   <td width="664">&nbsp;</td>
                   <td width="88"><input name="Generar" type="submit" id="Generar"  value="Generar"></td>
                 </tr>

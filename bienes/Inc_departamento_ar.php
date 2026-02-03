@@ -1,4 +1,4 @@
-<?include ("../class/ventana.php"); if (!$_GET){$cod_dependen=""; $cod_direcci=""; $cod_departamento="";}
+<?php include ("../class/ventana.php"); if (!$_GET){$cod_dependen=""; $cod_direcci=""; $cod_departamento="";}
 else{$cod_dependen=$_GET["cod_dependen"]; $cod_direcci=$_GET["cod_direcci"]; $cod_departamento=$_GET["cod_departamento"]; 
 }?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -6,7 +6,7 @@ else{$cod_dependen=$_GET["cod_dependen"]; $cod_direcci=$_GET["cod_direcci"]; $co
 <LINK REL="SHORTCUT ICON" HREF="../imagenes/sia.ico">
 <html>
 <head>
-<title>SIA CONTROL DE BIENES NACIONALES (Incluir Departamentos)</title>
+<title>SIPAP CONTROL DE BIENES NACIONALES (Incluir Departamentos)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -21,7 +21,7 @@ MM_reloadPage(true);
 //-->
 </script>
 <script language="JavaScript" type="text/JavaScript">
-function llamar_anterior(){ document.location ='Det_departamentos.php?cod_dependen=<?echo $cod_dependen?>&cod_direcci=<?echo $cod_direcci?>'; }
+function llamar_anterior(){ document.location ='Det_departamentos.php?cod_dependen=<?php echo $cod_dependen?>&cod_direcci=<?php echo $cod_direcci?>'; }
 
 function chequea_codigo(mform){ var mref;
  mref=mform.txtcod_departamento.value;  //mref=Rellenarizq(mref,"0",8);  
@@ -53,7 +53,7 @@ return true;}
             <td><table width="806">
               <tr>
                 <td width="186" scope="col"><div align="left"><span class="Estilo5">CODIGO DEPARTAMENTO:</span></div></td>
-                <td width="620" scope="col"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtcod_departamento" type="text" id="txtcod_departamento"  value="<?echo $cod_departamento?>" size="14" maxlength="12"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_codigo(this.form);" >
+                <td width="620" scope="col"><div align="left"><span class="Estilo5"><input class="Estilo10" name="txtcod_departamento" type="text" id="txtcod_departamento"  value="<?php echo $cod_departamento?>" size="14" maxlength="12"  onFocus="encender(this)" onBlur="apagar(this)"  onchange="chequea_codigo(this.form);" >
                 </span></div></td>
               </tr>
             </table></td>
@@ -84,8 +84,8 @@ return true;}
          <td>
            <table width="730" align="center">
           <tr>
-            <td width="20"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?echo $cod_dependen?>"></td>
-            <td width="20"><input name="txtcod_direcci" type="hidden" id="txtcod_direcci" value="<?echo $cod_direcci?>"></td>
+            <td width="20"><input name="txtcod_dependen" type="hidden" id="txtcod_dependen" value="<?php echo $cod_dependen?>"></td>
+            <td width="20"><input name="txtcod_direcci" type="hidden" id="txtcod_direcci" value="<?php echo $cod_direcci?>"></td>
 			<td width="10"><input name="txtnombre_contacto_d" type="hidden" id="txtnombre_contacto_d" value=""></td>
 			<td width="10"><input name="txtobservacion_dep" type="hidden" id="txtobservacion_dep" value=""></td>
             <td width="200">&nbsp;</td>

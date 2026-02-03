@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php");
+<?php include ("../class/conect.php");  include ("../class/funciones.php");
 $password=$_GET["password"];$user=$_GET["user"]; $dbname=$_GET["dbname"]; $criterio=$_GET["criterio"]; $codigo_mov=$_GET["codigo_mov"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
 $resultado=pg_exec($conn,"SELECT BORRAR_BAN029('$codigo_mov')"); $error=pg_errormessage($conn); $error=substr($error, 0, 61);
@@ -30,5 +30,5 @@ while($registro=pg_fetch_array($res)){ $tipo_p="00"; $nro_p="00000000"; $fecha_e
   $ssql="SELECT INCLUYE_BAN029('$codigo_mov','0000','O/P','$referencia','$tipo_p','$nro_p','$ced_rif','$fecha_e','$nro_o','$aux_o','A','$tipo_r','$tipo_d','$nro_fact','$nro_con_fac','','$fecha_f','$nro_c','$tipo_e',$monto_p,$monto_o,$tasa,$monto_r,$monto1,$monto2,$monto3)";
   $resultado=pg_exec($conn,$ssql); $error=pg_errormessage($conn);
 }
-?><iframe src="Det_ret_planillas.php?codigo_mov=<?echo $codigo_mov?>"  width="940" height="350" scrolling="auto" frameborder="1"> </iframe>
-<?pg_close();?>
+?><iframe src="Det_ret_planillas.php?codigo_mov=<?php echo $codigo_mov?>"  width="940" height="350" scrolling="auto" frameborder="1"> </iframe>
+<?php pg_close($conn);?>

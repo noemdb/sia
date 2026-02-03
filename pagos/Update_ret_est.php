@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); 
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); 
 $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
 $codigo_mov=$_POST["txtcodigo_mov"];
 $tipo_retencion=$_POST["txttipo_retencion"];
@@ -25,28 +25,28 @@ $MInf_Usuario = $equipo." ".date("d/m/y H:i a");
 echo "ESPERE POR FAVOR MODIFICANDO....","<br>";
 $url="Det_inc_ret_est.php?codigo_mov=".$codigo_mov;
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }
  else{
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql);
   if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"];}
   $error=0;
   $sSQL="Select * from PAG028 WHERE codigo_mov='$codigo_mov' and tipo_retencion='$tipo_retencion' and ref_comp_ret='$referencia_comp' and tipo_comp_ret='$tipo_compromiso' and cod_presup_ret='$cod_presup' and fuente_fin_ret='$fuente_financ'";
   $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
-  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('RETENCIÓN NO EXISTE EN LA ESTRUCTURA');</script><? }
+  if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('RETENCIÓN NO EXISTE EN LA ESTRUCTURA');</script><?php }
    else{
     if($error==0){
       $sSQL="Select * from PRE099 WHERE ced_rif='$ced_rif'"; $resultado=pg_query($sSQL); $filas=pg_num_rows($resultado);
-      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÉDULA/RIF DE BENEFICIARIO NO EXISTE');</script><? }
+      if ($filas==0){$error=1; ?> <script language="JavaScript"> muestra('CÉDULA/RIF DE BENEFICIARIO NO EXISTE');</script><?php }
        else{$registro=pg_fetch_array($resultado); $nombre=$registro["nombre"];}
     }
     if($error==0){
       $sfecha=formato_aaaammdd($fecha);
       $sSQL="SELECT ACTUALIZA_PAG028(2,'$codigo_mov','00000000','$tipo_retencion','$referencia_comp','$tipo_compromiso','$cod_presup','$fuente_financ','00000000','0000','',$tasa_retencion,$monto_objeto,$monto_retencion,0,'R','$ced_rif','$nombre','S','0000','0000','$des_orden_ret')";
       $resultado=pg_exec($conn,$sSQL); $error=pg_errormessage($conn); $error="ERROR GRABANDO: ".substr($error, 0, 61);
-      if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+      if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
     }
   }
 }
-pg_close();
-if ($error==0){?><script language="JavaScript">document.location ='<? echo $url; ?>';</script> <? }
-else {?>  <script language="JavaScript">history.back();</script> <? }?>
+pg_close($conn);
+if ($error==0){?><script language="JavaScript">document.location ='<?php  echo $url; ?>';</script> <?php }
+else {?>  <script language="JavaScript">history.back();</script> <?php }?>

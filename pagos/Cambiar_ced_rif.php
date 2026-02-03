@@ -4,7 +4,7 @@ if (!$_GET){$ced_rif=''; $nombre='';}  else {$ced_rif=$_GET["Gced_rif"]; $nombre
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>SIA ORDENAMIENTO DE PAGOS (CAMBIAR CEDULA/RIF BENEFICIARIO)</title>
+<title>SIPAP ORDENAMIENTO DE PAGOS (CAMBIAR CEDULA/RIF BENEFICIARIO)</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <LINK  href="../class/sia.css" type="text/css" rel="stylesheet">
 <script language="JavaScript" src="../class/sia.js" type="text/javascript"></script>
@@ -41,7 +41,7 @@ return true;}
             <td><table width="680" border="0" align="center">
               <tr>
                 <td width="160"><span class="Estilo5">CEDULA/RIF ACTUAL: </span></td>
-                <td width="270"><span class="Estilo5"> <input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="15" value="<?echo $ced_rif?>"  readonly  >   </span> </td>
+                <td width="270"><span class="Estilo5"> <input class="Estilo10" name="txtced_rif" type="text" id="txtced_rif" size="15" value="<?php echo $ced_rif?>"  readonly  >   </span> </td>
                 <td width="227"><span class="Estilo5"> </span></td>
               </tr>
             </table></td>
@@ -53,7 +53,7 @@ return true;}
              <td><table width="680" border="0" align="center">
                <tr>
                  <td width="80"><span class="Estilo5">NOMBRE :</span></td>
-                 <td width="577"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" value="<?echo $nombre?>" size="90" readonly>   </tr>
+                 <td width="577"><span class="Estilo5"> <input class="Estilo10" name="txtnombre" type="text" id="txtnombre" value="<?php echo $nombre?>" size="90" readonly>   </tr>
              </table></td>
            </tr>
 		  <tr>

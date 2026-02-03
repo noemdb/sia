@@ -1,14 +1,14 @@
-<?include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
+<?php include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");include ("../../class/conect.php"); error_reporting(E_ALL ^ E_NOTICE); $php_os=PHP_OS;
 $periodo=$_GET["periodo"];  $cod_cuenta_d=$_GET["cod_cuenta_d"]; $cod_cuenta_h=$_GET["cod_cuenta_h"]; $vstatus=$_GET["vstatus"]; $tipo_rpt=$_GET["tipo_rpt"];
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?} else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php } else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }
 $fecha_d=Armar_Fecha($periodo, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo, 2, $Fec_Ini_Ejer);
 $criterio1="Desde ".$fecha_d." Al ".$fecha_h; $Sql="";
 if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_d);} if($fecha_h==""){$sfecha_h="9999-12-31";}else{$sfecha_h=formato_aaaammdd($fecha_h);}
     $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','7')"; $resultado=pg_exec($conn,$Sql);$error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0, 61);
     $Sql="SELECT RPT_RES_PERIODO_CON013('".$usuario_sia."','7','".$sfecha_d."','".$sfecha_h."','".$cod_cuenta_d."','".$cod_cuenta_h."','".$vstatus."','".$periodo."')";
     $resultado=pg_exec($conn,$Sql);    $error=pg_errormessage($conn);     $error="ERROR GRABANDO: ".substr($error, 0, 61);
-    if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+    if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
        else{$Sql= "select * from RPT_RES_PERIODO WHERE nombre_usuario='".$usuario_sia."' AND tipo_registro='7' ORDER BY cod_cuenta";    $sSQL = $Sql;
    if($tipo_rpt=="HTML"){	include ("../../class/phpreports/PHPReportMaker.php"); 
              $oRpt = new PHPReportMaker();
@@ -93,7 +93,7 @@ if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_
 			 </tr>
 			 <tr height="20">
 				<td width="100" align="left" ><strong></strong></td>
-				<td width="400" align="center" ><strong><?	$criterio1?></strong></td>
+				<td width="400" align="center" ><strong><?php 	$criterio1?></strong></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="100" align="left" bgcolor="#99CCFF"><strong>CODIGO CUENTA</strong></td>
@@ -102,20 +102,20 @@ if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_
 			   <td width="100" align="right" bgcolor="#99CCFF"><strong>HABER</strong></td>
 			   <td width="100" align="right" bgcolor="#99CCFF" ><strong>SALDO</strong></td>
 			 </tr>
-		  <?  $i=0;  $total=0; $sub_total=0; $prev_fecha=""; $total_columna1=0; $total_columna2=0; $res=pg_query($sSQL);
+		  <?php   $i=0;  $total=0; $sub_total=0; $prev_fecha=""; $total_columna1=0; $total_columna2=0; $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1; 
 		  $cod_cuenta=$registro["cod_cuenta"]; $nombre_cuenta=$registro["nombre_cuenta"]; $columna1=$registro["columna1"]; $columna2=$registro["columna2"]; 	  $columna3=$registro["columna3"]; 
                   $total_columna1=$total_columna1+$columna1; $total_columna2=$total_columna2+$columna2;
                   $columna1=formato_monto($columna1); $columna2=formato_monto($columna2);  $columna3=formato_monto($columna3);  $nombre_cuenta=conv_cadenas($nombre_cuenta,0);
 			   ?>	   
 				<tr>
-				   <td width="100" align="left"><? echo $cod_cuenta; ?></td>
-				   <td width="400" align="justify"><? echo $nombre_cuenta; ?></td>
-				   <td width="100" align="right"><? echo $columna1; ?></td>
-				   <td width="100" align="right"><? echo $columna2; ?></td>
-				   <td width="100" align="right"><? echo $columna3; ?></td>
+				   <td width="100" align="left"><?php  echo $cod_cuenta; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre_cuenta; ?></td>
+				   <td width="100" align="right"><?php  echo $columna1; ?></td>
+				   <td width="100" align="right"><?php  echo $columna2; ?></td>
+				   <td width="100" align="right"><?php  echo $columna3; ?></td>
 				 </tr>
-			   <? 
+			   <?php  
  			   
 		  } $total_columna1=formato_monto($total_columna1); $total_columna2=formato_monto($total_columna2);
 				?>	 				 
@@ -129,11 +129,11 @@ if($fecha_d==""){$sfecha_d="2007-01-01";}else{$sfecha_d=formato_aaaammdd($fecha_
 				    <tr>
 				       <td width="100" align="left"></td>
 					  <td width="400" align="right"><strong>TOTAL GENERAL</strong></strong></td>
-					  <td width="100" align="right"><strong><? echo $total_columna1; ?></strong></td>
-					  <td width="100" align="right"><strong><? echo $total_columna2; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $total_columna1; ?></strong></td>
+					  <td width="100" align="right"><strong><?php  echo $total_columna2; ?></strong></td>
 					  <td width="100" align="right"></td>
 				    </tr>	
-          </table><?
+          </table><?php 
         }		  
     }
 ?>

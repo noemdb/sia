@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
+<?php include ("../class/conect.php");  include ("../class/funciones.php"); include ("../class/configura.inc");   error_reporting(E_ALL);
 $cod_cuenta="6-1-3-06"; $cod_presup="01-00-53-403-08-02-00"; $cod_fuente="00";
 echo "ESPERE POR FAVOR REVISANDO PAGOS PRESUPUESTARIOS....","<br>";
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
@@ -57,5 +57,5 @@ while($reg=pg_fetch_array($res)){
   
 }$tabla.="</table>";
 echo $tabla;
-pg_close(); error_reporting(E_ALL ^ E_WARNING); 
+pg_close($conn); error_reporting(E_ALL ^ E_WARNING); 
 ?>

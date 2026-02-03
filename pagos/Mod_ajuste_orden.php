@@ -1,4 +1,4 @@
-<? include ("../class/seguridad.inc");include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
+<?php  include ("../class/seguridad.inc");include ("../class/conects.php");  include ("../class/funciones.php"); $equipo=getenv("COMPUTERNAME");
 if (!$_GET){ $referencia_aju=""; $mcod_m="PAG019".$equipo;$codigo_mov=substr($mcod_m,0,49);}  else{$referencia_aju=$_GET["txtreferencia_aju"]; $codigo_mov=$_GET["codigo_mov"];}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -37,10 +37,10 @@ document.form1.submit;
 return true;}
 </script>
 </head>
-<?
+<?php 
 $nombre_abrev_aju="";$tipo_ajuste=""; $nro_orden="";  $tipo_causado=""; $fecha=""; $concepto=""; $nombre_abrev_caus=""; $nombre_abrev_aju=""; $total_ajuste=0; $anulado="N"; $fecha_anu="";
 $conn = pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $sSQL="Select * from AJUSTE_ORD where Referencia_Aju_Ord='$referencia_aju'";  $res=pg_exec($conn,$sSQL); $filas=pg_numrows($res);
 if($filas>0){ $registro=pg_fetch_array($res);
   $referencia_aju=$registro["referencia_aju_ord"];   $tipo_ajuste=$registro["tipo_aju_ord"];
@@ -90,13 +90,13 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                                     <td width="850" height="14"><table width="848">
                     <tr>
                       <td width="144"><span class="Estilo5">REFERENCIA AJUSTE : </span></td>
-                      <td width="147"><span class="Estilo5">  <input name="txtreferencia_aju" type="text"  id="txtreferencia_aju" size="8" maxlength="8" value="<?echo $referencia_aju?>" readonly>  </td>
+                      <td width="147"><span class="Estilo5">  <input name="txtreferencia_aju" type="text"  id="txtreferencia_aju" size="8" maxlength="8" value="<?php echo $referencia_aju?>" readonly>  </td>
                       <td width="154"><span class="Estilo5">DOCUMENTO AJUSTE : </span></td>
-                      <td width="38"><span class="Estilo5"> <input name="txttipo_ajuste" type="text" id="txttipo_ajuste" size="4" maxlength="4"  value="<?echo $tipo_ajuste?>" readonly > </span></td>
+                      <td width="38"><span class="Estilo5"> <input name="txttipo_ajuste" type="text" id="txttipo_ajuste" size="4" maxlength="4"  value="<?php echo $tipo_ajuste?>" readonly > </span></td>
                       <td width="140"><span class="Estilo5">
-                      <input name="txtnombre_abrev_ajuste" type="text" id="txtnombre_abrev_ajuste" size="5" maxlength="5" value="<?echo $nombre_abrev_aju?>" readonly></span></td>
+                      <input name="txtnombre_abrev_ajuste" type="text" id="txtnombre_abrev_ajuste" size="5" maxlength="5" value="<?php echo $nombre_abrev_aju?>" readonly></span></td>
                       <td width="54"><span class="Estilo5">FECHA :</span></td>
-                      <td width="134"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?echo $fecha?>" readonly></span></td>
+                      <td width="134"><span class="Estilo5"><input name="txtfecha" type="text" id="txtfecha" size="12" maxlength="10"  value="<?php echo $fecha?>" readonly></span></td>
                       </tr>
                   </table></td>
                 </tr>
@@ -104,12 +104,12 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                   <td height="14"><table width="861" >
                     <tr>
                       <td width="144"><span class="Estilo5">N&Uacute;MERO ORDEN : </span></td>
-                      <td width="142"><span class="Estilo5"><input name="txtnro_orden" type="text" id="txtnro_orden" size="8" maxlength="8" value="<?echo $nro_orden?>" readonly>
+                      <td width="142"><span class="Estilo5"><input name="txtnro_orden" type="text" id="txtnro_orden" size="8" maxlength="8" value="<?php echo $nro_orden?>" readonly>
                       </span></td>
                       <td width="153"><span class="Estilo5">DOCUMENTO CAUSADO :</span></td>
-                      <td width="35"><span class="Estilo5">  <input name="txttipo_causado" type="text" id="txttipo_causado" size="4" maxlength="4" value="<?echo $tipo_causado?>" readonly>
+                      <td width="35"><span class="Estilo5">  <input name="txttipo_causado" type="text" id="txttipo_causado" size="4" maxlength="4" value="<?php echo $tipo_causado?>" readonly>
                       </span></td>
-                      <td width="77"><span class="Estilo5">  <input name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus" size="5" maxlength="5" value="<?echo $nombre_abrev_caus?>" readonly>
+                      <td width="77"><span class="Estilo5">  <input name="txtnombre_abrev_caus" type="text" id="txtnombre_abrev_caus" size="5" maxlength="5" value="<?php echo $nombre_abrev_caus?>" readonly>
                       </span></td>
                       <td width="61"><span class="Estilo5"></span></td>
                       <td width="213"><span class="Estilo5"></span></td>
@@ -121,7 +121,7 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
                     <tr>
                       <td width="120" height="24"><span class="Estilo5">DESCRIPCI&Oacute;N :</span></td>
                       <td width="709"><span class="Estilo5">
-                        <textarea name="txtconcepto" cols="89"  onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="txtconcepto"><?echo $concepto?></textarea>
+                        <textarea name="txtconcepto" cols="89"  onFocus="encender(this); " onBlur="apagar(this);" class="headers" id="txtconcepto"><?php echo $concepto?></textarea>
                       </span> </td>
                     </tr>
                   </table></td>
@@ -133,7 +133,7 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
 
         <table width="768">
           <tr>
-            <td width="331"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?echo $codigo_mov?>"></td>
+            <td width="331"><input name="txtcodigo_mov" type="hidden" id="txtcodigo_mov" value="<?php echo $codigo_mov?>"></td>
             <td width="100"><input name="txtp_ces" type="hidden" id="txtp_ces" value="N"></td>
             <td width="231"><input name="txtcaus_directo" type="hidden" id="txtcaus_directo" value="SI"></td>
             <td width="88" valign="middle"><input name="button" type="submit" id="button"  value="Grabar"></td>
@@ -147,4 +147,4 @@ if(substr($tipo_ajuste,0,1)=='A'){$criterio=$sfecha.'A'.substr($referencia_aju,1
 </table>
 </body>
 </html>
-<? pg_close();?>
+<?php  pg_close($conn);?>

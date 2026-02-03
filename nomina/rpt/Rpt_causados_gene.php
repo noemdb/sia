@@ -1,10 +1,10 @@
-<?include ("../../class/conect.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
+<?php include ("../../class/conect.php");  include ("../../class/funciones.php");  include ("../../class/configura.inc"); error_reporting(E_ALL ^ E_NOTICE); include ("../../class/phpreports/PHPReportMaker.php");
 if ($_GET){$cod_presup_d=$_GET["cod_presupd"];$cod_presup_h=$_GET["cod_presuph"];$cod_fuente_d=$_GET["cod_fuented"];$cod_fuente_h=$_GET["cod_fuenteh"];$doc_causa_d=$_GET["doc_causa_d"];$doc_causa_h=$_GET["doc_causa_h"];$doc_comp_d=$_GET["doc_comp_d"]; $doc_comp_h=$_GET["doc_comp_h"];$referencia_d=$_GET["referencia_d"];$referencia_h=$_GET["referencia_h"]; $referenciacomp_d=$_GET["referenciacomp_d"];$referenciacomp_h=$_GET["referenciacomp_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];$cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$tipo_regis=$_GET["tipo_regis"];}
 else{$codigod="";$codigoh="";$fuented="";$fuenteh="";$fecha="";}  $equipo=getenv("COMPUTERNAME"); $cod_mov="PRE021".$usuario_sia; 
 if ($tipo_regis=='TO'){$nombre='TODOS';}elseif($tipo_regis=='ANU'){$nombre='ANULADOS';}elseif($tipo_regis=='AJU'){$nombre='AJUSTADOS';}elseif($tipo_regis=='NANU'){$nombre='NI ANULADOS';}elseif($tipo_regis=='NAJU'){$nombre='NI AJUSTADOS';}
 if ($cod_fuente_d=='00'){$fuente='PRESUPUESTO ORDINARIO';}
 $conn = pg_connect("host=localhost port=5432 password=".$password." user=".$user." dbname=".$dbname."");   $date = date("d-m-Y");$hora = date("H:i:s a");
-if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <? } else { $Nom_Emp=busca_conf(); }
+if (pg_last_error($conn)){$error=1;?> <script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script> <?php } else { $Nom_Emp=busca_conf(); }
   $sql="Select * from SIA005 where campo501='05'"; $resultado=pg_query($sql); $formato_presup="XX-XX-XX-XXX-XX-XX-XX";
   if ($registro=pg_fetch_array($resultado,0)){$formato_presup=$registro["campo504"]; $titulo=$registro["campo525"]; $formato_categoria=$registro["campo526"];$formato_partida=$registro["campo527"];} 
   $l_c=strlen($formato_presup); $c=strlen($formato_categoria);  $p=strlen($formato_partida); $ini=$c+2;
@@ -19,7 +19,7 @@ if (pg_ErrorMessage($conn)){$error=1;?> <script language="JavaScript">muestra('O
   $criterio4=$criterio_est."(substring(pre037.cod_presup from ".$ini." for 3)='401') and (PRE007.tipo_causado>='$doc_causa_d' and PRE007.tipo_causado<='$doc_causa_h') And (PRE007.referencia_caus>='$referencia_d' and PRE007.referencia_caus<='$referencia_h') And (PRE037.cod_presup>='$cod_presupd' and PRE037.cod_presup<='$cod_presuph') And (PRE007.tipo_compromiso>='$doc_comp_d' and PRE007.tipo_compromiso<='$doc_comp_h') And (PRE007.referencia_comp>='$referenciacomp_d' and PRE007.referencia_comp<='$referenciacomp_h')  And (PRE007.Fecha_Causado>='$fecha_d' and PRE007.Fecha_Causado<='$fecha_h') And (PRE037.fuente_financ>='$cod_fuente_d' and PRE037.fuente_financ<='$cod_fuente_h') And (PRE007.ced_rif>='$cedula_d' and PRE007.ced_rif<='$cedula_h')";
  	
   $StrSQL = "DELETE FROM PRE021 Where (tipo_registro='A') And (nombre_usuario='".$cod_mov."')";
-  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+  $res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 
  if($cfecha_h==$Fec_Fin_Ejer){$StrSQL= "INSERT INTO PRE021 SELECT '$cod_mov' as nombre_usuario,'A' as tipo_registro,PRE007.Referencia_Comp,PRE007.Tipo_Compromiso,PRE002.Nombre_Abrev_Comp,PRE002.Nombre_Tipo_Comp,
 PRE007.referencia_caus,PRE007.tipo_causado,PRE003.nombre_tipo_caus,PRE003.nombre_abrev_caus,'00000000' as Referencia_Pago,'0000' as Tipo_Pago,'' as Nombre_Abrev_Pago,'' as Nombre_Tipo_Pago, PRE037.Cod_Presup,PRE037.Fuente_Financ,PRE001.Denominacion,
@@ -39,12 +39,12 @@ WHERE PRE001.Cod_Presup = PRE037.Cod_Presup AND PRE037.Fuente_Financ=PRE001.cod_
  PRE007.Tipo_Causado = PRE003.Tipo_Causado AND PRE002.Tipo_Compromiso = PRE007.Tipo_Compromiso AND PRE007.Tipo_Compromiso = PRE037.Tipo_Compromiso AND PRE007.Referencia_Comp = PRE037.Referencia_Comp AND
 PRE007.Referencia_Caus = PRE037.Referencia_Caus AND PRE007.Tipo_Causado = PRE037.Tipo_Causado
 AND PRE007.Ced_Rif = PRE099.Ced_Rif and ".$criterio4; 
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 $StrSQL="SELECT ACT_CAUS_pre021('P','".$cod_mov."','A','$referencia_d','$referencia_h','$doc_comp_d','$doc_comp_h','$cfecha_d','$cfecha_h')";
 
 }
  
-$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<? echo $error; ?>'); </script> <? }
+$res=pg_exec($conn,$StrSQL); $error=pg_errormessage($conn); $error=substr($error, 0, 61);if (!$res){ ?> <script language="JavaScript">  muestra('<?php  echo $error; ?>'); </script> <?php }
 //print_r($StrSQL);
 	
 	$sSQL = "SELECT * FROM PRE021 WHERE ".$criterio." and (tipo_registro='A') And (nombre_usuario='".$cod_mov."') ORDER BY PRE021.Fecha_Doc, PRE021.Referencia_Comp, PRE021.Tipo_Compromiso";

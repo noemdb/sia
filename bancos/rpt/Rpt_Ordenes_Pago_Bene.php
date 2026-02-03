@@ -1,6 +1,6 @@
-<? error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
+<?php  error_reporting(E_ALL ^ E_NOTICE);include ("../../class/conect.php"); require ("../../class/fun_fechas.php"); require ("../../class/fun_numeros.php"); include ("../../class/configura.inc");
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname.""); $php_os=PHP_OS;        
-if (pg_ErrorMessage($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?}
+if (pg_last_error($conn)){ ?> <script language="JavaScript">  muestra('OCURRIO UN ERROR CONECTandO LA BASE DE DATOS'); </script> <?php }
 else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} }
    $cedula_d=$_GET["cedula_d"];$cedula_h=$_GET["cedula_h"];$nro_orden_d=$_GET["nro_orden_d"];$nro_orden_h=$_GET["nro_orden_h"];$fecha_d=$_GET["fecha_d"];$fecha_h=$_GET["fecha_h"];
    $clasificacion_d=$_GET["clasificacion_d"];$clasificacion_h=$_GET["clasificacion_h"];$tipo_orden_d=$_GET["tipo_orden_d"];$tipo_orden_h=$_GET["tipo_orden_h"];$status_orden=$_GET["status_orden"];$ordenado=$_GET["ordenado"];$detallado=$_GET["detallado"];$tipo_rpt=$_GET["tipo_rpt"];
@@ -171,7 +171,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 	     <tr height="20">
 		<td width="100" align="left" ><strong></strong></td>
 		<td width="100" align="left" ><strong></strong></td>
-		<td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1; ?></strong></font></td>
+		<td width="400" align="center" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1; ?></strong></font></td>
 	     </tr>
          <tr height="20">
            <td width="100" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>ORDEN</strong></td>
@@ -180,7 +180,7 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
            <td width="110" align="center" bgcolor="#99CCFF" ><strong>MONTO</strong></td>
            <td width="100" align="center" bgcolor="#99CCFF" ><strong>Estatus</strong></font></td>
          </tr>
-     <?
+     <?php 
 	  
 	  $i=0;  $total=0; $sub_total=0;  $cantidad=0; $prev_ced_rif="";
 	  $res=pg_query($sSQL);
@@ -201,22 +201,22 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			          <td width="100" align="left"></td>
 				      <td width="100" align="left"></td>
 			          <td width="400" align="left"></td>
-				      <td width="110" align="right"><? echo $sub_total; ?></td>
+				      <td width="110" align="right"><?php  echo $sub_total; ?></td>
 			          <td width="100" align="left"></td>
 			         </tr>	
 			        <tr>
 				      <td width="100" align="left"></td>
 			         </tr>	
-                  <?}
+                  <?php }
 			      ?>	   
 			      <tr>
 				    <td width="100" align="left">Cedula/Rif :</td>
-				    <td width="100" align="left"><? echo $ced_rif; ?></td>
-				    <td width="400" align="left">Nombre : <? echo $nombre; ?></td>
+				    <td width="100" align="left"><?php  echo $ced_rif; ?></td>
+				    <td width="400" align="left">Nombre : <?php  echo $nombre; ?></td>
 				    <td width="110" align="left"></td>
 				    <td width="100" align="left"></td>
 			      </tr>
-			     <? 					 
+			     <?php  					 
 			    $prev_ced_rif=$ced_rif_grupo; $sub_total=0;
 			}
   	       $nro_orden=$registro["nro_orden"]; $fecha=$registro["fecha"]; $concepto=$registro["concepto"]; 
@@ -227,13 +227,13 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 		   $nombre=conv_cadenas($nombre,0);  $concepto=conv_cadenas($concepto,0);
 	?>	   
 		   <tr>
-                <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<? echo $nro_orden; ?></td>
-           		<td width="100" align="left"><? echo $fecha; ?></td>
-           		<td width="400" align="justify"><? echo $concepto; ?></td>
-           		<td width="110" align="right"><? echo $monto_orden; ?></td>
-           		<td width="100" align="center"><? echo $st_orden; ?></td>
+                <td width="100" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033">'<?php  echo $nro_orden; ?></td>
+           		<td width="100" align="left"><?php  echo $fecha; ?></td>
+           		<td width="400" align="justify"><?php  echo $concepto; ?></td>
+           		<td width="110" align="right"><?php  echo $monto_orden; ?></td>
+           		<td width="100" align="center"><?php  echo $st_orden; ?></td>
             </tr>
-	    <? 
+	    <?php  
 	}  
         if(($sub_total>0)){ $sub_total=formato_monto($sub_total); 
 			?>	 				 
@@ -248,10 +248,10 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			   <td width="100" align="left"></td>
 		       <td width="100" align="left"></td>
 			   <td width="400" align="left"></td>
-		       <td width="110" align="right"><? echo $sub_total; ?></td>
+		       <td width="110" align="right"><?php  echo $sub_total; ?></td>
 			   <td width="100" align="left"></td>
 			</tr>			
-		    <?
+		    <?php 
 		  }$total=formato_monto($total); $cantidad=formato_monto($cantidad);	
 		    ?>	 				 
 			<tr>
@@ -259,13 +259,13 @@ else{ $Nom_Emp=busca_conf();  $php_os=PHP_OS; if($utf_rpt=="SI"){  if($php_os=="
 			</tr>
 			<tr>
 			   <td width="100" align="left">CANTIDAD:</td>
-			   <td width="100" align="right"><? echo $cantidad; ?></td>
+			   <td width="100" align="right"><?php  echo $cantidad; ?></td>
 			   <td width="400" align="right" >TOTAL ORDENES:</td>
-			   <td width="110" align="right"><? echo $total; ?></td>
+			   <td width="110" align="right"><?php  echo $total; ?></td>
 			   <td width="100" align="left"></td>
 			</tr>			   
-			<?
-		  ?></table><?
+			<?php 
+		  ?></table><?php 
         }		  
     }
 

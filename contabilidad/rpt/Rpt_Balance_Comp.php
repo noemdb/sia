@@ -1,4 +1,4 @@
-<? include ("../../class/conect.php");include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");error_reporting(E_ALL ^ E_NOTICE); 
+<?php  include ("../../class/conect.php");include ("../../class/fun_fechas.php"); include ("../../class/fun_numeros.php");include ("../../class/configura.inc");error_reporting(E_ALL ^ E_NOTICE); 
 $date=date("d-m-Y"); $hora=date("H:i:s a"); $php_os=PHP_OS; $Cta_Result_Eje=""; $mostrar_ap=1;
 $codigocuentad=$_GET["codigocuentad"]; $codigocuentah=$_GET["codigocuentah"]; $periodo=$_GET["periodo"]; $tipo_rep=$_GET["tipo_rep"]; $bal_cierre=$_GET["bal_cierre"];
 $nivel_hasta=$_GET["nivel"]; $imp_encero=$_GET["vimprimir"]; $Sql="";$MControl = array (0,0,0,0,0,0,0,0,0,0);
@@ -10,7 +10,7 @@ function BUSCAR_ACTUAL($Clave,$Formato){
   for ($a=1; $a<10; $a++) {if ($MControl[$a] == 0) {$MControl[$a]=0;} else { $j=$MControl[$a]+$k; $MControl[$a]=$j+1; $k=$MControl[$a];} }
   for ($a=1; $a<10; $a++) {if ($MControl[$a] < 0) {$MControl[$a]=0;}}  $act=-1;
   for ($a=0; $a<10; $a++) {if (strlen($Clave) == $MControl[$a]){$act=$a; $a=10;}}
-  if ($act==-1){?><script language="JavaScript">muestra('ERROR Longitud de la Cuenta Invalida');</script><? }
+  if ($act==-1){?><script language="JavaScript">muestra('ERROR Longitud de la Cuenta Invalida');</script><?php }
 return $act;}
 function cambia_coma_numero($monto){$valor=""; for ($i=0; $i<strlen($monto); $i++) {  if (substr($monto,$i,1)==",") {$valor=$valor.".";} else {$valor=$valor.substr($monto,$i,1);}  }  return $valor;}
 
@@ -24,7 +24,7 @@ $MDebitos = array (0,0,0,0,0,0,0,0,0,0);$MCreditos = array (0,0,0,0,0,0,0,0,0,0)
 $MSaldo_Total = array (0,0,0,0,0,0,0,0,0,0);
 $Total_Activo=0; $Total_Pasivo=0; $Total_Resultado=0;$Total_Capital=0; $Total_Resultado_Balance=0; $Monto_Gan_Perd=0;$nivel_hasta=$nivel_hasta*1;
 $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$user." dbname=".$dbname.""); 
-if (pg_ErrorMessage($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?}else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }
+if (pg_last_error($conn)){ ?><script language="JavaScript">muestra('OCURRIO UN ERROR CONECTANDO LA BASE DE DATOS');</script><?php }else{ $php_os=PHP_OS; $Nom_Emp=busca_conf(); if($utf_rpt=="SI"){  if($php_os=="WINNT"){ $php_os="LINUX"; } else{$php_os="WINNT";} } }
 if($periodo=="00"){$fecha_d=formato_ddmmaaaa($Fec_Ini_Ejer); $fecha_h=$fecha_d; $fecha_h=nextmes($fecha_h,-1); $fecha_h=colocar_udiames($fecha_h); $criterio1=" Al ".$fecha_h;}
 else{$fecha_d=Armar_Fecha($periodo, 1, $Fec_Ini_Ejer); $fecha_h=Armar_Fecha($periodo,2,$Fec_Ini_Ejer); $criterio1="Desde ".$fecha_d." Al ".$fecha_h; } $Sql="";
 $sfecha=formato_aaaammdd($fecha_d);   $ano_fiscal=substr($Fec_Ini_Ejer,6,4);  $periodo=$periodo*1;
@@ -34,7 +34,7 @@ $Cta_Sit_Finan=$registro["campo513"]; $Cta_Sit_Fiscal=$registro["campo514"]; $Ct
 $actual=BUSCAR_ACTUAL($Cta_Result_Eje,$Formato_Cuenta); $ln=$MControl[$nivel_hasta-1];  $lc=strlen($Cta_Ingreso); $lr=strlen($Cta_Egreso);
 $nro_linea=0; $cod_cuenta=""; $nom_cuenta=""; $c=0;  $prev_cuenta=""; $Total_Activo=0;  $Total_Resultado=0;  $Total_Pasivo=0; $Total_Capital=0;
 $Sql="SELECT ELIMINA_CON013('".$usuario_sia."','C')"; $resultado=pg_exec($conn,$Sql);$error=pg_errormessage($conn); $error="ERROR INICIALIZANDO: ".substr($error, 0,61);
-if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');</script><? }
+if (!$resultado){?><script language="JavaScript">muestra('<?php  echo $error; ?>');</script><?php }
  else{ $long_cuenta=$MControl[$nivel_hasta-1]; $sql="Select * from con001 where codigo_cuenta<>'".$Cta_Result_Eje."' and length(codigo_cuenta)<=".$long_cuenta." order by codigo_cuenta"; 
     $sql="Select * from con001 where codigo_cuenta<>'".$Cta_Result_Eje."' and length(codigo_cuenta)<=".$long_cuenta." order by codigo_cuenta"; $resultado=pg_query($sql);  $actual=$MControl[0];
 	$temp_debe=0; $temp_haber=0;
@@ -47,8 +47,8 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
            If ((trim($MCuenta[$i]) <> substr($cod_cuenta,0,($MControl[$i]))) And (strlen(Trim($MCuenta[$i]))>0)) {$Imprimir=true;
               If(($MSaldo_Total[$i]==0)and($imp_encero=="N")){$Imprimir=true;}  
 			  if(($Imprimir==true)and($i<$nivel_hasta)){ $Monto1=$MSaldo_Ant[$i]; $Monto2=$MDebitos[$i]; $Monto3=$MCreditos[$i];  $Monto4=$MSaldo_Total[$i];  $temp_nomb="TOTAL ".$MNombre[$i];                 
-				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
-				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','A','','$temp_nomb','$MTSaldo[$i]','','','',$Monto1,$Monto2,$Monto3,$Monto4,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
+				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','A','','$temp_nomb','$MTSaldo[$i]','','','',$Monto1,$Monto2,$Monto3,$Monto4,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
               }
               $MCuenta[$i]="";$MNombre[$i]=""; $MTSaldo[$i]=""; $MSaldo_Total[$i]=0; $MSaldo_Ant[$i]=0; $MDebitos[$i]=0; $MCreditos[$i]=0;
           }}
@@ -74,7 +74,7 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
 		 $Imprimir=false; $temp_debe=$temp_debe+$MDebe_per; $temp_haber=$temp_haber+$MHaber_per; }else{$entrar=1;}
 		 
 		 
-         if($Imprimir==true){$nro_linea=$nro_linea+1;  $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','B','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',$MSaldo_Anterior,$MDebe_per,$MHaber_per,$MSaldo,0,0,0,0,$MDebe_per,$MHaber_per,'','')"); 	 $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}}
+         if($Imprimir==true){$nro_linea=$nro_linea+1;  $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','B','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',$MSaldo_Anterior,$MDebe_per,$MHaber_per,$MSaldo,0,0,0,0,$MDebe_per,$MHaber_per,'','')"); 	 $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php } }
          $actual=BUSCAR_ACTUAL($cod_cuenta,$Formato_Cuenta);
        }
        else{ 
@@ -82,7 +82,7 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
 		 if(($bal_cierre=="SI")and($periodo=="12")and( (substr($cod_cuenta,0,$lc)==substr($Cta_Ingreso,0,$lc))or(substr($cod_cuenta,0,$lr)==substr($Cta_Egreso,0,$lr)) )){	 $Imprimir=false; }else{$entrar=1;}
 		 if((strlen($cod_cuenta)<$MControl[$nivel_hasta-1])and(Seletion_Ok($cod_cuenta,$fecha_creado)==0)and($Imprimir==true)){ $actual=BUSCAR_ACTUAL($cod_cuenta,$Formato_Cuenta);
          $i=$actual; $MCuenta[$i]=substr($cod_cuenta,0,$MControl[$i]); $MNombre[$i]=$nombre_cuenta; $MTSaldo[$i]=$tsaldo;
-         $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','C','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+         $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$cod_cuenta','00000','','01','0','C','$cod_cuenta','$nombre_cuenta','$tsaldo','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
        }}
        $prev_cuenta=$registro["codigo_cuenta"];
     }
@@ -91,9 +91,9 @@ if (!$resultado){?><script language="JavaScript">muestra('<? echo $error; ?>');<
             If(($MSaldo_Total[$i]==0)and($imp_encero=="N")){$Imprimir=true;}  
 			If(($Imprimir==true)and($i<$nivel_hasta)){ $Monto1=$MSaldo_Ant[$i]; $Monto2=$MDebitos[$i]; $Monto3=$MCreditos[$i];  $Monto4=$MSaldo_Total[$i];  $temp_nomb="TOTAL ".$MNombre[$i]; 
                 $Monto1=cambia_coma_numero($Monto1); $Monto2=cambia_coma_numero($Monto2); $Monto3=cambia_coma_numero($Monto3); $Monto4=cambia_coma_numero($Monto4);
-				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+				$nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','','00000','','01','0','S','','','','','','',0,0,0,0,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
 				if(($MCuenta[$i]>=$codigocuentad)and($cuenta<=$codigocuentah)){
-				  $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','A','','$temp_nomb','$MTSaldo[$i]','','','',$Monto1,$Monto2,$Monto3,$Monto4,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<? echo $error; ?>'); </script><?}
+				  $nro_linea=$nro_linea+1; $res=pg_exec($conn,"SELECT INCLUYE_CON013('$usuario_sia','C',$nro_linea,'00000000','$sfecha','','$MCuenta[$i]','00000','','01','0','A','','$temp_nomb','$MTSaldo[$i]','','','',$Monto1,$Monto2,$Monto3,$Monto4,0,0,0,0,0,0,'','')"); $error=pg_errormessage($conn);$error=substr($error,0,61); if(!$res){?><script language="JavaScript">muestra('<?php  echo $error; ?>'); </script><?php }
                 }
 			}
             $MCuenta[$i]="";$MNombre[$i]=""; $MTSaldo[$i]=""; $MSaldo_Total[$i]=0; $MSaldo_Ant[$i]=0; $MDebitos[$i]=0; $MCreditos[$i]=0;
@@ -213,7 +213,7 @@ if($nro_linea>0){
 			 </tr>
 			 <tr height="20">
 				<td width="150" align="left" ><strong></strong></td>
-				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?	echo $criterio1?></strong></font></td>
+				<td width="400" align="center" > <font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong><?php 	echo $criterio1?></strong></font></td>
 			 </tr>
 			 <tr height="20">
 			   <td width="150" align="left" bgcolor="#99CCFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><strong>Cuenta</strong></td>
@@ -223,7 +223,7 @@ if($nro_linea>0){
 			   <td width="120" align="right" bgcolor="#99CCFF"><strong>Credito</strong></td>
 			   <td width="120" align="right" bgcolor="#99CCFF" ><strong>Saldo Actual</strong></td>
 			 </tr>
-		  <?  $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cta="";  $res=pg_query($sSQL);
+		  <?php   $i=0;  $totald=0; $totalh=0; $sub_totald=0; $sub_totalh=0; $prev_cta="";  $res=pg_query($sSQL);
 		  while($registro=pg_fetch_array($res)){ $i=$i+1;  $codigo_cuenta=$registro["codigo_cuenta"];    $nombre_cuenta=$registro["nombre_cuenta"]; 
 		       $nombre_cuenta=conv_cadenas($nombre_cuenta,0); $cta_enc=$codigo_cuenta;  $nomb_cta_enc=$nombre_cuenta;  $saldoa_ac=$registro["saldoa_ac"]; $saldo_ac=$registro["saldo_ac"];
 		       $status=$registro["status"]; $tsaldo=$registro["tsaldo"]; $debe=$registro["columna9"]; $haber=$registro["columna10"];
@@ -236,14 +236,14 @@ if($nro_linea>0){
 			   }
 			   ?>	   
 				<tr>
-				   <td width="150" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><? echo $codigo_cuenta; ?></td>
-				   <td width="400" align="justify"><? echo $nombre_cuenta; ?></td>
-				   <td width="120" align="right"><? echo $columna1; ?></td>
-				   <td width="120" align="right"><? echo $columna2; ?></td>
-				   <td width="120" align="right"><? echo $columna3; ?></td>
-				   <td width="120" align="right"><? echo $columna4; ?></td>
+				   <td width="150" align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#000033"><?php  echo $codigo_cuenta; ?></td>
+				   <td width="400" align="justify"><?php  echo $nombre_cuenta; ?></td>
+				   <td width="120" align="right"><?php  echo $columna1; ?></td>
+				   <td width="120" align="right"><?php  echo $columna2; ?></td>
+				   <td width="120" align="right"><?php  echo $columna3; ?></td>
+				   <td width="120" align="right"><?php  echo $columna4; ?></td>
 				 </tr>
-			   <? 
+			   <?php  
 				
 		  }
           if(($totald>0)or($totalh>0)){ $totald=formato_monto($totald); $totalh=formato_monto($totalh); 
@@ -259,13 +259,13 @@ if($nro_linea>0){
 			  <td width="150" align="left"></td>
 			  <td width="400" align="right"></td>
 			  <td width="120" align="left"></td>
-			  <td width="120" align="right"><? echo $totald; ?></td>
-			  <td width="120" align="right"><? echo $totalh; ?></td>
+			  <td width="120" align="right"><?php  echo $totald; ?></td>
+			  <td width="120" align="right"><?php  echo $totalh; ?></td>
 			</tr>	
 			
-		  <? 					
+		  <?php  					
 		  }		  
-		  ?></table><?			
+		  ?></table><?php 			
 	}	
 }     
 

@@ -1,11 +1,11 @@
-<?include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
+<?php include ("../../class/conect.php");  include("../../class/fun_fechas.php"); include("../../class/fun_numeros.php"); $php_os=PHP_OS;
 $orden=$_GET["orden"];  $tipo_planilla=$_GET["tipo"]; $ano_fiscal="";
 $fecha_hoy=asigna_fecha_hoy();
 $nombre_planilla="COMPROBANTE DE RETENCION DE IMPUESTO SOBRE LA RENTA";
 
 if($tipo_planilla=="01"){$nombre_planilla="COMPROBANTE DE RETENCION ISLR"; }
 $conn = pg_connect("host=".$host." port=5432 password=".$password." user=".$user." dbname=".$dbname."");
-if (pg_ErrorMessage($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
+if (pg_last_error($conn)) { echo "<p><b>Ocurrio un error conectando a la base de datos: .</b></p>"; exit; }
 $direccion=""; $nombre_emp="IMAUBAR"; $ced_rif_emp="J-08529006-0"; $nro_ord=' ';
 $nro_comp=""; $sustraendo=0; $descripcion_ret=""; $fechae=""; $tipo_en=""; $tipo_documento=""; $nro_documento=""; $nro_con_factura=""; $fecha=""; $descripcion=""; $tipo_operacion="A";
 $ced_rif="";  $nombre_benef=""; $monto_r=0; $monto_o=0; $tasa=0; $error=0;
@@ -192,7 +192,7 @@ class PDF extends FPDF{
   $pdf->SetFont('Arial','',7);
   $pdf->SetAutoPageBreak(true, 45); 
   $pdf->Output();  
-  pg_close();
+  pg_close($conn);
 
 
 ?>

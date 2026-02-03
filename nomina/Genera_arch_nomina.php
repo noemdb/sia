@@ -1,4 +1,4 @@
-<?include ("../class/conect.php");  require ("../class/fun_num_otros.php"); require ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; 
+<?php include ("../class/conect.php");  require ("../class/fun_num_otros.php"); require ("../class/fun_fechas.php"); $fecha_hoy=asigna_fecha_hoy();  $error=0; 
 $equipo=getenv("COMPUTERNAME"); $minf_usuario=$usuario_sia." ".$equipo." ".date("d/m/y H:i a");
 $cod_arch_banco=$_POST["txtcod_arch_banco"];  $tipo_arch_banco=$_POST["txttipo_arch_banco"];   $tipo_calculo=$_POST["txttipo_calculo"];
 $fecha_hasta=$_POST["txtfecha_hasta"]; $fecha_desde=$_POST["txtfecha_desde"]; $concepto_t=$_POST["txtconcepto_t"];
@@ -10,7 +10,7 @@ $conn=pg_connect("host=".$host." port=".$port." password=".$password." user=".$u
 $sSQL="Select * from nom045 WHERE cod_arch_banco='$cod_arch_banco' and tipo_arch_banco='$tipo_arch_banco'"; $resultado=pg_query($sSQL);  $filas=pg_num_rows($resultado);
 if($filas>=1){  $registro=pg_fetch_array($resultado,0); $den_arch_banco=$registro["den_arch_banco"];
 $sSQL="SELECT ACTUALIZA_nom045(2,'$cod_arch_banco','$tipo_arch_banco','$den_arch_banco','','','','','','$tipo_nom','$agrupado','$cod_conceptod','$cod_conceptoh','','','','','$minf_usuario')"; $resultado=pg_exec($conn,$sSQL);}
-else{  $error=1;?> <script language="JavaScript">muestra('CODIGO DE ARCHIVO NO DEFINIDO');</script><? }
+else{  $error=1;?> <script language="JavaScript">muestra('CODIGO DE ARCHIVO NO DEFINIDO');</script><?php }
 $sql="SELECT NOM046.tipo_nomina,NOM001.descripcion FROM NOM046,NOM001 Where (NOM046.tipo_nomina=NOM001.tipo_nomina) And (cod_arch_banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco')"; $res=pg_query($sql);
 while($registro=pg_fetch_array($res)){ $tipo=$registro["tipo_nomina"]; if($mformula!=""){$mformula=$mformula." or ";}  $mformula=$mformula."(tipo_nomina='$tipo')";}
 
@@ -18,7 +18,7 @@ $tcod_arch_banco=$tipo_arch_banco.substr($cod_arch_banco,2,4);
 $sql="SELECT * from nom061 Where (cod_arch_banco='$tcod_arch_banco')"; $res=pg_query($sql); //echo $sql;
 while($registro=pg_fetch_array($res)){ $cod_concepto=$registro["cod_concepto"]; if($cformula!=""){$cformula=$cformula." or ";}  $cformula=$cformula."(cod_concepto='$cod_concepto')";}
 
-if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><? }
+if($mformula==""){$error=1;?> <script language="JavaScript">muestra('NO EXISTEN NOMINAS SELECCIONADAS');</script><?php }
 if($error==0){ $mformula="(".$mformula.")";
 $tipo_salida=$tipo_formato;$salto_linea="\n"; if($tipo_salida=="TXT"){ $tipo_formato="LINEAL";  } if($tipo_salida=="EXCEL"){ $tipo_formato="TABULADO"; }
 if($concepto_t=="NOMINA"){$mformula=$mformula." and (concepto_vac='N')";}
@@ -45,7 +45,7 @@ while($reg=pg_fetch_array($res)){ $cod_empleado=$reg["cod_empleado"];
   } 
   $monto_tot=$monto_tot+$monto_emp; if($monto_emp<>0){$monto_emp=0;$leidos=$leidos+1;}
   if($monto_tot<0){$monto_tot=$monto_tot*-1;}
-if($leidos==0){ echo $leidos; $error=1;?> <script language="JavaScript">muestra('INFORMACION DE NOMINAS NO LOCALIZADA');</script><? }
+if($leidos==0){ echo $leidos; $error=1;?> <script language="JavaScript">muestra('INFORMACION DE NOMINAS NO LOCALIZADA');</script><?php }
 else{ $encabezado=""; $detalle="";  $pie_pagina=""; if($tipo_formato=="TABULADO"){$encabezado="<tr>";}
 
   $StrSQL="SELECT * FROM NOM052 Where (cod_arch_banco='$cod_arch_banco') And (tipo_arch_banco='$tipo_arch_banco') And (status2_campo='E') Order by Pos_Campo";  $res=pg_query($StrSQL);
@@ -588,6 +588,6 @@ $pie_pagina=str_replace("<br>","\r\n",$pie_pagina); header("Content-type: applic
 } else{$encabezado="<pre>".$encabezado; $pie_pagina.="</pre>";} }
 echo $encabezado.$detalle.$pie_pagina;
 } }
-pg_close();
-if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?} 
+pg_close($conn);
+if($error==0){$error=0;}else{?><script language="JavaScript">window.close(); </script><?php } 
 ?>
